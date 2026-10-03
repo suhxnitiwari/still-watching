@@ -97,6 +97,12 @@ const LOCK_ICON = `<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height
 function setupProfiles() {
   const me = PROFILES.find((p) => p.me);
   $("#nav-avatar").innerHTML = avatar(me, "nav");
+  // The avatar goes back to "Who's watching?"
+  $("#switch-profile").addEventListener("click", () => {
+    try { sessionStorage.removeItem("entered"); } catch {}
+    scrollTo({ top: 0 });
+    location.reload();
+  });
   const gate = $("#profiles");
   let seen = false;
   try { seen = sessionStorage.getItem("entered") === "1"; } catch {}
@@ -536,39 +542,53 @@ function setupGrowth() {
   setupWhatChanged({ g, l, t, pct });
 }
 
-// What changed, shown with the shows themselves: one Netflix row per change. Each era opens with a card
-// carrying its number, followed by that era's shows behind it.
+// What changed, as poster bar charts: one panel per change, four bars (one per era). A bar's height is the
+// number; the bar itself is built from the posters of the shows behind it.
 function setupWhatChanged({ g, l, t, pct }) {
   const eras = DATA.life;
   const ex = (key) => (e) => e.examples[key] || [];
   const stories = [
-    { title: "Missing Home, in Hindi", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
-    { title: "Growing Out of Family TV", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
-    { title: "High School Got Serious", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
-    { title: "Hospitals and Crime", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
-    { title: "Laughing With Talk Shows", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
-    { title: "Watching What's New", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
-      shows: (e) => e.by_premiere.slice(-4).reverse().map((x) => ({ show: x.show, tag: x.year })) },
+    { title: "Missing home, in Hindi", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
+    { title: "Growing out of family TV", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
+    { title: "High school got serious", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
+    { title: "Hospitals and crime", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
+    { title: "Laughing with talk shows", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
+    { title: "Watching what's new", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
+      shows: (e) => e.by_premiere.slice(-4).reverse() },
   ];
-  const fmt = (st, v) => (st.year ? String(v) : pct(v));
-  const label = (e) => (e.key === "after" ? "College" : e.name);
-  $("#wc").innerHTML = stories.map((st) => {
+  const label = (e) => ({ elementary: "Elem.", middle: "Middle", high: "High", after: "College" }[e.key] || e.name);
+  $("#wc").innerHTML = `<div class="pbars">${stories.map((st) => {
     const vals = eras.map(st.value);
-    const peak = st.year ? vals.length - 1 : vals.indexOf(Math.max(...vals));
-    const items = eras.flatMap((e, i) => {
-      const v = vals[i];
-      const shows = (st.year || v >= 1 ? st.shows(e) : []).slice(0, 4);
-      const card = `<div class="eracard${i === peak ? " is-peak" : ""}">
-        <span class="eracard__era">${label(e)}</span>
-        <span class="eracard__num">${fmt(st, v)}</span>
-        <span class="eracard__unit">${esc(st.unit)}</span></div>`;
-      const tiles = shows.length ? shows.map((x) => tile(x.show, x.tag ? `<span class="tile__meta">${x.tag}</span>` : "")) :
-        [`<div class="eracard eracard--none"><span>None yet</span></div>`];
-      return [card, ...tiles];
-    });
-    return row(st.title, vals.map((v, i) => (i === vals.length - 1 ? fmt(st, v) : fmt(st, v))).join(" → "), items);
-  }).join("");
-  wireRows($("#wc"));
+    const lo = st.year ? Math.min(...vals) - 3 : 0, hi = Math.max(...vals);
+    const peak = vals.indexOf(hi);
+    return `<article class="pbar">
+      <header class="pbar__head"><h4>${esc(st.title)}</h4>
+        <p>${st.year ? `${vals[0]} → <b>${vals.at(-1)}</b>` : `${pct(vals[0])} → <b>${pct(vals.at(-1))}</b>`} <span>${esc(st.unit)}</span></p></header>
+      <div class="pbar__plot">${eras.map((e, i) => {
+        const v = vals[i], h = Math.max(((v - lo) / (hi - lo || 1)) * 100, 0);
+        const posters = (st.year || v >= 1 ? st.shows(e) : []).map((x) => posterOf(x.show)).filter(Boolean);
+        const fill = posters.length ? Array.from({ length: 12 }, (_, k) => posters[k % posters.length]) : [];
+        return `<div class="pbar__col${i === peak ? " is-peak" : ""}">
+          <span class="pbar__num">${st.year ? v : pct(v)}</span>
+          <div class="pbar__bar" style="--h:${h.toFixed(1)}" title="${e.name}: ${st.year ? v : pct(v)}">${fill.map((src) => `<img src="${src}" alt="" loading="lazy">`).join("")}</div>
+          <span class="pbar__era">${label(e)}</span>
+        </div>`;
+      }).join("")}</div>
+    </article>`;
+  }).join("")}</div>`;
+  // Bars rise when they scroll into view.
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
+  }), { threshold: .3 });
+  document.querySelectorAll(".pbar").forEach((el) => io.observe(el));
+  // Backup for browsers where the observer doesn't fire: check on scroll.
+  const check = () => document.querySelectorAll(".pbar:not(.is-in)").forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight * .8 && r.bottom > 0) el.classList.add("is-in");
+  });
+  addEventListener("scroll", check, { passive: true });
+  setTimeout(check, 300);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll(".pbar").forEach((el) => el.classList.add("is-in"));
 }
 
 // ---------- the broken home ----------
@@ -973,103 +993,6 @@ function setupPlayer() {
   });
 }
 
-// ---------- timeline ----------
-function storyMarks() {
-  const { dates, binges, gaps, windows } = DATA;
-  const silence = gaps[0];
-  const friends = binges[0];
-  const gg = windows.summer_2025.top[0];
-  return [
-    { month: friends.date.slice(0, 7), title: `${friends.show}: ${friends.episodes} in a day`, sub: fmtDate(friends.date) },
-    { month: dates.crackdown.slice(0, 7), title: "Netflix checks the Wi-Fi", sub: fmtDate(dates.crackdown) },
-    { month: "2024-03", title: `Senior spring: ${DATA.profile.senior_spring.views} views`, sub: "Jan – Jun 2024" },
-    { month: dates.austin.slice(0, 7), title: "Moved to Austin", sub: fmtDate(dates.austin) },
-    { month: "2025-07", title: "Home for the summer", sub: `${gg.views} eps of ${gg.show}` },
-  ];
-}
-
-function setupChart() {
-  const months = DATA.monthly;
-  const W = 1200, top = 82, H = 300, bottom = 24;
-  const slot = W / months.length;
-  const max = Math.max(...months.map((m) => m.views));
-  const y = (v) => H - bottom - (v / max) * (H - bottom - top);
-  const marks = storyMarks();
-  const markMonths = new Set(marks.map((m) => m.month));
-  const index = Object.fromEntries(months.map((m, i) => [m.month, i]));
-
-  const svg = document.createElementNS(SVG, "svg");
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  svg.setAttribute("role", "img");
-  svg.setAttribute("aria-label", "Netflix views per month, December 2017 to September 2026");
-
-  let out = "";
-  // School eras as shaded bands behind the bars.
-  DATA.life.forEach((e) => {
-    const a = index[e.from.slice(0, 7)] ?? 0;
-    const b = (index[e.to.slice(0, 7)] ?? months.length - 1) + 1;
-    out += `<g class="band"><rect x="${a * slot}" y="${top - 6}" width="${(b - a) * slot}" height="${H - bottom - top + 6}"/>
-      <text x="${a * slot + 8}" y="${top + 8}">${e.name}</text></g>`;
-  });
-  months.forEach((m, i) => {
-    const x = i * slot;
-    const h = H - bottom - y(m.views);
-    out += `<g class="col" data-i="${i}">
-      <rect x="${x}" y="${top}" width="${slot}" height="${H - bottom - top}" fill="transparent"/>
-      <rect class="bar grow${markMonths.has(m.month) ? " hot" : ""}" style="animation-delay:${i * 9}ms"
-        x="${x + slot * .14}" y="${y(m.views)}" width="${slot * .72}" height="${Math.max(h, 0)}" rx="1"/>
-    </g>`;
-    if (m.month.endsWith("-01")) out += `<text class="axis" x="${x}" y="${H - 6}">${m.month.slice(0, 4)}</text>`;
-  });
-
-  // Labels go on the first line (from the top) where they don't collide.
-  const levels = [];
-  marks.forEach((mk) => {
-    const i = index[mk.month];
-    if (i === undefined) return;
-    const x = i * slot + slot / 2;
-    const width = Math.max(mk.title.length * 6.9, mk.sub.length * 6.2) + 10;
-    const anchorEnd = x + width > W;
-    const span = anchorEnd ? [x - width, x] : [x, x + width];
-    let level = 0;
-    while ((levels[level] || []).some(([a, b]) => span[0] < b && span[1] > a)) level++;
-    (levels[level] ||= []).push(span);
-    const ty = 14 + level * 34;
-    const tx = anchorEnd ? x - 5 : x + 5;
-    const anchor = anchorEnd ? "end" : "start";
-    out += `<g class="mark"><line x1="${x}" x2="${x}" y1="${ty - 10}" y2="${y(months[i].views) - 3}"/>
-      <text x="${tx}" y="${ty}" text-anchor="${anchor}">${esc(mk.title)}</text>
-      <text class="sub" x="${tx}" y="${ty + 15}" text-anchor="${anchor}">${esc(mk.sub)}</text></g>`;
-  });
-  svg.innerHTML = out;
-  // Leave room above the bars for however many label lines were needed.
-  const need = 14 + levels.length * 34;
-  if (need > top) svg.setAttribute("viewBox", `0 ${top - need} ${W} ${H - top + need}`);
-  $("#chart").appendChild(svg);
-
-  const tip = $("#tooltip");
-  const show = (e) => {
-    const col = e.target.closest(".col");
-    if (!col) { tip.hidden = true; return; }
-    const m = months[col.dataset.i];
-    tip.innerHTML = `<b>${fmtMonth(m.month)}</b>${n(m.views)} view${m.views === 1 ? "" : "s"}`;
-    tip.hidden = false;
-    const r = tip.getBoundingClientRect();
-    tip.style.left = `${Math.min(e.clientX + 14, innerWidth - r.width - 8)}px`;
-    tip.style.top = `${e.clientY - r.height - 12}px`;
-  };
-  svg.addEventListener("pointermove", show);
-  svg.addEventListener("pointerdown", show);
-  svg.addEventListener("pointerleave", () => { tip.hidden = true; });
-}
-
-function playChart() {
-  const chart = $("#chart");
-  chart.classList.remove("playing");
-  void chart.offsetWidth;
-  chart.classList.add("playing");
-}
-
 // ---------- episodes ----------
 function seasons() {
   const { windows: w, yearly, month_of_year: moy, weekday, shows, gaps, streak, monthly, totals, binges } = DATA;
@@ -1246,7 +1169,6 @@ Promise.all([
     setupCase();
     setupGrowth();
     setupHouse();
-    setupChart();
     setupPreview();
     setupPlayer();
     setupEpisodes();

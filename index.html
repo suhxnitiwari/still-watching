@@ -42,12 +42,12 @@
     <a href="#case">Who's Watching</a>
     <a href="#growth">Growing Up</a>
     <a href="#house">The Household</a>
-    <a href="#timeline">Timeline</a>
+    <a href="#timeline">Report</a>
     <a href="#episodes">Episodes</a>
     <a href="case-study.html">Case Study</a>
     <a href="#about">About</a>
   </nav>
-  <span class="nav__me"><span class="avatar avatar--sm" id="nav-avatar" aria-hidden="true"></span><span class="nav__caret" aria-hidden="true">▾</span></span>
+  <button class="nav__me" type="button" id="switch-profile" aria-label="Switch profile"><span class="avatar avatar--sm" id="nav-avatar" aria-hidden="true"></span><span class="nav__caret" aria-hidden="true">▾</span></button>
 </header>
 
 <main id="top">
@@ -109,10 +109,15 @@
     </div>
   </section>
 
-  <section class="section" id="timeline">
-    <h3 class="section__title">Every month since 2017</h3>
-    <p class="section__sub">Views per month. Hover a bar for the month; the markers are where the story turns.</p>
-    <div class="chart" id="chart"></div>
+  <section class="section report" id="timeline">
+    <div class="report__card">
+      <div>
+        <p class="growth__kicker">The data report</p>
+        <h3 class="report__title">Every month, every year, every era</h3>
+        <p class="section__sub">The dense charts live in a PDF: all 136 months, each year's #1 show, the four eras side by side, and my top 20 shows.</p>
+      </div>
+      <a class="btn btn--play" href="report/still-watching-report.pdf" download>↓ Download the report (PDF)</a>
+    </div>
   </section>
 
   <section class="section" id="episodes">
