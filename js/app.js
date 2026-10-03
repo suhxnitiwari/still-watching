@@ -437,8 +437,8 @@ function setupCase() {
     ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
       chart: { from: "2020-11", to: "2021-05", hot: ["2021-02"] },
       ev: `The week Texas froze and the power kept going out, our whole family watched <b>${DATA.family.freeze.family} things</b>. Mine: <b>${listOf(DATA.family.freeze.mine.map(esc))}</b>. Rom-coms by candlelight.` }] : []),
-    { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "Born in early March", signal: "What I watch on one date every year",
-      ev: `March 6, 2026, my 20th birthday: Bridgerton and Queen Charlotte, back to back.` },
+    { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "The one clue it can't find", signal: "My birthday against every other day",
+      ev: `My birthday is invisible here. It ranks <b>${p.birthday.rank} of ${p.birthday.days}</b> calendar days, and I watched nothing at all on <b>${p.birthday.quiet_years} of ${p.birthday.years}</b> birthdays. Busy being celebrated. The exception was my 20th: Bridgerton and Queen Charlotte, back to back.` },
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
       ev: `Something on over Christmas in <b>${p.christmas_years} of ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years</b>, mostly a winter-break binge.` },
   ]]);

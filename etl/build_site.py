@@ -123,6 +123,12 @@ def profile(df, meta):
         "series_share": round((df["kind"] == "series").mean() * 100, 1),
         "big_days": int((daily >= 10).sum()),
         "finished": sorted(finished, key=lambda x: -x["total"]),
+        # My birthday (Mar 6) against every other calendar day: can a stranger find it?
+        "birthday": {"rank": int(df["date"].dt.strftime("%m-%d").value_counts().rank(ascending=False, method="min").get("03-06", 0)),
+                     "days": int(df["date"].dt.strftime("%m-%d").nunique()),
+                     "quiet_years": int(sum(1 for y in range(df["date"].dt.year.min() + 1, df["date"].dt.year.max() + 1)
+                                            if not ((df["date"].dt.month == 3) & (df["date"].dt.day == 6) & (df["date"].dt.year == y)).any())),
+                     "years": int(df["date"].dt.year.max() - df["date"].dt.year.min())},
         # Spooky, not scary: horror-tagged series are all teen/kids spooky; real horror films are rare.
         "spooky": [{"show": k, "views": int(v)} for k, v in df[(df["kind"] == "series") & df["show"].map(
             lambda x: "Horror" in ((meta.get(x) or {}).get("genres") or []))]["show"].value_counts().head(5).items()],
