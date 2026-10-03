@@ -1674,7 +1674,9 @@
    "december": 181,
    "last_week": 44,
    "watched": 233,
-   "total": 236
+   "total": 236,
+   "jan1": 4,
+   "nye_last": "The One Where Ross Meets Elizabeth's Dad"
   },
   "hindi_away": 35.2,
   "hindi_home": 13.6,
@@ -1768,6 +1770,42 @@
     "show": "Mighty Med",
     "watched": 48,
     "total": 47
+   }
+  ],
+  "spooky": [
+   {
+    "show": "Stranger Things",
+    "views": 39
+   },
+   {
+    "show": "Goosebumps",
+    "views": 24
+   },
+   {
+    "show": "Monster High",
+    "views": 11
+   },
+   {
+    "show": "R.L. Stine's The Haunting Hour",
+    "views": 5
+   },
+   {
+    "show": "Chilling Adventures of Sabrina",
+    "views": 2
+   }
+  ],
+  "horror_films": [
+   {
+    "show": "Cult of Chucky",
+    "date": "2018-03-06"
+   },
+   {
+    "show": "Killing Ground",
+    "date": "2018-03-06"
+   },
+   {
+    "show": "Scream",
+    "date": "2024-11-01"
    }
   ],
   "kids_by_year": {

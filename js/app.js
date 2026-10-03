@@ -430,6 +430,10 @@ function setupCase() {
     { label: "U.S. CATALOG", img: bg("Friends"), guess: "Watching U.S. Netflix", signal: "A deadline only U.S. viewers had",
       chart: { from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] },
       ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week. Then nothing.` },
+    ...(fr.jan1 ? [{ label: "DENIAL", img: bg("Friends"), guess: "I didn't want Friends to leave", signal: "Its last night on U.S. Netflix",
+      ev: `On Dec 31, 2019, Friends' last night on U.S. Netflix, one of my last episodes was <b>"${esc(fr.nye_last || "")}"</b>. The export still shows <b>${fr.jan1} more on Jan 1, 2020</b>: Netflix logs dates in UTC, so that's me past midnight, refusing to let go.` }] : []),
+    { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
+      ev: `Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. Real horror films, ever: <b>${p.horror_films.length}</b>${p.horror_films.length ? `, and ${p.horror_films.filter((x) => x.date.slice(5) === "03-06").length} of them on my 12th birthday` : ""}. Peer pressure.` },
     { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "Born in early March", signal: "What I watch on one date every year",
       ev: `March 6, 2026, my 20th birthday: Bridgerton and Queen Charlotte, back to back.` },
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
@@ -449,7 +453,7 @@ function setupCase() {
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["FAMILY", "HOUSEHOLD"]],
-    ["How I feel", ["HOMESICK", "RELATIONSHIP STATUS"]],
+    ["How I feel", ["HOMESICK", "DENIAL", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>

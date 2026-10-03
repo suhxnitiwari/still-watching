@@ -113,7 +113,9 @@ def profile(df, meta):
         "senior_spring": {"views": int(len(spring)), "days": int(spring["date"].nunique()), "months": 6},
         "friends_race": {"december": int(((friends["date"] >= "2019-12-01") & (friends["date"] <= "2019-12-31")).sum()),
                          "last_week": int(((friends["date"] >= "2019-12-25") & (friends["date"] <= "2019-12-31")).sum()),
-                         "watched": int(len(friends)), "total": totals.get("Friends")},
+                         "watched": int(len(friends)), "total": totals.get("Friends"),
+                         "jan1": int((friends["date"] == "2020-01-01").sum()),
+                         "nye_last": friends[friends["date"] == "2019-12-31"]["episode"].dropna().iloc[-1] if (friends["date"] == "2019-12-31").any() else None},
         "hindi_away": round(hindi_col[~home].mean() * 100, 1), "hindi_home": round(hindi_col[home].mean() * 100, 1),
         "kapil_away": int((col[~home]["show"] == "The Great Indian Kapil Show").sum()),
         "kapil_home": int((col[home]["show"] == "The Great Indian Kapil Show").sum()),
@@ -121,6 +123,11 @@ def profile(df, meta):
         "series_share": round((df["kind"] == "series").mean() * 100, 1),
         "big_days": int((daily >= 10).sum()),
         "finished": sorted(finished, key=lambda x: -x["total"]),
+        # Spooky, not scary: horror-tagged series are all teen/kids spooky; real horror films are rare.
+        "spooky": [{"show": k, "views": int(v)} for k, v in df[(df["kind"] == "series") & df["show"].map(
+            lambda x: "Horror" in ((meta.get(x) or {}).get("genres") or []))]["show"].value_counts().head(5).items()],
+        "horror_films": [{"show": r.show, "date": day(r.date)} for r in
+                         df[df["show"].isin({"Cult of Chucky", "Killing Ground", "Scream", "Annabelle", "Insidious", "The Conjuring"})].itertuples()],
         "kids_by_year": {str(k): v for k, v in kids_by_year.items()},
         "kids_early_top": df[kids & (df["date"].dt.year <= 2017)]["show"].value_counts().head(3).index.tolist(),
         "first_title": df.sort_values("date")["show"].iloc[0],
