@@ -162,12 +162,16 @@ def family(meta):
     label = {"Suhani": "Me", "Mom": "Mom", "Dad": "Dad", "Sister": "My sister"}
     ser = h[h["kind"] == "series"]
     quitters = {label[w]: int((ser[ser["who"] == w]["show"].value_counts() == 1).sum()) for w in label}
+    started = {label[w]: int(ser[ser["who"] == w]["show"].nunique()) for w in label}
+    quit_rate = {w: round(quitters[w] / started[w] * 100) for w in quitters if started[w]}
     kapil = h[h["show"] == "The Great Indian Kapil Show"]
     same_day = kapil.groupby("date")["who"].nunique()
     birthdays = h[(h["who"] == "Dad") & (h["date"] >= "2016-11-13") & (h["date"].dt.month == 11) &
                   (h["date"].dt.day == 13)]["show"].unique().tolist()
     return {
         "pilot_quitters": dict(sorted(quitters.items(), key=lambda x: -x[1])),
+        "shows_started": started,
+        "quit_rate": dict(sorted(quit_rate.items(), key=lambda x: -x[1])),
         "kapil": {label[w]: int(n) for w, n in kapil["who"].value_counts().items()},
         "kapil_same_day": int((same_day > 1).sum()),
         "dad_sister_birthday_picks": birthdays,

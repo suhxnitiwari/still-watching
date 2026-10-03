@@ -345,6 +345,7 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .clue__signal { font-size: 12px; color: var(--dim); margin: 0 0 10px; }
 .clue__evidence { font-size: 14px; line-height: 1.55; margin: 0; color: #d6d6d6; }
 .clue__evidence b { color: #fff; }
+.clue__evidence .dim { color: var(--dim); font-size: 12px; }
 
 .spark { position: relative; display: flex; align-items: flex-end; gap: 3px; height: 54px; margin: 2px 0 26px; }
 .spark__col { flex: 1; height: 100%; display: flex; align-items: flex-end; }

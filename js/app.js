@@ -445,8 +445,9 @@ function setupCase() {
     const q = Object.entries(fam.pilot_quitters);
     const k = fam.kapil;
     groups.push(["Family", [
-      { label: "PILOT QUITTERS", img: bg(DATA.top[0].show), guess: `${q.at(-1)[0]} finishes what she starts`, signal: "Shows quit after one episode",
-        ev: q.map(([w, n], i) => i === 0 ? `<b>${w}: ${n}</b>` : `${w}: ${n}`).join(" · ") + `. ${q[0][0]} samples everything; ${q.at(-1)[0]} commits.` },
+      { label: "PILOT QUITTERS", img: bg(DATA.top[0].show), guess: `${Object.keys(fam.quit_rate).at(-1)} finishes what she starts`,
+        signal: "Chance of quitting a show after episode 1",
+        ev: Object.entries(fam.quit_rate).map(([w, r], i) => `${i === 0 ? "<b>" : ""}${w}: ${r}%${i === 0 ? "</b>" : ""} <span class="dim">(${fam.pilot_quitters[w]} of ${fam.shows_started[w]} shows)</span>`).join("<br>") },
       { label: "THE FAMILY SHOW", img: bg("The Great Indian Kapil Show"), guess: "The Great Indian Kapil Show", signal: "The one show Mom and I share most",
         ev: `Mom: <b>${k.Mom || 0}</b> episodes. Me: <b>${k.Me || 0}</b>. We watched it on the same day ${fam.kapil_same_day} times.${k.Dad ? ` Dad: ${k.Dad}.` : ""}` },
       ...(fam.dad_sister_birthday_picks.length ? [{ label: "DAD'S PARTY PICKS", img: bg(DATA.top[2].show), guess: "Birthday-party energy", signal: "What Dad watched on my sister's birthdays",

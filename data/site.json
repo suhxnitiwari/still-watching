@@ -1899,6 +1899,18 @@
    "My sister": 37,
    "Mom": 29
   },
+  "shows_started": {
+   "Me": 211,
+   "Mom": 74,
+   "Dad": 308,
+   "My sister": 116
+  },
+  "quit_rate": {
+   "Dad": 67,
+   "Me": 47,
+   "Mom": 39,
+   "My sister": 32
+  },
   "kapil": {
    "Mom": 53,
    "Me": 50,
