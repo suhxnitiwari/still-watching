@@ -408,21 +408,20 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .shift__era.is-peak .shift__label b { color: var(--red); }
 /* What changed: poster bar charts */
 .pbars { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
-.pbar { background: #181818; border: 1px solid #2a2a2a; border-radius: 14px; padding: 16px 16px 12px; }
+.pbar { background: linear-gradient(180deg, #1a1a1a, #121212); border: 1px solid #262626; border-radius: 14px; padding: 16px 16px 12px; }
 .pbar__head h4 { margin: 0; font-size: 16px; }
 .pbar__head p { margin: 2px 0 10px; font-family: var(--display); font-size: 30px; color: #8c8c8c; line-height: 1.05; }
 .pbar__head p b { color: var(--red); font-weight: 400; }
 .pbar__head p span { font-family: var(--body); font-size: 12px; color: var(--dim); margin-left: 4px; }
 .pbar__plot { display: flex; gap: 10px; height: 230px; align-items: flex-end; border-bottom: 1px solid #333; }
 .pbar__col { position: relative; flex: 1 1 0; min-width: 0; height: 230px; display: flex; flex-direction: column; justify-content: flex-end; }
-.pbar__num { text-align: center; font-family: var(--display); font-size: 22px; color: #9a9a9a; margin-bottom: 4px; }
+.pbar__num { text-align: center; font-family: var(--display); font-size: 22px; color: #fff; margin-bottom: 4px; }
 .pbar__col.is-peak .pbar__num { color: var(--red); }
 .pbar__bar { flex: 0 0 auto; height: 2px; min-height: 0; overflow: hidden; border-radius: 6px 6px 0 0; display: grid; grid-template-columns: 1fr 1fr; align-content: start; gap: 2px;
-  background: #3a3a3a; transition: height 1.1s cubic-bezier(.2, .8, .2, 1); }
+  background: transparent; transition: height 1.1s cubic-bezier(.2, .8, .2, 1); }
 .pbar.is-in .pbar__bar { height: max(2px, calc(var(--h) * 1.8px)); }
-.pbar__bar img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; filter: grayscale(.6) brightness(.75); }
+.pbar__bar img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
 .pbar__col.is-peak .pbar__bar { box-shadow: 0 0 0 2px var(--red), 0 0 18px rgba(229, 9, 20, .45); }
-.pbar__col.is-peak .pbar__bar img { filter: none; }
 .pbar__era { position: absolute; bottom: -22px; left: 0; right: 0; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .pbar__plot { margin-bottom: 26px; }
 

@@ -1964,6 +1964,31 @@
     "To All the Boys"
    ]
   },
+  "dad_holidays": {
+   "christmas": [
+    "Bad Blood",
+    "Escape at Dannemora",
+    "Peaky Blinders"
+   ],
+   "fathers_day": [
+    {
+     "show": "Money Heist",
+     "views": 6
+    },
+    {
+     "show": "Supergirl",
+     "views": 3
+    },
+    {
+     "show": "The Hunt",
+     "views": 1
+    }
+   ],
+   "valentines": [
+    "Nazi Mega Weapons",
+    "The Snitch Cartel"
+   ]
+  },
   "dad_on_mothers_day": [
    {
     "show": "Peaky Blinders",

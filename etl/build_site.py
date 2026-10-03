@@ -249,6 +249,12 @@ def family(meta):
     titles_of = lambda w: sorted(set(h[(h["who"] == w) & h["show"].str.contains(fam_word, regex=True)]["show"]))
     return {
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
+        "dad_holidays": {
+            "christmas": sorted(set(h[(h["who"] == "Dad") & (h["date"].dt.month == 12) & (h["date"].dt.day == 25)]["show"])),
+            "fathers_day": [{"show": k, "views": int(v)} for k, v in h[(h["who"] == "Dad") & h["date"].isin(
+                {nth_sunday(y, 6, 3) for y in range(2015, 2027)})]["show"].value_counts().head(3).items()],
+            "valentines": sorted(set(h[(h["who"] == "Dad") & (h["date"].dt.month == 2) & (h["date"].dt.day == 14)]["show"])),
+        },
         "dad_on_mothers_day": [{"show": r.show, "year": int(r.date.year)} for r in dad_md.drop_duplicates("show").itertuples()],
         "mom_parent_titles": titles_of("Mom"), "dad_parent_titles": titles_of("Dad"),
         "mom_hindi_lead": {"shared": int(len(f)), "mom_first": int((g > 0).sum()), "me_first": int((g < 0).sum()),
