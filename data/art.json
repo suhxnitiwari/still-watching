@@ -330,12 +330,6 @@
   "poster": "img/posters/bombay-begums.jpg",
   "backdrop": "img/backdrops/bombay-begums.jpg"
  },
- "Dragon Tales": {
-  "match": "Dragon Tales (1999)",
-  "source": "https://www.tvmaze.com/shows/14821/dragon-tales",
-  "poster": "img/posters/dragon-tales.jpg",
-  "backdrop": "img/backdrops/dragon-tales.jpg"
- },
  "Good Luck Charlie": {
   "match": "Good Luck Charlie (2010)",
   "source": "https://www.tvmaze.com/shows/759/good-luck-charlie",
@@ -359,11 +353,6 @@
   "source": "https://www.tvmaze.com/shows/1362/lab-rats",
   "poster": "img/posters/lab-rats.jpg",
   "backdrop": "img/backdrops/lab-rats.jpg"
- },
- "Life with Boys": {
-  "match": "Life with Boys (2011)",
-  "source": "https://www.tvmaze.com/shows/9307/life-with-boys",
-  "poster": "img/posters/life-with-boys.jpg"
  },
  "Liv and Maddie": {
   "match": "Liv & Maddie (2013)",
@@ -478,12 +467,6 @@
   "source": "https://www.tvmaze.com/shows/1588/the-royals",
   "poster": "img/posters/the-royals.jpg",
   "backdrop": "img/backdrops/the-royals.jpg"
- },
- "Fishbowl Wives": {
-  "match": "Fishbowl Wives (2022)",
-  "source": "https://www.tvmaze.com/shows/59890/fishbowl-wives",
-  "poster": "img/posters/fishbowl-wives.jpg",
-  "backdrop": "img/backdrops/fishbowl-wives.jpg"
  },
  "The Witcher": {
   "match": "The Witcher (2019)",
@@ -663,5 +646,39 @@
   "source": "https://www.tvmaze.com/shows/52330/icarly",
   "poster": "img/posters/icarly.jpg",
   "backdrop": "img/backdrops/icarly.jpg"
+ },
+ "Hello Bachhon": {
+  "match": "Hello Bachhon (2026)",
+  "source": "https://www.tvmaze.com/shows/90612/hello-bachhon",
+  "poster": "img/posters/hello-bachhon.jpg"
+ },
+ "Outlander": {
+  "match": "Outlander (2014)",
+  "source": "https://www.tvmaze.com/shows/43/outlander",
+  "poster": "img/posters/outlander.jpg",
+  "backdrop": "img/backdrops/outlander.jpg"
+ },
+ "Barbie Dreamhouse Adventures": {
+  "match": "Barbie: Dreamhouse Adventures (2018)",
+  "source": "https://www.tvmaze.com/shows/44857/barbie-dreamhouse-adventures",
+  "poster": "img/posters/barbie-dreamhouse-adventures.jpg",
+  "backdrop": "img/backdrops/barbie-dreamhouse-adventures.jpg"
+ },
+ "Ben & Holly's Little Kingdom": {
+  "match": "Ben & Holly's Little Kingdom (2010)",
+  "source": "https://www.tvmaze.com/shows/5684/ben-hollys-little-kingdom",
+  "poster": "img/posters/ben-holly-s-little-kingdom.jpg",
+  "backdrop": "img/backdrops/ben-holly-s-little-kingdom.jpg"
+ },
+ "PJ Masks": {
+  "match": "PJ Masks (2015)",
+  "source": "https://www.tvmaze.com/shows/3855/pj-masks",
+  "poster": "img/posters/pj-masks.jpg",
+  "backdrop": "img/backdrops/pj-masks.jpg"
+ },
+ "Pocoyo": {
+  "match": "Pocoyo (2005)",
+  "source": "https://www.tvmaze.com/shows/6495/pocoyo",
+  "poster": "img/posters/pocoyo.jpg"
  }
 }

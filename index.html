@@ -16,7 +16,13 @@
 <div class="intro" id="intro" hidden>
   <button class="intro__start" type="button" id="intro-start" aria-label="Start: play the intro">
     <span class="intro__streaks" aria-hidden="true"></span>
-    <span class="intro__logo" aria-hidden="true">S</span>
+    <svg class="intro__logo" viewBox="0 0 140 220" aria-hidden="true">
+      <defs><linearGradient id="intro-s" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ff1f2c"/><stop offset=".46" stop-color="#e50914"/><stop offset=".52" stop-color="#8a0610"/><stop offset=".6" stop-color="#e50914"/><stop offset="1" stop-color="#ff1f2c"/>
+      </linearGradient></defs>
+      <path class="intro__ribbon intro__ribbon--shade" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
+      <path class="intro__ribbon" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
+    </svg>
     <span class="intro__hint">Click to start <small>🔊 sound on</small></span>
   </button>
   <button class="intro__skip" type="button" id="intro-skip">Skip intro</button>
@@ -111,10 +117,7 @@
     <p class="growth__kicker">Eleven years, four of me</p>
     <h3 class="growth__title" id="growth-title">Growing Up on Netflix</h3>
     <p class="growth__sub">From a fourth-grader just off the plane from Singapore to a UT Austin student. What I pressed play on changed as I did.</p>
-    <button class="btn btn--play growth__play" type="button" id="play-growing"><span class="btn__icon">▶</span> Play Episode 2: Singapore to the Forty Acres</button>
-    <div class="eras3" id="eras3"></div>
-    <h4 class="growth__h">What changed</h4>
-    <div class="wc" id="wc"></div>
+    <div class="teasers" id="growth-teasers"></div>
   </section>
 
   <section class="house" id="house" aria-labelledby="house-title">

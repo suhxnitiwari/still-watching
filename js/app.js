@@ -70,38 +70,72 @@ function toast(text) {
 
 // ---------- the intro ----------
 // Our own "ta-dum": two deep hits and a swell, synthesized with Web Audio. Not Netflix's sound.
+// Our own ta-dum (no Netflix audio): two soft low thuds, then a deep chord that blooms open and fades.
 function taDum() {
   const Ctx = window.AudioContext || window.webkitAudioContext;
   if (!Ctx) return;
-  const ctx = new Ctx(), out = ctx.createGain();
-  out.gain.value = .9;
-  out.connect(ctx.destination);
-  const hit = (at, freq, len, level) => {
+  const ctx = new Ctx(), t0 = ctx.currentTime + .05;
+  const out = ctx.createGain(), comp = ctx.createDynamicsCompressor();
+  out.gain.value = .85;
+  out.connect(comp).connect(ctx.destination);
+  const noise = (secs) => {
+    const buf = ctx.createBuffer(1, ctx.sampleRate * secs, ctx.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource();
+    src.buffer = buf;
+    return src;
+  };
+  // "ta": a low thud with a pitch drop and a muffled click on the attack.
+  const thud = (at, freq, len, level) => {
     const o = ctx.createOscillator(), g = ctx.createGain();
     o.type = "sine";
-    o.frequency.setValueAtTime(freq * 2.2, ctx.currentTime + at);
-    o.frequency.exponentialRampToValueAtTime(freq, ctx.currentTime + at + .08);
-    g.gain.setValueAtTime(0, ctx.currentTime + at);
-    g.gain.linearRampToValueAtTime(level, ctx.currentTime + at + .01);
-    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + at + len);
+    o.frequency.setValueAtTime(freq * 1.8, t0 + at);
+    o.frequency.exponentialRampToValueAtTime(freq, t0 + at + .06);
+    g.gain.setValueAtTime(0, t0 + at);
+    g.gain.linearRampToValueAtTime(level, t0 + at + .005);
+    g.gain.exponentialRampToValueAtTime(.001, t0 + at + len);
     o.connect(g).connect(out);
-    o.start(ctx.currentTime + at);
-    o.stop(ctx.currentTime + at + len + .05);
+    o.start(t0 + at); o.stop(t0 + at + len + .05);
+    const n = noise(.08), f = ctx.createBiquadFilter(), ng = ctx.createGain();
+    f.type = "lowpass"; f.frequency.value = 900;
+    ng.gain.setValueAtTime(level * .35, t0 + at);
+    ng.gain.exponentialRampToValueAtTime(.001, t0 + at + .07);
+    n.connect(f).connect(ng).connect(out);
+    n.start(t0 + at);
   };
-  hit(0, 55, .5, 1);
-  hit(.42, 41, 2.2, 1);
-  // A soft swell under the second hit.
-  [110, 164.8, 220].forEach((f) => {
-    const o = ctx.createOscillator(), g = ctx.createGain();
-    o.type = "triangle";
-    o.frequency.value = f;
-    g.gain.setValueAtTime(0, ctx.currentTime + .42);
-    g.gain.linearRampToValueAtTime(.06, ctx.currentTime + 1.1);
-    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + 2.8);
-    o.connect(g).connect(out);
-    o.start(ctx.currentTime + .42);
-    o.stop(ctx.currentTime + 2.9);
+  thud(0, 55, .3, .9);
+  thud(.13, 65, .34, .8);
+  // "dum": a sub hit under a detuned low chord, its lowpass sweeping open over 1.5 s.
+  const at = .42;
+  thud(at, 41, 1.8, 1);
+  const lp = ctx.createBiquadFilter(), swell = ctx.createGain();
+  lp.type = "lowpass"; lp.Q.value = .7;
+  lp.frequency.setValueAtTime(160, t0 + at);
+  lp.frequency.exponentialRampToValueAtTime(2600, t0 + at + 1.5);
+  swell.gain.setValueAtTime(0, t0 + at);
+  swell.gain.linearRampToValueAtTime(.5, t0 + at + .3);
+  swell.gain.setValueAtTime(.5, t0 + at + 1.2);
+  swell.gain.exponentialRampToValueAtTime(.001, t0 + at + 3.6);
+  swell.connect(lp).connect(out);
+  [[70, "sawtooth", .3], [105, "sawtooth", .2], [140, "triangle", .16], [210, "triangle", .07]].forEach(([freq, type, level]) => {
+    [-7, 7].forEach((cents) => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type; o.frequency.value = freq; o.detune.value = cents;
+      g.gain.value = level / 2;
+      o.connect(g).connect(swell);
+      o.start(t0 + at); o.stop(t0 + at + 3.7);
+    });
   });
+  // An airy rise under the bloom.
+  const air = noise(3), bp = ctx.createBiquadFilter(), ag = ctx.createGain();
+  bp.type = "bandpass"; bp.Q.value = .8;
+  bp.frequency.setValueAtTime(400, t0 + at);
+  bp.frequency.exponentialRampToValueAtTime(1800, t0 + at + 1.6);
+  ag.gain.setValueAtTime(0, t0 + at);
+  ag.gain.linearRampToValueAtTime(.1, t0 + at + 1.1);
+  ag.gain.linearRampToValueAtTime(0, t0 + at + 2.6);
+  air.connect(bp).connect(ag).connect(out);
+  air.start(t0 + at);
 }
 
 function setupIntro(onDone) {
@@ -112,6 +146,12 @@ function setupIntro(onDone) {
   intro.hidden = false;
   document.body.classList.add("locked");
   const finish = () => { intro.remove(); onDone(); };
+  // The light streaks the S breaks into: red and pink ribbons spreading out from the middle.
+  const colors = ["#e50914", "#b20710", "#ff3d6e", "#ff1f2c", "#8a0610", "#ff7aa2", "#7b2ff7", "#ffb36b"];
+  $(".intro__streaks").innerHTML = Array.from({ length: 46 }, (_, i) => {
+    const x = (Math.random() - .5) * 2;
+    return `<i style="--x:${x.toFixed(3)};--w:${(2 + Math.random() * 10).toFixed(1)}px;--c:${colors[i % colors.length]};--d:${(Math.random() * .35).toFixed(2)}s"></i>`;
+  }).join("");
   $("#intro-start").focus();
   $("#intro-start").addEventListener("click", () => {
     if (intro.classList.contains("is-playing")) return;
@@ -181,6 +221,24 @@ function peekLines(name) {
   return [];
 }
 
+// Their watcher persona, the same types as the How We Watch slides.
+function peekPersona(name) {
+  const f = DATA?.family, hb = f?.habits;
+  if (!hb) return "";
+  const stat = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
+  const P = {
+    Mom: hb.Mom && { type: "The steady one", tag: "A little, in Hindi, every so often.",
+      about: `She never binges, she just keeps a show going: one or two things a night, then she's done. Mostly Hindi, the biggest movie person in the house, and once she's seen it, she's seen it. She never rewatches.`,
+      stats: [stat(hb.Mom.binge_days, "binge days in 11 years"), stat(hb.Mom.per_day, "a day when she watches"), stat(`${hb.Mom.hindi_pct}%`, "Hindi"), stat(`${hb.Mom.movie_pct}%`, "movies")] },
+    Dad: hb.Dad && { type: "The sampler", tag: "A serial killer… of pilots.",
+      about: `He'll try anything once, and usually only once. The survivors are cartels, bikers and crime families, plus the only Spanish and Korean thrillers in the house. Lots of movies, almost no rewatches.`,
+      stats: [stat(n(hb.Dad.titles), "different titles"), stat(`${f.quit_rate.Dad}%`, "quit after episode 1"), stat(hb.Dad.eps_per_show, "episodes a show"), stat(`${hb.Dad.movie_pct}%`, "movies")] },
+  }[name];
+  if (!P) return "";
+  return `<div class="peek__persona"><p class="peek__label">Watcher type</p><h3>${P.type}</h3><p class="peek__tag">${P.tag}</p>
+    <p class="peek__about">${P.about}</p><div class="peek__stats">${P.stats.join("")}</div></div>`;
+}
+
 function peekProfile(p) {
   const f = DATA?.family;
   const who = p.name === "Sister" ? "My sister" : p.name;
@@ -197,6 +255,7 @@ function peekProfile(p) {
   el.innerHTML = `<div class="peek__card">
     <button class="peek__close" type="button" aria-label="Close">×</button>
     <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
+    ${peekPersona(p.name)}
     ${pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
@@ -414,16 +473,17 @@ function setupRows() {
     row("Top 10 Shows in Suhani's Life", "", top.map((s, i) =>
       `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span>${tile(s.show, `<span class="tag">${esc(tagFor(s.show))}</span>`, { tall: true })}</div>`)),
     collection(),
-    row("Episodes of Me", "short films made from my history", [
-      ["password", "E1", "The Password Stopped Working", "Friends"], ["growing", "E2", "Singapore to the Forty Acres", "Jessie"],
-      ["friends", "E3", "The One With the Deadline", "Friends"], ["summer", "E4", "Home for the Summer", "Gossip Girl"],
-      ["dad", "E5", "Dad's Impeccable Timing", "Peaky Blinders"],
-    ].map(([key, ep, name, show]) => `<button class="tile film-tile" type="button" data-film="${key}" aria-label="Play ${ep}: ${esc(name)}">
-      ${art(show, { label: name })}<span class="tile__ribbon">EP<b>${ep.slice(1)}</b></span><span class="film-tile__play">▶</span></button>`)),
+    row("Episodes", "two seasons of short films made from my history", Object.entries(FILMS).map(([key, f]) => `<button class="tile film-tile" type="button" data-film="${key}" aria-label="Play ${f.ep}: ${esc(f.subtitle)}">
+      ${art(f.art, { label: f.tile || f.subtitle })}<span class="tile__ribbon">S${f.season}<b>E${f.num}</b></span><span class="film-tile__play">▶</span></button>`)),
     row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
       tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
-    ...DATA.because.map((b) => row(`Because I Finished ${b.seed}`, `what I started in the two months after ${fmtMonth(b.done.slice(0, 7))}`,
-      b.shows.map((x) => wideTile(x.show)))),
+    // Amaira's own rows. Her shows aren't in my history, so the tiles don't open a title page.
+    ...(DATA.family?.amaira?.top.length ? [
+      row("Top 10 Shows in Amaira's Life", `my little sister, ${n(DATA.family.amaira.views)} views and counting`, DATA.family.amaira.top.map((s, i) =>
+        `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="tile tile--static" aria-label="${esc(s.show)}, ${s.views} episodes">${art(s.show, { tall: true })}<span class="tag">${s.views} eps</span></div></div>`)),
+      row("Watch Amaira Grow Up", "her #1 show every year", DATA.family.amaira.years.map((y) =>
+        `<div class="tile tile--static" aria-label="${y.year}: ${esc(y.show)}">${art(y.show)}<span class="tile__ribbon">YEAR<b>${String(y.year).slice(2)}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span></div>`)),
+    ] : []),
     ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.map((t) => wideTile(t)))] : []),
     row("Hooked From the First Episode", "4+ episodes on day one", DATA.hooked.map((h) =>
       tile(h.show, `<span class="tag">${h.day_one} on Day One</span><span class="tile__eps">${h.views} eps</span>`))),
@@ -537,6 +597,23 @@ function pie(slices) {
     <ul class="pie__legend">${slices.filter((x) => x.pct >= 1).map((x, i) => `<li><i style="background:${PIE_COLORS[i % PIE_COLORS.length]}"></i>${esc(x.genre)} <b>${Math.round(x.pct)}%</b></li>`).join("")}</ul></div>`;
 }
 
+// Charts and tables live inside the films, never on the poster pages.
+const viz = (html) => `<div class="scene__viz">${html}</div>`;
+
+// Every profile side by side, for the How We Watch episode.
+function habitsTable() {
+  const hb = DATA.family?.habits;
+  if (!hb) return "";
+  const who = ["Me", "My sister", "Dad", "Mom"].filter((w) => hb[w]);
+  const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "short" });
+  const rows = [["Days with 6+ episodes", "binge_days"], ["Episodes per show", "eps_per_show"], ["Different titles", "titles"], ["Movies", "movie_pct", "%"], ["Top 5 shows' share", "top5_pct", "%"]];
+  const best = (k) => Math.max(...who.map((w) => hb[w][k]));
+  return `<table class="habits"><thead><tr><th></th>${who.map((w) => `<th>${w === "My sister" ? "Sister" : w}</th>`).join("")}</tr></thead><tbody>
+            <tr class="habits__type"><td>Type</td>${who.map((w) => `<td>${{ Me: "The binger", "My sister": "The superfan", Dad: "The sampler", Mom: "The steady one" }[w]}</td>`).join("")}</tr>
+            ${rows.map(([l, k, u = ""]) => `<tr><td>${l}</td>${who.map((w) => `<td${hb[w][k] === best(k) ? ' class="hot"' : ""}>${n(hb[w][k])}${u}</td>`).join("")}</tr>`).join("")}
+            <tr><td>Favorite month</td>${who.map((w) => `<td>${mo(hb[w].month)}</td>`).join("")}</tr></tbody></table>`;
+}
+
 function setupCase() {
   const p = DATA.profile;
   $("#case-count").textContent = n(DATA.totals.views);
@@ -550,17 +627,16 @@ function setupCase() {
   const dallasGap = DATA.gaps.find((g) => g.from.startsWith("2020"));
   const groups = [
     ["Who I am", [
-      { label: "AGE", img: bg(p.kids_early_top[0]), guess: "A kid in 2015. A college student now.", signal: "Who the shows are made for",
-        ev: `Kids' shows were <b>${pct(p.kids_by_year["2016"])}</b> of 2016 (${listOf(p.kids_early_top)}), ${pct(p.kids_by_year["2018"])} of 2018 and almost nothing after 2019. Then teen rom-coms: ${listOf(p.teen_romcoms.slice(0, 3))}. A fourth-grader in 2015 graduates in 2024.` },
-      { label: "GENDER", img: bg("Bridgerton"), guess: "A woman", signal: "What I choose",
-        ev: `<b>${pct(p.romance_share)}</b> of my series episodes are tagged Romance, and most of my movies are rom-coms. This is how ad platforms guess gender: crudely.` },
+      { label: "AGE", img: bg(p.kids_early_top[0]), guess: "About 20, born around 2006", signal: "Who the shows are made for",
+        ev: `Kids' shows were <b>${pct(p.kids_by_year["2016"])}</b> of 2016 (${listOf(p.kids_early_top)}), ${pct(p.kids_by_year["2018"])} of 2018 and almost nothing after 2019. Then teen rom-coms: ${listOf(p.teen_romcoms.slice(0, 3))}. A fourth-grader in 2015 graduates in 2024 and turns 20 in 2026.` },
+      { label: "GENDER", img: bg("Bridgerton"), guess: "A young woman", signal: "What I choose",
+        ev: `<b>${pct(p.romance_share)}</b> of my series episodes are tagged Romance, and most of my movies are rom-coms. My biggest shows are about girls growing up, Gossip Girl and Gilmore Girls, and "Girl" beats "Boy" in my titles <b>${DATA.words?.girl.length} to ${DATA.words?.boy.length}</b>.` },
       ...(DATA.genre_pie ? [{ label: "GENRES", img: bg("Gilmore Girls"), guess: "Romance first, always", signal: "Every series episode, one genre per show",
-        pie: DATA.genre_pie,
-        ev: `${listOf(DATA.genre_pie[0].shows.map(esc))} make Romance my biggest slice. Kids & Disney is everything before 2019. And Medical is one Grey's summer I never finished.` }] : []),
+        ev: `${DATA.genre_pie.slice(0, 3).map((g) => `<b>${esc(g.genre)} ${Math.round(g.pct)}%</b>`).join(", ")}. ${listOf(DATA.genre_pie[0].shows.map(esc))} make Romance the biggest. Kids & Disney is everything before 2019. And Medical is one Grey's summer I never finished.` }] : []),
       { label: "CULTURAL BACKGROUND", img: bg("Heeramandi"), guess: "Indian, Hindi-speaking", signal: "The language of what I watch",
         ev: `<b>${hf.total} of my ${hf.movies} movies</b> are Hindi films, starting with ${esc(hf.first)} in ${parse(hf.first_date).getFullYear()}. Hindi series went from ${pct(ms.language.Hindi || 0)} in middle school to <b>${pct(after.language.Hindi || 0)}</b> after graduating.` },
-      { label: "HOME", img: bg("AMERICA'S SWEETHEARTS"), guess: "The U.S., probably Texas", signal: "Format, timing and one docuseries",
-        ev: `US-style dates and a slump that lines up with Netflix's US password crackdown. America's Sweethearts: Dallas Cowboys Cheerleaders is a hint, not proof.` },
+      { label: "HOME", img: bg("AMERICA'S SWEETHEARTS"), guess: "Texas", signal: "Deadlines, outages and one docuseries",
+        ev: `US-style dates, a race to finish Friends before it left <b>U.S.</b> Netflix, and a busy week in February 2021, when the <b>Texas</b> power grid failed. America's Sweethearts: Dallas Cowboys Cheerleaders is the tiebreaker.` },
     ]],
     ["How I live", [
       { label: "ROUTINE", img: bg("Gilmore Girls"), guess: "A student", signal: "When I watch",
@@ -568,9 +644,8 @@ function setupCase() {
       { label: "MARCH 2020", img: bg(p.covid.top), guess: "Sent home when COVID hit", signal: "A sudden spike",
         ev: `February 2020: ${p.covid.feb_2020} views. March: <b>${p.covid.march_2020}</b>, ${p.covid.after_closure} of them after schools closed on March 13, mostly ${esc(p.covid.top)}.` },
       { label: "GRADUATION", img: bg(DATA.windows.last_summer_home.top[0].show), guess: "Graduated in spring 2024", signal: "The same six months, every high school year",
-        chart: { from: "2023-09", to: "2024-08", hot: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"] },
         ev: `January to June: ${Object.entries(p.senior_spring.by_year).map(([y, v]) => y === "2024" ? `<b>${y}: ${v}</b>` : `${y}: ${v}`).join(" · ")} views. Senior spring was <b>${p.senior_spring.views} views on ${p.senior_spring.days} days</b>. Then graduation, and <b>${p.senior_spring.summer_after}</b> views in the next seven weeks.` },
-      { label: "COLLEGE", img: bg(DATA.windows.summer_2025.top[0].show), guess: "Left home for college in 2024", signal: "Semesters against summers",
+      { label: "EDUCATION", img: bg(DATA.windows.summer_2025.top[0].show), guess: "In college since fall 2024", signal: "Semesters against summers",
         ev: `Fall 2024: <b>${p.college.fall_2024}</b> views a day. Summer 2025, back home: <b>${p.college.summer_2025}</b>, ten times more. Fall 2025: ${p.college.fall_2025} again.` },
     ]],
     ["Who I live with", [
@@ -597,7 +672,6 @@ function setupCase() {
     { label: "A TV PERSON", img: bg("Grey's Anatomy"), guess: "Episodes, not movies", signal: "What I press play on",
       ev: `<b>${pct(p.series_share)}</b> of everything I've watched is an episode. <b>${p.big_days} days</b> with 10 or more.` },
     { label: "U.S. CATALOG", img: bg("Friends"), guess: "Watching U.S. Netflix", signal: "A deadline only U.S. viewers had",
-      chart: { from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] },
       ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week, racing the deadline.` },
     { label: "ATTACHMENT ISSUES", img: bg("Friends"), guess: "I hate goodbyes", signal: "How I end things (I don't)",
       ev: `I watched <b>${p.finished.length} shows to the very last episode</b>. I come back to old ones years later: ${listOf(p.comebacks.slice(0, 3).map((c) => `${esc(c.show)} after ${Math.round(c.years)} years`))}. And on Friends' last night on U.S. Netflix, I kept going past midnight: <b>${fr.jan1} more episodes</b> logged Jan 1, 2020. I get emotional.` },
@@ -613,10 +687,8 @@ function setupCase() {
     { label: "MOVIE NIGHTS", img: bg("Bridgerton"), guess: "Movies are for breaks", signal: "When the movies happen",
       ev: `<b>${p.lifestyle.movies_on_breaks}%</b> of my movies land in December, January, June or July, a third of the year. Winter break 2026 alone: ${p.jan_2026.movies} movies.` },
     ...(DATA.show_run?.days ? [{ label: "STREAK", img: bg(DATA.show_run.show), guess: "Home for summer, never off", signal: "Days in a row with something on",
-      chart: { from: "2025-04", to: "2025-10", hot: ["2025-06", "2025-07"] },
       ev: `My longest streak: <b>${DATA.streak.days} days in a row</b>, ${fmtShort(DATA.streak.from)} to ${fmtDate(DATA.streak.to)}, my first summer home from college. ${DATA.show_run.days} of those days were <b>${esc(DATA.show_run.show)}</b>: ${DATA.show_run.episodes} episodes, almost the whole series, in under a month.` }] : []),
     ...(DATA.friends_origin ? [(() => { const f = DATA.friends_origin; return { label: "FRIENDS", img: bg("Friends"), guess: "Hooked at 13, on a deadline", signal: "How Friends and I started, and why it was so rushed",
-      chart: { from: "2019-10", to: "2020-02", hot: ["2019-11", "2019-12"] },
       ev: `My first Friends: ${fmtDate(f.sample)}, age ${f.sample_age}, ${f.sample_eps} episodes, then nothing for two and a half years. The real start was <b>${fmtDate(f.start)}, age ${f.age}</b>, with ${esc(f.start_ep)}. ${f.before_thanksgiving} episodes in the first two weeks, then Thanksgiving break hooked me: <b>${f.thanksgiving} on Thanksgiving Day</b>, ${f.thanksgiving_weekend} over the long weekend. But Friends was leaving U.S. Netflix on Jan 1, 2020, so I had <b>${f.days} days</b> for ten seasons: ${f.episodes} episodes, about ${Math.round(f.episodes / f.days)} a day. Our time together on Netflix was short, so I rushed it.` }; })()] : []),
     ...(DATA.big_december ? [(() => { const d = DATA.big_december; const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "long" }); return { label: "BIG ON DECEMBER", img: bg(d.years[0].show), guess: "December is my month", signal: "Views by month",
       ev: `December is <b>${d.share}%</b> of everything I've ever watched (${n(d.views)} views), when an average month would be 8.3%. ${mo(d.quietest.month)} is my quietest, just ${d.quietest.views}, so I go from quietest to loudest in two months. ${d.top_days} of my 20 biggest days are in December. The big ones: ${d.years.map((y) => `<b>${y.year}</b>: ${y.views} (${esc(y.show)})`).join(" · ")}.` }; })()] : []),
@@ -627,10 +699,7 @@ function setupCase() {
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
       ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
     ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
-      chart: { from: "2020-11", to: "2021-05", hot: ["2021-02"] },
       ev: `The week Texas froze and the power kept going out, our whole family watched <b>${DATA.family.freeze.family} things</b>. Mine: <b>${listOf(DATA.family.freeze.mine.map(esc))}</b>. Rom-coms by candlelight.` }] : []),
-    { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "The one clue it can't find", signal: "My birthday against every other day",
-      ev: `My birthday is invisible here. It ranks <b>${p.birthday.rank} of ${p.birthday.days}</b> calendar days, and I watched nothing at all on <b>${p.birthday.quiet_years} of ${p.birthday.years}</b> birthdays. Busy being celebrated. The exception was my 20th: Bridgerton and Queen Charlotte, back to back.` },
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
       ev: `Something on over Christmas in <b>${p.christmas_years} of ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years</b>, mostly a winter-break binge.` },
   ]]);
@@ -640,16 +709,6 @@ function setupCase() {
     const q = Object.entries(fam.pilot_quitters);
     const k = fam.kapil;
     groups.push(["Family", [
-      ...(fam.habits ? [(() => { const hb = fam.habits; const who = ["Me", "My sister", "Dad", "Mom"].filter((w) => hb[w]);
-        const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "short" });
-        const rows = [["Days with 6+ episodes", "binge_days"], ["Episodes per show", "eps_per_show"], ["Different titles", "titles"], ["Movies", "movie_pct", "%"], ["Top 5 shows' share", "top5_pct", "%"]];
-        const best = (k) => Math.max(...who.map((w) => hb[w][k]));
-        return { label: "HOW WE WATCH", img: bg("Fuller House"), guess: "A binger, a superfan, a sampler and a steady one", signal: "Every profile, side by side",
-          table: `<table class="habits"><thead><tr><th></th>${who.map((w) => `<th>${w === "My sister" ? "Sister" : w}</th>`).join("")}</tr></thead><tbody>
-            <tr class="habits__type"><td>Type</td>${who.map((w) => `<td>${{ Me: "The binger", "My sister": "The superfan", Dad: "The sampler", Mom: "The steady one" }[w]}</td>`).join("")}</tr>
-            ${rows.map(([l, k, u = ""]) => `<tr><td>${l}</td>${who.map((w) => `<td${hb[w][k] === best(k) ? ' class="hot"' : ""}>${n(hb[w][k])}${u}</td>`).join("")}</tr>`).join("")}
-            <tr><td>Favorite month</td>${who.map((w) => `<td>${mo(hb[w].month)}</td>`).join("")}</tr></tbody></table>`,
-          ev: `<b>Me, the binger:</b> ${hb.Me.binge_days} binge days, ${hb.Me.eps_per_show} episodes a show. <b>My sister, the superfan:</b> a third of everything is five shows, and she rewatches the most. <b>Mom, the steady one:</b> mostly Hindi, mostly movies, ${hb.Mom.binge_days} binge days in eleven years. <b>Dad, a serial killer… of pilots:</b> ${n(hb.Dad.titles)} different titles, more than anyone, about three episodes each, and his titles are scary: cartels, crime families and Spanish and Korean thrillers.` }; })()] : []),
       ...(fam.habits ? (() => { const hb = fam.habits, pr = fam.profiles, q = fam.quit_rate; const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "long" });
         const top = (w) => pr[w].top[0];
         return [
@@ -693,6 +752,8 @@ function setupCase() {
         ev: `"Love" is the most repeated word in my episode titles: <b>${w.love_eps} titles across ${w.love_shows} shows</b>. "Hate": ${w.hate_eps}. English: ${listOf(w.love.slice(0, 5).map(esc))}. Hindi: <b>${w.hindi_love.length}</b> films with Pyaar, Dil or Dulhania, from ${esc(w.hindi_love.find((t) => /Dilwale/.test(t)) || w.hindi_love[0])} to ${esc(w.hindi_love.find((t) => /Badrinath/.test(t)) || w.hindi_love.at(-1))}.` },
       { label: "LOYAL", img: bg("Fuller House"), guess: "I crave consistency", signal: "How I start shows vs how I leave them",
         ev: `I quit <b>${DATA.family?.quit_rate?.Me ?? 47}%</b> of shows after one episode. But once I'm in, I don't leave. I rewatch: <b>${ly.rewatched}</b> episodes twice (mostly ${listOf(Object.keys(ly.rewatch_top).map(esc))}) and the same rom-coms again and again (${listOf(ly.movies_twice.slice(0, 4).map(esc))}). And when a show ends, I keep going. Episodes after the finale: ${listOf(ly.after_finale.slice(0, 4).map((x) => `${esc(x.show)} <b>${x.after}</b>`))}. Same characters, same places, no goodbyes.` },
+      ...(DATA.front_row ? [(() => { const f = DATA.front_row; return { label: "FRONT ROW", img: bg("Never Have I Ever"), guess: "Late to the party, then front row", signal: "Release day vs my first play, and how far a show gets",
+        ev: `I find Season 1 late: a median of <b>${f.s1_median} days</b> after release (${listOf(f.late.map((x) => `${esc(x.show)} ${Math.round(x.lag / 30)} months`))}). Once I'm hooked, I'm there: <b>${f.within_3} seasons</b> started within 3 days of release, ${listOf(f.same_day.map((x) => `${esc(x.show)} Season ${x.season}`))} on release day. Getting me hooked is the hard part. One episode: <b>${f.stay["1"]}%</b> chance I watch 10+. Two: ${f.stay["2"]}%. Three: <b>${f.stay["3"]}%</b>. Make it to episode 3 and I'm probably staying.` }; })()] : []),
       ...(DATA.picky ? [(() => { const k = DATA.picky; return { label: "PICKY", img: bg("Outer Banks"), guess: "Hype doesn't get me in. Drama does.", signal: `${k.quit} shows I quit after one episode vs ${k.kept} I stayed with`,
         ev: `<b>${k.netflix_quit}%</b> of my one-and-done shows are Netflix originals, vs ${k.netflix_kept}% of my keepers. I stay with network TV: ${listOf(k.network_kept.slice(0, 4).map(esc))}, 20+ episodes a season for years. ${k.dark_quits.length ? `Dark thrillers lose me after the pilot: ${listOf(k.dark_quits.map(esc))}. ` : ""}Dating shows too: ${listOf(k.dating_quit.map(esc))}, one episode each${k.matchmaking ? ` (Indian Matchmaking is the exception)` : ""}. K-dramas: ${k.korean_tried} tried, ${k.korean_kept} kept. Not enough drama, and drama is my thing: <b>${Math.round(k.drama_views / k.views * 100)}%</b> of everything I've watched is tagged Drama.` }; })()] : []),
       ...(DATA.favorites ? [(() => { const f = DATA.favorites; return { label: "FAVORITES", img: bg("Gossip Girl"), guess: "Blair Waldorf. And Rachel.", signal: "Which episodes I go back to",
@@ -701,35 +762,29 @@ function setupCase() {
         ev: me.map(([e, v]) => (v === Math.max(...me.map((x) => x[1])) ? `<b>${esc(e)}: ${v}%</b>` : `${esc(e)}: ${v}%`)).join(" · ") + `. The shows I picked got more first-person through middle and high school, then let go in college.` },
     ]]);
   }
-  // Charts for the place clues
-  const charts = {
-    MOVED: { from: "2015-05", to: "2016-02", hot: ["2015-06", "2015-07"] },
-    "MOVED AGAIN": { from: "2020-04", to: "2021-01", hot: ["2020-08", "2020-09"] },
-    COLLEGE: { from: "2024-06", to: "2026-09", hot: ["2025-06", "2025-07", "2026-06", "2026-07"] },
-  };
-  groups.forEach(([, clues]) => clues.forEach((c) => { if (charts[c.label]) c.chart = charts[c.label]; }));
   // Regroup the clues by theme.
   const byLabel = Object.fromEntries(groups.flatMap(([, clues]) => clues).map((c) => [c.label, c]));
   const themed = [
-    ["Who I am", ["AGE", "GENDER", "GENRES", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
-    ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
+    ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "EDUCATION", "FAMILY", "RELATIONSHIP STATUS"]],
+    ["Where I've lived", ["HOME", "MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG"]],
+    ["What I watch", ["GENRES", "A TV PERSON", "A FINISHER"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "STREAK", "BIG ON DECEMBER", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
-    ["How we watch", ["HOW WE WATCH", "ME: THE BINGER", "SISTER: THE SUPERFAN", "DAD: THE SAMPLER", "MOM: THE STEADY ONE"]],
-    ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
-    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "FAVORITES", "THE ME ERA"]],
-    ["How I feel", ["FRIENDS", "ATTACHMENT ISSUES", "MOOD", "DARK GENRES", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
+    ["How we watch", ["ME: THE BINGER", "SISTER: THE SUPERFAN", "DAD: THE SAMPLER", "MOM: THE STEADY ONE"]],
+    ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS"]],
+    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "FRONT ROW", "FAVORITES", "THE ME ERA"]],
+    ["How I feel", ["FRIENDS", "ATTACHMENT ISSUES", "MOOD", "DARK GENRES", "HOMESICK", "SCARE THRESHOLD"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
+  // The episode that tells each group's story plays first in its row.
+  const TEASE = { "Where I've lived": "password", "How I live": "summer", "How we watch": "watch", "Who I live with": "dad", "How I feel": "friends" };
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>
     <div class="row__track"><button class="row__arrow row__arrow--prev" type="button" aria-label="Scroll left">‹</button>
-    <div class="clues row__scroller">${clues.filter((c) => c.ev).map((c) => `
+    <div class="clues row__scroller">${TEASE[title] ? teaserHTML(TEASE[title]) : ""}${clues.filter((c) => c.ev).map((c) => `
       <article class="clue">
         <div class="clue__img" style="background-image:url('${c.img}')"><span class="clue__label">${c.label}</span></div>
         <div class="clue__body">
           <p class="clue__guess">${esc(c.guess)}</p>
           <p class="clue__signal">Signal: ${esc(c.signal)}</p>
-          ${c.chart ? spark(c.chart) : ""}
-          ${c.pie ? pie(c.pie) : ""}
           ${c.table || ""}
           <p class="clue__evidence">${c.ev2 || c.ev}</p>
         </div>
@@ -761,6 +816,8 @@ function setupGrowth() {
     after: [[pct(l(after, "Hindi")), "in Hindi"], [after.median_premiere, "typical premiere"], [pct(after.movie_share), "movies"]],
   };
   const bg = (era) => { const s = era.top.find((x) => ART[x.show]?.backdrop); return s ? ART[s.show].backdrop : FALLBACK_BG(); };
+  $("#growth-teasers").innerHTML = teaserHTML("growing") + teaserHTML("changed");
+  if (!$("#eras3")) return;
   $("#eras3").innerHTML = DATA.life.map((e, i) => `
     <article class="era">
       <div class="era__bg" style="background-image:url('${bg(e)}')"></div>
@@ -774,56 +831,43 @@ function setupGrowth() {
       </div>
     </article>`).join("");
 
-  setupWhatChanged({ g, l, t, pct });
 }
 
 // What changed, as poster bar charts: one panel per change, four bars (one per era). A bar's height is the
-// number; the bar itself is built from the posters of the shows behind it.
-function setupWhatChanged({ g, l, t, pct }) {
+// number; the bar itself is built from the posters of the shows behind it. Played as an episode.
+function changePanels() {
   const eras = DATA.life;
+  const pct = (x) => `${Math.round(x || 0)}%`;
+  const g = (era, k) => era.genres[k] || 0;
+  const l = (era, k) => era.language[k] || 0;
+  const t = (era, k) => era.type[k] || 0;
   const ex = (key) => (e) => e.examples[key] || [];
   const stories = [
-    { title: "Missing home, in Hindi", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
-    { title: "Growing out of family TV", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
-    { title: "High school got serious", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
-    { title: "The dark turn", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
-    { title: "Laughing with talk shows", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
-    { title: "Watching what's new", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
+    { title: "Missing home,<br><em>in Hindi</em>", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
+    { title: "Growing out of<br><em>family TV</em>", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
+    { title: "High school<br><em>got serious</em>", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
+    { title: "The dark<br><em>turn</em>", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
+    { title: "Laughing with<br><em>talk shows</em>", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
+    { title: "Watching<br><em>what's new</em>", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
       shows: (e) => e.by_premiere.slice(-4).reverse() },
   ];
   const label = (e) => ({ elementary: "Elem.", middle: "Middle", high: "High", after: "College" }[e.key] || e.name);
-  $("#wc").innerHTML = `<div class="pbars">${stories.map((st) => {
+  return stories.map((st) => {
     const vals = eras.map(st.value);
     const lo = st.year ? Math.min(...vals) - 3 : 0, hi = Math.max(...vals);
     const peak = vals.indexOf(hi);
-    return `<article class="pbar">
-      <header class="pbar__head"><h4>${esc(st.title)}</h4>
-        <p>${st.year ? `${vals[0]} → <b>${vals.at(-1)}</b>` : `${pct(vals[0])} → <b>${pct(vals.at(-1))}</b>`} <span>${esc(st.unit)}</span></p></header>
-      <div class="pbar__plot">${eras.map((e, i) => {
-        const v = vals[i], h = Math.max(((v - lo) / (hi - lo || 1)) * 100, 0);
-        const posters = (st.year || v >= 1 ? st.shows(e) : []).map((x) => posterOf(x.show)).filter(Boolean);
-        const fill = posters.length ? Array.from({ length: 12 }, (_, k) => posters[k % posters.length]) : [];
-        return `<div class="pbar__col${i === peak ? " is-peak" : ""}">
-          <span class="pbar__num">${st.year ? v : pct(v)}</span>
-          <div class="pbar__bar" style="--h:${h.toFixed(1)}" title="${e.name}: ${st.year ? v : pct(v)}">${fill.map((src) => `<img src="${src}" alt="" loading="lazy">`).join("")}</div>
-          <span class="pbar__era">${label(e)}</span>
-        </div>`;
-      }).join("")}</div>
-    </article>`;
-  }).join("")}</div>`;
-  // Bars rise when they scroll into view.
-  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); }
-  }), { threshold: .3 });
-  document.querySelectorAll(".pbar").forEach((el) => io.observe(el));
-  // Backup for browsers where the observer doesn't fire: check on scroll.
-  const check = () => document.querySelectorAll(".pbar:not(.is-in)").forEach((el) => {
-    const r = el.getBoundingClientRect();
-    if (r.top < innerHeight * .8 && r.bottom > 0) el.classList.add("is-in");
+    const plot = `<div class="pbar pbar--scene"><div class="pbar__plot">${eras.map((e, i) => {
+      const v = vals[i], h = Math.max(((v - lo) / (hi - lo || 1)) * 100, 0);
+      const posters = (st.year || v >= 1 ? st.shows(e) : []).map((x) => posterOf(x.show)).filter(Boolean);
+      const fill = posters.length ? Array.from({ length: 12 }, (_, k) => posters[k % posters.length]) : [];
+      return `<div class="pbar__col${i === peak ? " is-peak" : ""}">
+        <span class="pbar__num">${st.year ? v : pct(v)}</span>
+        <div class="pbar__bar" style="--h:${h.toFixed(1)}">${fill.map((src) => `<img src="${src}" alt="" loading="lazy">`).join("")}</div>
+        <span class="pbar__era">${label(e)}</span>
+      </div>`;
+    }).join("")}</div></div>`;
+    return { title: st.title, sub: `${st.year ? `${vals[0]} → ${vals.at(-1)}` : `${pct(vals[0])} → ${pct(vals.at(-1))}`} ${st.unit}`, plot };
   });
-  addEventListener("scroll", check, { passive: true });
-  setTimeout(check, 300);
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll(".pbar").forEach((el) => el.classList.add("is-in"));
 }
 
 // ---------- the broken home ----------
@@ -914,54 +958,103 @@ const PIECE_MOVES = {
   r3: [0, -95, 5], r4: [165, -60, 10], r5: [215, 105, 14], hub: [0, 0, 0],
 };
 
+// The household, hands-on: break the house, then drag each room back where it belongs.
 function setupHouse() {
   const section = $("#house");
   $("#house-art").innerHTML = houseSVG();
-  const { dates, windows: w, monthly } = DATA;
+  const { windows: w, dates, monthly } = DATA;
   const july = monthly.find((m) => m.month === "2025-07");
-  const steps = [
-    `<q>A Netflix account is for use by one household.</q> Starting ${fmtDate(dates.crackdown)}, Netflix emailed members sharing outside of theirs.`,
-    `Ours was in Dallas: four profiles, every screen under one roof. For me nothing changed: <b>${n(w.after_crackdown.views)} views</b> from that day to the end of 2023.`,
-    `On <b>${fmtDate(dates.austin)}</b> I moved to Austin, and my screen left the house. My first semester: <b>${w.first_semester.views} views</b>. It only came back together when I went home: <b>${july.views} in July 2025</b>.`,
-  ];
-  $("#house-steps").innerHTML = steps.map((s) => `<p class="house__step">${s}</p>`).join("");
-  $(".house__copy").insertAdjacentHTML("beforeend", '<button class="house__replay" type="button" id="house-replay">↻ Watch it break again</button>');
-  const stepEls = [...section.querySelectorAll(".house__step")];
-  section.querySelectorAll(".piece").forEach((el, i) => {
+  const steps = {
+    whole: `<q>A Netflix account is for use by one household.</q> Ours was in Dallas: four profiles, every screen under one roof. For me nothing changed: <b>${n(w.after_crackdown.views)} views</b> from that day to the end of 2023.`,
+    broken: `On <b>${fmtDate(dates.austin)}</b> I moved to Austin, and my screen left the house. My first semester: <b>${w.first_semester.views} views</b>, about one month's worth back home.`,
+    rebuilt: `It only came back together when I went home. Summer 2025, back on the Dallas Wi-Fi: <b>${july.views} views in July</b>, my biggest month in years.`,
+  };
+  $("#house-steps").innerHTML = Object.entries(steps).map(([k, t]) => `<p class="house__step" data-step="${k}">${t}</p>`).join("");
+  $(".house__copy").insertAdjacentHTML("beforeend", `<div class="house__controls">
+    <button class="btn btn--play house__btn" type="button" id="house-break"><span class="btn__icon">⚡</span> Break the house</button>
+    <button class="btn btn--light house__btn" type="button" id="house-fix" hidden>Put it back together</button>
+    <p class="house__hint" id="house-hint" hidden>Or drag the rooms back into place yourself.</p></div>`);
+  const svg = section.querySelector("svg");
+  const pieces = [...section.querySelectorAll(".piece")];
+  pieces.forEach((el, i) => {
     const [dx, dy, rot] = PIECE_MOVES[el.dataset.piece];
+    Object.assign(el.dataset, { dx, dy, rot });
     el.style.setProperty("--dx", `${dx}px`);
     el.style.setProperty("--dy", `${dy}px`);
     el.style.setProperty("--r", `${rot}deg`);
     el.style.setProperty("--i", i);
   });
 
-  // Stages: whole → cracking (seams draw in, a rumble) → broken (a hard shake, then the rooms fly apart).
-  let stage = -1;
-  const setStage = (next) => {
-    if (next === stage) return;
-    stage = next;
-    section.classList.toggle("is-cracking", stage >= 1);
-    section.classList.toggle("is-broken", stage >= 2);
+  let state = "whole", timer;
+  const show = (k) => section.querySelectorAll(".house__step").forEach((el) => el.classList.toggle("is-on", el.dataset.step === k));
+  const reset = () => pieces.forEach((el) => { el.removeAttribute("data-x"); el.removeAttribute("data-y"); el.classList.remove("is-home"); el.style.transform = ""; });
+  const setState = (next) => {
+    state = next;
+    clearTimeout(timer);
+    $("#house-break").hidden = next === "broken" || next === "cracking";
+    $("#house-break").innerHTML = `<span class="btn__icon">⚡</span> ${next === "rebuilt" ? "Break it again" : "Break the house"}`;
+    $("#house-fix").hidden = $("#house-hint").hidden = next !== "broken";
+    section.classList.toggle("is-rebuilt", next === "rebuilt");
+    show(next === "cracking" ? "whole" : next);
   };
-  let queued = false;
-  const update = () => {
-    queued = false;
-    const r = section.getBoundingClientRect();
-    const p = Math.min(Math.max(-r.top / (r.height - innerHeight), 0), 1);
-    const step = p < .28 ? 0 : p < .55 ? 1 : 2;
-    stepEls.forEach((el, i) => el.classList.toggle("is-on", i === step));
-    setStage(step);
-  };
-  $("#house-replay").addEventListener("click", () => {
+  const breakHouse = () => {
+    if (state === "broken" || state === "cracking") return;
+    reset();
     section.classList.remove("is-broken", "is-cracking");
     void section.offsetWidth;
     section.classList.add("is-cracking");
-    setTimeout(() => section.classList.add("is-broken"), 1100);
+    setState("cracking");
+    timer = setTimeout(() => {
+      section.classList.add("is-broken");
+      pieces.filter((el) => !+el.dataset.dx && !+el.dataset.dy).forEach((el) => el.classList.add("is-home"));  // the hub stays put
+      setState("broken");
+    }, 1100);
+  };
+  const rebuild = () => {
+    reset();
+    section.classList.remove("is-broken", "is-cracking");
+    setState("rebuilt");
+  };
+  $("#house-break").addEventListener("click", breakHouse);
+  $("#house-fix").addEventListener("click", rebuild);
+  section.querySelector(".house__art").addEventListener("click", (e) => { if (state !== "broken" && !e.target.closest("button")) breakHouse(); });
+
+  // Dragging a room: it follows the pointer and snaps home when dropped close enough.
+  let drag = null;
+  const place = (el, x, y) => {
+    const d = Math.hypot(x, y), far = Math.hypot(+el.dataset.dx, +el.dataset.dy) || 1;
+    el.style.transform = `translate(${x}px, ${y}px) rotate(${(+el.dataset.rot * Math.min(d / far, 1)).toFixed(1)}deg)`;
+  };
+  svg.addEventListener("pointerdown", (e) => {
+    const el = e.target.closest(".piece");
+    if (state !== "broken" || !el || el.classList.contains("is-home")) return;
+    e.preventDefault();
+    try { el.setPointerCapture(e.pointerId); } catch {}
+    const x = +(el.dataset.x ?? el.dataset.dx), y = +(el.dataset.y ?? el.dataset.dy);
+    drag = { el, x, y, sx: e.clientX, sy: e.clientY, k: svg.getScreenCTM().a };
+    el.classList.add("is-dragging");
+    place(el, x, y);
   });
-  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
-  addEventListener("scroll", onScroll, { passive: true });
-  addEventListener("resize", onScroll);
-  update();
+  addEventListener("pointermove", (e) => {
+    if (!drag) return;
+    const x = drag.x + (e.clientX - drag.sx) / drag.k, y = drag.y + (e.clientY - drag.sy) / drag.k;
+    drag.el.dataset.x = x; drag.el.dataset.y = y;
+    place(drag.el, x, y);
+  });
+  const drop = () => {
+    if (!drag) return;
+    const { el } = drag;
+    drag = null;
+    el.classList.remove("is-dragging");
+    if (Math.hypot(+(el.dataset.x ?? el.dataset.dx), +(el.dataset.y ?? el.dataset.dy)) < 45) {
+      el.classList.add("is-home");
+      el.style.transform = "translate(0px, 0px) rotate(0deg)";
+      if (pieces.every((p) => p.classList.contains("is-home"))) setTimeout(rebuild, 450);
+    }
+  };
+  addEventListener("pointerup", drop);
+  addEventListener("pointercancel", drop);
+  setState("whole");
 }
 
 // ---------- the player ----------
@@ -1071,7 +1164,7 @@ function growingFilm() {
     { dur: 5, wall: true, center: true, kicker: "Episode 2", line: "Singapore<br>to the <em>Forty Acres</em>",
       sub: `${parse(totals.to).getFullYear() - parse(totals.from).getFullYear()} years of Netflix, growing up.` },
     { dur: 4.5, img: backdropOf(p.first_title), kicker: `${fmtDate(totals.from)} · just moved from Singapore`, line: "First play:<br><em>${esc(p.first_title)}</em>",
-      sub: "The very first thing our new account ever played." },
+      sub: "The very first thing our new account ever played.", viz: viz(spark({ from: "2015-05", to: "2016-02", hot: ["2015-06", "2015-07"] })) },
     { dur: 5, montage: posters(el.top.slice(0, 6)), center: true, kicker: "Season 1 · Elementary", line: "Learning America<br>on <em>Disney</em>",
       sub: `${listOf(el.top.slice(0, 3).map((s) => s.show))}. On Dad's profile: I didn't have my own yet.` },
     { dur: 5, montage: posters(ms.top.slice(0, 6)), center: true, kicker: "Season 2 · Middle School", line: "The family-<br><em>drama</em> years",
@@ -1081,17 +1174,21 @@ function growingFilm() {
     { dur: 4.5, img: backdropOf(p.covid.top), kicker: "March 13, 2020", line: "Sent<br><em>home</em>",
       sub: `Schools close. ${p.covid.after_closure} views before March is over, mostly ${p.covid.top}.` },
     ...(DATA.gaps.some((g) => g.from.startsWith("2020")) ? [{ dur: 4.5, black: true, center: true, kicker: "Summer 2020", line: "Cupertino<br>to <em>Dallas</em>",
-      sub: `${DATA.gaps.find((g) => g.from.startsWith("2020")).days} days without pressing play. Then high school, in Texas.` }] : []),
+      sub: `${DATA.gaps.find((g) => g.from.startsWith("2020")).days} days without pressing play. Then high school, in Texas.`, viz: viz(spark({ from: "2020-04", to: "2021-01", hot: ["2020-08", "2020-09"] })) }] : []),
+    ...(DATA.family?.freeze?.mine.length ? [{ dur: 5, black: true, center: true, kicker: "February 14–20, 2021", line: "Texas<br><em>freezes</em>",
+      sub: `The power kept going out. Mine: ${listOf(DATA.family.freeze.mine.map(esc))}. Rom-coms by candlelight.`, viz: viz(spark({ from: "2020-11", to: "2021-05", hot: ["2021-02"] })) }] : []),
     { dur: 5, montage: posters(hs.top.slice(0, 6)), center: true, kicker: "Season 3 · High School", line: "It gets<br><em>serious</em>",
       sub: `Drama goes from ${pct(ms.genres.Drama)} to ${pct(hs.genres.Drama)}. Hospitals, crime, Stars Hollow.` },
     { dur: 5, montage: posters(hindi.slice(0, 6)), center: true, kicker: "Finding home on screen", line: "Hindi,<br><em>more and more</em>",
       sub: `Hindi series: ${pct(ms.language.Hindi)} → ${pct(hs.language.Hindi)} → ${pct(after.language.Hindi)}. Hindi films: ${p.hindi_films.total} of ${p.hindi_films.movies}.` },
     { dur: 4.5, black: true, center: true, kicker: "Senior spring, 2024", line: `<span class="scene__counter" data-to="${p.senior_spring.views}">0</span> views<br>in <em>six months</em>`,
-      sub: "Graduation is busy." },
+      sub: "Graduation is busy.", viz: viz(spark({ from: "2023-09", to: "2024-08", hot: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"] })) },
     { dur: 5.5, black: true, center: true, accent: "ut", kicker: fmtDate(dates.austin), line: "Hook 'em.<br><em>UT Austin.</em>",
-      sub: `Freshman fall: ${p.college.fall_2024} views a day. Summer back home: ${p.college.summer_2025}.` },
+      sub: `Freshman fall: ${p.college.fall_2024} views a day. Summer back home: ${p.college.summer_2025}.`, viz: viz(spark({ from: "2024-06", to: "2026-09", hot: ["2025-06", "2025-07", "2026-06", "2026-07"] })) },
     { dur: 5, montage: posters(after.top.slice(0, 6)), center: true, kicker: "Season 4 · After Graduation", line: "Missing home,<br><em>in Hindi</em>",
       sub: `${pct(after.language.Hindi)} of my series. Talk shows, new releases, movie nights.` },
+    ...(DATA.genre_pie ? [{ dur: 6, black: true, center: true, kicker: "Every series episode, one genre per show", line: "Romance<br><em>first, always</em>",
+      sub: `${listOf(DATA.genre_pie[0].shows.map(esc))}.`, viz: viz(pie(DATA.genre_pie)) }] : []),
     { dur: 5, wall: true, center: true, accent: "ut", kicker: "Still watching", line: "From Singapore<br>to the <em>Forty Acres</em>",
       sub: `${n(totals.views)} views. Same profile. A different person.` },
   ];
@@ -1102,7 +1199,7 @@ function friendsFilm() {
   const big = binges.find((b) => b.show === "Friends");
   return [
     { dur: 5, black: true, center: true, kicker: "December 1, 2019", line: "Friends is leaving<br><em>Netflix</em>", sub: "January 1, 2020. Thirty-one days left. Eighth grade, winter break coming." },
-    { dur: 5, img: backdropOf("Friends"), kicker: "December 2019", line: `${fr.december} episodes<br>in <em>one month</em>`, sub: "About six a day, every day." },
+    { dur: 5, img: backdropOf("Friends"), kicker: "December 2019", line: `${fr.december} episodes<br>in <em>one month</em>`, sub: "About six a day, every day.", viz: viz(spark({ from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] })) },
     { dur: 5, black: true, center: true, kicker: fmtDate(big.date), line: `<span class="scene__counter" data-to="${big.episodes}">0</span> episodes<br>in <em>one day</em>`, sub: "Roughly eleven hours of Central Perk." },
     { dur: 4.5, img: backdropOf("Friends"), alt: true, kicker: "December 25–31", line: `${fr.last_week} more,<br><em>racing the clock</em>`, sub: "Christmas Day alone: 8 episodes." },
     { dur: 5, black: true, center: true, kicker: "December 31, 11:59 PM", line: "Just<br><em>one more</em>", sub: `Netflix logged ${fr.jan1} episodes on January 1, 2020. Past midnight. In denial.` },
@@ -1118,9 +1215,38 @@ function summerFilm() {
     { dur: 5, dorm: true, kicker: "Austin · spring 2025", line: "One more<br><em>final</em>", sub: `Freshman year on a family account: ${p.college.fall_2024} views a day in the fall.` },
     { dur: 4.5, black: true, center: true, kicker: "May 2025", line: "Back on the<br><em>home Wi-Fi</em>", sub: "Dallas. The TV recognizes me again." },
     { dur: 5.5, img: backdropOf(gg.show), kicker: "June – July 2025", line: `${gg.views} episodes<br>of <em>${esc(gg.show)}</em>`, sub: "Starving. Absolutely starving." },
-    { dur: 5, black: true, center: true, kicker: `${fmtShort(streak.from)} – ${fmtShort(streak.to)}`, line: `<span class="scene__counter" data-to="${streak.days}">0</span> days<br>in a <em>row</em>`, sub: "The longest streak of my life." },
+    { dur: 5, black: true, center: true, kicker: `${fmtShort(streak.from)} – ${fmtShort(streak.to)}`, line: `<span class="scene__counter" data-to="${streak.days}">0</span> days<br>in a <em>row</em>`, sub: "The longest streak of my life.", viz: viz(spark({ from: "2025-04", to: "2025-10", hot: ["2025-06", "2025-07"] })) },
     { dur: 5, montage: w.summer_2025.top.slice(0, 5).map((s) => ({ img: posterOf(s.show), tag: `${s.views}` })), center: true, kicker: "July 2025", line: `${july.views} views<br>in <em>one month</em>`, sub: "My biggest month since Friends left." },
     { dur: 5, img: backdropOf(w.fall_2025.top[0].show), alt: true, kicker: "August 2025", line: "Back to<br><em>Austin</em>", sub: `Sophomore fall: ${p.college.fall_2025} views a day. See you next summer.` },
+  ];
+}
+
+function changedFilm() {
+  const panels = changePanels();
+  return [
+    { dur: 5, wall: true, center: true, kicker: "Season 1 · Episode 3", line: "What<br><em>changed</em>", sub: "Elementary, middle school, high school, college. Every bar is built from the posters behind it." },
+    ...panels.map((x) => ({ dur: 6, black: true, center: true, kicker: "What changed", line: x.title, sub: x.sub, viz: viz(x.plot) })),
+    { dur: 5, wall: true, center: true, kicker: "Four schools", line: "Four of<br><em>me</em>", sub: "Same profile. A different person every few years." },
+  ];
+}
+
+function watchFilm() {
+  const f = DATA.family;
+  if (!f?.habits) return [];
+  const hb = f.habits, pr = f.profiles, q = f.quit_rate;
+  const top = (w) => pr[w].top[0];
+  return [
+    { dur: 5, wall: true, center: true, kicker: "Season 2 · Episode 1", line: "How we<br><em>watch</em>", sub: "Four profiles. One account. Eleven years." },
+    { dur: 8, black: true, center: true, kicker: "Every profile, side by side", line: "Four ways<br>to <em>watch</em>", sub: "", viz: viz(habitsTable()) },
+    { dur: 6, img: backdropOf(top("Me").show), kicker: "Me", line: "The<br><em>binger</em>",
+      sub: `${hb.Me.binge_days} days with 6+ episodes. ${hb.Me.eps_per_show} episodes a show, the most in the family. Whatever survives the pilot gets finished.` },
+    { dur: 6, img: backdropOf(top("My sister").show), alt: true, kicker: "My sister", line: "The<br><em>superfan</em>",
+      sub: `${hb["My sister"].top5_pct}% of everything she watches is five shows, led by ${top("My sister").show}. The biggest rewatcher in the house.` },
+    { dur: 6, img: backdropOf(top("Dad").show), kicker: "Dad", line: "The<br><em>sampler</em>",
+      sub: `${n(hb.Dad.titles)} different titles, and he quits ${q.Dad}% after one episode. A serial killer… of pilots.` },
+    { dur: 6, img: backdropOf(top("Mom").show), alt: true, kicker: "Mom", line: "The steady<br><em>one</em>",
+      sub: `${hb.Mom.binge_days} binge days in eleven years. ${hb.Mom.hindi_pct}% Hindi, and she never rewatches.` },
+    { dur: 5, wall: true, center: true, kicker: "One account", line: "Same Wi-Fi.<br><em>Four people.</em>", sub: "Until one of us moved out." },
   ];
 }
 
@@ -1139,18 +1265,118 @@ function dadFilm() {
   ];
 }
 
+// One scene of a film, shared by the full player and the inline previews.
+function sceneHTML(s) {
+  let bg = "";
+  if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
+  else if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
+  else if (s.montage?.length) bg = `<div class="montage" style="--cols:${Math.max(3, Math.ceil(s.montage.length / 2))}">${s.montage.map((m, k) =>
+    `<figure style="--k:${k}"><img src="${m.img}" alt="" loading="lazy">${m.tag ? `<figcaption>${m.tag}</figcaption>` : ""}</figure>`).join("")}</div>`;
+  else if (s.img) bg = `<div class="scene__bg" style="background-image:url('${s.img}')"></div>`;
+  return `<section class="scene${s.viz ? " scene--viz" : ""}${s.center ? " scene--center" : ""}${s.alt ? " scene--alt" : ""}${s.accent ? ` scene--${s.accent}` : ""}" style="--dur:${s.dur + 1}s">
+    ${bg}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker)}</p><h2 class="scene__line">${s.line}</h2><p class="scene__sub">${esc(s.sub)}</p>${s.viz || ""}</div></section>`;
+}
+
+const SEASONS = [
+  { n: 1, title: "Me", sub: "Short films made from eleven years of my history." },
+  { n: 2, title: "The Household", sub: "One account, four profiles, and what happened when I left." },
+];
 const FILMS = {
-  password: { ep: "E1", name: "The Password Stopped Working", subtitle: "One Household", scenes: passwordFilm, next: "growing", art: "Friends",
+  password: { season: 1, name: "The Password Stopped Working", subtitle: "One Household", tile: "The Password Stopped Working", scenes: passwordFilm, art: "Friends",
     blurb: "Netflix decides an account belongs to one household. Suhani moves 200 miles away from hers." },
-  growing: { ep: "E2", name: "The Password Stopped Working", subtitle: "Singapore to the Forty Acres", scenes: growingFilm, next: "friends", art: "Jessie",
+  growing: { season: 1, name: "The Password Stopped Working", subtitle: "Singapore to the Forty Acres", scenes: growingFilm, art: "Jessie",
     blurb: "A fourth-grader fresh from Singapore learns America through Disney Channel, and grows up into a Longhorn." },
-  friends: { ep: "E3", name: "The Password Stopped Working", subtitle: "The One With the Deadline", scenes: friendsFilm, next: "summer", art: "Friends",
+  changed: { season: 1, name: "The Password Stopped Working", subtitle: "What Changed", scenes: changedFilm, art: "Gilmore Girls",
+    blurb: "Four schools, four of me: family TV, then drama, then Hindi and talk shows, in bars built from posters." },
+  friends: { season: 1, name: "The Password Stopped Working", subtitle: "The One With the Deadline", scenes: friendsFilm, art: "Friends",
     blurb: "Friends is leaving Netflix in 31 days. An eighth-grader takes that personally." },
-  summer: { ep: "E4", name: "The Password Stopped Working", subtitle: "Home for the Summer", scenes: summerFilm, next: "dad", art: "Gossip Girl",
+  summer: { season: 1, name: "The Password Stopped Working", subtitle: "Home for the Summer", scenes: summerFilm, art: "Gossip Girl",
     blurb: "A year of college on someone else's Wi-Fi. Then home, the TV, and 26 days in a row." },
-  dad: { ep: "E5", name: "The Password Stopped Working", subtitle: "Dad's Impeccable Timing", scenes: dadFilm, next: null, art: "Peaky Blinders",
+  watch: { season: 2, name: "The Password Stopped Working", subtitle: "How We Watch", scenes: watchFilm, art: "Fuller House",
+    blurb: "A binger, a superfan, a sampler and a steady one, sharing one Netflix account." },
+  dad: { season: 2, name: "The Password Stopped Working", subtitle: "Dad's Impeccable Timing", scenes: dadFilm, art: "Peaky Blinders",
     blurb: "What one man watches on Mother's Day, Christmas and his daughter's birthday. A study in timing." },
 };
+// Episode numbers and autoplay order follow the list above.
+Object.entries(FILMS).forEach(([k, f], i, all) => {
+  f.num = all.filter(([, x]) => x.season === f.season).findIndex(([kk]) => kk === k) + 1;
+  f.ep = `S${f.season}:E${f.num}`;
+  f.next = all[i + 1]?.[0] || null;
+});
+const filmLength = (f) => { const t = Math.round(f.scenes().reduce((a, s) => a + s.dur, 0)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; };
+
+// Inline previews: scroll to a section and its episode starts playing right there, muted, the way
+// Netflix previews do. Only the most visible one plays. Click to watch it full screen.
+function teaserHTML(key) {
+  const f = FILMS[key];
+  return `<div class="teaser" data-film="${key}" role="button" tabindex="0" aria-label="Play ${f.ep}: ${esc(f.subtitle)}" style="background-image:url('${backdropOf(f.art)}')">
+    <div class="teaser__stage"></div>
+    <span class="teaser__badge">Preview · muted</span>
+    <div class="teaser__info"><span class="teaser__ep">${f.ep}</span><b>${esc(f.subtitle)}</b><span class="teaser__watch">▶ Watch full screen · ${filmLength(f)}</span></div>
+    <div class="teaser__bar"><i></i></div>
+  </div>`;
+}
+
+function setupTeasers() {
+  const els = [...document.querySelectorAll(".teaser")];
+  if (!els.length) return;
+  const films = new Map();
+  const build = (el) => {
+    if (films.has(el)) return films.get(el);
+    const list = FILMS[el.dataset.film].scenes().map((s) => s.montage ? { ...s, montage: s.montage.filter((m) => m.img) } : s);
+    const stage = el.querySelector(".teaser__stage");
+    stage.innerHTML = list.map(sceneHTML).join("");
+    stage.querySelectorAll(".scene__counter").forEach((c) => { c.textContent = c.dataset.to; });
+    const f = { el, list, scenes: [...stage.children], i: -1, t: 0, total: list.reduce((a, s) => a + s.dur, 0) };
+    films.set(el, f);
+    return f;
+  };
+  const show = (f, i) => {
+    f.scenes.forEach((sc, k) => {
+      if (k === i) { sc.classList.remove("is-on"); void sc.offsetWidth; }
+      sc.classList.toggle("is-on", k === i);
+    });
+    f.i = i;
+  };
+  els.forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.click(); } }));
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { els.forEach((el) => show(build(el), 0)); return; }
+
+  let active = null, raf = 0, last = 0;
+  const frame = (now) => {
+    const f = active;
+    if (!f) return;
+    f.t = (f.t + (now - last) / 1000) % f.total;
+    last = now;
+    let acc = 0, i = 0;
+    while (i < f.list.length - 1 && acc + f.list[i].dur <= f.t) acc += f.list[i++].dur;
+    if (i !== f.i) show(f, i);
+    f.el.querySelector(".teaser__bar i").style.width = `${(f.t / f.total) * 100}%`;
+    raf = requestAnimationFrame(frame);
+  };
+  const play = (f) => {
+    if (active === f) return;
+    active = f;
+    els.forEach((el) => el.classList.toggle("is-playing", el === f.el));
+    if (f.i < 0) show(f, 0);
+    cancelAnimationFrame(raf);
+    last = performance.now();
+    raf = requestAnimationFrame(frame);
+  };
+  const stop = () => { active = null; cancelAnimationFrame(raf); els.forEach((el) => el.classList.remove("is-playing")); };
+  const ratios = new Map();
+  const pick = () => {
+    if (!$("#player").hidden || document.hidden || document.body.classList.contains("locked")) return stop();
+    let best = null, top = .55;
+    ratios.forEach((r, el) => { if (r > top) { top = r; best = el; } });
+    best ? play(build(best)) : stop();
+  };
+  const io = new IntersectionObserver((entries) => { entries.forEach((e) => ratios.set(e.target, e.intersectionRatio)); pick(); },
+    { threshold: [0, .3, .55, .7, .85, 1] });
+  els.forEach((el) => io.observe(el));
+  document.addEventListener("visibilitychange", pick);
+  new MutationObserver(pick).observe($("#player"), { attributes: true, attributeFilter: ["hidden"] });
+  new MutationObserver(pick).observe(document.body, { attributes: true, attributeFilter: ["class"] });  // intro, profile gate
+}
 
 function setupPlayer() {
   const player = $("#player");
@@ -1163,16 +1389,7 @@ function setupPlayer() {
     list = film.scenes().map((s) => s.montage ? { ...s, montage: s.montage.filter((m) => m.img) } : s);
     starts = list.reduce((acc, s, i) => (acc.push(i ? acc[i - 1] + list[i - 1].dur : 0), acc), []);
     total = starts.at(-1) + list.at(-1).dur;
-    stage.innerHTML = list.map((s) => {
-      let bg = "";
-      if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
-      else if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
-      else if (s.montage?.length) bg = `<div class="montage" style="--cols:${Math.max(3, Math.ceil(s.montage.length / 2))}">${s.montage.map((m, k) =>
-        `<figure style="--k:${k}"><img src="${m.img}" alt="" loading="lazy">${m.tag ? `<figcaption>${m.tag}</figcaption>` : ""}</figure>`).join("")}</div>`;
-      else if (s.img) bg = `<div class="scene__bg" style="background-image:url('${s.img}')"></div>`;
-      return `<section class="scene${s.center ? " scene--center" : ""}${s.alt ? " scene--alt" : ""}${s.accent ? ` scene--${s.accent}` : ""}" style="--dur:${s.dur + 1}s">
-        ${bg}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker)}</p><h2 class="scene__line">${s.line}</h2><p class="scene__sub">${esc(s.sub)}</p></div></section>`;
-    }).join("");
+    stage.innerHTML = list.map(sceneHTML).join("");
     sceneEls = [...stage.children];
     $(".player__title").innerHTML = `<b>${esc(film.name)}</b> <span>${film.ep}</span> ${esc(film.subtitle)}`;
     $("#player-next").setAttribute("aria-label", film.next ? "Next episode" : "Back to browse");
@@ -1215,7 +1432,7 @@ function setupPlayer() {
     playing = on;
     player.classList.toggle("is-paused", !on);
     $("#player-toggle").setAttribute("aria-label", on ? "Pause" : "Play");
-    sceneEls[current]?.querySelectorAll(".scene__bg, .montage figure, .scene__kicker, .scene__line, .scene__sub, .wall__col")
+    sceneEls[current]?.querySelectorAll(".scene__bg, .montage figure, .scene__kicker, .scene__line, .scene__sub, .scene__viz, .wall__col")
       .forEach((el) => { el.style.animationPlayState = on ? "running" : "paused"; });
   };
   const seek = (x) => { t = Math.min(Math.max(x, 0), total - .01); current = -1; render(); setPlaying(true); };
@@ -1253,7 +1470,6 @@ function setupPlayer() {
   };
 
   $("#play").addEventListener("click", (e) => { opener = e.currentTarget; open("password"); });
-  $("#play-growing")?.addEventListener("click", (e) => { opener = e.currentTarget; open("growing"); });
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-film]");
     if (b && FILMS[b.dataset.film]) { opener = b; open(b.dataset.film); }
@@ -1264,7 +1480,7 @@ function setupPlayer() {
   function closePanels() { panels.forEach((p) => { p.hidden = true; }); }
   const toggle = (q) => { const p = $(q), was = p.hidden; closePanels(); p.hidden = !was; wake(); };
   const epCard = (k, now) => { const f = FILMS[k]; return `<button class="pp-ep${now ? " is-now" : ""}" type="button" data-film-go="${k}">
-      <span class="pp-ep__head"><b>${f.ep.slice(1)}</b> ${esc(f.subtitle)}</span>
+      <span class="pp-ep__head"><b>${f.num}</b> ${esc(f.subtitle)}</span>
       <span class="pp-ep__body"><span class="pp-ep__art">${art(f.art, { label: "", mark: false })}<i>${now ? "▮▮▮ Now Playing" : "▶"}</i></span><span>${esc(f.blurb)}</span></span></button>`; };
   const fillNext = () => {
     const nx = film.next;
@@ -1273,7 +1489,7 @@ function setupPlayer() {
   $("#player-next").addEventListener("mouseenter", () => { fillNext(); closePanels(); $("#pp-next").hidden = false; });
   $("#pp-next").addEventListener("mouseleave", () => { $("#pp-next").hidden = true; });
   $("#player-eps").addEventListener("click", () => {
-    $("#pp-episodes").innerHTML = `<h3>The Password Stopped Working</h3>${Object.keys(FILMS).map((k) => epCard(k, k === key)).join("")}`;
+    $("#pp-episodes").innerHTML = SEASONS.map((s) => `<h3>Season ${s.n}: ${esc(s.title)}</h3>${Object.keys(FILMS).filter((k) => FILMS[k].season === s.n).map((k) => epCard(k, k === key)).join("")}`).join("");
     toggle("#pp-episodes");
   });
   $("#player-lang").addEventListener("click", () => toggle("#pp-lang"));
@@ -1338,78 +1554,23 @@ function setupPlayer() {
 }
 
 // ---------- episodes ----------
-function seasons() {
-  const { windows: w, yearly, month_of_year: moy, weekday, shows, gaps, streak, monthly, totals, binges } = DATA;
-  const silence = gaps[0];
-  const friendsDay = binges.find((b) => b.show === "Friends");
-  const firsts = w.first_days.top.map((s) => s.show);
-  const peakYears = yearly.filter((y) => y.year >= 2018 && y.year <= 2023);
-  const weekend = weekday.Saturday + weekday.Sunday;
-  const july = monthly.find((m) => m.month === "2025-07");
-  const before = monthly.filter((m) => m.month < "2025-07");
-  const rival = [...before].reverse().find((m) => m.views >= july.views);
-  const kapil = "The Great Indian Kapil Show";
-  const since = ["last_summer_home", "first_semester", "summer_2025", "fall_2025", "this_year"];
-  const kapilTop3 = since.filter((k) => w[k].top.slice(0, 3).some((s) => s.show === kapil)).length;
-  const gg = w.summer_2025.top[0];
-  const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0);
-  const { elementary: el, middle: ms, high: hs, after } = Object.fromEntries(DATA.life.map((e) => [e.key, e]));
-  const sub = (e) => `${fmtDate(e.from)} to ${fmtDate(e.to)} · ${n(e.views)} views · ${e.per_month} a month`;
-  const ep = {
-        pilot: { title: "Pilot", art: firsts[0], stat: `${w.first_days.views} views`,
-          copy: `My history starts on ${fmtDate(w.first_days.from)} with ${listOf(firsts)}. ${w.first_days.views} views in the first ${daysBetween(w.first_days.from, w.first_days.to)} days.` },
-        friends: { title: "The One With 223 Episodes", art: "Friends", stat: `${w.friends_run.top[0].views} episodes`,
-          copy: `${w.friends_run.top[0].views} episodes of Friends in ${daysBetween(w.friends_run.from, w.friends_run.to)} days, ${fmtShort(w.friends_run.from)} to ${fmtDate(w.friends_run.to)}. On ${fmtShort(friendsDay.date)} I watched ${friendsDay.episodes}, my biggest day ever.` },
-        yearly: { title: "Every Year Had a Show", art: peakYears[3].show, stat: `${peakYears.length} years`,
-          copy: `Every year had a show that owned it: ${listOf(peakYears.map((y) => `${y.show} in ${y.year} (${y.episodes})`))}.` },
-        winter: { title: "Winter Break", art: "December", label: "December", stat: `${n(moy[11])} in December`,
-          copy: `December is my biggest month: ${n(moy[11])} views across every December. August through October, when school starts, is the quietest: ${moy[7]}, ${moy[8]} and ${moy[9]}.` },
-        sunday: { title: "Sunday Night", art: "Sunday", label: "Sundays", stat: `${weekday.Sunday} on Sundays`,
-          copy: `Sunday is my biggest day and Thursday my smallest, ${weekday.Sunday} views against ${weekday.Thursday}. Weekends are ${Math.round(weekend / sum(weekday) * 100)}% of everything I've watched, more than their 29% share of the week.` },
-        password: { title: "The Password Check", art: w.after_crackdown.top[0].show, stat: `${w.after_crackdown.views} views`,
-          copy: `On ${fmtDate(DATA.dates.crackdown)}, Netflix started enforcing paid sharing in the US: watch away from the account's home Wi-Fi and it asks someone to pay. I was still home, and it didn't slow me down: ${w.after_crackdown.views} views by the end of 2023, led by ${w.after_crackdown.top[0].show} (${w.after_crackdown.top[0].views}).` },
-        silence: { title: "Senior Spring", art: "Silence", label: "…", stat: `${DATA.profile.senior_spring.views} views`,
-          copy: `January to June 2024: ${DATA.profile.senior_spring.views} views on ${DATA.profile.senior_spring.days} days, the quietest six months in ${parse(totals.to).getFullYear() - parse(totals.from).getFullYear()} years. Graduation season.` },
-        lastSummer: { title: "Last Summer at Home", art: w.last_summer_home.top[1].show, stat: `${w.last_summer_home.views} views`,
-          copy: `The summer before college, it came back: ${w.last_summer_home.views} views between ${fmtShort(w.last_summer_home.from)} and ${fmtDate(w.last_summer_home.to)}, mostly ${listOf(w.last_summer_home.top.slice(0, 3).map((s) => s.show))}.` },
-        moveIn: { title: "Move-In Day", art: "Austin", label: "Austin", stat: `${w.first_semester.views} views`,
-          copy: `I moved to Austin on ${fmtDate(DATA.dates.austin)}. My whole first semester: ${w.first_semester.views} views, about what a single month looked like in high school, when I averaged ${hs.per_month}.` },
-        summer: { title: "Summer in Dallas", art: gg.show, stat: `${gg.views} episodes`,
-          copy: `Home for summer 2025, I watched ${gg.views} episodes of ${gg.show} in June and July, inside a ${streak.days}-day streak (${fmtShort(streak.from)} to ${fmtShort(streak.to)}), the longest in my history. July 2025 had ${july.views} views, my biggest month since ${rival ? fmtMonth(rival.month) : "the history began"}.` },
-        back: { title: "Back to Austin", art: w.fall_2025.top[0].show, stat: `${w.fall_2025.views} views`,
-          copy: `Then the semester started: ${w.fall_2025.views} views from ${fmtShort(w.fall_2025.from)} to the end of 2025. The most I watched of anything was ${w.fall_2025.top[0].views} episodes of ${w.fall_2025.top[0].show}.` },
-        comfort: { title: "The Comfort Show", art: kapil, stat: `${shows[kapil].eras.Austin} episodes`,
-          copy: `${kapil} is the one constant since I left: ${shows[kapil].eras.Austin} episodes since the move, and in my top 3 in ${kapilTop3} of the ${since.length} stretches since summer 2024. It was also my #1 show of 2024.` },
-        still: { title: "Still Watching", art: w.this_year.top[0].show, stat: `${w.this_year.views} views`,
-          copy: `2026 so far: ${w.this_year.views} views, ${w.this_year.views > yearly.find((y) => y.year === 2024).views ? "already more than all of 2024" : "still catching up to 2024"}. ${w.this_year.top[0].show} leads with ${w.this_year.top[0].views}, then ${listOf(w.this_year.top.slice(1, 3).map((s) => s.show))}.` },
-  };
-  return [
-    { name: "Season 1: Elementary", sub: `${sub(el)} · on Dad's profile`, episodes: [ep.pilot] },
-    { name: "Season 2: Middle School", sub: sub(ms), episodes: [ep.friends, ep.winter] },
-    { name: "Season 3: High School", sub: sub(hs), episodes: [ep.yearly, ep.sunday, ep.password, ep.silence] },
-    { name: "Season 4: After Graduation", sub: `${sub(after)}, summers home included`,
-      episodes: [ep.lastSummer, ep.moveIn, ep.summer, ep.back, ep.comfort, ep.still] },
-  ];
-}
-
 function setupEpisodes() {
-  const all = seasons();
   const tabs = $("#season-tabs");
-  tabs.innerHTML = all.map((s, i) =>
-    `<button class="season-tab" role="tab" type="button" aria-selected="${i === 0}" data-i="${i}">${esc(s.name)}</button>`).join("");
+  tabs.innerHTML = SEASONS.map((s, i) =>
+    `<button class="season-tab" role="tab" type="button" aria-selected="${i === 0}" data-i="${i}">Season ${s.n}: ${esc(s.title)}</button>`).join("");
   const render = (i) => {
-    const s = all[i];
+    const s = SEASONS[i];
     tabs.querySelectorAll(".season-tab").forEach((b) => b.setAttribute("aria-selected", String(+b.dataset.i === i)));
     $("#season-sub").textContent = s.sub;
-    $("#episode-list").innerHTML = s.episodes.map((e, k) => `
-      <li class="episode">
-        <span class="episode__num">${k + 1}</span>
-        <span class="episode__thumb">${art(e.art, { label: e.label || e.art, mark: false })}</span>
-        <div>
-          <div class="episode__top"><p class="episode__title">${esc(e.title)}</p><span class="episode__stat">${esc(e.stat)}</span></div>
-          <p class="episode__copy">${esc(e.copy)}</p>
-        </div>
-      </li>`).join("");
+    $("#episode-list").innerHTML = Object.entries(FILMS).filter(([, f]) => f.season === s.n).map(([k, f]) => `
+      <li><button class="episode" type="button" data-film="${k}" aria-label="Play ${f.ep}: ${esc(f.subtitle)}">
+        <span class="episode__num">${f.num}</span>
+        <span class="episode__thumb">${art(f.art, { label: f.tile || f.subtitle, mark: false })}<span class="episode__play">▶</span></span>
+        <span class="episode__text">
+          <span class="episode__top"><span class="episode__title">${esc(f.subtitle)}</span><span class="episode__stat">${filmLength(f)}</span></span>
+          <span class="episode__copy">${esc(f.blurb)}</span>
+        </span>
+      </button></li>`).join("");
   };
   tabs.addEventListener("click", (e) => { const b = e.target.closest(".season-tab"); if (b) render(+b.dataset.i); });
   render(0);
@@ -1518,5 +1679,6 @@ Promise.all([
     setupPreview();
     setupPlayer();
     setupEpisodes();
+    setupTeasers();
     setupGlobal();
   });

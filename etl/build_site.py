@@ -179,12 +179,6 @@ def profile(df, meta):
         "mood": mood(df, meta),
         # Shows I came back to after years away (20+ episodes, a gap of 3+ years between episodes).
         "comebacks": comebacks(df),
-        # My birthday (Mar 6) against every other calendar day: can a stranger find it?
-        "birthday": {"rank": int(df["date"].dt.strftime("%m-%d").value_counts().rank(ascending=False, method="min").get("03-06", 0)),
-                     "days": int(df["date"].dt.strftime("%m-%d").nunique()),
-                     "quiet_years": int(sum(1 for y in range(df["date"].dt.year.min() + 1, df["date"].dt.year.max() + 1)
-                                            if not ((df["date"].dt.month == 3) & (df["date"].dt.day == 6) & (df["date"].dt.year == y)).any())),
-                     "years": int(df["date"].dt.year.max() - df["date"].dt.year.min())},
         # Spooky, not scary: horror-tagged series are all teen/kids spooky; real horror films are rare.
         "spooky": [{"show": k, "views": int(v)} for k, v in df[(df["kind"] == "series") & df["show"].map(
             lambda x: "Horror" in ((meta.get(x) or {}).get("genres") or []))]["show"].value_counts().head(5).items()],
@@ -211,6 +205,17 @@ def profile(df, meta):
         "romance_share": round(romance * 100, 1),
         "valentines": [{"date": day(r.date), "show": r.show} for r in valentines.itertuples()],
     }
+
+
+def amaira(h):
+    """My sister's top 10 shows, and the show she watched most each year."""
+    a = h[h["who"] == "Sister"]
+    top = a["show"].value_counts().head(10)
+    years = []
+    for y, g in a.groupby(a["date"].dt.year):
+        vc = g["show"].value_counts()
+        years.append({"year": int(y), "show": vc.index[0], "episodes": int(vc.iloc[0]), "views": int(len(g))})
+    return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years}
 
 
 def family(meta):
@@ -265,6 +270,8 @@ def family(meta):
     return {
         "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
+        # Amaira's own section (her family said yes): her 10 favorites and her #1 show each year.
+        "amaira": amaira(h),
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
         "dad_holidays": {
             "christmas": sorted(set(h[(h["who"] == "Dad") & (h["date"].dt.month == 12) & (h["date"].dt.day == 25)]["show"])),
@@ -497,6 +504,29 @@ def dark_years(df, meta):
             "shows": [{"show": k, "views": int(v)} for k, v in window["show"].value_counts().head(4).items()]}
 
 
+def front_row(df, meta):
+    """Late to season 1, then there the week a new season drops; and how far one, two or three episodes get a show."""
+    path = BUILD / "season_dates.json"
+    lags = []
+    if path.exists():
+        for show, seasons in json.loads(path.read_text()).items():
+            w = df[df["show"] == show]
+            season = w["title"].str.extract(r"Season (\d+)")[0]
+            for sn, g in w.groupby(season):
+                if sn in seasons:
+                    lags.append({"show": show, "season": int(sn), "lag": int((g["date"].min() - pd.Timestamp(seasons[sn])).days)})
+    first = [x["lag"] for x in lags if x["season"] == 1]
+    later = [x["lag"] for x in lags if x["season"] > 1]
+    ser = df[(df["kind"] == "series") & df["show"].map(lambda x: (meta.get(x) or {}).get("type") == "Scripted")]
+    n = ser.groupby("show").size()
+    stay = {str(k): round(float((n[n >= k] >= 10).mean()) * 100) for k in (1, 2, 3, 5)}
+    late = sorted([x for x in lags if x["season"] == 1], key=lambda x: -x["lag"])[:3]
+    quick = sorted([x for x in lags if x["lag"] <= 3], key=lambda x: x["lag"])
+    return {"s1_median": int(pd.Series(first).median()) if first else None, "later_median": int(pd.Series(later).median()) if later else None,
+            "within_3": len(quick), "same_day": [x for x in quick if x["lag"] == 0], "late": late, "stay": stay,
+            "tried": int(len(n)), "past_pilot": round(float((n >= 2).mean()) * 100)}
+
+
 def title_words(df):
     """Patterns in the words of what I watch, not in how much."""
     ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
@@ -539,21 +569,6 @@ def main():
     hooked = [{"show": k, "day_one": int(v), "views": int((ser_all["show"] == k).sum())}
               for k, v in day_one[day_one >= 4].sort_values(ascending=False).head(12).items()]
     featured |= {h["show"] for h in hooked}
-    # "Because I finished X": what I started in the 60 days after getting 90% through a show I finished.
-    because = []
-    for seed in ["The Vampire Diaries", "Gilmore Girls", "Friends", "Gossip Girl"]:
-        sd = ser_all[ser_all["show"] == seed].sort_values("date")
-        if len(sd) < 20:
-            continue
-        done = sd["date"].iloc[int(len(sd) * .9) - 1]
-        firsts = df.groupby("show")["date"].min()
-        nxt = firsts[(firsts > done) & (firsts <= done + pd.Timedelta(days=60))].index
-        counts = df[df["show"].isin(nxt)]["show"].value_counts()
-        kinds = df.drop_duplicates("show").set_index("show")["kind"]
-        picks = counts[[(kinds[k] == "movie") or v >= 2 for k, v in counts.items()]].head(8)  # skip one-off specials
-        if len(picks) >= 3:
-            because.append({"seed": seed, "done": day(done), "shows": [{"show": k, "views": int(v)} for k, v in picks.items()]})
-            featured |= set(picks.index)
     featured |= set(binges.head(20)["show"])
     for era in life:
         featured |= {t["show"] for t in era["top"]}
@@ -623,7 +638,6 @@ def main():
         "yearly": yearly,
         "eras": eras,
         "hooked": hooked,
-        "because": because,
         "life": life,
         "profile": profile(df, meta),
         "words": words,
@@ -635,13 +649,15 @@ def main():
         "big_december": big_december(df),
         "genre_pie": genre_pie(df, meta),
         "dark_years": dark_years(df, meta),
+        "front_row": front_row(df, meta),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),
         "streak": longest_streak(active),
         "shows": {show: show_summary(df, show) for show in sorted(featured)},
         # Posters only, for the family profile peeks (these aren't in my history).
-        "extra_art": sorted({t["show"] for p in (fam or {}).get("profiles", {}).values() for t in p["top"]} - featured),
+        "extra_art": sorted(({t["show"] for p in (fam or {}).get("profiles", {}).values() for t in p["top"]}
+                             | {t["show"] for t in (fam or {}).get("amaira", {}).get("top", []) + (fam or {}).get("amaira", {}).get("years", [])}) - featured),
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(site, indent=1, ensure_ascii=False))

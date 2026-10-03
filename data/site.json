@@ -1,11 +1,11 @@
 {
  "totals": {
-  "views": 3421,
-  "titles": 467,
-  "series": 209,
+  "views": 3373,
+  "titles": 462,
+  "series": 204,
   "movies": 258,
-  "binge_days": 422,
-  "active_days": 1260,
+  "binge_days": 414,
+  "active_days": 1253,
   "from": "2015-06-16",
   "to": "2026-09-25"
  },
@@ -16,7 +16,7 @@
  "monthly": [
   {
    "month": "2015-06",
-   "views": 39
+   "views": 33
   },
   {
    "month": "2015-07",
@@ -24,7 +24,7 @@
   },
   {
    "month": "2015-08",
-   "views": 14
+   "views": 13
   },
   {
    "month": "2015-09",
@@ -32,7 +32,7 @@
   },
   {
    "month": "2015-10",
-   "views": 24
+   "views": 3
   },
   {
    "month": "2015-11",
@@ -100,7 +100,7 @@
   },
   {
    "month": "2017-03",
-   "views": 64
+   "views": 58
   },
   {
    "month": "2017-04",
@@ -344,7 +344,7 @@
   },
   {
    "month": "2022-04",
-   "views": 23
+   "views": 15
   },
   {
    "month": "2022-05",
@@ -400,7 +400,7 @@
   },
   {
    "month": "2023-06",
-   "views": 61
+   "views": 55
   },
   {
    "month": "2023-07",
@@ -562,25 +562,25 @@
  "month_of_year": [
   294,
   160,
-  339,
-  260,
+  333,
+  252,
   385,
-  379,
+  367,
   321,
-  224,
+  223,
   172,
-  87,
+  66,
   308,
   492
  ],
  "weekday": {
-  "Sunday": 627,
-  "Saturday": 555,
-  "Monday": 508,
+  "Sunday": 615,
+  "Saturday": 545,
+  "Monday": 495,
   "Tuesday": 472,
-  "Friday": 451,
-  "Wednesday": 410,
-  "Thursday": 398
+  "Friday": 448,
+  "Wednesday": 406,
+  "Thursday": 392
  },
  "top": [
   {
@@ -646,6 +646,11 @@
    "episodes": 14
   },
   {
+   "date": "2021-05-25",
+   "show": "Grey's Anatomy",
+   "episodes": 13
+  },
+  {
    "date": "2017-05-14",
    "show": "Mighty Med",
    "episodes": 13
@@ -656,9 +661,9 @@
    "episodes": 13
   },
   {
-   "date": "2021-05-25",
-   "show": "Grey's Anatomy",
-   "episodes": 13
+   "date": "2019-11-10",
+   "show": "Sugar Rush",
+   "episodes": 12
   },
   {
    "date": "2019-12-21",
@@ -666,9 +671,9 @@
    "episodes": 12
   },
   {
-   "date": "2019-11-10",
-   "show": "Sugar Rush",
-   "episodes": 12
+   "date": "2019-12-31",
+   "show": "Friends",
+   "episodes": 11
   },
   {
    "date": "2021-07-23",
@@ -681,30 +686,25 @@
    "episodes": 11
   },
   {
-   "date": "2015-10-18",
-   "show": "Life with Boys",
-   "episodes": 11
+   "date": "2025-07-16",
+   "show": "Gossip Girl",
+   "episodes": 10
   },
   {
-   "date": "2019-12-31",
-   "show": "Friends",
-   "episodes": 11
+   "date": "2025-06-08",
+   "show": "Ginny & Georgia",
+   "episodes": 10
   },
   {
    "date": "2021-12-23",
    "show": "Emily in Paris",
-   "episodes": 10
-  },
-  {
-   "date": "2023-06-09",
-   "show": "Never Have I Ever",
    "episodes": 10
   }
  ],
  "yearly": [
   {
    "year": 2015,
-   "views": 125,
+   "views": 97,
    "show": "LEGO Ninjago",
    "episodes": 27
   },
@@ -716,7 +716,7 @@
   },
   {
    "year": 2017,
-   "views": 464,
+   "views": 458,
    "show": "Liv and Maddie",
    "episodes": 74
   },
@@ -746,13 +746,13 @@
   },
   {
    "year": 2022,
-   "views": 351,
+   "views": 343,
    "show": "Gilmore Girls",
    "episodes": 132
   },
   {
    "year": 2023,
-   "views": 316,
+   "views": 310,
    "show": "Jane The Virgin",
    "episodes": 98
   },
@@ -825,10 +825,10 @@
    ]
   },
   "Dallas": {
-   "views": 2889,
+   "views": 2841,
    "from": "2015-06-16",
    "to": "2024-07-23",
-   "per_month": 26.4,
+   "per_month": 26.0,
    "top": [
     {
      "show": "Friends",
@@ -880,9 +880,9 @@
    "views": 14
   },
   {
-   "show": "Life with Boys",
-   "day_one": 11,
-   "views": 21
+   "show": "Mismatched",
+   "day_one": 8,
+   "views": 22
   },
   {
    "show": "Heeramandi",
@@ -890,19 +890,9 @@
    "views": 8
   },
   {
-   "show": "Mismatched",
-   "day_one": 8,
-   "views": 22
-  },
-  {
    "show": "FUBAR",
    "day_one": 7,
    "views": 9
-  },
-  {
-   "show": "Fishbowl Wives",
-   "day_one": 7,
-   "views": 8
   },
   {
    "show": "Shaque",
@@ -915,66 +905,34 @@
    "views": 19
   },
   {
-   "show": "Octonauts",
+   "show": "Single Papa",
    "day_one": 6,
    "views": 6
-  },
-  {
-   "show": "The Witcher",
-   "day_one": 6,
-   "views": 6
-  },
-  {
-   "show": "Dragon Tales",
-   "day_one": 6,
-   "views": 7
   },
   {
    "show": "Dubai Bling",
    "day_one": 6,
    "views": 25
-  }
- ],
- "because": [
-  {
-   "seed": "Friends",
-   "done": "2019-12-29",
-   "shows": [
-    {
-     "show": "The Fosters",
-     "views": 104
-    },
-    {
-     "show": "2 States",
-     "views": 1
-    },
-    {
-     "show": "Tall Girl",
-     "views": 1
-    }
-   ]
   },
   {
-   "seed": "Gossip Girl",
-   "done": "2025-07-19",
-   "shows": [
-    {
-     "show": "The Hunting Wives",
-     "views": 7
-    },
-    {
-     "show": "The Notebook",
-     "views": 1
-    },
-    {
-     "show": "How to Be Single",
-     "views": 1
-    },
-    {
-     "show": "La La Land",
-     "views": 1
-    }
-   ]
+   "show": "Business Proposal",
+   "day_one": 6,
+   "views": 12
+  },
+  {
+   "show": "Outlander",
+   "day_one": 5,
+   "views": 5
+  },
+  {
+   "show": "Bombay Begums",
+   "day_one": 5,
+   "views": 6
+  },
+  {
+   "show": "Hello Bachhon",
+   "day_one": 5,
+   "views": 5
   }
  ],
  "life": [
@@ -983,39 +941,39 @@
    "name": "Elementary",
    "from": "2015-06-16",
    "to": "2017-07-08",
-   "views": 748,
-   "per_month": 30.2,
-   "titles": 101,
-   "titles_per_month": 4.1,
-   "movie_share": 7.6,
+   "views": 714,
+   "per_month": 28.9,
+   "titles": 98,
+   "titles_per_month": 4.0,
+   "movie_share": 8.0,
    "language": {
     "English": 100.0
    },
    "type": {
-    "Scripted": 83.5,
-    "Animation": 16.4,
-    "Reality": 0.1
+    "Scripted": 84.6,
+    "Animation": 15.2,
+    "Reality": 0.2
    },
    "genres": {
-    "Comedy": 65.8,
-    "Family": 36.5,
-    "Drama": 35.7,
-    "Science-Fiction": 20.5,
-    "Action": 19.2,
+    "Comedy": 66.1,
+    "Drama": 37.6,
+    "Family": 35.2,
+    "Science-Fiction": 21.6,
+    "Action": 19.3,
     "Children": 19.0,
-    "Music": 9.4,
-    "Adventure": 9.1,
-    "Horror": 5.1,
-    "Supernatural": 2.9,
-    "Fantasy": 2.0,
-    "Romance": 0.7,
+    "Music": 9.9,
+    "Adventure": 8.7,
+    "Horror": 5.3,
+    "Supernatural": 3.0,
+    "Fantasy": 2.1,
+    "Romance": 0.8,
     "Espionage": 0.3,
-    "Crime": 0.1
+    "Crime": 0.2
    },
-   "netflix_share": 2.3,
+   "netflix_share": 2.4,
    "median_premiere": 2011,
-   "classic_share": 19.0,
-   "fresh_share": 10.3,
+   "classic_share": 18.9,
+   "fresh_share": 10.8,
    "top": [
     {
      "show": "Jessie",
@@ -1066,8 +1024,8 @@
       "views": 48
      },
      {
-      "show": "Life with Boys",
-      "views": 21
+      "show": "Mako Mermaids",
+      "views": 2
      }
     ],
     "drama": [
@@ -1137,7 +1095,7 @@
     }
    ],
    "movies": 57,
-   "series_views": 691
+   "series_views": 657
   },
   {
    "key": "middle",
@@ -1347,55 +1305,54 @@
    "name": "High School",
    "from": "2020-08-01",
    "to": "2024-04-29",
-   "views": 1056,
-   "per_month": 23.5,
-   "titles": 159,
+   "views": 1042,
+   "per_month": 23.2,
+   "titles": 157,
    "titles_per_month": 3.5,
-   "movie_share": 8.6,
+   "movie_share": 8.7,
    "language": {
-    "English": 89.0,
+    "English": 89.7,
     "Hindi": 4.8,
     "Korean": 1.8,
-    "Spanish": 1.0,
-    "Japanese": 0.8,
+    "Spanish": 1.1,
     "Arabic": 0.6,
     "Norwegian": 0.3,
     "Polish": 0.3,
     "Dutch": 0.1
    },
    "type": {
-    "Scripted": 91.8,
-    "Reality": 5.9,
+    "Scripted": 91.7,
+    "Reality": 6.0,
     "Variety": 0.5,
     "Documentary": 0.3,
     "Animation": 0.2,
     "News": 0.2
    },
    "genres": {
-    "Drama": 80.9,
-    "Romance": 65.1,
-    "Comedy": 37.1,
-    "Medical": 17.5,
-    "Crime": 14.2,
-    "Science-Fiction": 11.0,
-    "Supernatural": 10.2,
-    "Mystery": 8.0,
-    "Family": 8.0,
+    "Drama": 80.7,
+    "Romance": 66.0,
+    "Comedy": 37.6,
+    "Medical": 17.8,
+    "Crime": 14.4,
+    "Science-Fiction": 11.1,
+    "Supernatural": 10.3,
+    "Mystery": 8.1,
+    "Family": 8.1,
     "Horror": 2.5,
-    "Action": 2.0,
-    "Fantasy": 1.6,
     "Thriller": 1.5,
+    "Action": 1.4,
     "Adventure": 0.9,
+    "Fantasy": 0.9,
     "Espionage": 0.8,
     "Food": 0.3,
     "Legal": 0.3,
     "Children": 0.2,
     "History": 0.1
    },
-   "netflix_share": 39.6,
+   "netflix_share": 38.7,
    "median_premiere": 2014,
-   "classic_share": 32.7,
-   "fresh_share": 18.2,
+   "classic_share": 33.2,
+   "fresh_share": 17.7,
    "top": [
     {
      "show": "Grey's Anatomy",
@@ -1546,7 +1503,7 @@
     }
    ],
    "movies": 91,
-   "series_views": 965
+   "series_views": 951
   },
   {
    "key": "after",
@@ -1775,8 +1732,8 @@
    "months": 6,
    "by_year": {
     "2021": 201,
-    "2022": 115,
-    "2023": 144,
+    "2022": 107,
+    "2023": 138,
     "2024": 14
    },
    "summer_after": 36
@@ -1787,15 +1744,15 @@
    "watched": 233,
    "total": 236,
    "jan1": 4,
-   "nye_last": "The One That Could Have Been: Part 2"
+   "nye_last": "The One Where Chandler Can't Cry"
   },
   "hindi_away": 35.2,
   "hindi_home": 13.6,
   "kapil_away": 30,
   "kapil_home": 10,
   "christmas_years": 6,
-  "series_share": 91.8,
-  "big_days": 27,
+  "series_share": 91.7,
+  "big_days": 25,
   "finished": [
    {
     "show": "Friends",
@@ -1934,12 +1891,6 @@
     "after": 11
    }
   ],
-  "birthday": {
-   "rank": 169,
-   "days": 360,
-   "quiet_years": 9,
-   "years": 11
-  },
   "spooky": [
    {
     "show": "Stranger Things",
@@ -1969,9 +1920,9 @@
    }
   ],
   "kids_by_year": {
-   "2015": 57.6,
+   "2015": 67.0,
    "2016": 67.0,
-   "2017": 57.3,
+   "2017": 56.8,
    "2018": 18.4,
    "2019": 1.2,
    "2020": 0.0,
@@ -2007,8 +1958,8 @@
    "after_20": 261
   },
   "weekday_share": {
-   "school": 64.1,
-   "summer": 70.9
+   "school": 64.4,
+   "summer": 70.3
   },
   "college": {
    "fall_2024": 0.19,
@@ -2048,7 +1999,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 44.5,
+  "romance_share": 45.2,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -2061,10 +2012,10 @@
   ]
  },
  "words": {
-  "episodes": 2820,
-  "shows": 205,
-  "beginnings": 99,
-  "endings": 41,
+  "episodes": 2772,
+  "shows": 200,
+  "beginnings": 98,
+  "endings": 40,
   "begin_examples": [
    "New York, New Nanny",
    "Zuri's New Old Friend",
@@ -2086,7 +2037,6 @@
   ],
   "boy": [
    "Bad Boys",
-   "Life with Boys",
    "Poster Boys",
    "To All The Boys",
    "To All the Boys",
@@ -2176,17 +2126,17 @@
   "me_titles": {
    "Elementary": 1.8,
    "Middle School": 4.4,
-   "High School": 7.7,
+   "High School": 7.8,
    "After Graduation": 3.1
   }
  },
  "picky": {
   "quit": 35,
-  "kept": 32,
+  "kept": 31,
   "netflix_quit": 54,
-  "netflix_kept": 34,
+  "netflix_kept": 35,
   "romance_quit": 20,
-  "romance_kept": 38,
+  "romance_kept": 39,
   "network_kept": [
    "The Vampire Diaries",
    "Gossip Girl",
@@ -2206,8 +2156,8 @@
    "Pop the Balloon LIVE"
   ],
   "matchmaking": 24,
-  "drama_views": 1804,
-  "views": 3421,
+  "drama_views": 1790,
+  "views": 3373,
   "korean_quit": [
    "Crash Landing on You",
    "Hometown Cha-Cha-Cha",
@@ -2217,17 +2167,17 @@
  "favorites": {
   "gg_early": [
    "The Handmaiden's Tale",
-   "Seventeen Candles",
-   "Victor, Victrola"
+   "Victor, Victrola",
+   "Seventeen Candles"
   ],
   "gg_twice": [
    "Victor, Victrola",
    "Seventeen Candles"
   ],
   "gg_first_back": [
-   "The Wild Brunch",
+   "Bad News Blair",
    "Poison Ivy",
-   "Bad News Blair"
+   "The Wild Brunch"
   ],
   "rachel_titles": 28,
   "ross_titles": 23
@@ -2254,10 +2204,10 @@
  },
  "big_december": {
   "views": 492,
-  "share": 14.4,
+  "share": 14.6,
   "quietest": {
    "month": 10,
-   "views": 87
+   "views": 66
   },
   "top_days": 7,
   "years": [
@@ -2287,11 +2237,11 @@
     "Gilmore Girls",
     "Gossip Girl"
    ],
-   "pct": 29.6
+   "pct": 30.0
   },
   {
    "genre": "Kids & Disney",
-   "views": 739,
+   "views": 726,
    "shows": [
     "Jessie",
     "Good Luck Charlie",
@@ -2301,7 +2251,7 @@
   },
   {
    "genre": "Supernatural",
-   "views": 440,
+   "views": 434,
    "shows": [
     "The Vampire Diaries",
     "The Originals",
@@ -2311,13 +2261,13 @@
   },
   {
    "genre": "Comedy",
-   "views": 296,
+   "views": 275,
    "shows": [
     "Fuller House",
     "Baby Daddy",
-    "Life with Boys"
+    "Workin' Moms"
    ],
-   "pct": 9.4
+   "pct": 8.9
   },
   {
    "genre": "Reality & talk",
@@ -2327,7 +2277,7 @@
     "Brain Games",
     "Dubai Bling"
    ],
-   "pct": 7.5
+   "pct": 7.6
   },
   {
    "genre": "Medical",
@@ -2337,7 +2287,7 @@
     "The Mindy Project",
     "PULSE"
    ],
-   "pct": 5.4
+   "pct": 5.5
   },
   {
    "genre": "Crime & thriller",
@@ -2347,17 +2297,17 @@
     "13 Reasons Why",
     "Ginny & Georgia"
    ],
-   "pct": 5.1
+   "pct": 5.2
   },
   {
    "genre": "Drama",
-   "views": 155,
+   "views": 147,
    "shows": [
     "Switched at Birth",
     "Partner Track",
-    "Fishbowl Wives"
+    "Grand Army"
    ],
-   "pct": 4.9
+   "pct": 4.8
   },
   {
    "genre": "Other",
@@ -2372,7 +2322,7 @@
  ],
  "dark_years": {
   "by_year": {
-   "2015": 6,
+   "2015": 7,
    "2016": 11,
    "2017": 2,
    "2018": 3,
@@ -2418,12 +2368,54 @@
    }
   ]
  },
+ "front_row": {
+  "s1_median": 197,
+  "later_median": 16,
+  "within_3": 12,
+  "same_day": [
+   {
+    "show": "Never Have I Ever",
+    "season": 3,
+    "lag": 0
+   },
+   {
+    "show": "Fuller House",
+    "season": 3,
+    "lag": 0
+   }
+  ],
+  "late": [
+   {
+    "show": "Indian Matchmaking",
+    "season": 1,
+    "lag": 1249
+   },
+   {
+    "show": "Manifest",
+    "season": 1,
+    "lag": 1027
+   },
+   {
+    "show": "Fuller House",
+    "season": 1,
+    "lag": 534
+   }
+  ],
+  "stay": {
+   "1": 28,
+   "2": 47,
+   "3": 59,
+   "5": 66
+  },
+  "tried": 124,
+  "past_pilot": 60
+ },
  "family": {
   "habits": {
    "Me": {
-    "binge_days": 128,
-    "eps_per_show": 15.0,
-    "titles": 466,
+    "binge_days": 124,
+    "eps_per_show": 15.1,
+    "titles": 461,
     "movie_pct": 8,
     "top5_pct": 25,
     "per_day": 2.7,
@@ -2441,7 +2433,7 @@
     "hindi_pct": 59
    },
    "Dad": {
-    "binge_days": 27,
+    "binge_days": 28,
     "eps_per_show": 3.3,
     "titles": 771,
     "movie_pct": 32,
@@ -2451,11 +2443,11 @@
     "hindi_pct": 1
    },
    "My sister": {
-    "binge_days": 68,
+    "binge_days": 69,
     "eps_per_show": 12.3,
-    "titles": 176,
+    "titles": 177,
     "movie_pct": 5,
-    "top5_pct": 32,
+    "top5_pct": 31,
     "per_day": 3.1,
     "month": 7,
     "hindi_pct": 0
@@ -2477,7 +2469,7 @@
       "views": 164
      }
     ],
-    "views": 3426,
+    "views": 3378,
     "rewatched": 122,
     "rewatch_pct": 3.6
    },
@@ -2515,9 +2507,9 @@
       "views": 45
      }
     ],
-    "views": 1482,
-    "rewatched": 14,
-    "rewatch_pct": 0.9
+    "views": 1488,
+    "rewatched": 16,
+    "rewatch_pct": 1.1
    },
    "My sister": {
     "top": [
@@ -2534,10 +2526,117 @@
       "views": 102
      }
     ],
-    "views": 1498,
+    "views": 1504,
     "rewatched": 117,
     "rewatch_pct": 7.8
    }
+  },
+  "amaira": {
+   "views": 1504,
+   "top": [
+    {
+     "show": "iCarly",
+     "views": 115
+    },
+    {
+     "show": "The Thundermans",
+     "views": 104
+    },
+    {
+     "show": "Sofia the First",
+     "views": 102
+    },
+    {
+     "show": "PJ Masks",
+     "views": 77
+    },
+    {
+     "show": "Fuller House",
+     "views": 75
+    },
+    {
+     "show": "Masha and the Bear",
+     "views": 71
+    },
+    {
+     "show": "Victorious",
+     "views": 61
+    },
+    {
+     "show": "Barbie Dreamhouse Adventures",
+     "views": 48
+    },
+    {
+     "show": "The Boss Baby",
+     "views": 46
+    },
+    {
+     "show": "Pocoyo",
+     "views": 46
+    }
+   ],
+   "years": [
+    {
+     "year": 2017,
+     "show": "Octonauts",
+     "episodes": 6,
+     "views": 7
+    },
+    {
+     "year": 2018,
+     "show": "The Boss Baby",
+     "episodes": 33,
+     "views": 35
+    },
+    {
+     "year": 2019,
+     "show": "Sofia the First",
+     "episodes": 59,
+     "views": 198
+    },
+    {
+     "year": 2020,
+     "show": "Sofia the First",
+     "episodes": 38,
+     "views": 218
+    },
+    {
+     "year": 2021,
+     "show": "PJ Masks",
+     "episodes": 73,
+     "views": 278
+    },
+    {
+     "year": 2022,
+     "show": "Ben & Holly's Little Kingdom",
+     "episodes": 22,
+     "views": 128
+    },
+    {
+     "year": 2023,
+     "show": "Barbie Dreamhouse Adventures",
+     "episodes": 10,
+     "views": 38
+    },
+    {
+     "year": 2024,
+     "show": "Barbie Dreamhouse Adventures",
+     "episodes": 15,
+     "views": 42
+    },
+    {
+     "year": 2025,
+     "show": "The Thundermans",
+     "episodes": 91,
+     "views": 174
+    },
+    {
+     "year": 2026,
+     "show": "iCarly",
+     "episodes": 115,
+     "views": 386
+    }
+   ]
   },
   "freeze": {
    "family": 4,
@@ -2624,8 +2723,8 @@
    "within_week": 0
   },
   "dad_and_me": {
-   "shared": 30,
-   "first": 23,
+   "shared": 29,
+   "first": 22,
    "second": 7,
    "within_week": 3
   },
@@ -2636,14 +2735,14 @@
    "Mom": 29
   },
   "shows_started": {
-   "Me": 210,
+   "Me": 205,
    "Mom": 74,
    "Dad": 309,
-   "My sister": 116
+   "My sister": 117
   },
   "quit_rate": {
    "Dad": 66,
-   "Me": 48,
+   "Me": 49,
    "Mom": 39,
    "My sister": 32
   },
@@ -2663,14 +2762,10 @@
   "first_days": {
    "from": "2015-06-16",
    "to": "2015-06-26",
-   "views": 21,
+   "views": 15,
    "top": [
     {
      "show": "Phineas and Ferb",
-     "views": 6
-    },
-    {
-     "show": "Dragon Tales",
      "views": 6
     },
     {
@@ -2679,6 +2774,10 @@
     },
     {
      "show": "Lilo & Stitch",
+     "views": 1
+    },
+    {
+     "show": "The Pirate Fairy",
      "views": 1
     },
     {
@@ -2705,7 +2804,7 @@
   "after_crackdown": {
    "from": "2023-05-23",
    "to": "2023-12-31",
-   "views": 244,
+   "views": 238,
    "top": [
     {
      "show": "Jane The Virgin",
@@ -2921,26 +3020,6 @@
    },
    "eras": {
     "Dallas": 24
-   }
-  },
-  "2 States": {
-   "show": "2 States",
-   "kind": "movie",
-   "views": 1,
-   "first": "2020-01-02",
-   "last": "2020-01-02",
-   "days": 1,
-   "best_day": {
-    "date": "2020-01-02",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2020": 1
-   },
-   "eras": {
-    "Dallas": 1
    }
   },
   "A Family Affair": {
@@ -3301,6 +3380,28 @@
     "Dallas": 91
    }
   },
+  "Business Proposal": {
+   "show": "Business Proposal",
+   "kind": "series",
+   "views": 12,
+   "first": "2022-04-13",
+   "last": "2022-09-26",
+   "days": 5,
+   "best_day": {
+    "date": "2022-04-13",
+    "episodes": 6
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Limited Series": 12
+   },
+   "by_year": {
+    "2022": 12
+   },
+   "eras": {
+    "Dallas": 12
+   }
+  },
   "Chandigarh Kare Aashiqui": {
    "show": "Chandigarh Kare Aashiqui",
    "kind": "movie",
@@ -3529,26 +3630,6 @@
     "Austin": 1
    }
   },
-  "Dragon Tales": {
-   "show": "Dragon Tales",
-   "kind": "series",
-   "views": 7,
-   "first": "2015-06-22",
-   "last": "2015-08-10",
-   "days": 2,
-   "best_day": {
-    "date": "2015-06-22",
-    "episodes": 6
-   },
-   "binge_days": 1,
-   "seasons": {},
-   "by_year": {
-    "2015": 7
-   },
-   "eras": {
-    "Dallas": 7
-   }
-  },
   "Dubai Bling": {
    "show": "Dubai Bling",
    "kind": "series",
@@ -3698,26 +3779,6 @@
    "eras": {
     "Austin": 8,
     "Dallas": 15
-   }
-  },
-  "Fishbowl Wives": {
-   "show": "Fishbowl Wives",
-   "kind": "series",
-   "views": 8,
-   "first": "2022-04-23",
-   "last": "2022-04-24",
-   "days": 2,
-   "best_day": {
-    "date": "2022-04-23",
-    "episodes": 7
-   },
-   "binge_days": 1,
-   "seasons": {},
-   "by_year": {
-    "2022": 8
-   },
-   "eras": {
-    "Dallas": 8
    }
   },
   "Friends": {
@@ -4001,6 +4062,26 @@
     "Dallas": 8
    }
   },
+  "Hello Bachhon": {
+   "show": "Hello Bachhon",
+   "kind": "series",
+   "views": 5,
+   "first": "2026-03-12",
+   "last": "2026-03-12",
+   "days": 1,
+   "best_day": {
+    "date": "2026-03-12",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2026": 5
+   },
+   "eras": {
+    "Austin": 5
+   }
+  },
   "Hometown Cha-Cha-Cha": {
    "show": "Hometown Cha-Cha-Cha",
    "kind": "series",
@@ -4016,26 +4097,6 @@
    "seasons": {
     "Limited Series": 1
    },
-   "by_year": {
-    "2025": 1
-   },
-   "eras": {
-    "Austin": 1
-   }
-  },
-  "How to Be Single": {
-   "show": "How to Be Single",
-   "kind": "movie",
-   "views": 1,
-   "first": "2025-07-23",
-   "last": "2025-07-23",
-   "days": 1,
-   "best_day": {
-    "date": "2025-07-23",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
    "by_year": {
     "2025": 1
    },
@@ -4227,26 +4288,6 @@
     "Dallas": 28
    }
   },
-  "La La Land": {
-   "show": "La La Land",
-   "kind": "movie",
-   "views": 1,
-   "first": "2025-09-13",
-   "last": "2025-09-13",
-   "days": 1,
-   "best_day": {
-    "date": "2025-09-13",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2025": 1
-   },
-   "eras": {
-    "Austin": 1
-   }
-  },
   "Lab Rats": {
    "show": "Lab Rats",
    "kind": "series",
@@ -4270,28 +4311,6 @@
    },
    "eras": {
     "Dallas": 98
-   }
-  },
-  "Life with Boys": {
-   "show": "Life with Boys",
-   "kind": "series",
-   "views": 21,
-   "first": "2015-10-18",
-   "last": "2015-10-24",
-   "days": 4,
-   "best_day": {
-    "date": "2015-10-18",
-    "episodes": 11
-   },
-   "binge_days": 4,
-   "seasons": {
-    "Season 2": 7
-   },
-   "by_year": {
-    "2015": 21
-   },
-   "eras": {
-    "Dallas": 21
    }
   },
   "Lilo & Stitch": {
@@ -4772,28 +4791,6 @@
     "Dallas": 34
    }
   },
-  "Octonauts": {
-   "show": "Octonauts",
-   "kind": "series",
-   "views": 6,
-   "first": "2017-03-23",
-   "last": "2017-03-23",
-   "days": 1,
-   "best_day": {
-    "date": "2017-03-23",
-    "episodes": 6
-   },
-   "binge_days": 1,
-   "seasons": {
-    "Season 1": 6
-   },
-   "by_year": {
-    "2017": 6
-   },
-   "eras": {
-    "Dallas": 6
-   }
-  },
   "Once Upon a Time": {
    "show": "Once Upon a Time",
    "kind": "series",
@@ -4857,6 +4854,28 @@
    },
    "eras": {
     "Dallas": 1
+   }
+  },
+  "Outlander": {
+   "show": "Outlander",
+   "kind": "series",
+   "views": 5,
+   "first": "2023-04-18",
+   "last": "2023-04-18",
+   "days": 1,
+   "best_day": {
+    "date": "2023-04-18",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 5
+   },
+   "by_year": {
+    "2023": 5
+   },
+   "eras": {
+    "Dallas": 5
    }
   },
   "Partner Track": {
@@ -5308,27 +5327,6 @@
     "Dallas": 10
    }
   },
-  "The Hunting Wives": {
-   "show": "The Hunting Wives",
-   "kind": "series",
-   "views": 7,
-   "first": "2025-08-14",
-   "last": "2026-02-16",
-   "days": 3,
-   "best_day": {
-    "date": "2026-02-16",
-    "episodes": 5
-   },
-   "binge_days": 1,
-   "seasons": {},
-   "by_year": {
-    "2025": 2,
-    "2026": 5
-   },
-   "eras": {
-    "Austin": 7
-   }
-  },
   "The Night Agent": {
    "show": "The Night Agent",
    "kind": "series",
@@ -5356,26 +5354,6 @@
     "Dallas": 5
    }
   },
-  "The Notebook": {
-   "show": "The Notebook",
-   "kind": "movie",
-   "views": 1,
-   "first": "2025-07-23",
-   "last": "2025-07-23",
-   "days": 1,
-   "best_day": {
-    "date": "2025-07-23",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2025": 1
-   },
-   "eras": {
-    "Austin": 1
-   }
-  },
   "The Originals": {
    "show": "The Originals",
    "kind": "series",
@@ -5401,6 +5379,26 @@
    },
    "eras": {
     "Dallas": 92
+   }
+  },
+  "The Pirate Fairy": {
+   "show": "The Pirate Fairy",
+   "kind": "movie",
+   "views": 1,
+   "first": "2015-06-17",
+   "last": "2015-06-17",
+   "days": 1,
+   "best_day": {
+    "date": "2015-06-17",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2015": 1
+   },
+   "eras": {
+    "Dallas": 1
    }
   },
   "The Powerpuff Girls": {
@@ -5452,28 +5450,6 @@
    },
    "eras": {
     "Dallas": 172
-   }
-  },
-  "The Witcher": {
-   "show": "The Witcher",
-   "kind": "series",
-   "views": 6,
-   "first": "2023-06-05",
-   "last": "2023-06-05",
-   "days": 1,
-   "best_day": {
-    "date": "2023-06-05",
-    "episodes": 6
-   },
-   "binge_days": 1,
-   "seasons": {
-    "Season 1": 6
-   },
-   "by_year": {
-    "2023": 6
-   },
-   "eras": {
-    "Dallas": 6
    }
   },
   "Thoda Pyaar Thoda Magic": {
@@ -5697,11 +5673,19 @@
   }
  },
  "extra_art": [
+  "Barbie Dreamhouse Adventures",
+  "Ben & Holly's Little Kingdom",
+  "Masha and the Bear",
   "Narcos",
+  "Octonauts",
   "Ozark",
+  "PJ Masks",
+  "Pocoyo",
   "Sofia the First",
   "Sons of Anarchy",
+  "The Boss Baby",
   "The Thundermans",
+  "Victorious",
   "iCarly"
  ]
 }
