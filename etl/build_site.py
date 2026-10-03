@@ -442,6 +442,40 @@ def big_december(df):
             "years": sorted(big, key=lambda x: -x["views"])[:3]}
 
 
+DISNEY = {"Jessie", "Good Luck Charlie", "Liv and Maddie", "Lab Rats", "Mighty Med", "Bunk'd", "A.N.T. Farm", "Austin & Ally", "Girl Meets World"}
+
+
+def genre_pie(df, meta):
+    """One genre per show, so the slices add up to 100% of my series episodes."""
+    def cat(show):
+        d = meta.get(show) or {}
+        g, t = set(d.get("genres", [])), d.get("type")
+        if show in DISNEY or t == "Animation" or "Children" in g or d.get("network") in ("Disney Channel", "DisneyNOW", "Disney XD", "Nickelodeon"):
+            return "Kids & Disney"
+        if t in ("Reality", "Talk Show", "Variety", "Game Show", "Documentary"):
+            return "Reality & talk"
+        for name, tags in [("Supernatural", {"Supernatural", "Fantasy", "Science-Fiction", "Horror"}), ("Medical", {"Medical"}),
+                           ("Romance", {"Romance"}), ("Crime & thriller", {"Crime", "Thriller", "Mystery", "Espionage", "Legal"}),
+                           ("Comedy", {"Comedy"}), ("Drama", {"Drama", "Family"})]:
+            if g & tags:
+                return name
+        return "Other"
+    ser = df[df["kind"] == "series"]
+    counts = ser["show"].value_counts()
+    by = {}
+    for show, n in counts.items():
+        k = cat(show)
+        by.setdefault(k, {"genre": k, "views": 0, "shows": []})
+        by[k]["views"] += int(n)
+        by[k]["shows"].append(show)
+    total = sum(x["views"] for x in by.values())
+    out = sorted(by.values(), key=lambda x: -x["views"])
+    for x in out:
+        x["pct"] = round(x["views"] / total * 100, 1)
+        x["shows"] = x["shows"][:3]
+    return out
+
+
 def title_words(df):
     """Patterns in the words of what I watch, not in how much."""
     ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
@@ -578,6 +612,7 @@ def main():
         "show_run": longest_show_run(df),
         "friends_origin": friends_origin(df),
         "big_december": big_december(df),
+        "genre_pie": genre_pie(df, meta),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),

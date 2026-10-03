@@ -2278,6 +2278,98 @@
    }
   ]
  },
+ "genre_pie": [
+  {
+   "genre": "Romance",
+   "views": 928,
+   "shows": [
+    "Friends",
+    "Gilmore Girls",
+    "Gossip Girl"
+   ],
+   "pct": 29.6
+  },
+  {
+   "genre": "Kids & Disney",
+   "views": 739,
+   "shows": [
+    "Jessie",
+    "Good Luck Charlie",
+    "Lab Rats"
+   ],
+   "pct": 23.5
+  },
+  {
+   "genre": "Supernatural",
+   "views": 440,
+   "shows": [
+    "The Vampire Diaries",
+    "The Originals",
+    "Manifest"
+   ],
+   "pct": 14.0
+  },
+  {
+   "genre": "Comedy",
+   "views": 296,
+   "shows": [
+    "Fuller House",
+    "Baby Daddy",
+    "Life with Boys"
+   ],
+   "pct": 9.4
+  },
+  {
+   "genre": "Reality & talk",
+   "views": 236,
+   "shows": [
+    "The Great Indian Kapil Show",
+    "Brain Games",
+    "Dubai Bling"
+   ],
+   "pct": 7.5
+  },
+  {
+   "genre": "Medical",
+   "views": 170,
+   "shows": [
+    "Grey's Anatomy",
+    "The Mindy Project",
+    "PULSE"
+   ],
+   "pct": 5.4
+  },
+  {
+   "genre": "Crime & thriller",
+   "views": 160,
+   "shows": [
+    "The Night Agent",
+    "13 Reasons Why",
+    "Ginny & Georgia"
+   ],
+   "pct": 5.1
+  },
+  {
+   "genre": "Drama",
+   "views": 155,
+   "shows": [
+    "Switched at Birth",
+    "Partner Track",
+    "Fishbowl Wives"
+   ],
+   "pct": 4.9
+  },
+  {
+   "genre": "Other",
+   "views": 16,
+   "shows": [
+    "Queen Cleopatra",
+    "The Exchange",
+    "Miss Congeniality 2"
+   ],
+   "pct": 0.5
+  }
+ ],
  "family": {
   "profiles": {
    "Me": {

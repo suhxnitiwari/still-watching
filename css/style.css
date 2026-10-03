@@ -824,3 +824,12 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .peek__lock { width: 30px; height: 30px; color: var(--red); margin-bottom: 4px; }
 .peek__lock svg { width: 100%; height: 100%; }
 .peek__locked span:last-child { color: var(--muted); font-size: 14px; }
+
+/* Genre donut inside a case-file card */
+.pie { display: flex; align-items: center; gap: 14px; margin: 6px 0 10px; }
+.pie__donut { flex: none; width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; }
+.pie__donut span { width: 64%; height: 64%; border-radius: 50%; background: #181818; display: grid; place-content: center; text-align: center; font-size: 10px; color: var(--muted); line-height: 1.1; }
+.pie__donut b { display: block; font-family: var(--display); font-weight: 400; font-size: 24px; color: #fff; }
+.pie__legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; font-size: 12px; color: #ddd; }
+.pie__legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.pie__legend b { color: #fff; }

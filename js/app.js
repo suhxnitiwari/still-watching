@@ -528,6 +528,15 @@ function spark({ from, to, hot = [] }) {
 }
 
 // Guesses a stranger could make from nothing but my history, each with its signal and evidence.
+// A donut of slices [{genre, pct}], with a legend.
+const PIE_COLORS = ["#e50914", "#ff6b9a", "#a53bff", "#ffb020", "#2f8cff", "#2ec27e", "#ff7a3d", "#8a8a8a", "#555"];
+function pie(slices) {
+  let at = 0;
+  const stops = slices.map((x, i) => { const a = at; at += x.pct; return `${PIE_COLORS[i % PIE_COLORS.length]} ${a}% ${at}%`; }).join(", ");
+  return `<div class="pie"><div class="pie__donut" style="background:conic-gradient(${stops})"><span><b>${Math.round(slices[0].pct)}%</b>${esc(slices[0].genre)}</span></div>
+    <ul class="pie__legend">${slices.filter((x) => x.pct >= 1).map((x, i) => `<li><i style="background:${PIE_COLORS[i % PIE_COLORS.length]}"></i>${esc(x.genre)} <b>${Math.round(x.pct)}%</b></li>`).join("")}</ul></div>`;
+}
+
 function setupCase() {
   const p = DATA.profile;
   $("#case-count").textContent = n(DATA.totals.views);
@@ -545,6 +554,9 @@ function setupCase() {
         ev: `Kids' shows were <b>${pct(p.kids_by_year["2016"])}</b> of 2016 (${listOf(p.kids_early_top)}), ${pct(p.kids_by_year["2018"])} of 2018 and almost nothing after 2019. Then teen rom-coms: ${listOf(p.teen_romcoms.slice(0, 3))}. A fourth-grader in 2015 graduates in 2024.` },
       { label: "GENDER", img: bg("Bridgerton"), guess: "A woman", signal: "What I choose",
         ev: `<b>${pct(p.romance_share)}</b> of my series episodes are tagged Romance, and most of my movies are rom-coms. This is how ad platforms guess gender: crudely.` },
+      ...(DATA.genre_pie ? [{ label: "GENRES", img: bg("Gilmore Girls"), guess: "Romance first, always", signal: "Every series episode, one genre per show",
+        pie: DATA.genre_pie,
+        ev: `${listOf(DATA.genre_pie[0].shows.map(esc))} make Romance my biggest slice. Kids & Disney is everything before 2019. And Medical is one Grey's summer I never finished.` }] : []),
       { label: "CULTURAL BACKGROUND", img: bg("Heeramandi"), guess: "Indian, Hindi-speaking", signal: "The language of what I watch",
         ev: `<b>${hf.total} of my ${hf.movies} movies</b> are Hindi films, starting with ${esc(hf.first)} in ${parse(hf.first_date).getFullYear()}. Hindi series went from ${pct(ms.language.Hindi || 0)} in middle school to <b>${pct(after.language.Hindi || 0)}</b> after graduating.` },
       { label: "HOME", img: bg("AMERICA'S SWEETHEARTS"), guess: "The U.S., probably Texas", signal: "Format, timing and one docuseries",
@@ -675,7 +687,7 @@ function setupCase() {
   // Regroup the clues by theme.
   const byLabel = Object.fromEntries(groups.flatMap(([, clues]) => clues).map((c) => [c.label, c]));
   const themed = [
-    ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
+    ["Who I am", ["AGE", "GENDER", "GENRES", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "STREAK", "BIG ON DECEMBER", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
@@ -692,6 +704,7 @@ function setupCase() {
           <p class="clue__guess">${esc(c.guess)}</p>
           <p class="clue__signal">Signal: ${esc(c.signal)}</p>
           ${c.chart ? spark(c.chart) : ""}
+          ${c.pie ? pie(c.pie) : ""}
           <p class="clue__evidence">${c.ev2 || c.ev}</p>
         </div>
       </article>`).join("")}</div>
@@ -712,7 +725,7 @@ function setupGrowth() {
   const who = {
     elementary: `<b>New in America.</b> We moved from Singapore to Cupertino in 2015, right before fourth grade. I learned America through Disney Channel: ${listOf(el.top.slice(0, 3).map((s) => s.show))}. On Dad's profile, because I didn't have one yet.`,
     middle: `<b>The family-drama kid.</b> Still in Cupertino. Freeform and Disney after school, ${pct(g(ms, "Family"))} family shows, ${pct(l(ms, "English"))} in English, and nearly all of Friends over one winter break.`,
-    high: `<b>The serious-drama era.</b> Drama went from ${pct(g(ms, "Drama"))} to ${pct(g(hs, "Drama"))} of what I watched: hospitals, crime, Stars Hollow. I tried ${hs.titles} different titles, ${(hs.titles / ms.titles).toFixed(1)}× middle school.`,
+    high: `<b>The serious-drama era.</b> Drama went from ${pct(g(ms, "Drama"))} to ${pct(g(hs, "Drama"))} of what I watched: one Grey's Anatomy summer I never finished (I don't even like medical shows), 13 Reasons Why, crime and Stars Hollow. I tried ${hs.titles} different titles, ${(hs.titles / ms.titles).toFixed(1)}× middle school.`,
     after: `<b>Missing home, in Hindi.</b> After graduating, Hindi shows went from ${pct(l(hs, "Hindi"))} to ${pct(l(after, "Hindi"))}. Talk shows, new releases and movies over long commitments.`,
   };
   const stats = {
@@ -747,7 +760,7 @@ function setupWhatChanged({ g, l, t, pct }) {
     { title: "Missing home, in Hindi", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
     { title: "Growing out of family TV", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
     { title: "High school got serious", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
-    { title: "Hospitals and crime", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
+    { title: "The dark turn", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
     { title: "Laughing with talk shows", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
     { title: "Watching what's new", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
       shows: (e) => e.by_premiere.slice(-4).reverse() },
