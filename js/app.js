@@ -399,8 +399,9 @@ function setupCase() {
         ev: `Weekdays are <b>${pct(p.weekday_share.school)}</b> of my school-year watching and ${pct(p.weekday_share.summer)} in summer. The last 12 days of December average <b>${decRate.toFixed(1)}×</b> the first 19: finals, then winter break.` },
       { label: "MARCH 2020", img: bg(p.covid.top), guess: "Sent home when COVID hit", signal: "A sudden spike",
         ev: `February 2020: ${p.covid.feb_2020} views. March: <b>${p.covid.march_2020}</b>, ${p.covid.after_closure} of them after schools closed on March 13, mostly ${esc(p.covid.top)}.` },
-      { label: "GRADUATION", img: bg(DATA.windows.last_summer_home.top[0].show), guess: "Graduated in spring 2024", signal: "The quietest six months",
-        ev: `January to June 2024: <b>${p.senior_spring.views} views on ${p.senior_spring.days} days</b>, against about ${Math.round(hs.per_month)} a month the rest of high school. Senior spring. Then a summer back on the couch.` },
+      { label: "GRADUATION", img: bg(DATA.windows.last_summer_home.top[0].show), guess: "Graduated in spring 2024", signal: "The same six months, every high school year",
+        chart: { from: "2023-09", to: "2024-08", hot: ["2024-01", "2024-02", "2024-03", "2024-04", "2024-05", "2024-06"] },
+        ev: `January to June: ${Object.entries(p.senior_spring.by_year).map(([y, v]) => y === "2024" ? `<b>${y}: ${v}</b>` : `${y}: ${v}`).join(" · ")} views. Senior spring was <b>${p.senior_spring.views} views on ${p.senior_spring.days} days</b>. Then graduation, and <b>${p.senior_spring.summer_after}</b> views in the next seven weeks.` },
       { label: "COLLEGE", img: bg(DATA.windows.summer_2025.top[0].show), guess: "Left home for college in 2024", signal: "Semesters against summers",
         ev: `Fall 2024: <b>${p.college.fall_2024}</b> views a day. Summer 2025, back home: <b>${p.college.summer_2025}</b>, ten times more. Fall 2025: ${p.college.fall_2025} again.` },
     ]],
@@ -429,9 +430,9 @@ function setupCase() {
       ev: `<b>${pct(p.series_share)}</b> of everything I've watched is an episode. <b>${p.big_days} days</b> with 10 or more.` },
     { label: "U.S. CATALOG", img: bg("Friends"), guess: "Watching U.S. Netflix", signal: "A deadline only U.S. viewers had",
       chart: { from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] },
-      ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week. Then nothing.` },
-    ...(fr.jan1 ? [{ label: "DENIAL", img: bg("Friends"), guess: "I didn't want Friends to leave", signal: "Its last night on U.S. Netflix",
-      ev: `On Dec 31, 2019, Friends' last night on U.S. Netflix, one of my last episodes was <b>"${esc(fr.nye_last || "")}"</b>. The export still shows <b>${fr.jan1} more on Jan 1, 2020</b>: Netflix logs dates in UTC, so that's me past midnight, refusing to let go.` }] : []),
+      ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week, racing the deadline.` },
+    { label: "ATTACHMENT ISSUES", img: bg("Friends"), guess: "I hate goodbyes", signal: "How I end things (I don't)",
+      ev: `I watched <b>${p.finished.length} shows to the very last episode</b>. I come back to old ones years later: ${listOf(p.comebacks.slice(0, 3).map((c) => `${esc(c.show)} after ${Math.round(c.years)} years`))}. And on Friends' last night on U.S. Netflix, I kept going past midnight: <b>${fr.jan1} more episodes</b> logged Jan 1, 2020. I get emotional.` },
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
       ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
     ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
@@ -480,7 +481,7 @@ function setupCase() {
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
-    ["How I feel", ["HOMESICK", "DENIAL", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
+    ["How I feel", ["ATTACHMENT ISSUES", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>

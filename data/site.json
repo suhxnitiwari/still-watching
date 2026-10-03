@@ -1668,7 +1668,14 @@
   "senior_spring": {
    "views": 14,
    "days": 6,
-   "months": 6
+   "months": 6,
+   "by_year": {
+    "2021": 201,
+    "2022": 115,
+    "2023": 144,
+    "2024": 14
+   },
+   "summer_after": 36
   },
   "friends_race": {
    "december": 181,
@@ -1770,6 +1777,28 @@
     "show": "Mighty Med",
     "watched": 48,
     "total": 47
+   }
+  ],
+  "comebacks": [
+   {
+    "show": "Gossip Girl",
+    "years": 5.0,
+    "after": 124
+   },
+   {
+    "show": "Gilmore Girls",
+    "years": 4.8,
+    "after": 157
+   },
+   {
+    "show": "Jane The Virgin",
+    "years": 4.8,
+    "after": 100
+   },
+   {
+    "show": "Stranger Things",
+    "years": 3.5,
+    "after": 11
    }
   ],
   "birthday": {

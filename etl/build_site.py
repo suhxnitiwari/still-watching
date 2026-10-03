@@ -73,6 +73,19 @@ _HINDI = ROOT / "etl" / "private" / "hindi_films.txt"
 HINDI_FILMS = {l.strip() for l in _HINDI.read_text().splitlines() if l.strip() and not l.startswith("#")} if _HINDI.exists() else set()
 
 
+def comebacks(df, min_gap_years=3, min_after=5):
+    """Shows I came back to after years away: a gap of 3+ years, then 5+ episodes."""
+    out = []
+    for name, g in df[df["kind"] == "series"].groupby("show")["date"]:
+        g = g.sort_values().reset_index(drop=True)
+        gaps = g.diff().dt.days
+        if gaps.max() >= min_gap_years * 365:
+            i = gaps.idxmax()
+            if len(g) - i >= min_after:
+                out.append({"show": name, "years": round(gaps.max() / 365.25, 1), "after": int(len(g) - i)})
+    return sorted(out, key=lambda x: -x["years"])
+
+
 def profile(df, meta):
     """The detective file: what the history gives away without being told."""
     per_day = lambda s, a, b: round(len(s[(s["date"] >= a) & (s["date"] <= b)]) / ((pd.Timestamp(b) - pd.Timestamp(a)).days + 1), 2)
@@ -110,7 +123,10 @@ def profile(df, meta):
     finished = [{"show": k, "watched": int((df["show"] == k).sum()), "total": v} for k, v in totals.items()
                 if v >= 40 and (df["show"] == k).sum() / v >= .95]
     return {
-        "senior_spring": {"views": int(len(spring)), "days": int(spring["date"].nunique()), "months": 6},
+        "senior_spring": {"views": int(len(spring)), "days": int(spring["date"].nunique()), "months": 6,
+                          # The same January–June stretch in every high school year, for comparison.
+                          "by_year": {str(y): int(((df["date"] >= f"{y}-01-01") & (df["date"] <= f"{y}-06-26")).sum()) for y in range(2021, 2025)},
+                          "summer_after": int(((df["date"] >= "2024-06-27") & (df["date"] <= "2024-08-14")).sum())},
         "friends_race": {"december": int(((friends["date"] >= "2019-12-01") & (friends["date"] <= "2019-12-31")).sum()),
                          "last_week": int(((friends["date"] >= "2019-12-25") & (friends["date"] <= "2019-12-31")).sum()),
                          "watched": int(len(friends)), "total": totals.get("Friends"),
@@ -123,6 +139,8 @@ def profile(df, meta):
         "series_share": round((df["kind"] == "series").mean() * 100, 1),
         "big_days": int((daily >= 10).sum()),
         "finished": sorted(finished, key=lambda x: -x["total"]),
+        # Shows I came back to after years away (20+ episodes, a gap of 3+ years between episodes).
+        "comebacks": comebacks(df),
         # My birthday (Mar 6) against every other calendar day: can a stranger find it?
         "birthday": {"rank": int(df["date"].dt.strftime("%m-%d").value_counts().rank(ascending=False, method="min").get("03-06", 0)),
                      "days": int(df["date"].dt.strftime("%m-%d").nunique()),
