@@ -26,6 +26,10 @@ MOVED_TO_AUSTIN = pd.Timestamp("2024-08-15")
 _BLOCK = ROOT / "etl" / "private" / "blocklist.txt"
 BLOCKED = {l.strip() for l in _BLOCK.read_text().splitlines() if l.strip() and not l.startswith("#")} if _BLOCK.exists() else set()
 
+# Shows on my profile that were really my sister's (private list, same reason as the blocklist).
+_NOT_MINE = ROOT / "etl" / "private" / "not_mine.txt"
+NOT_MINE = {l.strip() for l in _NOT_MINE.read_text().splitlines() if l.strip() and not l.startswith("#")} if _NOT_MINE.exists() else set()
+
 SEASON = re.compile(r"^(season|series|part|volume|chapter|book|limited series|collection)\b", re.I)
 
 
@@ -86,6 +90,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     dates.to_csv(OUT / "active_days.csv", index=False)
     df = transform(raw)
+    df = df[~df["show"].isin(NOT_MINE)].reset_index(drop=True)  # my sister's, watched on my profile
     OUT.mkdir(exist_ok=True)
     df.to_csv(OUT / "views.csv", index=False)
     b = binges(df)
