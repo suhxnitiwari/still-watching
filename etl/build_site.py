@@ -178,7 +178,18 @@ def family(meta):
     hh = h[h["show"].map(hindi)]
     f = hh[hh["who"].isin(["Mom", "Suhani"])].groupby(["show", "who"])["date"].min().unstack().dropna()
     g = (f["Suhani"] - f["Mom"]).dt.days
+    freeze = h[(h["date"] >= "2021-02-14") & (h["date"] <= "2021-02-20")]
+    def nth_sunday(y, m, n):
+        d = pd.Timestamp(y, m, 1)
+        return d + pd.Timedelta(days=(6 - d.dayofweek) % 7) + pd.Timedelta(weeks=n - 1)
+    mothers_days = {nth_sunday(y, 5, 2) for y in range(2015, 2027)}
+    dad_md = h[(h["who"] == "Dad") & h["date"].isin(mothers_days)]
+    fam_word = r"\b(?:Mom|Mother|Mummy|Mumma|Dad|Daddy|Papa|Father)\b"
+    titles_of = lambda w: sorted(set(h[(h["who"] == w) & h["show"].str.contains(fam_word, regex=True)]["show"]))
     return {
+        "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
+        "dad_on_mothers_day": [{"show": r.show, "year": int(r.date.year)} for r in dad_md.drop_duplicates("show").itertuples()],
+        "mom_parent_titles": titles_of("Mom"), "dad_parent_titles": titles_of("Dad"),
         "mom_hindi_lead": {"shared": int(len(f)), "mom_first": int((g > 0).sum()), "me_first": int((g < 0).sum()),
                            "next_week": int(((g > 0) & (g <= 7)).sum())},
         "me_to_sister": lead("Suhani", "Sister"),

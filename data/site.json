@@ -1893,6 +1893,44 @@
   ]
  },
  "family": {
+  "freeze": {
+   "family": 4,
+   "mine": [
+    "The Kissing Booth 2",
+    "To All the Boys"
+   ]
+  },
+  "dad_on_mothers_day": [
+   {
+    "show": "Peaky Blinders",
+    "year": 2017
+   },
+   {
+    "show": "City of God",
+    "year": 2018
+   },
+   {
+    "show": "Life in Color with David Attenborough",
+    "year": 2021
+   },
+   {
+    "show": "The Mother",
+    "year": 2023
+   },
+   {
+    "show": "The Royals",
+    "year": 2025
+   }
+  ],
+  "mom_parent_titles": [
+   "Jai Mummy Di",
+   "Mister Mummy",
+   "Single Papa"
+  ],
+  "dad_parent_titles": [
+   "Her Mother's Killer",
+   "The Mother"
+  ],
   "mom_hindi_lead": {
    "shared": 72,
    "mom_first": 51,

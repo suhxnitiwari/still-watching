@@ -434,6 +434,9 @@ function setupCase() {
       ev: `On Dec 31, 2019, Friends' last night on U.S. Netflix, one of my last episodes was <b>"${esc(fr.nye_last || "")}"</b>. The export still shows <b>${fr.jan1} more on Jan 1, 2020</b>: Netflix logs dates in UTC, so that's me past midnight, refusing to let go.` }] : []),
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
       ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
+    ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
+      chart: { from: "2020-11", to: "2021-05", hot: ["2021-02"] },
+      ev: `The week Texas froze and the power kept going out, our whole family watched <b>${DATA.family.freeze.family} things</b>. Mine: <b>${listOf(DATA.family.freeze.mine.map(esc))}</b>. Rom-coms by candlelight.` }] : []),
     { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "Born in early March", signal: "What I watch on one date every year",
       ev: `March 6, 2026, my 20th birthday: Bridgerton and Queen Charlotte, back to back.` },
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
@@ -452,6 +455,11 @@ function setupCase() {
         ev: `<b>Mom → me (Hindi):</b> of ${fam.mom_hindi_lead.shared} Hindi titles we share, she watched ${fam.mom_hindi_lead.mom_first} first, and I started ${fam.mom_hindi_lead.next_week} of them within a week of her.<br>
           <b>Me → my sister:</b> ${fam.me_to_sister.first} of ${fam.me_to_sister.shared}. I'm her tastemaker.<br>
           <b>Dad and me:</b> ${fam.dad_and_me.first} of ${fam.dad_and_me.shared} he saw first, but we never talk about shows. It's just Netflix's new releases finding us both.` },
+      ...(fam.dad_on_mothers_day.some((x) => x.show === "The Mother") ? [{ label: "HAPPY MOTHER'S DAY", img: bg(DATA.top[1].show), guess: "Dad watched The Mother",
+        signal: "What Dad watches on Mother's Day",
+        ev: `Mother's Day ${fam.dad_on_mothers_day.find((x) => x.show === "The Mother").year}: Dad pressed play on <b>The Mother</b>, the Jennifer Lopez assassin movie. Other Mother's Days: ${listOf(fam.dad_on_mothers_day.filter((x) => x.show !== "The Mother").map((x) => esc(x.show)))}.` }] : []),
+      { label: "TITLE ENERGY", img: bg(DATA.top[3].show), guess: "Comedy moms vs deadly moms", signal: "Titles about parents, by who watched",
+        ev: `Mom's parents are comedies: <b>${listOf(fam.mom_parent_titles.slice(0, 4).map(esc))}</b>. Dad's moms are lethal: <b>${listOf(fam.dad_parent_titles.filter((t) => /Mother/.test(t)).map(esc))}</b>.` },
       { label: "THE FAMILY SHOW", img: bg("The Great Indian Kapil Show"), guess: "The Great Indian Kapil Show", signal: "The one show Mom and I share most",
         ev: `Mom: <b>${k.Mom || 0}</b> episodes. Me: <b>${k.Me || 0}</b>. We watched it on the same day ${fam.kapil_same_day} times.${k.Dad ? ` Dad: ${k.Dad}.` : ""}` },
       ...(fam.dad_sister_birthday_picks.length ? [{ label: "DAD'S PARTY PICKS", img: bg(DATA.top[2].show), guess: "Birthday-party energy", signal: "What Dad watched on my sister's birthdays",
@@ -469,9 +477,9 @@ function setupCase() {
   const byLabel = Object.fromEntries(groups.flatMap(([, clues]) => clues).map((c) => [c.label, c]));
   const themed = [
     ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
-    ["Where I've lived", ["MOVED", "MOVED AGAIN", "U.S. CATALOG", "COLLEGE"]],
+    ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
-    ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
+    ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
     ["How I feel", ["HOMESICK", "DENIAL", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
