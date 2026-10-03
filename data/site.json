@@ -2279,6 +2279,84 @@
   ]
  },
  "family": {
+  "profiles": {
+   "Me": {
+    "top": [
+     {
+      "show": "Friends",
+      "views": 233
+     },
+     {
+      "show": "The Vampire Diaries",
+      "views": 173
+     },
+     {
+      "show": "Grey's Anatomy",
+      "views": 164
+     }
+    ],
+    "views": 3426,
+    "rewatched": 122,
+    "rewatch_pct": 3.6
+   },
+   "Mom": {
+    "top": [
+     {
+      "show": "The Great Indian Kapil Show",
+      "views": 53
+     },
+     {
+      "show": "The Night Agent",
+      "views": 21
+     },
+     {
+      "show": "Delhi Crime",
+      "views": 18
+     }
+    ],
+    "views": 688,
+    "rewatched": 1,
+    "rewatch_pct": 0.1
+   },
+   "Dad": {
+    "top": [
+     {
+      "show": "Sons of Anarchy",
+      "views": 67
+     },
+     {
+      "show": "Narcos",
+      "views": 60
+     },
+     {
+      "show": "Ozark",
+      "views": 45
+     }
+    ],
+    "views": 1482,
+    "rewatched": 14,
+    "rewatch_pct": 0.9
+   },
+   "My sister": {
+    "top": [
+     {
+      "show": "iCarly",
+      "views": 115
+     },
+     {
+      "show": "The Thundermans",
+      "views": 104
+     },
+     {
+      "show": "Sofia the First",
+      "views": 102
+     }
+    ],
+    "views": 1498,
+    "rewatched": 117,
+    "rewatch_pct": 7.8
+   }
+  },
   "freeze": {
    "family": 4,
    "mine": [
@@ -2306,10 +2384,6 @@
      "show": "The Hunt",
      "views": 1
     }
-   ],
-   "valentines": [
-    "Nazi Mega Weapons",
-    "The Snitch Cartel"
    ]
   },
   "dad_on_mothers_day": [
@@ -5439,5 +5513,13 @@
     "Austin": 3
    }
   }
- }
+ },
+ "extra_art": [
+  "Narcos",
+  "Ozark",
+  "Sofia the First",
+  "Sons of Anarchy",
+  "The Thundermans",
+  "iCarly"
+ ]
 }

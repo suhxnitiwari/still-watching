@@ -155,6 +155,57 @@ function avatar(p, id) {
 
 const LOCK_ICON = `<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>`;
 
+// A peek at a family profile: their top shows and a few funny titles, then the rest stays locked.
+function peekLines(name) {
+  const f = DATA?.family;
+  if (!f) return [];
+  if (name === "Dad") {
+    const md = f.dad_on_mothers_day.find((x) => x.show === "The Mother");
+    return [
+      md && `Mother's Day ${md.year}: <b>The Mother</b>, the Jennifer Lopez assassin movie.`,
+      f.dad_sister_birthday_picks.length && `On my sister's birthdays: <b>${listOf(f.dad_sister_birthday_picks.map(esc))}</b>.`,
+      f.dad_holidays.christmas.length && `Christmas: ${listOf(f.dad_holidays.christmas.map(esc))}.`,
+      f.dad_holidays.fathers_day.length && `Father's Day: ${f.dad_holidays.fathers_day[0].views} episodes of ${esc(f.dad_holidays.fathers_day[0].show)}.`,
+      `Quits <b>${f.quit_rate.Dad}%</b> of shows after one episode.`,
+    ].filter(Boolean);
+  }
+  if (name === "Mom") return [
+    `Her parent titles are comedies: <b>${listOf(f.mom_parent_titles.map(esc))}</b>.`,
+    `Watched ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles before me. She's my Hindi recommendation engine.`,
+    `Rewatches: basically never.`,
+  ];
+  if (name === "Sister") return [
+    `The biggest rewatcher in the family: <b>${f.profiles["My sister"].rewatch_pct}%</b> of what she watches is a repeat.`,
+    `I was first on <b>${f.me_to_sister.first} of ${f.me_to_sister.shared}</b> shows we share. I'm her tastemaker.`,
+  ];
+  return [];
+}
+
+function peekProfile(p) {
+  const f = DATA?.family;
+  const who = p.name === "Sister" ? "My sister" : p.name;
+  const pk = f?.profiles?.[who];
+  let el = $("#peek");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "peek"; el.className = "peek"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true");
+    document.body.appendChild(el);
+    el.addEventListener("click", (e) => { if (e.target === el || e.target.closest(".peek__close")) el.hidden = true; });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") el.hidden = true; });
+  }
+  const label = p.name === "Sister" ? "my sister" : p.name;
+  el.innerHTML = `<div class="peek__card">
+    <button class="peek__close" type="button" aria-label="Close">×</button>
+    <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
+    ${pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
+      <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
+      <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
+    <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She'd rather you watch Kapil." : "She's busy rewatching iCarly."}</span></div>
+  </div>`;
+  el.hidden = false;
+  el.querySelector(".peek__close").focus();
+}
+
 function setupProfiles() {
   const me = PROFILES.find((p) => p.me);
   $("#nav-avatar").innerHTML = avatar(me, "nav");
@@ -173,7 +224,9 @@ function setupProfiles() {
   $("#pmenu-profiles").addEventListener("click", (e) => {
     const b = e.target.closest("[data-other]");
     if (!b) return;
+    setOpen(false);
     const p = others[b.dataset.other];
+    if (DATA?.family) return peekProfile(p);
     toast(`That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
   });
   const gate = $("#profiles");
@@ -215,6 +268,7 @@ function setupProfiles() {
     if (key === "add") return say(b, "One household, one account. Since May 2023, adding someone from outside it costs extra.");
     const p = PROFILES[key];
     if (p.me) return enter();
+    if (DATA?.family) return peekProfile(p);
     say(b, `That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
   });
   $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Profiles on this account are managed from home, in Dallas."));
@@ -1041,7 +1095,6 @@ function dadFilm() {
     ...(md ? [{ dur: 5, black: true, center: true, kicker: `Mother's Day ${md.year}`, line: "The<br><em>Mother</em>", sub: "The Jennifer Lopez assassin movie. Happy Mother's Day." }] : []),
     { dur: 5, black: true, center: true, kicker: "My little sister's birthdays", line: `${esc(f.dad_sister_birthday_picks[0] || "")}<br><em>and ${esc(f.dad_sister_birthday_picks.at(-1) || "")}</em>`, sub: "Party energy." },
     { dur: 5, black: true, center: true, kicker: "Christmas", line: "Merry<br><em>crime-mas</em>", sub: `${listOf(h.christmas.map(esc))}.` },
-    ...(h.valentines.length ? [{ dur: 4.5, black: true, center: true, kicker: "Valentine's Day", line: `${esc(h.valentines[0])}`, sub: "Romance." }] : []),
     ...(h.fathers_day.length ? [{ dur: 4.5, black: true, center: true, kicker: "Father's Day", line: `${h.fathers_day[0].views} episodes of<br><em>${esc(h.fathers_day[0].show)}</em>`, sub: "He treats himself." }] : []),
     { dur: 5, black: true, center: true, kicker: "The verdict", line: `Quits <em>${f.quit_rate.Dad}%</em><br>of shows`, sub: "After one episode. Samples everything. Commits to nothing. Except crime." },
   ];

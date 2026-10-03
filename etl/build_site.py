@@ -248,13 +248,19 @@ def family(meta):
     dad_md = h[(h["who"] == "Dad") & h["date"].isin(mothers_days)]
     fam_word = r"\b(?:Mom|Mother|Mummy|Mumma|Dad|Daddy|Papa|Father)\b"
     titles_of = lambda w: sorted(set(h[(h["who"] == w) & h["show"].str.contains(fam_word, regex=True)]["show"]))
+    # A peek at each profile: top shows and how often they rewatch (same full title on two profiles).
+    def peek(w):
+        d = h[h["who"] == w]
+        reps = d[d["episode"].notna()].groupby("title").size()
+        return {"top": [{"show": k, "views": int(v)} for k, v in d["show"].value_counts().head(3).items()],
+                "views": int(len(d)), "rewatched": int((reps > 1).sum()), "rewatch_pct": round((reps > 1).sum() / max(len(d), 1) * 100, 1)}
     return {
+        "profiles": {label[w]: peek(w) for w in label},
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
         "dad_holidays": {
             "christmas": sorted(set(h[(h["who"] == "Dad") & (h["date"].dt.month == 12) & (h["date"].dt.day == 25)]["show"])),
             "fathers_day": [{"show": k, "views": int(v)} for k, v in h[(h["who"] == "Dad") & h["date"].isin(
                 {nth_sunday(y, 6, 3) for y in range(2015, 2027)})]["show"].value_counts().head(3).items()],
-            "valentines": sorted(set(h[(h["who"] == "Dad") & (h["date"].dt.month == 2) & (h["date"].dt.day == 14)]["show"])),
         },
         "dad_on_mothers_day": [{"show": r.show, "year": int(r.date.year)} for r in dad_md.drop_duplicates("show").itertuples()],
         "mom_parent_titles": titles_of("Mom"), "dad_parent_titles": titles_of("Dad"),
@@ -577,6 +583,8 @@ def main():
         "gaps": gaps(active),
         "streak": longest_streak(active),
         "shows": {show: show_summary(df, show) for show in sorted(featured)},
+        # Posters only, for the family profile peeks (these aren't in my history).
+        "extra_art": sorted({t["show"] for p in (fam or {}).get("profiles", {}).values() for t in p["top"]} - featured),
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(site, indent=1, ensure_ascii=False))

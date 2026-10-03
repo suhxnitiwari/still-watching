@@ -94,7 +94,7 @@ def wikipedia(title):
 
 def main():
     art = json.loads(OUT.read_text()) if OUT.exists() else {}
-    for name in sorted(SITE["shows"]):
+    for name in sorted(set(SITE["shows"]) | set(SITE.get("extra_art", []))):
         if name in art:
             continue
         found = wikipedia(WIKI[name]) if name in WIKI else tvmaze(name)

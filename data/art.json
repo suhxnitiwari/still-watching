@@ -627,5 +627,41 @@
   "source": "https://www.tvmaze.com/shows/26856/you",
   "poster": "img/posters/you.jpg",
   "backdrop": "img/backdrops/you.jpg"
+ },
+ "Narcos": {
+  "match": "Narcos (2015)",
+  "source": "https://www.tvmaze.com/shows/2705/narcos",
+  "poster": "img/posters/narcos.jpg",
+  "backdrop": "img/backdrops/narcos.jpg"
+ },
+ "Ozark": {
+  "match": "Ozark (2017)",
+  "source": "https://www.tvmaze.com/shows/13417/ozark",
+  "poster": "img/posters/ozark.jpg",
+  "backdrop": "img/backdrops/ozark.jpg"
+ },
+ "Sofia the First": {
+  "match": "Sofia the First (2013)",
+  "source": "https://www.tvmaze.com/shows/707/sofia-the-first",
+  "poster": "img/posters/sofia-the-first.jpg",
+  "backdrop": "img/backdrops/sofia-the-first.jpg"
+ },
+ "Sons of Anarchy": {
+  "match": "Sons of Anarchy (2008)",
+  "source": "https://www.tvmaze.com/shows/76/sons-of-anarchy",
+  "poster": "img/posters/sons-of-anarchy.jpg",
+  "backdrop": "img/backdrops/sons-of-anarchy.jpg"
+ },
+ "The Thundermans": {
+  "match": "The Thundermans (2013)",
+  "source": "https://www.tvmaze.com/shows/595/the-thundermans",
+  "poster": "img/posters/the-thundermans.jpg",
+  "backdrop": "img/backdrops/the-thundermans.jpg"
+ },
+ "iCarly": {
+  "match": "iCarly (2021)",
+  "source": "https://www.tvmaze.com/shows/52330/icarly",
+  "poster": "img/posters/icarly.jpg",
+  "backdrop": "img/backdrops/icarly.jpg"
  }
 }
