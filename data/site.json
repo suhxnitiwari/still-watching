@@ -1893,6 +1893,24 @@
   ]
  },
  "family": {
+  "mom_hindi_lead": {
+   "shared": 72,
+   "mom_first": 51,
+   "me_first": 21,
+   "next_week": 13
+  },
+  "me_to_sister": {
+   "shared": 26,
+   "first": 26,
+   "second": 0,
+   "within_week": 0
+  },
+  "dad_and_me": {
+   "shared": 30,
+   "first": 23,
+   "second": 7,
+   "within_week": 3
+  },
   "pilot_quitters": {
    "Dad": 205,
    "Me": 100,

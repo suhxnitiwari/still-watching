@@ -168,7 +168,21 @@ def family(meta):
     same_day = kapil.groupby("date")["who"].nunique()
     birthdays = h[(h["who"] == "Dad") & (h["date"] >= "2016-11-13") & (h["date"].dt.month == 11) &
                   (h["date"].dt.day == 13)]["show"].unique().tolist()
+    # Who watched shared titles first, pair by pair (counts only).
+    def lead(a, b):
+        f = h[h["who"].isin([a, b])].groupby(["show", "who"])["date"].min().unstack().dropna()
+        gap = (f[b] - f[a]).dt.days
+        return {"shared": int(len(f)), "first": int((gap > 0).sum()), "second": int((gap < 0).sum()),
+                "within_week": int(((gap > 0) & (gap <= 7)).sum())}
+    hindi = lambda x: (meta.get(x) or {}).get("language") == "Hindi" or x in HINDI_FILMS
+    hh = h[h["show"].map(hindi)]
+    f = hh[hh["who"].isin(["Mom", "Suhani"])].groupby(["show", "who"])["date"].min().unstack().dropna()
+    g = (f["Suhani"] - f["Mom"]).dt.days
     return {
+        "mom_hindi_lead": {"shared": int(len(f)), "mom_first": int((g > 0).sum()), "me_first": int((g < 0).sum()),
+                           "next_week": int(((g > 0) & (g <= 7)).sum())},
+        "me_to_sister": lead("Suhani", "Sister"),
+        "dad_and_me": lead("Dad", "Suhani"),
         "pilot_quitters": dict(sorted(quitters.items(), key=lambda x: -x[1])),
         "shows_started": started,
         "quit_rate": dict(sorted(quit_rate.items(), key=lambda x: -x[1])),
