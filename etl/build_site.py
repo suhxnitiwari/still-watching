@@ -73,6 +73,41 @@ _HINDI = ROOT / "etl" / "private" / "hindi_films.txt"
 HINDI_FILMS = {l.strip() for l in _HINDI.read_text().splitlines() if l.strip() and not l.startswith("#")} if _HINDI.exists() else set()
 
 
+def lifestyle(df):
+    """Summers vs school by era, when movies happen, and how often anything is on."""
+    eras = [("Middle", "2017-08-01", "2020-07-31"), ("High", "2020-08-01", "2024-05-31"), ("College", "2024-08-15", "2026-09-30")]
+    out = {"summers": []}
+    for name, a, b in eras:
+        s = df[(df["date"] >= a) & (df["date"] <= b)]
+        days = pd.Series(pd.date_range(a, b))
+        summer_days = days.dt.month.isin([6, 7]).sum()
+        school_days = (~days.dt.month.isin([6, 7, 8, 12])).sum()
+        per_summer = s["date"].dt.month.isin([6, 7]).sum() / summer_days
+        per_school = (~s["date"].dt.month.isin([6, 7, 8, 12])).sum() / school_days
+        out["summers"].append({"era": name, "ratio": round(per_summer / per_school, 1)})
+    movies = df[df["kind"] == "movie"]
+    out["movies_on_breaks"] = round(movies["date"].dt.month.isin([12, 1, 6, 7]).mean() * 100)
+    return out
+
+
+def mood(df, meta, min_eps=15):
+    """The mood of what I reached for, month by month: light genres (comedy, family, romance) against dark ones
+    (crime, thriller, horror, medical...). It measures what I chose, not how I felt."""
+    light = {"Comedy", "Family", "Romance", "Children", "Music", "Food"}
+    dark = {"Crime", "Thriller", "Horror", "Mystery", "War", "Medical", "Supernatural"}
+    ser = df[df["kind"] == "series"].copy()
+    genres = ser["show"].map(lambda x: set((meta.get(x) or {}).get("genres") or []))
+    ser["score"] = genres.map(lambda g: (len(g & light) - len(g & dark)) / len(g & (light | dark)) if g & (light | dark) else None)
+    ser = ser.dropna(subset=["score"])
+    m = ser.groupby(ser["date"].dt.to_period("M")).agg(score=("score", "mean"), n=("score", "size"),
+                                                        top=("show", lambda x: x.value_counts().index[0]))
+    m = m[m["n"] >= min_eps]
+    pick = lambda row, k: {"month": str(k), "show": row["top"], "episodes": int(row["n"])}
+    darkest, lightest = m["score"].idxmin(), m["score"].idxmax()
+    lightest = m[m["score"] == m["score"].max()]["n"].idxmax()  # ties: the biggest month
+    return {"darkest": pick(m.loc[darkest], darkest), "lightest": pick(m.loc[lightest], lightest)}
+
+
 def comebacks(df, min_gap_years=3, min_after=5):
     """Shows I came back to after years away: a gap of 3+ years, then 5+ episodes."""
     out = []
@@ -139,6 +174,8 @@ def profile(df, meta):
         "series_share": round((df["kind"] == "series").mean() * 100, 1),
         "big_days": int((daily >= 10).sum()),
         "finished": sorted(finished, key=lambda x: -x["total"]),
+        "lifestyle": lifestyle(df),
+        "mood": mood(df, meta),
         # Shows I came back to after years away (20+ episodes, a gap of 3+ years between episodes).
         "comebacks": comebacks(df),
         # My birthday (Mar 6) against every other calendar day: can a stranger find it?

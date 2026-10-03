@@ -1779,6 +1779,35 @@
     "total": 47
    }
   ],
+  "lifestyle": {
+   "summers": [
+    {
+     "era": "Middle",
+     "ratio": 0.4
+    },
+    {
+     "era": "High",
+     "ratio": 2.1
+    },
+    {
+     "era": "College",
+     "ratio": 2.9
+    }
+   ],
+   "movies_on_breaks": 45
+  },
+  "mood": {
+   "darkest": {
+    "month": "2021-01",
+    "show": "Stranger Things",
+    "episodes": 17
+   },
+   "lightest": {
+    "month": "2019-12",
+    "show": "Friends",
+    "episodes": 181
+   }
+  },
   "comebacks": [
    {
     "show": "Gossip Girl",

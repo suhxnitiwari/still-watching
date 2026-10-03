@@ -439,6 +439,19 @@ function setupCase() {
       ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week, racing the deadline.` },
     { label: "ATTACHMENT ISSUES", img: bg("Friends"), guess: "I hate goodbyes", signal: "How I end things (I don't)",
       ev: `I watched <b>${p.finished.length} shows to the very last episode</b>. I come back to old ones years later: ${listOf(p.comebacks.slice(0, 3).map((c) => `${esc(c.show)} after ${Math.round(c.years)} years`))}. And on Friends' last night on U.S. Netflix, I kept going past midnight: <b>${fr.jan1} more episodes</b> logged Jan 1, 2020. I get emotional.` },
+    { label: "MOOD", img: bg(p.mood.darkest.show), guess: `Darkest: ${fmtMonth(p.mood.darkest.month)}`, signal: "The mood of the genres I reached for, month by month",
+      ev: (() => {
+        const ctx = { "2020-07": "the COVID summer right before moving to Dallas", "2021-01": "a COVID winter in a new state",
+          "2019-12": "winter break, racing Friends off Netflix", "2022-12": "a vacation with no school" };
+        const line = (m) => (ctx[m.month] ? `, ${ctx[m.month]}` : "");
+        return `My darkest month: <b>${fmtMonth(p.mood.darkest.month)}</b>, mostly ${esc(p.mood.darkest.show)}${line(p.mood.darkest)}. My lightest: <b>${fmtMonth(p.mood.lightest.month)}</b>, ${p.mood.lightest.episodes} episodes of ${esc(p.mood.lightest.show)}${line(p.mood.lightest)}. It measures what I reached for, not how I felt.`;
+      })() },
+    { label: "SUMMERS", img: bg(DATA.windows.summer_2025.top[0].show), guess: "Summer is for bingeing", signal: "Watching per day: summer vs school year",
+      ev: p.lifestyle.summers.map((x) => `${x.era} school: <b>${x.ratio}×</b>`).join(" · ") + `. In middle school summers were my quietest time; by college I watched almost three times as much in summer.` },
+    { label: "MOVIE NIGHTS", img: bg("Bridgerton"), guess: "Movies are for breaks", signal: "When the movies happen",
+      ev: `<b>${p.lifestyle.movies_on_breaks}%</b> of my movies land in December, January, June or July, a third of the year. Winter break 2026 alone: ${p.jan_2026.movies} movies.` },
+    { label: "RHYTHM", img: bg("Gilmore Girls"), guess: "Every third day", signal: "How often anything is on",
+      ev: `Something's on <b>${pct(DATA.totals.active_days / (daysBetween(DATA.totals.from, DATA.totals.to)) * 100)}</b> of the days in my history. My record: <b>${DATA.streak.days} days in a row</b>, ${fmtShort(DATA.streak.from)} to ${fmtDate(DATA.streak.to)}, home for summer.` },
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
       ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
     ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
@@ -485,13 +498,14 @@ function setupCase() {
   const themed = [
     ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
-    ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
+    ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
-    ["How I feel", ["ATTACHMENT ISSUES", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
+    ["How I feel", ["ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>
-    <div class="clues">${clues.filter((c) => c.ev).map((c) => `
+    <div class="row__track"><button class="row__arrow row__arrow--prev" type="button" aria-label="Scroll left">‹</button>
+    <div class="clues row__scroller">${clues.filter((c) => c.ev).map((c) => `
       <article class="clue">
         <div class="clue__img" style="background-image:url('${c.img}')"><span class="clue__label">${c.label}</span></div>
         <div class="clue__body">
@@ -500,7 +514,9 @@ function setupCase() {
           ${c.chart ? spark(c.chart) : ""}
           <p class="clue__evidence">${c.ev2 || c.ev}</p>
         </div>
-      </article>`).join("")}</div>`).join("");
+      </article>`).join("")}</div>
+    <button class="row__arrow row__arrow--next" type="button" aria-label="Scroll right">›</button></div>`).join("");
+  wireRows($("#case-groups"));
 }
 
 // ---------- growing up ----------
