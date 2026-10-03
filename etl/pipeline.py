@@ -65,8 +65,9 @@ def binges(df):
 
 
 def early_years():
-    """My viewing before my own profile existed (2015 to Dec 2017): the kids' shows I watched on
-    Dad's profile, picked out by etl/household.py (local only). Nothing else from his file is used."""
+    """My viewing on my parents' profiles, picked out by etl/household.py (local only): the kids' shows I
+    watched before 2019, and the teen shows and rom-coms I watched on Mom's profile. Nothing else from their
+    files is used."""
     path = OUT / "household.csv"
     if not path.exists():
         return None

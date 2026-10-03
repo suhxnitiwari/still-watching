@@ -399,5 +399,10 @@
   "source": "https://www.tvmaze.com/shows/1955/the-powerpuff-girls",
   "poster": "img/posters/the-powerpuff-girls.jpg",
   "backdrop": "img/backdrops/the-powerpuff-girls.jpg"
+ },
+ "Motu Patlu": {
+  "match": "Motu Patlu (2012)",
+  "source": "https://www.tvmaze.com/shows/35173/motu-patlu",
+  "poster": "img/posters/motu-patlu.jpg"
  }
 }
