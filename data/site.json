@@ -1,11 +1,11 @@
 {
  "totals": {
-  "views": 3483,
-  "titles": 477,
-  "series": 217,
+  "views": 3482,
+  "titles": 476,
+  "series": 216,
   "movies": 260,
   "binge_days": 432,
-  "active_days": 1279,
+  "active_days": 1278,
   "from": "2015-06-16",
   "to": "2026-09-25"
  },
@@ -484,7 +484,7 @@
   },
   {
    "month": "2025-03",
-   "views": 20
+   "views": 19
   },
   {
    "month": "2025-04",
@@ -562,7 +562,7 @@
  "month_of_year": [
   295,
   160,
-  346,
+  345,
   280,
   388,
   379,
@@ -576,7 +576,7 @@
  "weekday": {
   "Sunday": 635,
   "Saturday": 572,
-  "Monday": 514,
+  "Monday": 513,
   "Tuesday": 486,
   "Friday": 456,
   "Wednesday": 418,
@@ -764,7 +764,7 @@
   },
   {
    "year": 2025,
-   "views": 327,
+   "views": 326,
    "show": "Gossip Girl",
    "episodes": 123
   },
@@ -777,7 +777,7 @@
  ],
  "eras": {
   "Austin": {
-   "views": 533,
+   "views": 532,
    "from": "2024-08-25",
    "to": "2026-09-25",
    "per_month": 21.3,
@@ -1454,35 +1454,35 @@
    "name": "After Graduation",
    "from": "2024-06-27",
    "to": "2026-09-25",
-   "views": 569,
+   "views": 568,
    "per_month": 21.1,
-   "titles": 148,
+   "titles": 147,
    "titles_per_month": 5.5,
    "movie_share": 14.1,
    "language": {
-    "English": 66.5,
-    "Hindi": 27.6,
+    "English": 66.6,
+    "Hindi": 27.5,
     "Arabic": 3.9,
     "Korean": 0.8,
     "Spanish": 0.4,
     "Japanese": 0.2
    },
    "type": {
-    "Scripted": 77.7,
-    "Talk Show": 10.6,
-    "Reality": 7.0,
+    "Scripted": 77.9,
+    "Talk Show": 10.7,
+    "Reality": 6.8,
     "Documentary": 3.5,
     "Animation": 0.4,
     "Sports": 0.2
    },
    "genres": {
-    "Drama": 63.4,
-    "Romance": 48.5,
-    "Comedy": 23.1,
+    "Drama": 63.3,
+    "Romance": 48.6,
+    "Comedy": 23.2,
     "Thriller": 9.0,
     "Action": 7.0,
-    "Crime": 5.7,
-    "Mystery": 5.5,
+    "Crime": 5.5,
+    "Mystery": 5.3,
     "Family": 4.9,
     "Sports": 3.3,
     "Horror": 2.5,
@@ -1499,9 +1499,9 @@
     "Nature": 0.2,
     "Music": 0.2
    },
-   "netflix_share": 66.3,
+   "netflix_share": 66.4,
    "median_premiere": 2020,
-   "classic_share": 3.7,
+   "classic_share": 3.5,
    "fresh_share": 30.1,
    "top": [
     {
@@ -1666,7 +1666,7 @@
     }
    ],
    "movies": 80,
-   "series_views": 489
+   "series_views": 488
   }
  ],
  "profile": {
@@ -1681,7 +1681,7 @@
    "watched": 233,
    "total": 236
   },
-  "hindi_away": 35.5,
+  "hindi_away": 35.2,
   "hindi_home": 13.6,
   "kapil_away": 30,
   "kapil_home": 10,
@@ -2718,6 +2718,31 @@
    },
    "eras": {
     "Dallas": 101
+   }
+  },
+  "Goosebumps": {
+   "show": "Goosebumps",
+   "kind": "series",
+   "views": 24,
+   "first": "2016-06-09",
+   "last": "2017-08-19",
+   "days": 10,
+   "best_day": {
+    "date": "2016-12-21",
+    "episodes": 5
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 2": 4,
+    "Season 3": 4,
+    "Season 4": 3
+   },
+   "by_year": {
+    "2016": 20,
+    "2017": 4
+   },
+   "eras": {
+    "Dallas": 24
    }
   },
   "Gossip Girl": {
