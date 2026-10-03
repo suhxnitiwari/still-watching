@@ -6,6 +6,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 const SVG = "http://www.w3.org/2000/svg";
 
 let DATA;
+const BIRTH_YEAR = 2006;
 let ART = {};
 
 // ---------- helpers ----------
@@ -158,7 +159,7 @@ function setupHero() {
     `Then 2024 brought ${yearly[2024]}, my lowest year, and after I moved to Austin the screen mostly went dark, ` +
     `except the summers I came home.`;
   $("#hero-badges").innerHTML =
-    `<span class="chip"><i></i>${drop}% Fewer Views</span><span class="chip"><i></i>${silence.days} Days of Silence</span>`;
+    `<span class="chip"><i></i>${drop}% Fewer Views</span><span class="chip"><i></i>${DATA.profile.senior_spring.views} Views, Senior Spring</span>`;
 
   // The poster wall drifts, unless the viewer asked for less motion.
   $("#hero-wall").innerHTML = wallHTML();
@@ -172,7 +173,7 @@ function setupHero() {
   setPaused(matchMedia("(prefers-reduced-motion: reduce)").matches);
   toggle.addEventListener("click", () => setPaused(!wall.classList.contains("is-paused")));
 
-  $("#more-info").addEventListener("click", openStory);
+  $("#more-info").addEventListener("click", () => { location.href = "case-study.html"; });
 }
 
 function openStory() {
@@ -228,27 +229,37 @@ function comfortShows() {
     .sort((a, b) => yearsOf(b) - yearsOf(a) || b.views - a.views);
 }
 
+// A strip of squares, one per year of my history, lit for every year I watched the show.
+function yearStrip(s) {
+  const first = parse(DATA.totals.from).getFullYear(), last = parse(DATA.totals.to).getFullYear();
+  return `<span class="strip" aria-label="${yearsOf(s)} of ${last - first + 1} years">${Array.from({ length: last - first + 1 }, (_, i) => {
+    const y = first + i, eps = s.by_year[y];
+    return `<i class="${eps ? "on" : ""}" title="${y}${eps ? `: ${eps} episode${eps === 1 ? "" : "s"}` : ""}"></i>`;
+  }).join("")}</span>`;
+}
+
 function collection() {
   const shows = comfortShows();
+  const first = parse(DATA.totals.from).getFullYear(), last = parse(DATA.totals.to).getFullYear();
   return `<section class="collection" aria-labelledby="collection-title">
     <div class="collection__copy">
-      <h3 class="collection__title" id="collection-title">Comfort<br>Shows</h3>
       <p class="collection__label">FEATURED COLLECTION</p>
-      <p class="collection__text">The shows I kept coming back to, years apart. ${esc(shows[0].show)} shows up in ${yearsOf(shows[0])} different years.</p>
+      <h3 class="collection__title" id="collection-title">The Ones That<br>Never Left</h3>
+      <p class="collection__text">Every square is a year, ${first} to ${last}. ${esc(shows[0].show)} lit up ${yearsOf(shows[0])} of them.</p>
       <button class="btn btn--light" type="button" id="explore">Explore All</button>
     </div>
-    <div class="collection__tiles">${shows.slice(0, 3).map((s) => tile(s.show)).join("")}</div>
+    <div class="collection__tiles">${shows.slice(0, 3).map((s) => `
+      <div class="never">${tile(s.show)}<div class="never__foot">${yearStrip(s)}<b>${yearsOf(s)} yrs</b></div></div>`).join("")}</div>
   </section>`;
 }
 
 function openComfort() {
-  const shows = comfortShows().slice(0, 10);
-  const max = Math.max(...shows.map(yearsOf));
-  openModal("Comfort Shows", `
+  const shows = comfortShows().slice(0, 12);
+  openModal("The Ones That Never Left", `
     <p class="modal__meta"><span class="match">Featured Collection</span><span>${shows.length} shows</span></p>
-    <p class="modal__copy">Ranked by how many different years I watched them.</p>
-    <h4>Years watched</h4>
-    <div class="mini">${shows.map((s) => miniRow(s.show, yearsOf(s), max)).join("")}</div>`);
+    <p class="modal__copy">The shows I keep coming back to. Each square is a year; lit means I watched it that year.</p>
+    <div class="never-list">${shows.map((s) => `
+      <button class="never-list__row" type="button" data-show="${esc(s.show)}"><span>${esc(s.show)}</span>${yearStrip(s)}<b>${yearsOf(s)}</b></button>`).join("")}</div>`);
 }
 
 function setupRows() {
@@ -257,10 +268,10 @@ function setupRows() {
     row("Top 10 Shows in Suhani's Life", "", top.map((s, i) =>
       `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span>${tile(s.show, `<span class="tag">${esc(tagFor(s.show))}</span>`, { tall: true })}</div>`)),
     collection(),
-    row("#1 Every Year", "", yearly.map((y) =>
-      tile(y.show, `<span class="tile__ribbon">TOP<b>${y.year}</b></span><span class="tile__meta tile__meta--left">${y.episodes} eps</span>`))),
-    row("Summer 2025, Home in Dallas", `${n(windows.summer_2025.views)} views in two months`, windows.summer_2025.top.map((s) =>
-      tile(s.show, `<span class="tile__meta">${s.views}</span>`))),
+    row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
+      tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
+    row("Home for Summer & Absolutely Starving", `a whole year of college, then ${n(windows.summer_2025.views)} views in two months`, windows.summer_2025.top.map((s) =>
+      tile(s.show, `<span class="tile__meta">${s.views} eps</span>`))),
   ];
   const rows = $("#rows");
   rows.innerHTML = html.join("");
@@ -268,7 +279,11 @@ function setupRows() {
   const comfortBg = comfortShows().map((x) => ART[x.show]?.backdrop).find(Boolean);
   if (comfortBg) $(".collection").style.setProperty("--collection-bg", `url('${new URL(comfortBg, location.href).href}')`);
 
-  rows.querySelectorAll(".row__track").forEach((track) => {
+  wireRows(rows);
+}
+
+function wireRows(root) {
+  root.querySelectorAll(".row__track").forEach((track) => {
     const scroller = $(".row__scroller", track);
     const prev = $(".row__arrow--prev", track);
     const next = $(".row__arrow--next", track);
@@ -347,6 +362,15 @@ function setupPreview() {
 }
 
 // ---------- the case file ----------
+// A small monthly bar chart of my views over a window, with the months that make the point in red.
+function spark({ from, to, hot = [] }) {
+  const months = DATA.monthly.filter((m) => m.month >= from && m.month <= to);
+  const max = Math.max(...months.map((m) => m.views), 1);
+  return `<div class="spark" role="img" aria-label="Views per month, ${fmtMonth(from)} to ${fmtMonth(to)}">${months.map((m) =>
+    `<span class="spark__col${hot.includes(m.month) ? " is-hot" : ""}" title="${fmtMonth(m.month)}: ${m.views} views"><i style="height:${Math.max(m.views / max * 100, 2)}%"></i></span>`).join("")}
+    <span class="spark__axis"><b>${fmtMonth(from)}</b><b>${fmtMonth(to)}</b></span></div>`;
+}
+
 // Guesses a stranger could make from nothing but my history, each with its signal and evidence.
 function setupCase() {
   const p = DATA.profile;
@@ -375,8 +399,8 @@ function setupCase() {
         ev: `Weekdays are <b>${pct(p.weekday_share.school)}</b> of my school-year watching and ${pct(p.weekday_share.summer)} in summer. The last 12 days of December average <b>${decRate.toFixed(1)}×</b> the first 19: finals, then winter break.` },
       { label: "MARCH 2020", img: bg(p.covid.top), guess: "Sent home when COVID hit", signal: "A sudden spike",
         ev: `February 2020: ${p.covid.feb_2020} views. March: <b>${p.covid.march_2020}</b>, ${p.covid.after_closure} of them after schools closed on March 13, mostly ${esc(p.covid.top)}.` },
-      { label: "GRADUATION", img: bg(DATA.windows.last_summer_home.top[0].show), guess: "Graduated in spring 2024", signal: "The longest silence",
-        ev: `<b>${silence.days} days</b> with nothing, ${fmtShort(silence.from)} to ${fmtDate(silence.to)}: senior spring. Then a summer back on the couch.` },
+      { label: "GRADUATION", img: bg(DATA.windows.last_summer_home.top[0].show), guess: "Graduated in spring 2024", signal: "The quietest six months",
+        ev: `January to June 2024: <b>${p.senior_spring.views} views on ${p.senior_spring.days} days</b>, against about ${Math.round(hs.per_month)} a month the rest of high school. Senior spring. Then a summer back on the couch.` },
       { label: "COLLEGE", img: bg(DATA.windows.summer_2025.top[0].show), guess: "Left home for college in 2024", signal: "Semesters against summers",
         ev: `Fall 2024: <b>${p.college.fall_2024}</b> views a day. Summer 2025, back home: <b>${p.college.summer_2025}</b>, ten times more. Fall 2025: ${p.college.fall_2025} again.` },
     ]],
@@ -391,16 +415,39 @@ function setupCase() {
         ev: `When I moved out, my watching collapsed, and it came back every time I was home. That's what happens when the account belongs to a house, not to you.` },
       { label: "RELATIONSHIP STATUS", img: bg("The Vampire Diaries"), guess: "Single, at least in 2019", signal: "Valentine's Day",
         ev: p.valentines.length ? `The only Valentine's Day in ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years with anything on: ${fmtDate(p.valentines[0].date)}, <b>${esc(p.valentines[0].show)}</b>, ${p.valentines.length === 2 ? "twice" : `${p.valentines.length} times`}.` : "" },
-      { label: "HOMESICK", img: bg("The Great Indian Kapil Show"), guess: "Bollywood is how I go home", signal: "Hindi films by era",
+      { label: "HOMESICK", img: bg("The Great Indian Kapil Show"), guess: "Homesick, in Hindi", signal: "Hindi when I'm away vs home",
+        ev2: `In college, Hindi is <b>${pct(p.hindi_away)} of my series when I'm away</b> and ${pct(p.hindi_home)} when I'm home for summer. The Great Indian Kapil Show: ${p.kapil_away} episodes away, ${p.kapil_home} at home.`,
         ev: `Hindi films were ${share(hf.by_era[1])} of my movies in middle school, ${share(hf.by_era[2])} in high school and ${share(hf.by_era[3])} after. Winter break, January 2026: <b>${p.jan_2026.movies} movies, ${p.jan_2026.hindi} of them Hindi</b>.` },
     ]],
   ];
+  const fr = p.friends_race;
+  const finished = p.finished.slice(0, 6).map((f) => f.show);
+  groups.push(["More", [
+    { label: "A FINISHER", img: bg("The Vampire Diaries"), guess: `${p.finished.length} shows, start to finish`, signal: "Episodes watched against episodes made",
+      ev: `Every episode, or nearly: ${listOf(finished)}. Friends: <b>${fr.watched} of ${fr.total}</b>.` },
+    { label: "A TV PERSON", img: bg("Grey's Anatomy"), guess: "Episodes, not movies", signal: "What I press play on",
+      ev: `<b>${pct(p.series_share)}</b> of everything I've watched is an episode. <b>${p.big_days} days</b> with 10 or more.` },
+    { label: "U.S. CATALOG", img: bg("Friends"), guess: "Watching U.S. Netflix", signal: "A deadline only U.S. viewers had",
+      chart: { from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] },
+      ev: `Friends left U.S. Netflix on Jan 1, 2020. I watched <b>${fr.december} episodes that December</b>, ${fr.last_week} of them in the last week. Then nothing.` },
+    { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "Born in early March", signal: "What I watch on one date every year",
+      ev: `March 6, 2026, my 20th birthday: Bridgerton and Queen Charlotte, back to back.` },
+    { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
+      ev: `Something on over Christmas in <b>${p.christmas_years} of ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years</b>, mostly a winter-break binge.` },
+  ]]);
+  // Charts for the place clues
+  const charts = {
+    MOVED: { from: "2015-05", to: "2016-02", hot: ["2015-06", "2015-07"] },
+    "MOVED AGAIN": { from: "2020-04", to: "2021-01", hot: ["2020-08", "2020-09"] },
+    COLLEGE: { from: "2024-06", to: "2026-09", hot: ["2025-06", "2025-07", "2026-06", "2026-07"] },
+  };
+  groups.forEach(([, clues]) => clues.forEach((c) => { if (charts[c.label]) c.chart = charts[c.label]; }));
   // Regroup the clues by theme.
   const byLabel = Object.fromEntries(groups.flatMap(([, clues]) => clues).map((c) => [c.label, c]));
   const themed = [
-    ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND"]],
-    ["Where I've lived", ["MOVED", "MOVED AGAIN", "HOME", "COLLEGE"]],
-    ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION"]],
+    ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
+    ["Where I've lived", ["MOVED", "MOVED AGAIN", "U.S. CATALOG", "COLLEGE"]],
+    ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["FAMILY", "HOUSEHOLD"]],
     ["How I feel", ["HOMESICK", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
@@ -412,7 +459,8 @@ function setupCase() {
         <div class="clue__body">
           <p class="clue__guess">${esc(c.guess)}</p>
           <p class="clue__signal">Signal: ${esc(c.signal)}</p>
-          <p class="clue__evidence">${c.ev}</p>
+          ${c.chart ? spark(c.chart) : ""}
+          <p class="clue__evidence">${c.ev2 || c.ev}</p>
         </div>
       </article>`).join("")}</div>`).join("");
 }
@@ -453,46 +501,42 @@ function setupGrowth() {
       </div>
     </article>`).join("");
 
-  // Each shift shows the shows behind its number in every era, not a paragraph about them.
-  const ex = (key) => DATA.life.map((e) => e.examples[key] || []);
-  const shifts = [
-    { title: "Missing home, in Hindi", vals: DATA.life.map((e) => l(e, "Hindi")), shows: ex("hindi"), unit: "% of series in Hindi" },
-    { title: "Growing out of family TV", vals: DATA.life.map((e) => g(e, "Family")), shows: ex("family"), unit: "% family shows" },
-    { title: "High school got serious", vals: DATA.life.map((e) => g(e, "Drama")), shows: ex("drama"), unit: "% drama" },
-    { title: "Hospitals and crime", vals: DATA.life.map((e) => g(e, "Medical") + g(e, "Crime")), shows: ex("medical_crime"), unit: "% medical + crime" },
-    { title: "Laughing with talk shows", vals: DATA.life.map((e) => t(e, "Talk Show")), shows: ex("talk"), unit: "% talk shows" },
-    { title: "Watching what's new", vals: DATA.life.map((e) => e.median_premiere), year: true,
-      shows: DATA.life.map((e) => e.by_premiere.slice(-3).reverse().map((x) => ({ show: x.show, tag: x.year }))), unit: "typical premiere year" },
-  ];
-  const labels = ["Elementary", "Middle", "High", "After"];
-  const fmtVal = (s, v) => (s.year ? v : pct(v));
-  $("#shifts").innerHTML = shifts.map((s) => {
-    const hi = Math.max(...s.vals), lo = s.year ? Math.min(...s.vals) - 3 : 0;
-    const peak = s.vals.indexOf(hi);
-    return `<article class="shift">
-      <p class="shift__title">${esc(s.title)}</p>
-      <p class="shift__big">${s.vals.map((v, i) => i === s.vals.length - 1 ? `<b>${fmtVal(s, v)}</b>` : fmtVal(s, v)).join(" <span>→</span> ")}</p>
-      <p class="shift__signal">${esc(s.unit)}</p>
-      <div class="shift__eras">${s.vals.map((v, i) => {
-        const shows = (s.year || v >= 1 ? s.shows[i] : []).filter((x) => posterOf(x.show)).slice(0, 3);
-        return `<div class="shift__era${i === peak ? " is-peak" : ""}">
-          <div class="shift__meter"><span data-w="${Math.max(((v - lo) / (hi - lo || 1)) * 100, 3)}"></span></div>
-          <div class="shift__posters">${shows.length ? shows.map((x) =>
-            `<button class="shift__poster" type="button" data-show="${esc(x.show)}" aria-label="${esc(x.show)}"><img src="${posterOf(x.show)}" alt="" loading="lazy">${x.tag ? `<i>${x.tag}</i>` : ""}</button>`).join("")
-            : '<span class="shift__none">none</span>'}</div>
-          <p class="shift__label">${labels[i]} <b>${fmtVal(s, v)}</b></p>
-        </div>`;
-      }).join("")}</div>
-    </article>`;
-  }).join("");
+  setupWhatChanged({ g, l, t, pct });
+}
 
-  // Bars grow when the cards scroll into view.
-  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-    if (!e.isIntersecting) return;
-    e.target.querySelectorAll("[data-w]").forEach((b) => { b.style.width = `${b.dataset.w}%`; });
-    io.unobserve(e.target);
-  }), { threshold: .3 });
-  document.querySelectorAll(".shift").forEach((el) => io.observe(el));
+// What changed, shown with the shows themselves: one Netflix row per change. Each era opens with a card
+// carrying its number, followed by that era's shows behind it.
+function setupWhatChanged({ g, l, t, pct }) {
+  const eras = DATA.life;
+  const ex = (key) => (e) => e.examples[key] || [];
+  const stories = [
+    { title: "Missing Home, in Hindi", unit: "of my series in Hindi", value: (e) => l(e, "Hindi"), shows: ex("hindi") },
+    { title: "Growing Out of Family TV", unit: "family shows", value: (e) => g(e, "Family"), shows: ex("family") },
+    { title: "High School Got Serious", unit: "drama", value: (e) => g(e, "Drama"), shows: ex("drama") },
+    { title: "Hospitals and Crime", unit: "medical + crime", value: (e) => g(e, "Medical") + g(e, "Crime"), shows: ex("medical_crime") },
+    { title: "Laughing With Talk Shows", unit: "talk shows", value: (e) => t(e, "Talk Show"), shows: ex("talk") },
+    { title: "Watching What's New", unit: "typical premiere year", value: (e) => e.median_premiere, year: true,
+      shows: (e) => e.by_premiere.slice(-4).reverse().map((x) => ({ show: x.show, tag: x.year })) },
+  ];
+  const fmt = (st, v) => (st.year ? String(v) : pct(v));
+  const label = (e) => (e.key === "after" ? "College" : e.name);
+  $("#wc").innerHTML = stories.map((st) => {
+    const vals = eras.map(st.value);
+    const peak = st.year ? vals.length - 1 : vals.indexOf(Math.max(...vals));
+    const items = eras.flatMap((e, i) => {
+      const v = vals[i];
+      const shows = (st.year || v >= 1 ? st.shows(e) : []).slice(0, 4);
+      const card = `<div class="eracard${i === peak ? " is-peak" : ""}">
+        <span class="eracard__era">${label(e)}</span>
+        <span class="eracard__num">${fmt(st, v)}</span>
+        <span class="eracard__unit">${esc(st.unit)}</span></div>`;
+      const tiles = shows.length ? shows.map((x) => tile(x.show, x.tag ? `<span class="tile__meta">${x.tag}</span>` : "")) :
+        [`<div class="eracard eracard--none"><span>None yet</span></div>`];
+      return [card, ...tiles];
+    });
+    return row(st.title, vals.map((v, i) => (i === vals.length - 1 ? fmt(st, v) : fmt(st, v))).join(" → "), items);
+  }).join("");
+  wireRows($("#wc"));
 }
 
 // ---------- the broken home ----------
@@ -657,8 +701,8 @@ function passwordFilm() {
       kicker: "Every year had a show", line: "One obsession<br>at a time", sub: listOf(owned.slice(0, 6).map((y) => y.show)) + "." },
     { dur: 6, wall: true, center: true, kicker: `Update on Sharing · ${fmtDate(dates.crackdown)}`,
       line: "“One<br><em>household.</em>”", sub: "Netflix starts checking which Wi-Fi you watch from. At home in Dallas, nothing changes. Yet." },
-    { dur: 5.5, black: true, center: true, kicker: `${fmtShort(silence.from)} – ${fmtDate(silence.to)}`,
-      line: `<span class="scene__counter" data-to="${silence.days}">0</span> days<br>of <em>silence</em>`, sub: "Senior spring. The longest I've ever gone without pressing play." },
+    { dur: 5.5, black: true, center: true, kicker: "January – June 2024",
+      line: `<span class="scene__counter" data-to="${DATA.profile.senior_spring.views}">0</span> views<br>in <em>six months</em>`, sub: "Senior spring. The quietest stretch of my life on Netflix." },
     { dur: 5.5, img: backdropOf(w.first_semester.top[1].show), alt: true, kicker: fmtDate(dates.austin), line: "Moved to<br><em>Austin</em>",
       sub: `The household stayed in Dallas. My first semester: ${w.first_semester.views} views, about one month's worth back home.` },
     { dur: 6, img: backdropOf(gg.show), kicker: "Summer 2025 · home in Dallas", line: `${gg.views} episodes<br>of <em>${esc(gg.show)}</em>`,
@@ -694,7 +738,7 @@ function growingFilm() {
       sub: `Drama goes from ${pct(ms.genres.Drama)} to ${pct(hs.genres.Drama)}. Hospitals, crime, Stars Hollow.` },
     { dur: 5, montage: posters(hindi.slice(0, 6)), center: true, kicker: "Finding home on screen", line: "Hindi,<br><em>more and more</em>",
       sub: `Hindi series: ${pct(ms.language.Hindi)} → ${pct(hs.language.Hindi)} → ${pct(after.language.Hindi)}. Hindi films: ${p.hindi_films.total} of ${p.hindi_films.movies}.` },
-    { dur: 4.5, black: true, center: true, kicker: "Senior spring, 2024", line: `<span class="scene__counter" data-to="${gaps[0].days}">0</span> days<br>of <em>nothing</em>`,
+    { dur: 4.5, black: true, center: true, kicker: "Senior spring, 2024", line: `<span class="scene__counter" data-to="${p.senior_spring.views}">0</span> views<br>in <em>six months</em>`,
       sub: "Graduation is busy." },
     { dur: 5.5, black: true, center: true, accent: "ut", kicker: fmtDate(dates.austin), line: "Hook 'em.<br><em>UT Austin.</em>",
       sub: `Freshman fall: ${p.college.fall_2024} views a day. Summer back home: ${p.college.summer_2025}.` },
@@ -844,7 +888,7 @@ function storyMarks() {
   return [
     { month: friends.date.slice(0, 7), title: `${friends.show}: ${friends.episodes} in a day`, sub: fmtDate(friends.date) },
     { month: dates.crackdown.slice(0, 7), title: "Netflix checks the Wi-Fi", sub: fmtDate(dates.crackdown) },
-    { month: silence.from.slice(0, 7), title: `${silence.days} days of silence`, sub: `${fmtShort(silence.from)} – ${fmtShort(silence.to)}` },
+    { month: "2024-03", title: `Senior spring: ${DATA.profile.senior_spring.views} views`, sub: "Jan – Jun 2024" },
     { month: dates.austin.slice(0, 7), title: "Moved to Austin", sub: fmtDate(dates.austin) },
     { month: "2025-07", title: "Home for the summer", sub: `${gg.views} eps of ${gg.show}` },
   ];
@@ -963,8 +1007,8 @@ function seasons() {
           copy: `Sunday is my biggest day and Thursday my smallest, ${weekday.Sunday} views against ${weekday.Thursday}. Weekends are ${Math.round(weekend / sum(weekday) * 100)}% of everything I've watched, more than their 29% share of the week.` },
         password: { title: "The Password Check", art: w.after_crackdown.top[0].show, stat: `${w.after_crackdown.views} views`,
           copy: `On ${fmtDate(DATA.dates.crackdown)}, Netflix started enforcing paid sharing in the US: watch away from the account's home Wi-Fi and it asks someone to pay. I was still home, and it didn't slow me down: ${w.after_crackdown.views} views by the end of 2023, led by ${w.after_crackdown.top[0].show} (${w.after_crackdown.top[0].views}).` },
-        silence: { title: `${silence.days} Days of Silence`, art: "Silence", label: "…", stat: "0 views",
-          copy: `From ${fmtShort(silence.from)} to ${fmtDate(silence.to)}, nothing at all: the longest break in ${parse(totals.to).getFullYear() - parse(totals.from).getFullYear()} years. It happened in the spring of senior year, while I was still in Dallas.` },
+        silence: { title: "Senior Spring", art: "Silence", label: "…", stat: `${DATA.profile.senior_spring.views} views`,
+          copy: `January to June 2024: ${DATA.profile.senior_spring.views} views on ${DATA.profile.senior_spring.days} days, the quietest six months in ${parse(totals.to).getFullYear() - parse(totals.from).getFullYear()} years. Graduation season.` },
         lastSummer: { title: "Last Summer at Home", art: w.last_summer_home.top[1].show, stat: `${w.last_summer_home.views} views`,
           copy: `The summer before college, it came back: ${w.last_summer_home.views} views between ${fmtShort(w.last_summer_home.from)} and ${fmtDate(w.last_summer_home.to)}, mostly ${listOf(w.last_summer_home.top.slice(0, 3).map((s) => s.show))}.` },
         moveIn: { title: "Move-In Day", art: "Austin", label: "Austin", stat: `${w.first_semester.views} views`,

@@ -1670,6 +1670,111 @@
   }
  ],
  "profile": {
+  "senior_spring": {
+   "views": 14,
+   "days": 6,
+   "months": 6
+  },
+  "friends_race": {
+   "december": 181,
+   "last_week": 44,
+   "watched": 233,
+   "total": 236
+  },
+  "hindi_away": 35.5,
+  "hindi_home": 13.6,
+  "kapil_away": 30,
+  "kapil_home": 10,
+  "christmas_years": 6,
+  "series_share": 91.9,
+  "big_days": 27,
+  "finished": [
+   {
+    "show": "Friends",
+    "watched": 233,
+    "total": 236
+   },
+   {
+    "show": "The Vampire Diaries",
+    "watched": 172,
+    "total": 171
+   },
+   {
+    "show": "Gilmore Girls",
+    "watched": 158,
+    "total": 153
+   },
+   {
+    "show": "Gossip Girl",
+    "watched": 127,
+    "total": 121
+   },
+   {
+    "show": "The Fosters",
+    "watched": 104,
+    "total": 104
+   },
+   {
+    "show": "Switched at Birth",
+    "watched": 103,
+    "total": 103
+   },
+   {
+    "show": "Jane The Virgin",
+    "watched": 104,
+    "total": 100
+   },
+   {
+    "show": "Good Luck Charlie",
+    "watched": 101,
+    "total": 100
+   },
+   {
+    "show": "Baby Daddy",
+    "watched": 96,
+    "total": 100
+   },
+   {
+    "show": "Jessie",
+    "watched": 105,
+    "total": 99
+   },
+   {
+    "show": "The Originals",
+    "watched": 92,
+    "total": 92
+   },
+   {
+    "show": "Lab Rats",
+    "watched": 98,
+    "total": 90
+   },
+   {
+    "show": "Liv and Maddie",
+    "watched": 82,
+    "total": 80
+   },
+   {
+    "show": "Fuller House",
+    "watched": 116,
+    "total": 75
+   },
+   {
+    "show": "Manifest",
+    "watched": 67,
+    "total": 62
+   },
+   {
+    "show": "A.N.T. Farm",
+    "watched": 64,
+    "total": 62
+   },
+   {
+    "show": "Mighty Med",
+    "watched": 48,
+    "total": 47
+   }
+  ],
   "kids_by_year": {
    "2015": 57.6,
    "2016": 67.0,

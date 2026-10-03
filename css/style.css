@@ -283,10 +283,10 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .collection::before { content: ""; position: absolute; inset: -30px; background: var(--collection-bg, #222) center / cover; filter: blur(18px) saturate(1.2) brightness(.5); }
 .collection::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20, 20, 20, .5), transparent 60%), linear-gradient(180deg, var(--bg), transparent 18%, transparent 82%, var(--bg)); }
 .collection > * { position: relative; z-index: 1; }
-.collection__copy { text-align: center; }
-.collection__title { font-family: var(--display); font-weight: 400; font-size: clamp(38px, 3.6vw, 56px); line-height: .9; margin: 0; letter-spacing: .04em; color: #f6e7b0; }
-.collection__label { display: inline-block; margin: 16px 0; padding: 10px 26px; border-top: 1px solid rgba(255, 255, 255, .4); border-bottom: 1px solid rgba(255, 255, 255, .4); font-size: 13px; letter-spacing: .3em; font-weight: 600; }
-.collection__text { font-size: clamp(15px, 1.3vw, 19px); line-height: 1.5; margin: 0 auto 20px; max-width: 420px; }
+.collection__copy { text-align: left; }
+.collection__title { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 4.4vw, 68px); line-height: .9; margin: 0 0 14px; letter-spacing: .03em; color: #fff; }
+.collection__label { margin: 0 0 10px; color: var(--red); font-size: 12px; letter-spacing: .24em; font-weight: 800; }
+.collection__text { font-size: clamp(15px, 1.3vw, 19px); line-height: 1.5; margin: 0 0 20px; max-width: 420px; color: #ddd; }
 .collection__tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .collection__tiles .tile { width: 100%; }
 
@@ -346,6 +346,13 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .clue__evidence { font-size: 14px; line-height: 1.55; margin: 0; color: #d6d6d6; }
 .clue__evidence b { color: #fff; }
 
+.spark { position: relative; display: flex; align-items: flex-end; gap: 3px; height: 54px; margin: 2px 0 26px; }
+.spark__col { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.spark__col i { display: block; width: 100%; border-radius: 2px 2px 0 0; background: #5a5a5a; }
+.spark__col.is-hot i { background: var(--red); box-shadow: 0 0 8px rgba(229, 9, 20, .5); }
+.spark__axis { position: absolute; left: 0; right: 0; bottom: -18px; display: flex; justify-content: space-between; font-size: 11px; color: var(--dim); }
+.spark__axis b { font-weight: 500; }
+
 /* Growing up: three eras and what changed between them */
 .growth { padding: 30px var(--gutter) 60px; }
 .growth__kicker { color: var(--red); font-weight: 800; letter-spacing: .22em; font-size: 12px; text-transform: uppercase; margin: 0 0 6px; }
@@ -356,11 +363,11 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .scene--ut.scene--center::after { background: radial-gradient(70% 70% at 50% 50%, rgba(191, 87, 0, .28), rgba(0, 0, 0, .94)); }
 .growth__h { font-size: clamp(20px, 1.8vw, 26px); margin: 48px 0 16px; }
 .eras3 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-.era { position: relative; border-radius: 14px; overflow: hidden; background: #1c1c1c; display: flex; flex-direction: column; min-height: 520px; }
-.era__bg { position: absolute; inset: 0 0 auto; height: 62%; background: center / cover no-repeat; transition: transform 6s ease; }
+.era { position: relative; border-radius: 14px; overflow: hidden; background: #1c1c1c; display: flex; flex-direction: column; }
+.era__bg { position: absolute; inset: 0 0 auto; height: 300px; background: center / cover no-repeat; transition: transform 6s ease; }
 .era:hover .era__bg { transform: scale(1.06); }
 .era__bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .25), #1c1c1c 96%); }
-.era__body { position: relative; margin-top: auto; padding: 22px; }
+.era__body { position: relative; margin-top: 190px; padding: 22px; }
 .era__season { font-size: 12px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--red); margin: 0 0 4px; }
 .era__name { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 3vw, 46px); line-height: .95; margin: 0; }
 .era__years { color: var(--muted); font-size: 14px; margin: 4px 0 12px; }
@@ -394,6 +401,32 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .shift__label { margin: 0; font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 6px; }
 .shift__label b { color: #fff; }
 .shift__era.is-peak .shift__label b { color: var(--red); }
+/* What changed: Netflix rows with an era card in front of each era's shows */
+#wc .row { margin-bottom: 30px; }
+#wc .row__title { margin-left: 0; }
+#wc .row__scroller { padding-left: 0; scroll-padding-left: 0; }
+.eracard { flex: 0 0 auto; width: clamp(150px, 12vw, 190px); aspect-ratio: 16 / 9; border-radius: 8px; padding: 10px 14px; scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center; background: #1f1f1f; border: 1px solid #333; margin-left: 14px; }
+.eracard:first-child { margin-left: 0; }
+.eracard__era { font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.eracard__num { font-family: var(--display); font-size: clamp(38px, 3.4vw, 54px); line-height: .95; color: #bdbdbd; }
+.eracard__unit { font-size: 12px; color: var(--dim); }
+.eracard.is-peak { background: rgba(229, 9, 20, .14); border-color: var(--red); }
+.eracard.is-peak .eracard__num { color: var(--red); }
+.eracard--none { margin-left: 0; align-items: center; color: #555; font-size: 13px; border-style: dashed; background: transparent; }
+
+/* The Ones That Never Left */
+.never { display: flex; flex-direction: column; gap: 8px; }
+.never .tile { width: 100%; }
+.never__foot { display: flex; align-items: center; gap: 10px; }
+.never__foot b { font-size: 13px; color: #fff; white-space: nowrap; }
+.strip { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 3px; flex: 1; }
+.strip i { height: 10px; border-radius: 2px; background: rgba(255, 255, 255, .14); }
+.strip i.on { background: var(--red); box-shadow: 0 0 8px rgba(229, 9, 20, .6); }
+.never-list { display: grid; gap: 6px; margin-top: 10px; }
+.never-list__row { display: grid; grid-template-columns: 200px 1fr 30px; gap: 12px; align-items: center; background: none; border: 0; padding: 6px 0; cursor: pointer; text-align: left; font-size: 14px; }
+.never-list__row b { text-align: right; color: var(--muted); }
+
 .chart .band rect { fill: #fff; opacity: .035; }
 .chart .band:nth-child(2n) rect { opacity: .065; }
 .chart .band text { fill: var(--dim); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
@@ -604,6 +637,7 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 
 @media (max-width: 1200px) { .eras3 { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 760px) {
+  .never-list__row { grid-template-columns: 1fr; }
   .eras3 { grid-template-columns: 1fr; }
   .shifts { grid-template-columns: 1fr; }
   .era { min-height: 460px; }

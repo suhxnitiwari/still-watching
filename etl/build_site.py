@@ -93,7 +93,34 @@ def profile(df, meta):
     masha = df[df["show"] == "Masha and the Bear"]
     jan26 = movies[(movies["date"] >= "2026-01-01") & (movies["date"] <= "2026-01-31")]
     valentines = df[(df["date"].dt.month == 2) & (df["date"].dt.day == 14)]
+    # Senior spring: January to graduation, 2024.
+    spring = df[(df["date"] >= "2024-01-01") & (df["date"] <= "2024-06-26")]
+    # Racing Friends off US Netflix (it left on Jan 1, 2020).
+    friends = df[df["show"] == "Friends"]
+    # In college: Hindi when I'm away vs home for summer.
+    meta_lang = df["show"].map(lambda x: (meta.get(x) or {}).get("language"))
+    col = df[(df["date"] >= "2024-08-15") & (df["kind"] == "series")]
+    home = col["date"].dt.month.isin([6, 7]) | ((col["date"].dt.month == 8) & (col["date"].dt.day < 15)) | \
+        ((col["date"].dt.month == 5) & (col["date"].dt.day > 10))
+    hindi_col = meta_lang.loc[col.index] == "Hindi"
+    xmas = df[(df["date"].dt.month == 12) & (df["date"].dt.day.between(24, 26))]
+    daily = df.groupby("date").size()
+    counts_path = BUILD / "episode_counts.json"
+    totals = json.loads(counts_path.read_text()) if counts_path.exists() else {}
+    finished = [{"show": k, "watched": int((df["show"] == k).sum()), "total": v} for k, v in totals.items()
+                if v >= 40 and (df["show"] == k).sum() / v >= .95]
     return {
+        "senior_spring": {"views": int(len(spring)), "days": int(spring["date"].nunique()), "months": 6},
+        "friends_race": {"december": int(((friends["date"] >= "2019-12-01") & (friends["date"] <= "2019-12-31")).sum()),
+                         "last_week": int(((friends["date"] >= "2019-12-25") & (friends["date"] <= "2019-12-31")).sum()),
+                         "watched": int(len(friends)), "total": totals.get("Friends")},
+        "hindi_away": round(hindi_col[~home].mean() * 100, 1), "hindi_home": round(hindi_col[home].mean() * 100, 1),
+        "kapil_away": int((col[~home]["show"] == "The Great Indian Kapil Show").sum()),
+        "kapil_home": int((col[home]["show"] == "The Great Indian Kapil Show").sum()),
+        "christmas_years": int(xmas["date"].dt.year.nunique()),
+        "series_share": round((df["kind"] == "series").mean() * 100, 1),
+        "big_days": int((daily >= 10).sum()),
+        "finished": sorted(finished, key=lambda x: -x["total"]),
         "kids_by_year": {str(k): v for k, v in kids_by_year.items()},
         "kids_early_top": df[kids & (df["date"].dt.year <= 2017)]["show"].value_counts().head(3).index.tolist(),
         "first_title": df.sort_values("date")["show"].iloc[0],

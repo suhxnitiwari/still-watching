@@ -409,5 +409,74 @@
   "match": "Lost & Found Music Studios (2015)",
   "source": "https://www.tvmaze.com/shows/11917/lost-found-music-studios",
   "poster": "img/posters/lost-found-music-studios.jpg"
+ },
+ "Business Proposal": {
+  "match": "Business Proposal (2022)",
+  "source": "https://www.tvmaze.com/shows/59755/business-proposal",
+  "poster": "img/posters/business-proposal.jpg",
+  "backdrop": "img/backdrops/business-proposal.jpg"
+ },
+ "FUBAR": {
+  "match": "FUBAR (2023)",
+  "source": "https://www.tvmaze.com/shows/65953/fubar",
+  "poster": "img/posters/fubar.jpg",
+  "backdrop": "img/backdrops/fubar.jpg"
+ },
+ "Grand Army": {
+  "match": "Grand Army (2020)",
+  "source": "https://www.tvmaze.com/shows/44653/grand-army",
+  "poster": "img/posters/grand-army.jpg",
+  "backdrop": "img/backdrops/grand-army.jpg"
+ },
+ "Lucifer": {
+  "match": "Lucifer (2016)",
+  "source": "https://www.tvmaze.com/shows/1859/lucifer",
+  "poster": "img/posters/lucifer.jpg",
+  "backdrop": "img/backdrops/lucifer.jpg"
+ },
+ "Monster High": {
+  "match": "Monster High (2010)",
+  "source": "https://www.tvmaze.com/shows/6937/monster-high",
+  "poster": "img/posters/monster-high.jpg",
+  "backdrop": "img/backdrops/monster-high.jpg"
+ },
+ "Octonauts": {
+  "match": "Octonauts (2010)",
+  "source": "https://www.tvmaze.com/shows/17756/octonauts",
+  "poster": "img/posters/octonauts.jpg",
+  "backdrop": "img/backdrops/octonauts.jpg"
+ },
+ "Operation Safed Sagar": {
+  "match": "Operation Safed Sagar: The Untold Story of the Kargil War (2026)",
+  "source": "https://www.tvmaze.com/shows/93357/operation-safed-sagar-the-untold-story-of-the-kargil-war",
+  "poster": "img/posters/operation-safed-sagar.jpg"
+ },
+ "Queen Charlotte": {
+  "match": "Queen Charlotte: A Bridgerton Story (2023)",
+  "source": "https://www.tvmaze.com/shows/60126/queen-charlotte-a-bridgerton-story",
+  "poster": "img/posters/queen-charlotte.jpg",
+  "backdrop": "img/backdrops/queen-charlotte.jpg"
+ },
+ "Richie Rich": {
+  "match": "Richie Rich (1980)",
+  "source": "https://www.tvmaze.com/shows/26663/richie-rich",
+  "poster": "img/posters/richie-rich.jpg"
+ },
+ "Shaque": {
+  "match": "Shaque: Trust No One (2026)",
+  "source": "https://www.tvmaze.com/shows/94641/shaque-trust-no-one",
+  "poster": "img/posters/shaque.jpg"
+ },
+ "The Hunting Wives": {
+  "match": "The Hunting Wives (2025)",
+  "source": "https://www.tvmaze.com/shows/72427/the-hunting-wives",
+  "poster": "img/posters/the-hunting-wives.jpg",
+  "backdrop": "img/backdrops/the-hunting-wives.jpg"
+ },
+ "The Royals": {
+  "match": "The Royals (2015)",
+  "source": "https://www.tvmaze.com/shows/1588/the-royals",
+  "poster": "img/posters/the-royals.jpg",
+  "backdrop": "img/backdrops/the-royals.jpg"
  }
 }
