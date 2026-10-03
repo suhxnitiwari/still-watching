@@ -8,7 +8,7 @@
 
 Eleven years of what I pressed play on, from June 2015 to September 2026, rebuilt as a Netflix home screen. You pick a profile, land on a billboard with my own poster wall drifting behind it, and browse Top 10 and collection rows of my history. Press Play and the story runs as a short film, *The Password Stopped Working*, about what happened to my viewing when Netflix started enforcing one household per account in May 2023 and I moved away to college the next year.
 
-**3,427 views · 470 titles · 423 binge days · 1,260 days with something on**
+**3,400+ views · 460+ titles · 420+ binge days · 1,260 days with something on**
 
 ## How it's built
 
