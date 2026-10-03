@@ -407,8 +407,8 @@ function setupCase() {
     ["Who I live with", [
       { label: "MOVED", img: bg(el.top[0].show), guess: "New to America in 2015", signal: "When the history starts",
         ev: `The account's very first play: <b>${esc(p.first_title)}</b>, ${fmtDate(DATA.totals.from)}. Then a summer of Disney Channel. (We had just moved from Singapore to Cupertino.)` },
-      ...(dallasGap ? [{ label: "MOVED AGAIN", img: bg(hs.top[0].show), guess: "A second move, summer 2020", signal: "A silence right before high school",
-        ev: `<b>${dallasGap.days} days</b> with nothing, ${fmtShort(dallasGap.from)} to ${fmtDate(dallasGap.to)}, one of the longest gaps in my history. That was the move from Cupertino to Dallas. High school started in Texas.` }] : []),
+      ...(dallasGap ? [{ label: "MOVED AGAIN", img: bg(hs.top[0].show), guess: "A new state, a quiet start", signal: "Summer 2020, then a long silence",
+        ev: `Summer 2020 was patchy, then <b>${dallasGap.days} days</b> with nothing, ${fmtShort(dallasGap.from)} to ${fmtDate(dallasGap.to)}: the first weeks of high school in a new state. The data never sees the moving truck, just the quiet after.` }] : []),
       { label: "FAMILY", img: bg("Masha and the Bear"), guess: "A younger sibling", signal: "Shows made for someone smaller",
         ev: p.masha ? `Masha and the Bear, a preschool cartoon, <b>${p.masha.views} episodes</b> in ${parse(p.masha.first).getFullYear()}, when my little sister was about two. Someone small was borrowing my profile.` : "" },
       { label: "HOUSEHOLD", img: bg("Fuller House"), guess: "A shared family account", signal: "What happened when I left",
