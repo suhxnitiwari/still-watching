@@ -2214,6 +2214,24 @@
    "When Life Gives You Tangerines"
   ]
  },
+ "favorites": {
+  "gg_early": [
+   "The Handmaiden's Tale",
+   "Victor, Victrola",
+   "Seventeen Candles"
+  ],
+  "gg_twice": [
+   "Victor, Victrola",
+   "Seventeen Candles"
+  ],
+  "gg_first_back": [
+   "The Wild Brunch",
+   "Poison Ivy",
+   "Bad News Blair"
+  ],
+  "rachel_titles": 28,
+  "ross_titles": 23
+ },
  "family": {
   "freeze": {
    "family": 4,

@@ -377,6 +377,18 @@ def picky(df, meta):
             "korean_quit": [x for x in ["Crash Landing on You", "Hometown Cha-Cha-Cha", "When Life Gives You Tangerines"] if n.get(x, 0) == 1]}
 
 
+def favorites(df):
+    """Guessing my favorite characters from which episodes I went back to."""
+    gg = df[df["show"] == "Gossip Girl"]
+    fr = df[df["show"] == "Friends"]
+    twice = gg[gg.duplicated("episode", keep=False)].drop_duplicates("episode")
+    return {"gg_early": gg[gg["date"] < "2021-01-01"].sort_values("date")["episode"].tolist(),
+            "gg_twice": [e for e in ["Victor, Victrola", "Seventeen Candles"] if e in set(twice["episode"])],
+            "gg_first_back": gg[gg["date"] >= "2025-01-01"].sort_values("date")["episode"].drop_duplicates().head(3).tolist(),
+            "rachel_titles": int(fr["episode"].str.contains("Rachel", na=False).sum()),
+            "ross_titles": int(fr["episode"].str.contains("Ross", na=False).sum())}
+
+
 def title_words(df):
     """Patterns in the words of what I watch, not in how much."""
     ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
@@ -509,6 +521,7 @@ def main():
         "words": words,
         "loyalty": loyalty(df),
         "picky": pk,
+        "favorites": favorites(df),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),

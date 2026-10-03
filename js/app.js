@@ -597,6 +597,8 @@ function setupCase() {
         ev: `I quit <b>${DATA.family?.quit_rate?.Me ?? 47}%</b> of shows after one episode. But once I'm in, I don't leave. I rewatch: <b>${ly.rewatched}</b> episodes twice (mostly ${listOf(Object.keys(ly.rewatch_top).map(esc))}) and the same rom-coms again and again (${listOf(ly.movies_twice.slice(0, 4).map(esc))}). And when a show ends, I keep going. Episodes after the finale: ${listOf(ly.after_finale.slice(0, 4).map((x) => `${esc(x.show)} <b>${x.after}</b>`))}. Same characters, same places, no goodbyes.` },
       ...(DATA.picky ? [(() => { const k = DATA.picky; return { label: "PICKY", img: bg("Outer Banks"), guess: "Hype doesn't get me in. Drama does.", signal: `${k.quit} shows I quit after one episode vs ${k.kept} I stayed with`,
         ev: `<b>${k.netflix_quit}%</b> of my one-and-done shows are Netflix originals, vs ${k.netflix_kept}% of my keepers. I stay with network TV: ${listOf(k.network_kept.slice(0, 4).map(esc))}, 20+ episodes a season for years. ${k.dark_quits.length ? `Dark thrillers lose me after the pilot: ${listOf(k.dark_quits.map(esc))}. ` : ""}Dating shows too: ${listOf(k.dating_quit.map(esc))}, one episode each${k.matchmaking ? ` (Indian Matchmaking is the exception)` : ""}. K-dramas: ${k.korean_tried} tried, ${k.korean_kept} kept. Not enough drama, and drama is my thing: <b>${Math.round(k.drama_views / k.views * 100)}%</b> of everything I've watched is tagged Drama.` }; })()] : []),
+      ...(DATA.favorites ? [(() => { const f = DATA.favorites; return { label: "FAVORITES", img: bg("Gossip Girl"), guess: "Blair Waldorf. And Rachel.", signal: "Which episodes I go back to",
+        ev: `Before I ever binged Gossip Girl, I played exactly ${f.gg_early.length} episodes: ${listOf(f.gg_early.map((e) => `<b>${esc(e)}</b>`))}, the start of Chuck and Blair. Five years later I watched ${listOf(f.gg_twice.map(esc))} again. Friends fooled the data: it guessed Monica, then Chandler. The answer was Rachel, named in <b>${f.rachel_titles}</b> of my Friends titles, more than anyone.` }; })()] : []),
       { label: "THE ME ERA", img: bg("Never Have I Ever"), guess: "High school was about me", signal: "Episode titles with I, me or my",
         ev: me.map(([e, v]) => (v === Math.max(...me.map((x) => x[1])) ? `<b>${esc(e)}: ${v}%</b>` : `${esc(e)}: ${v}%`)).join(" · ") + `. The shows I picked got more first-person through middle and high school, then let go in college.` },
     ]]);
@@ -615,7 +617,7 @@ function setupCase() {
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
-    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "THE ME ERA"]],
+    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "FAVORITES", "THE ME ERA"]],
     ["How I feel", ["ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
