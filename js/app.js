@@ -433,7 +433,7 @@ function setupCase() {
     ...(fr.jan1 ? [{ label: "DENIAL", img: bg("Friends"), guess: "I didn't want Friends to leave", signal: "Its last night on U.S. Netflix",
       ev: `On Dec 31, 2019, Friends' last night on U.S. Netflix, one of my last episodes was <b>"${esc(fr.nye_last || "")}"</b>. The export still shows <b>${fr.jan1} more on Jan 1, 2020</b>: Netflix logs dates in UTC, so that's me past midnight, refusing to let go.` }] : []),
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
-      ev: `Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. Real horror films, ever: <b>${p.horror_films.length}</b>${p.horror_films.length ? `, and ${p.horror_films.filter((x) => x.date.slice(5) === "03-06").length} of them on my 12th birthday` : ""}. Peer pressure.` },
+      ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
     { label: "BIRTHDAY", img: bg("Bridgerton"), guess: "Born in early March", signal: "What I watch on one date every year",
       ev: `March 6, 2026, my 20th birthday: Bridgerton and Queen Charlotte, back to back.` },
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",

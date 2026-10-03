@@ -1,9 +1,9 @@
 {
  "totals": {
-  "views": 3427,
-  "titles": 470,
+  "views": 3425,
+  "titles": 468,
   "series": 210,
-  "movies": 260,
+  "movies": 258,
   "binge_days": 423,
   "active_days": 1260,
   "from": "2015-06-16",
@@ -148,7 +148,7 @@
   },
   {
    "month": "2018-03",
-   "views": 56
+   "views": 54
   },
   {
    "month": "2018-04",
@@ -562,7 +562,7 @@
  "month_of_year": [
   294,
   160,
-  341,
+  339,
   260,
   385,
   379,
@@ -577,7 +577,7 @@
   "Sunday": 627,
   "Saturday": 555,
   "Monday": 508,
-  "Tuesday": 478,
+  "Tuesday": 476,
   "Friday": 451,
   "Wednesday": 410,
   "Thursday": 398
@@ -612,11 +612,11 @@
    "views": 105
   },
   {
-   "show": "The Fosters",
+   "show": "Jane The Virgin",
    "views": 104
   },
   {
-   "show": "Jane The Virgin",
+   "show": "The Fosters",
    "views": 104
   },
   {
@@ -722,8 +722,8 @@
   },
   {
    "year": 2018,
-   "views": 359,
-   "show": "Switched at Birth",
+   "views": 357,
+   "show": "Baby Daddy",
    "episodes": 95
   },
   {
@@ -825,7 +825,7 @@
    ]
   },
   "Dallas": {
-   "views": 2895,
+   "views": 2893,
    "from": "2015-06-16",
    "to": "2024-07-23",
    "per_month": 26.5,
@@ -851,11 +851,11 @@
      "views": 105
     },
     {
-     "show": "The Fosters",
+     "show": "Jane The Virgin",
      "views": 104
     },
     {
-     "show": "Jane The Virgin",
+     "show": "The Fosters",
      "views": 104
     },
     {
@@ -1040,11 +1040,11 @@
    "name": "Middle School",
    "from": "2017-08-10",
    "to": "2020-07-18",
-   "views": 1055,
+   "views": 1053,
    "per_month": 29.9,
-   "titles": 114,
+   "titles": 112,
    "titles_per_month": 3.2,
-   "movie_share": 5.0,
+   "movie_share": 4.8,
    "language": {
     "English": 99.6,
     "Korean": 0.1,
@@ -1235,7 +1235,7 @@
      "year": 2013
     }
    ],
-   "movies": 53,
+   "movies": 51,
    "series_views": 1002
   },
   {
@@ -1676,14 +1676,14 @@
    "watched": 233,
    "total": 236,
    "jan1": 4,
-   "nye_last": "The One Where Ross Meets Elizabeth's Dad"
+   "nye_last": "The One with the Rumor"
   },
   "hindi_away": 35.2,
   "hindi_home": 13.6,
   "kapil_away": 30,
   "kapil_home": 10,
   "christmas_years": 6,
-  "series_share": 91.8,
+  "series_share": 91.9,
   "big_days": 27,
   "finished": [
    {
@@ -1796,14 +1796,6 @@
   ],
   "horror_films": [
    {
-    "show": "Cult of Chucky",
-    "date": "2018-03-06"
-   },
-   {
-    "show": "Killing Ground",
-    "date": "2018-03-06"
-   },
-   {
     "show": "Scream",
     "date": "2024-11-01"
    }
@@ -1812,7 +1804,7 @@
    "2015": 57.6,
    "2016": 67.0,
    "2017": 57.3,
-   "2018": 19.2,
+   "2018": 19.3,
    "2019": 1.2,
    "2020": 0.0,
    "2021": 0.3,
@@ -1858,7 +1850,7 @@
   },
   "hindi_films": {
    "total": 86,
-   "movies": 281,
+   "movies": 279,
    "by_era": [
     {
      "key": "elementary",
@@ -1867,7 +1859,7 @@
     },
     {
      "key": "middle",
-     "movies": 53,
+     "movies": 51,
      "hindi": 4
     },
     {
