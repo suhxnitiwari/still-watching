@@ -1,11 +1,11 @@
 {
  "totals": {
-  "views": 3382,
-  "titles": 410,
-  "series": 214,
-  "movies": 196,
-  "binge_days": 429,
-  "active_days": 1220,
+  "views": 3483,
+  "titles": 477,
+  "series": 217,
+  "movies": 260,
+  "binge_days": 432,
+  "active_days": 1279,
   "from": "2015-06-16",
   "to": "2026-09-25"
  },
@@ -16,19 +16,19 @@
  "monthly": [
   {
    "month": "2015-06",
-   "views": 33
+   "views": 39
   },
   {
    "month": "2015-07",
-   "views": 24
+   "views": 27
   },
   {
    "month": "2015-08",
-   "views": 10
+   "views": 14
   },
   {
    "month": "2015-09",
-   "views": 2
+   "views": 5
   },
   {
    "month": "2015-10",
@@ -36,15 +36,15 @@
   },
   {
    "month": "2015-11",
-   "views": 7
+   "views": 8
   },
   {
    "month": "2015-12",
-   "views": 7
+   "views": 8
   },
   {
    "month": "2016-01",
-   "views": 16
+   "views": 19
   },
   {
    "month": "2016-02",
@@ -52,19 +52,19 @@
   },
   {
    "month": "2016-03",
-   "views": 20
+   "views": 21
   },
   {
    "month": "2016-04",
-   "views": 7
+   "views": 8
   },
   {
    "month": "2016-05",
-   "views": 1
+   "views": 3
   },
   {
    "month": "2016-06",
-   "views": 13
+   "views": 15
   },
   {
    "month": "2016-07",
@@ -72,27 +72,27 @@
   },
   {
    "month": "2016-08",
-   "views": 49
+   "views": 50
   },
   {
    "month": "2016-09",
-   "views": 17
-  },
-  {
-   "month": "2016-10",
-   "views": 8
-  },
-  {
-   "month": "2016-11",
    "views": 19
   },
   {
+   "month": "2016-10",
+   "views": 11
+  },
+  {
+   "month": "2016-11",
+   "views": 22
+  },
+  {
    "month": "2016-12",
-   "views": 69
+   "views": 76
   },
   {
    "month": "2017-01",
-   "views": 33
+   "views": 34
   },
   {
    "month": "2017-02",
@@ -100,19 +100,19 @@
   },
   {
    "month": "2017-03",
-   "views": 63
+   "views": 64
   },
   {
    "month": "2017-04",
-   "views": 53
+   "views": 54
   },
   {
    "month": "2017-05",
-   "views": 109
+   "views": 110
   },
   {
    "month": "2017-06",
-   "views": 46
+   "views": 51
   },
   {
    "month": "2017-07",
@@ -120,23 +120,23 @@
   },
   {
    "month": "2017-08",
-   "views": 29
+   "views": 36
   },
   {
    "month": "2017-09",
-   "views": 9
+   "views": 10
   },
   {
    "month": "2017-10",
-   "views": 9
+   "views": 11
   },
   {
    "month": "2017-11",
-   "views": 16
+   "views": 19
   },
   {
    "month": "2017-12",
-   "views": 26
+   "views": 29
   },
   {
    "month": "2018-01",
@@ -144,11 +144,11 @@
   },
   {
    "month": "2018-02",
-   "views": 36
+   "views": 37
   },
   {
    "month": "2018-03",
-   "views": 56
+   "views": 57
   },
   {
    "month": "2018-04",
@@ -160,11 +160,11 @@
   },
   {
    "month": "2018-06",
-   "views": 3
+   "views": 8
   },
   {
    "month": "2018-07",
-   "views": 9
+   "views": 11
   },
   {
    "month": "2018-08",
@@ -172,7 +172,7 @@
   },
   {
    "month": "2018-09",
-   "views": 2
+   "views": 3
   },
   {
    "month": "2018-10",
@@ -180,15 +180,15 @@
   },
   {
    "month": "2018-11",
-   "views": 17
+   "views": 20
   },
   {
    "month": "2018-12",
-   "views": 33
+   "views": 34
   },
   {
    "month": "2019-01",
-   "views": 33
+   "views": 34
   },
   {
    "month": "2019-02",
@@ -276,7 +276,7 @@
   },
   {
    "month": "2020-11",
-   "views": 15
+   "views": 16
   },
   {
    "month": "2020-12",
@@ -324,7 +324,7 @@
   },
   {
    "month": "2021-11",
-   "views": 44
+   "views": 45
   },
   {
    "month": "2021-12",
@@ -360,7 +360,7 @@
   },
   {
    "month": "2022-08",
-   "views": 22
+   "views": 23
   },
   {
    "month": "2022-09",
@@ -368,7 +368,7 @@
   },
   {
    "month": "2022-10",
-   "views": 13
+   "views": 14
   },
   {
    "month": "2022-11",
@@ -396,7 +396,7 @@
   },
   {
    "month": "2023-05",
-   "views": 32
+   "views": 33
   },
   {
    "month": "2023-06",
@@ -408,7 +408,7 @@
   },
   {
    "month": "2023-08",
-   "views": 13
+   "views": 18
   },
   {
    "month": "2023-09",
@@ -420,7 +420,7 @@
   },
   {
    "month": "2023-11",
-   "views": 36
+   "views": 38
   },
   {
    "month": "2023-12",
@@ -468,7 +468,7 @@
   },
   {
    "month": "2024-11",
-   "views": 10
+   "views": 11
   },
   {
    "month": "2024-12",
@@ -520,7 +520,7 @@
   },
   {
    "month": "2025-12",
-   "views": 15
+   "views": 17
   },
   {
    "month": "2026-01",
@@ -544,11 +544,11 @@
   },
   {
    "month": "2026-06",
-   "views": 9
+   "views": 10
   },
   {
    "month": "2026-07",
-   "views": 5
+   "views": 7
   },
   {
    "month": "2026-08",
@@ -560,27 +560,27 @@
   }
  ],
  "month_of_year": [
-  290,
-  159,
-  343,
-  278,
-  384,
-  360,
-  315,
-  206,
-  165,
-  97,
-  299,
-  486
+  295,
+  160,
+  346,
+  280,
+  388,
+  379,
+  322,
+  224,
+  172,
+  103,
+  314,
+  500
  ],
  "weekday": {
-  "Sunday": 619,
-  "Saturday": 563,
-  "Monday": 498,
-  "Tuesday": 467,
-  "Friday": 445,
-  "Wednesday": 399,
-  "Thursday": 391
+  "Sunday": 635,
+  "Saturday": 572,
+  "Monday": 514,
+  "Tuesday": 486,
+  "Friday": 456,
+  "Wednesday": 418,
+  "Thursday": 402
  },
  "top": [
   {
@@ -589,11 +589,11 @@
   },
   {
    "show": "The Vampire Diaries",
-   "views": 171
+   "views": 172
   },
   {
    "show": "Grey's Anatomy",
-   "views": 162
+   "views": 164
   },
   {
    "show": "Gilmore Girls",
@@ -612,12 +612,12 @@
    "views": 105
   },
   {
-   "show": "The Fosters",
+   "show": "Jane The Virgin",
    "views": 104
   },
   {
-   "show": "Jane The Virgin",
-   "views": 103
+   "show": "The Fosters",
+   "views": 104
   },
   {
    "show": "Switched at Birth",
@@ -646,8 +646,8 @@
    "episodes": 14
   },
   {
-   "date": "2021-05-25",
-   "show": "Grey's Anatomy",
+   "date": "2019-11-28",
+   "show": "Friends",
    "episodes": 13
   },
   {
@@ -656,8 +656,8 @@
    "episodes": 13
   },
   {
-   "date": "2019-11-28",
-   "show": "Friends",
+   "date": "2021-05-25",
+   "show": "Grey's Anatomy",
    "episodes": 13
   },
   {
@@ -671,18 +671,13 @@
    "episodes": 12
   },
   {
-   "date": "2021-07-23",
-   "show": "Manifest",
-   "episodes": 11
-  },
-  {
    "date": "2019-12-31",
    "show": "Friends",
    "episodes": 11
   },
   {
-   "date": "2020-05-25",
-   "show": "The Vampire Diaries",
+   "date": "2021-07-23",
+   "show": "Manifest",
    "episodes": 11
   },
   {
@@ -691,96 +686,101 @@
    "episodes": 11
   },
   {
-   "date": "2019-12-01",
-   "show": "Friends",
-   "episodes": 10
+   "date": "2020-05-25",
+   "show": "The Vampire Diaries",
+   "episodes": 11
   },
   {
    "date": "2023-06-09",
    "show": "Never Have I Ever",
+   "episodes": 10
+  },
+  {
+   "date": "2019-12-01",
+   "show": "Friends",
    "episodes": 10
   }
  ],
  "yearly": [
   {
    "year": 2015,
-   "views": 107,
+   "views": 125,
    "show": "LEGO Ninjago",
    "episodes": 27
   },
   {
    "year": 2016,
-   "views": 239,
+   "views": 264,
    "show": "Good Luck Charlie",
    "episodes": 48
   },
   {
    "year": 2017,
-   "views": 440,
+   "views": 465,
    "show": "Liv and Maddie",
    "episodes": 74
   },
   {
    "year": 2018,
-   "views": 380,
+   "views": 394,
    "show": "Baby Daddy",
    "episodes": 95
   },
   {
    "year": 2019,
-   "views": 428,
+   "views": 429,
    "show": "Friends",
    "episodes": 223
   },
   {
    "year": 2020,
-   "views": 201,
+   "views": 202,
    "show": "The Fosters",
    "episodes": 104
   },
   {
    "year": 2021,
-   "views": 353,
+   "views": 354,
    "show": "Grey's Anatomy",
    "episodes": 152
   },
   {
    "year": 2022,
-   "views": 349,
+   "views": 351,
    "show": "Gilmore Girls",
    "episodes": 132
   },
   {
    "year": 2023,
-   "views": 308,
+   "views": 316,
    "show": "Jane The Virgin",
    "episodes": 98
   },
   {
    "year": 2024,
-   "views": 76,
+   "views": 77,
    "show": "The Great Indian Kapil Show",
    "episodes": 15
   },
   {
    "year": 2025,
-   "views": 325,
+   "views": 327,
    "show": "Gossip Girl",
    "episodes": 123
   },
   {
    "year": 2026,
-   "views": 176,
+   "views": 179,
    "show": "Bridgerton",
    "episodes": 24
   }
  ],
  "eras": {
   "Austin": {
-   "views": 527,
+   "views": 533,
    "from": "2024-08-25",
    "to": "2026-09-25",
-   "per_month": 21.1,
+   "per_month": 21.3,
    "top": [
     {
      "show": "Gossip Girl",
@@ -815,8 +815,8 @@
      "views": 11
     },
     {
-     "show": "Partner Track",
-     "views": 10
+     "show": "Stranger Things",
+     "views": 11
     },
     {
      "show": "Ginny & Georgia",
@@ -825,10 +825,10 @@
    ]
   },
   "Dallas": {
-   "views": 2855,
+   "views": 2950,
    "from": "2015-06-16",
    "to": "2024-07-23",
-   "per_month": 26.1,
+   "per_month": 27.0,
    "top": [
     {
      "show": "Friends",
@@ -836,11 +836,11 @@
     },
     {
      "show": "The Vampire Diaries",
-     "views": 171
+     "views": 172
     },
     {
      "show": "Grey's Anatomy",
-     "views": 162
+     "views": 164
     },
     {
      "show": "Gilmore Girls",
@@ -851,12 +851,12 @@
      "views": 105
     },
     {
-     "show": "The Fosters",
+     "show": "Jane The Virgin",
      "views": 104
     },
     {
-     "show": "Jane The Virgin",
-     "views": 103
+     "show": "The Fosters",
+     "views": 104
     },
     {
      "show": "Switched at Birth",
@@ -879,40 +879,39 @@
    "name": "Elementary",
    "from": "2015-06-16",
    "to": "2017-07-23",
-   "views": 697,
-   "per_month": 27.6,
-   "titles": 53,
-   "titles_per_month": 2.1,
-   "movie_share": 1.0,
+   "views": 749,
+   "per_month": 29.7,
+   "titles": 102,
+   "titles_per_month": 4.0,
+   "movie_share": 7.6,
    "language": {
     "English": 100.0
    },
    "type": {
-    "Scripted": 83.3,
-    "Animation": 16.5,
+    "Scripted": 83.5,
+    "Animation": 16.3,
     "Reality": 0.1
    },
    "genres": {
     "Comedy": 65.8,
     "Family": 36.4,
-    "Drama": 35.5,
-    "Science-Fiction": 20.6,
-    "Children": 19.3,
-    "Action": 19.3,
-    "Adventure": 9.4,
-    "Music": 9.3,
+    "Drama": 35.7,
+    "Science-Fiction": 20.5,
+    "Action": 19.2,
+    "Children": 19.1,
+    "Music": 9.4,
+    "Adventure": 9.2,
     "Horror": 5.1,
     "Supernatural": 3.0,
     "Fantasy": 2.0,
-    "Romance": 0.4,
+    "Romance": 0.7,
     "Espionage": 0.3,
-    "Anime": 0.1,
     "Crime": 0.1
    },
    "netflix_share": 2.3,
    "median_premiere": 2011,
-   "classic_share": 19.0,
-   "fresh_share": 10.3,
+   "classic_share": 18.9,
+   "fresh_share": 10.4,
    "top": [
     {
      "show": "Jessie",
@@ -996,6 +995,14 @@
      {
       "show": "Friends",
       "views": 3
+     },
+     {
+      "show": "Once Upon a Time",
+      "views": 1
+     },
+     {
+      "show": "Lost & Found Music Studios",
+      "views": 1
      }
     ]
    },
@@ -1025,21 +1032,21 @@
      "year": 2013
     }
    ],
-   "movies": 7,
-   "series_views": 690
+   "movies": 57,
+   "series_views": 692
   },
   {
    "key": "middle",
    "name": "Middle School",
    "from": "2017-08-10",
    "to": "2020-07-18",
-   "views": 1074,
-   "per_month": 30.5,
-   "titles": 97,
-   "titles_per_month": 2.8,
-   "movie_share": 2.8,
+   "views": 1105,
+   "per_month": 31.3,
+   "titles": 118,
+   "titles_per_month": 3.3,
+   "movie_share": 4.8,
    "language": {
-    "English": 98.4,
+    "English": 98.3,
     "Russian": 1.2,
     "Korean": 0.1,
     "Hindi": 0.1
@@ -1047,38 +1054,38 @@
    "type": {
     "Scripted": 86.9,
     "Animation": 6.4,
-    "Reality": 5.4,
+    "Reality": 5.3,
     "Documentary": 0.7,
     "Talk Show": 0.2,
     "Variety": 0.2,
     "Game Show": 0.1
    },
    "genres": {
-    "Romance": 50.3,
-    "Comedy": 49.3,
-    "Drama": 44.5,
-    "Family": 37.5,
+    "Romance": 50.1,
+    "Comedy": 49.0,
+    "Drama": 44.9,
+    "Family": 37.3,
     "Supernatural": 17.8,
     "Children": 8.2,
-    "Adventure": 5.0,
-    "Mystery": 3.6,
-    "Thriller": 2.4,
-    "Crime": 2.1,
+    "Adventure": 4.9,
+    "Mystery": 4.0,
+    "Thriller": 2.7,
+    "Crime": 2.3,
     "Food": 1.9,
+    "Horror": 1.4,
     "Fantasy": 1.4,
-    "Horror": 1.3,
+    "Science-Fiction": 1.2,
     "Action": 1.1,
-    "Science-Fiction": 1.1,
     "Music": 0.4,
     "Nature": 0.2,
     "History": 0.2,
     "DIY": 0.1,
     "Espionage": 0.1
    },
-   "netflix_share": 13.6,
+   "netflix_share": 13.9,
    "median_premiere": 2011,
-   "classic_share": 22.3,
-   "fresh_share": 13.1,
+   "classic_share": 22.1,
+   "fresh_share": 13.5,
    "top": [
     {
      "show": "Friends",
@@ -1086,7 +1093,7 @@
     },
     {
      "show": "The Vampire Diaries",
-     "views": 167
+     "views": 168
     },
     {
      "show": "The Fosters",
@@ -1141,7 +1148,7 @@
     "drama": [
      {
       "show": "The Vampire Diaries",
-      "views": 167
+      "views": 168
      },
      {
       "show": "The Fosters",
@@ -1153,17 +1160,17 @@
      },
      {
       "show": "13 Reasons Why",
-      "views": 21
+      "views": 24
      }
     ],
     "medical_crime": [
      {
       "show": "Riverdale",
-      "views": 17
+      "views": 18
      },
      {
       "show": "Jane The Virgin",
-      "views": 3
+      "views": 4
      },
      {
       "show": "Peaky Blinders",
@@ -1191,7 +1198,7 @@
      },
      {
       "show": "The Vampire Diaries",
-      "views": 167
+      "views": 168
      },
      {
       "show": "The Fosters",
@@ -1229,22 +1236,22 @@
      "year": 2015
     }
    ],
-   "movies": 30,
-   "series_views": 1044
+   "movies": 53,
+   "series_views": 1052
   },
   {
    "key": "high",
    "name": "High School",
    "from": "2020-08-01",
    "to": "2024-04-29",
-   "views": 1048,
-   "per_month": 23.3,
-   "titles": 156,
-   "titles_per_month": 3.5,
-   "movie_share": 8.3,
+   "views": 1060,
+   "per_month": 23.6,
+   "titles": 160,
+   "titles_per_month": 3.6,
+   "movie_share": 8.6,
    "language": {
     "English": 89.1,
-    "Hindi": 4.8,
+    "Hindi": 4.7,
     "Korean": 1.8,
     "Spanish": 1.0,
     "Japanese": 0.8,
@@ -1254,7 +1261,7 @@
     "Dutch": 0.1
    },
    "type": {
-    "Scripted": 91.9,
+    "Scripted": 91.8,
     "Reality": 5.9,
     "Variety": 0.5,
     "Documentary": 0.3,
@@ -1262,19 +1269,19 @@
     "News": 0.2
    },
    "genres": {
-    "Drama": 81.5,
-    "Romance": 64.6,
-    "Comedy": 37.1,
-    "Medical": 16.9,
-    "Crime": 14.3,
-    "Science-Fiction": 11.0,
-    "Supernatural": 10.2,
+    "Drama": 81.0,
+    "Romance": 64.8,
+    "Comedy": 37.4,
+    "Medical": 17.4,
+    "Crime": 14.1,
+    "Science-Fiction": 10.9,
+    "Supernatural": 10.1,
     "Family": 8.4,
-    "Mystery": 8.0,
+    "Mystery": 7.9,
     "Horror": 2.5,
     "Action": 2.0,
-    "Fantasy": 1.6,
-    "Thriller": 1.5,
+    "Fantasy": 1.5,
+    "Thriller": 1.4,
     "Adventure": 0.9,
     "Espionage": 0.8,
     "Food": 0.3,
@@ -1282,14 +1289,14 @@
     "Children": 0.2,
     "History": 0.1
    },
-   "netflix_share": 39.8,
+   "netflix_share": 39.4,
    "median_premiere": 2014,
-   "classic_share": 32.7,
-   "fresh_share": 18.3,
+   "classic_share": 32.6,
+   "fresh_share": 18.2,
    "top": [
     {
      "show": "Grey's Anatomy",
-     "views": 162
+     "views": 164
     },
     {
      "show": "Gilmore Girls",
@@ -1360,7 +1367,7 @@
     "drama": [
      {
       "show": "Grey's Anatomy",
-      "views": 162
+      "views": 164
      },
      {
       "show": "Gilmore Girls",
@@ -1378,7 +1385,7 @@
     "medical_crime": [
      {
       "show": "Grey's Anatomy",
-      "views": 162
+      "views": 164
      },
      {
       "show": "Jane The Virgin",
@@ -1397,7 +1404,7 @@
     "romance": [
      {
       "show": "Grey's Anatomy",
-      "views": 162
+      "views": 164
      },
      {
       "show": "Gilmore Girls",
@@ -1439,47 +1446,47 @@
      "year": 2018
     }
    ],
-   "movies": 87,
-   "series_views": 961
+   "movies": 91,
+   "series_views": 969
   },
   {
    "key": "after",
    "name": "After Graduation",
    "from": "2024-06-27",
    "to": "2026-09-25",
-   "views": 563,
-   "per_month": 20.9,
-   "titles": 146,
-   "titles_per_month": 5.4,
-   "movie_share": 13.9,
+   "views": 569,
+   "per_month": 21.1,
+   "titles": 148,
+   "titles_per_month": 5.5,
+   "movie_share": 14.1,
    "language": {
-    "English": 66.4,
-    "Hindi": 27.8,
+    "English": 66.5,
+    "Hindi": 27.6,
     "Arabic": 3.9,
-    "Korean": 0.6,
+    "Korean": 0.8,
     "Spanish": 0.4,
     "Japanese": 0.2
    },
    "type": {
-    "Scripted": 77.5,
-    "Talk Show": 10.7,
+    "Scripted": 77.7,
+    "Talk Show": 10.6,
     "Reality": 7.0,
     "Documentary": 3.5,
     "Animation": 0.4,
     "Sports": 0.2
    },
    "genres": {
-    "Drama": 63.1,
+    "Drama": 63.4,
     "Romance": 48.5,
     "Comedy": 23.1,
-    "Thriller": 9.1,
+    "Thriller": 9.0,
     "Action": 7.0,
-    "Crime": 5.8,
-    "Mystery": 5.6,
+    "Crime": 5.7,
+    "Mystery": 5.5,
     "Family": 4.9,
     "Sports": 3.3,
-    "Horror": 2.1,
-    "Science-Fiction": 2.1,
+    "Horror": 2.5,
+    "Science-Fiction": 2.5,
     "History": 1.6,
     "War": 1.2,
     "Adventure": 0.8,
@@ -1492,10 +1499,10 @@
     "Nature": 0.2,
     "Music": 0.2
    },
-   "netflix_share": 66.2,
+   "netflix_share": 66.3,
    "median_premiere": 2020,
-   "classic_share": 3.5,
-   "fresh_share": 30.3,
+   "classic_share": 3.7,
+   "fresh_share": 30.1,
    "top": [
     {
      "show": "Gossip Girl",
@@ -1577,7 +1584,7 @@
       "views": 22
      },
      {
-      "show": "XO, Kitty",
+      "show": "Stranger Things",
       "views": 11
      }
     ],
@@ -1658,16 +1665,16 @@
      "year": 2023
     }
    ],
-   "movies": 78,
-   "series_views": 485
+   "movies": 80,
+   "series_views": 489
   }
  ],
  "profile": {
   "kids_by_year": {
-   "2015": 67.3,
-   "2016": 74.5,
-   "2017": 60.7,
-   "2018": 26.8,
+   "2015": 57.6,
+   "2016": 67.0,
+   "2017": 57.4,
+   "2018": 25.9,
    "2019": 4.4,
    "2020": 0.5,
    "2021": 0.3,
@@ -1702,41 +1709,41 @@
    "top": "The Fosters"
   },
   "december": {
-   "before_20": 225,
-   "after_20": 261
+   "before_20": 234,
+   "after_20": 266
   },
   "weekday_share": {
-   "school": 63.8,
-   "summer": 70.2
+   "school": 64.0,
+   "summer": 70.8
   },
   "college": {
-   "fall_2024": 0.18,
+   "fall_2024": 0.19,
    "summer_2025": 1.95,
    "fall_2025": 0.15,
-   "winter_2025": 0.73
+   "winter_2025": 0.8
   },
   "hindi_films": {
    "total": 86,
-   "movies": 202,
+   "movies": 281,
    "by_era": [
     {
      "key": "elementary",
-     "movies": 7,
+     "movies": 57,
      "hindi": 0
     },
     {
      "key": "middle",
-     "movies": 30,
+     "movies": 53,
      "hindi": 4
     },
     {
      "key": "high",
-     "movies": 87,
+     "movies": 91,
      "hindi": 44
     },
     {
      "key": "after",
-     "movies": 78,
+     "movies": 80,
      "hindi": 38
     }
    ],
@@ -1747,7 +1754,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 43.5,
+  "romance_share": 43.6,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -1763,7 +1770,7 @@
   "first_days": {
    "from": "2015-06-16",
    "to": "2015-06-26",
-   "views": 16,
+   "views": 21,
    "top": [
     {
      "show": "Phineas and Ferb",
@@ -1782,7 +1789,7 @@
      "views": 1
     },
     {
-     "show": "Mickey Mouse Clubhouse",
+     "show": "The Pirate Fairy",
      "views": 1
     }
    ]
@@ -1809,7 +1816,7 @@
   "after_crackdown": {
    "from": "2023-05-23",
    "to": "2023-12-31",
-   "views": 236,
+   "views": 244,
    "top": [
     {
      "show": "Jane The Virgin",
@@ -1863,7 +1870,7 @@
   "first_semester": {
    "from": "2024-08-15",
    "to": "2024-12-31",
-   "views": 26,
+   "views": 27,
    "top": [
     {
      "show": "Fabulous Lives of Bollywood Wives",
@@ -1917,11 +1924,11 @@
   "fall_2025": {
    "from": "2025-08-15",
    "to": "2025-12-31",
-   "views": 41,
+   "views": 43,
    "top": [
     {
      "show": "Stranger Things",
-     "views": 8
+     "views": 10
     },
     {
      "show": "The Great Indian Kapil Show",
@@ -1944,7 +1951,7 @@
   "this_year": {
    "from": "2026-01-01",
    "to": "2026-09-25",
-   "views": 176,
+   "views": 179,
    "top": [
     {
      "show": "Bridgerton",
@@ -2005,24 +2012,26 @@
   "13 Reasons Why": {
    "show": "13 Reasons Why",
    "kind": "series",
-   "views": 21,
-   "first": "2020-05-23",
+   "views": 24,
+   "first": "2018-06-06",
    "last": "2020-07-07",
-   "days": 10,
+   "days": 11,
    "best_day": {
     "date": "2020-07-07",
     "episodes": 6
    },
-   "binge_days": 3,
+   "binge_days": 4,
    "seasons": {
+    "Season 1": 3,
     "Season 3": 11,
     "Season 4": 10
    },
    "by_year": {
+    "2018": 3,
     "2020": 21
    },
    "eras": {
-    "Dallas": 21
+    "Dallas": 24
    }
   },
   "A Family Affair": {
@@ -2095,10 +2104,10 @@
   "Baby Daddy": {
    "show": "Baby Daddy",
    "kind": "series",
-   "views": 95,
-   "first": "2018-01-30",
+   "views": 96,
+   "first": "2017-06-21",
    "last": "2018-06-03",
-   "days": 48,
+   "days": 49,
    "best_day": {
     "date": "2018-02-25",
     "episodes": 6
@@ -2112,10 +2121,11 @@
     "Season 6": 11
    },
    "by_year": {
+    "2017": 1,
     "2018": 95
    },
    "eras": {
-    "Dallas": 95
+    "Dallas": 96
    }
   },
   "Best of The Great Indian Kapil Show": {
@@ -2605,31 +2615,6 @@
     "Dallas": 101
    }
   },
-  "Goosebumps": {
-   "show": "Goosebumps",
-   "kind": "series",
-   "views": 24,
-   "first": "2016-06-09",
-   "last": "2017-08-19",
-   "days": 10,
-   "best_day": {
-    "date": "2016-12-21",
-    "episodes": 5
-   },
-   "binge_days": 4,
-   "seasons": {
-    "Season 2": 4,
-    "Season 3": 4,
-    "Season 4": 3
-   },
-   "by_year": {
-    "2016": 20,
-    "2017": 4
-   },
-   "eras": {
-    "Dallas": 24
-   }
-  },
   "Gossip Girl": {
    "show": "Gossip Girl",
    "kind": "series",
@@ -2664,17 +2649,17 @@
   "Grey's Anatomy": {
    "show": "Grey's Anatomy",
    "kind": "series",
-   "views": 162,
+   "views": 164,
    "first": "2021-05-23",
-   "last": "2023-04-21",
-   "days": 44,
+   "last": "2023-11-25",
+   "days": 45,
    "best_day": {
     "date": "2021-05-25",
     "episodes": 13
    },
    "binge_days": 27,
    "seasons": {
-    "Season 1": 9,
+    "Season 1": 11,
     "Season 2": 27,
     "Season 3": 25,
     "Season 4": 17,
@@ -2688,10 +2673,10 @@
    "by_year": {
     "2021": 152,
     "2022": 8,
-    "2023": 2
+    "2023": 4
    },
    "eras": {
-    "Dallas": 162
+    "Dallas": 164
    }
   },
   "Heeramandi": {
@@ -2743,29 +2728,29 @@
   "Jane The Virgin": {
    "show": "Jane The Virgin",
    "kind": "series",
-   "views": 103,
-   "first": "2018-07-15",
+   "views": 104,
+   "first": "2018-06-06",
    "last": "2024-01-26",
-   "days": 49,
+   "days": 50,
    "best_day": {
     "date": "2023-09-09",
     "episodes": 7
    },
    "binge_days": 13,
    "seasons": {
-    "Chapter One": 1,
+    "Chapter One": 2,
     "Season 2": 23,
     "Season 3": 21,
     "Season 4": 17,
     "Season 5": 19
    },
    "by_year": {
-    "2018": 3,
+    "2018": 4,
     "2023": 98,
     "2024": 2
    },
    "eras": {
-    "Dallas": 103
+    "Dallas": 104
    }
   },
   "Jessie": {
@@ -2930,6 +2915,26 @@
     "Dallas": 82
    }
   },
+  "Lost & Found Music Studios": {
+   "show": "Lost & Found Music Studios",
+   "kind": "series",
+   "views": 1,
+   "first": "2016-12-04",
+   "last": "2016-12-04",
+   "days": 1,
+   "best_day": {
+    "date": "2016-12-04",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2016": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Mako Mermaids": {
    "show": "Mako Mermaids",
    "kind": "series",
@@ -3038,26 +3043,6 @@
    "seasons": {},
    "by_year": {
     "2023": 1
-   },
-   "eras": {
-    "Dallas": 1
-   }
-  },
-  "Mickey Mouse Clubhouse": {
-   "show": "Mickey Mouse Clubhouse",
-   "kind": "series",
-   "views": 1,
-   "first": "2015-06-22",
-   "last": "2015-06-22",
-   "days": 1,
-   "best_day": {
-    "date": "2015-06-22",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2015": 1
    },
    "eras": {
     "Dallas": 1
@@ -3185,12 +3170,12 @@
   "Once Upon a Time": {
    "show": "Once Upon a Time",
    "kind": "series",
-   "views": 1,
-   "first": "2019-11-17",
+   "views": 2,
+   "first": "2016-09-29",
    "last": "2019-11-17",
-   "days": 1,
+   "days": 2,
    "best_day": {
-    "date": "2019-11-17",
+    "date": "2016-09-29",
     "episodes": 1
    },
    "binge_days": 0,
@@ -3198,10 +3183,11 @@
     "Season 5": 1
    },
    "by_year": {
+    "2016": 1,
     "2019": 1
    },
    "eras": {
-    "Dallas": 1
+    "Dallas": 2
    }
   },
   "Partner Track": {
@@ -3272,26 +3258,28 @@
   "Riverdale": {
    "show": "Riverdale",
    "kind": "series",
-   "views": 20,
-   "first": "2020-01-12",
+   "views": 21,
+   "first": "2018-06-05",
    "last": "2022-09-25",
-   "days": 9,
+   "days": 10,
    "best_day": {
     "date": "2020-01-12",
     "episodes": 7
    },
    "binge_days": 2,
    "seasons": {
+    "Season 1": 1,
     "Season 2": 17,
     "Season 4": 1,
     "Season 5": 2
    },
    "by_year": {
+    "2018": 1,
     "2020": 18,
     "2022": 2
    },
    "eras": {
-    "Dallas": 20
+    "Dallas": 21
    }
   },
   "Single Papa": {
@@ -3317,35 +3305,36 @@
   "Stranger Things": {
    "show": "Stranger Things",
    "kind": "series",
-   "views": 36,
-   "first": "2018-01-21",
+   "views": 39,
+   "first": "2017-11-12",
    "last": "2026-01-01",
-   "days": 14,
+   "days": 15,
    "best_day": {
     "date": "2021-01-03",
     "episodes": 8
    },
-   "binge_days": 4,
+   "binge_days": 5,
    "seasons": {
     "Chapter Eight": 1,
     "Chapter Five": 1,
     "Chapter Four": 1,
-    "Chapter One": 1,
+    "Chapter One": 2,
     "Chapter Seven": 1,
     "Chapter Six": 1,
     "Chapter Three": 1,
     "Chapter Two": 1
    },
    "by_year": {
+    "2017": 1,
     "2018": 4,
     "2021": 17,
     "2022": 6,
-    "2025": 8,
+    "2025": 10,
     "2026": 1
    },
    "eras": {
-    "Austin": 9,
-    "Dallas": 27
+    "Austin": 11,
+    "Dallas": 28
    }
   },
   "Sugar Rush": {
@@ -3526,6 +3515,26 @@
     "Dallas": 92
    }
   },
+  "The Pirate Fairy": {
+   "show": "The Pirate Fairy",
+   "kind": "movie",
+   "views": 1,
+   "first": "2015-06-17",
+   "last": "2015-06-17",
+   "days": 1,
+   "best_day": {
+    "date": "2015-06-17",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2015": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "The Powerpuff Girls": {
    "show": "The Powerpuff Girls",
    "kind": "series",
@@ -3549,10 +3558,10 @@
   "The Vampire Diaries": {
    "show": "The Vampire Diaries",
    "kind": "series",
-   "views": 171,
+   "views": 172,
    "first": "2018-12-22",
    "last": "2021-10-07",
-   "days": 80,
+   "days": 81,
    "best_day": {
     "date": "2020-05-25",
     "episodes": 11
@@ -3569,12 +3578,12 @@
    },
    "by_year": {
     "2018": 22,
-    "2019": 133,
+    "2019": 134,
     "2020": 15,
     "2021": 1
    },
    "eras": {
-    "Dallas": 171
+    "Dallas": 172
    }
   },
   "Tribhuvan Mishra CA Topper": {

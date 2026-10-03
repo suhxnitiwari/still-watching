@@ -404,5 +404,10 @@
   "match": "Motu Patlu (2012)",
   "source": "https://www.tvmaze.com/shows/35173/motu-patlu",
   "poster": "img/posters/motu-patlu.jpg"
+ },
+ "Lost & Found Music Studios": {
+  "match": "Lost & Found Music Studios (2015)",
+  "source": "https://www.tvmaze.com/shows/11917/lost-found-music-studios",
+  "poster": "img/posters/lost-found-music-studios.jpg"
  }
 }
