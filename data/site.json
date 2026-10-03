@@ -1,11 +1,11 @@
 {
  "totals": {
-  "views": 3341,
+  "views": 3382,
   "titles": 410,
   "series": 214,
   "movies": 196,
-  "binge_days": 423,
-  "active_days": 1202,
+  "binge_days": 429,
+  "active_days": 1220,
   "from": "2015-06-16",
   "to": "2026-09-25"
  },
@@ -120,19 +120,19 @@
   },
   {
    "month": "2017-08",
-   "views": 21
+   "views": 29
   },
   {
    "month": "2017-09",
-   "views": 0
+   "views": 9
   },
   {
    "month": "2017-10",
-   "views": 3
+   "views": 9
   },
   {
    "month": "2017-11",
-   "views": 5
+   "views": 16
   },
   {
    "month": "2017-12",
@@ -188,7 +188,7 @@
   },
   {
    "month": "2019-01",
-   "views": 32
+   "views": 33
   },
   {
    "month": "2019-02",
@@ -208,7 +208,7 @@
   },
   {
    "month": "2019-06",
-   "views": 13
+   "views": 14
   },
   {
    "month": "2019-07",
@@ -348,7 +348,7 @@
   },
   {
    "month": "2022-05",
-   "views": 18
+   "views": 20
   },
   {
    "month": "2022-06",
@@ -360,7 +360,7 @@
   },
   {
    "month": "2022-08",
-   "views": 21
+   "views": 22
   },
   {
    "month": "2022-09",
@@ -400,7 +400,7 @@
   },
   {
    "month": "2023-06",
-   "views": 59
+   "views": 61
   },
   {
    "month": "2023-07",
@@ -560,27 +560,27 @@
   }
  ],
  "month_of_year": [
-  289,
+  290,
   159,
   343,
   278,
-  382,
-  357,
+  384,
+  360,
   315,
-  197,
-  156,
-  91,
-  288,
+  206,
+  165,
+  97,
+  299,
   486
  ],
  "weekday": {
-  "Sunday": 610,
-  "Saturday": 558,
-  "Monday": 489,
-  "Tuesday": 463,
-  "Friday": 443,
-  "Wednesday": 391,
-  "Thursday": 387
+  "Sunday": 619,
+  "Saturday": 563,
+  "Monday": 498,
+  "Tuesday": 467,
+  "Friday": 445,
+  "Wednesday": 399,
+  "Thursday": 391
  },
  "top": [
   {
@@ -604,6 +604,10 @@
    "views": 127
   },
   {
+   "show": "Fuller House",
+   "views": 116
+  },
+  {
    "show": "Jessie",
    "views": 105
   },
@@ -612,16 +616,12 @@
    "views": 104
   },
   {
-   "show": "Switched at Birth",
-   "views": 103
-  },
-  {
    "show": "Jane The Virgin",
    "views": 103
   },
   {
-   "show": "Good Luck Charlie",
-   "views": 101
+   "show": "Switched at Birth",
+   "views": 103
   }
  ],
  "binges": [
@@ -651,13 +651,13 @@
    "episodes": 13
   },
   {
-   "date": "2019-11-28",
-   "show": "Friends",
+   "date": "2017-05-14",
+   "show": "Mighty Med",
    "episodes": 13
   },
   {
-   "date": "2017-05-14",
-   "show": "Mighty Med",
+   "date": "2019-11-28",
+   "show": "Friends",
    "episodes": 13
   },
   {
@@ -671,18 +671,8 @@
    "episodes": 12
   },
   {
-   "date": "2020-05-25",
-   "show": "The Vampire Diaries",
-   "episodes": 11
-  },
-  {
    "date": "2021-07-23",
    "show": "Manifest",
-   "episodes": 11
-  },
-  {
-   "date": "2015-10-18",
-   "show": "Life with Boys",
    "episodes": 11
   },
   {
@@ -691,8 +681,18 @@
    "episodes": 11
   },
   {
-   "date": "2021-12-23",
-   "show": "Emily in Paris",
+   "date": "2020-05-25",
+   "show": "The Vampire Diaries",
+   "episodes": 11
+  },
+  {
+   "date": "2015-10-18",
+   "show": "Life with Boys",
+   "episodes": 11
+  },
+  {
+   "date": "2019-12-01",
+   "show": "Friends",
    "episodes": 10
   },
   {
@@ -716,7 +716,7 @@
   },
   {
    "year": 2017,
-   "views": 406,
+   "views": 440,
    "show": "Liv and Maddie",
    "episodes": 74
   },
@@ -728,7 +728,7 @@
   },
   {
    "year": 2019,
-   "views": 426,
+   "views": 428,
    "show": "Friends",
    "episodes": 223
   },
@@ -746,13 +746,13 @@
   },
   {
    "year": 2022,
-   "views": 346,
+   "views": 349,
    "show": "Gilmore Girls",
    "episodes": 132
   },
   {
    "year": 2023,
-   "views": 306,
+   "views": 308,
    "show": "Jane The Virgin",
    "episodes": 98
   },
@@ -825,10 +825,10 @@
    ]
   },
   "Dallas": {
-   "views": 2814,
+   "views": 2855,
    "from": "2015-06-16",
    "to": "2024-07-23",
-   "per_month": 25.8,
+   "per_month": 26.1,
    "top": [
     {
      "show": "Friends",
@@ -855,11 +855,11 @@
      "views": 104
     },
     {
-     "show": "Switched at Birth",
+     "show": "Jane The Virgin",
      "views": 103
     },
     {
-     "show": "Jane The Virgin",
+     "show": "Switched at Birth",
      "views": 103
     },
     {
@@ -1033,52 +1033,52 @@
    "name": "Middle School",
    "from": "2017-08-10",
    "to": "2020-07-18",
-   "views": 1038,
-   "per_month": 29.4,
+   "views": 1074,
+   "per_month": 30.5,
    "titles": 97,
    "titles_per_month": 2.8,
-   "movie_share": 2.9,
+   "movie_share": 2.8,
    "language": {
-    "English": 98.3,
-    "Russian": 1.3,
+    "English": 98.4,
+    "Russian": 1.2,
     "Korean": 0.1,
     "Hindi": 0.1
    },
    "type": {
-    "Scripted": 86.4,
-    "Animation": 6.6,
-    "Reality": 5.6,
+    "Scripted": 86.9,
+    "Animation": 6.4,
+    "Reality": 5.4,
     "Documentary": 0.7,
     "Talk Show": 0.2,
     "Variety": 0.2,
     "Game Show": 0.1
    },
    "genres": {
-    "Romance": 52.1,
-    "Comedy": 47.5,
-    "Drama": 46.1,
-    "Family": 35.3,
-    "Supernatural": 18.5,
-    "Children": 8.5,
-    "Adventure": 5.2,
-    "Mystery": 3.8,
-    "Thriller": 2.5,
-    "Crime": 2.2,
-    "Food": 2.0,
-    "Fantasy": 1.5,
-    "Horror": 1.4,
-    "Action": 1.2,
-    "Science-Fiction": 1.2,
+    "Romance": 50.3,
+    "Comedy": 49.3,
+    "Drama": 44.5,
+    "Family": 37.5,
+    "Supernatural": 17.8,
+    "Children": 8.2,
+    "Adventure": 5.0,
+    "Mystery": 3.6,
+    "Thriller": 2.4,
+    "Crime": 2.1,
+    "Food": 1.9,
+    "Fantasy": 1.4,
+    "Horror": 1.3,
+    "Action": 1.1,
+    "Science-Fiction": 1.1,
     "Music": 0.4,
     "Nature": 0.2,
     "History": 0.2,
     "DIY": 0.1,
     "Espionage": 0.1
    },
-   "netflix_share": 10.5,
+   "netflix_share": 13.6,
    "median_premiere": 2011,
-   "classic_share": 23.1,
-   "fresh_share": 10.2,
+   "classic_share": 22.3,
+   "fresh_share": 13.1,
    "top": [
     {
      "show": "Friends",
@@ -1105,12 +1105,12 @@
      "views": 58
     },
     {
-     "show": "The Boss Baby",
-     "views": 35
+     "show": "Fuller House",
+     "views": 38
     },
     {
-     "show": "Brain Games",
-     "views": 34
+     "show": "The Boss Baby",
+     "views": 35
     }
    ],
    "examples": {
@@ -1134,8 +1134,8 @@
       "views": 95
      },
      {
-      "show": "The Boss Baby",
-      "views": 35
+      "show": "Fuller House",
+      "views": 38
      }
     ],
     "drama": [
@@ -1213,10 +1213,6 @@
      "year": 2009
     },
     {
-     "show": "Brain Games",
-     "year": 2011
-    },
-    {
      "show": "Switched at Birth",
      "year": 2011
     },
@@ -1227,23 +1223,27 @@
     {
      "show": "The Fosters",
      "year": 2013
+    },
+    {
+     "show": "Bunk'd",
+     "year": 2015
     }
    ],
    "movies": 30,
-   "series_views": 1008
+   "series_views": 1044
   },
   {
    "key": "high",
    "name": "High School",
    "from": "2020-08-01",
    "to": "2024-04-29",
-   "views": 1043,
-   "per_month": 23.2,
+   "views": 1048,
+   "per_month": 23.3,
    "titles": 156,
    "titles_per_month": 3.5,
    "movie_share": 8.3,
    "language": {
-    "English": 89.0,
+    "English": 89.1,
     "Hindi": 4.8,
     "Korean": 1.8,
     "Spanish": 1.0,
@@ -1254,23 +1254,23 @@
     "Dutch": 0.1
    },
    "type": {
-    "Scripted": 91.8,
-    "Reality": 6.0,
+    "Scripted": 91.9,
+    "Reality": 5.9,
     "Variety": 0.5,
     "Documentary": 0.3,
     "Animation": 0.2,
     "News": 0.2
    },
    "genres": {
-    "Drama": 81.9,
-    "Romance": 65.0,
-    "Comedy": 36.8,
+    "Drama": 81.5,
+    "Romance": 64.6,
+    "Comedy": 37.1,
     "Medical": 16.9,
     "Crime": 14.3,
-    "Science-Fiction": 11.1,
-    "Supernatural": 10.3,
-    "Mystery": 8.1,
-    "Family": 7.9,
+    "Science-Fiction": 11.0,
+    "Supernatural": 10.2,
+    "Family": 8.4,
+    "Mystery": 8.0,
     "Horror": 2.5,
     "Action": 2.0,
     "Fantasy": 1.6,
@@ -1282,10 +1282,10 @@
     "Children": 0.2,
     "History": 0.1
    },
-   "netflix_share": 39.4,
+   "netflix_share": 39.8,
    "median_premiere": 2014,
-   "classic_share": 32.8,
-   "fresh_share": 18.4,
+   "classic_share": 32.7,
+   "fresh_share": 18.3,
    "top": [
     {
      "show": "Grey's Anatomy",
@@ -1309,7 +1309,7 @@
     },
     {
      "show": "Fuller House",
-     "views": 53
+     "views": 58
     },
     {
      "show": "Never Have I Ever",
@@ -1342,7 +1342,7 @@
     "family": [
      {
       "show": "Fuller House",
-      "views": 53
+      "views": 58
      },
      {
       "show": "Workin' Moms",
@@ -1440,7 +1440,7 @@
     }
    ],
    "movies": 87,
-   "series_views": 956
+   "series_views": 961
   },
   {
    "key": "after",
@@ -1666,9 +1666,9 @@
   "kids_by_year": {
    "2015": 67.3,
    "2016": 74.5,
-   "2017": 65.8,
+   "2017": 60.7,
    "2018": 26.8,
-   "2019": 4.5,
+   "2019": 4.4,
    "2020": 0.5,
    "2021": 0.3,
    "2022": 0.0,
@@ -1706,8 +1706,8 @@
    "after_20": 261
   },
   "weekday_share": {
-   "school": 63.7,
-   "summer": 70.5
+   "school": 63.8,
+   "summer": 70.2
   },
   "college": {
    "fall_2024": 0.18,
@@ -1747,7 +1747,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 44.1,
+  "romance_share": 43.5,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -1809,7 +1809,7 @@
   "after_crackdown": {
    "from": "2023-05-23",
    "to": "2023-12-31",
-   "views": 234,
+   "views": 236,
    "top": [
     {
      "show": "Jane The Virgin",
@@ -1821,7 +1821,7 @@
     },
     {
      "show": "Fuller House",
-     "views": 12
+     "views": 14
     },
     {
      "show": "Delhi Crime",
@@ -1986,14 +1986,14 @@
    "days": 56
   },
   {
-   "from": "2017-08-23",
-   "to": "2017-10-15",
-   "days": 53
-  },
-  {
    "from": "2024-01-27",
    "to": "2024-03-20",
    "days": 53
+  },
+  {
+   "from": "2024-08-27",
+   "to": "2024-10-11",
+   "days": 45
   }
  ],
  "streak": {
@@ -2492,32 +2492,34 @@
   "Fuller House": {
    "show": "Fuller House",
    "kind": "series",
-   "views": 75,
-   "first": "2020-01-02",
+   "views": 116,
+   "first": "2017-08-13",
    "last": "2026-09-11",
-   "days": 38,
+   "days": 57,
    "best_day": {
     "date": "2022-06-14",
     "episodes": 8
    },
-   "binge_days": 8,
+   "binge_days": 14,
    "seasons": {
-    "Season 1": 13,
-    "Season 2": 13,
-    "Season 3": 18,
+    "Season 1": 29,
+    "Season 2": 26,
+    "Season 3": 28,
     "Season 4": 13,
-    "Season 5": 18
+    "Season 5": 20
    },
    "by_year": {
+    "2017": 34,
+    "2019": 2,
     "2020": 2,
-    "2022": 41,
-    "2023": 12,
+    "2022": 44,
+    "2023": 14,
     "2025": 7,
     "2026": 13
    },
    "eras": {
     "Austin": 20,
-    "Dallas": 55
+    "Dallas": 96
    }
   },
   "Gilmore Girls": {
