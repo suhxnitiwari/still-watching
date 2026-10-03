@@ -61,6 +61,67 @@ function wallHTML(cols = 13) {
 
 const FALLBACK_BG = () => Object.values(ART).find((a) => a.backdrop)?.backdrop || "";
 
+function toast(text) {
+  let t = $("#toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; t.className = "toast"; t.setAttribute("role", "status"); document.body.appendChild(t); }
+  t.textContent = text;
+  t.classList.remove("is-on"); void t.offsetWidth; t.classList.add("is-on");
+}
+
+// ---------- the intro ----------
+// Our own "ta-dum": two deep hits and a swell, synthesized with Web Audio. Not Netflix's sound.
+function taDum() {
+  const Ctx = window.AudioContext || window.webkitAudioContext;
+  if (!Ctx) return;
+  const ctx = new Ctx(), out = ctx.createGain();
+  out.gain.value = .9;
+  out.connect(ctx.destination);
+  const hit = (at, freq, len, level) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "sine";
+    o.frequency.setValueAtTime(freq * 2.2, ctx.currentTime + at);
+    o.frequency.exponentialRampToValueAtTime(freq, ctx.currentTime + at + .08);
+    g.gain.setValueAtTime(0, ctx.currentTime + at);
+    g.gain.linearRampToValueAtTime(level, ctx.currentTime + at + .01);
+    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + at + len);
+    o.connect(g).connect(out);
+    o.start(ctx.currentTime + at);
+    o.stop(ctx.currentTime + at + len + .05);
+  };
+  hit(0, 55, .5, 1);
+  hit(.42, 41, 2.2, 1);
+  // A soft swell under the second hit.
+  [110, 164.8, 220].forEach((f) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "triangle";
+    o.frequency.value = f;
+    g.gain.setValueAtTime(0, ctx.currentTime + .42);
+    g.gain.linearRampToValueAtTime(.06, ctx.currentTime + 1.1);
+    g.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + 2.8);
+    o.connect(g).connect(out);
+    o.start(ctx.currentTime + .42);
+    o.stop(ctx.currentTime + 2.9);
+  });
+}
+
+function setupIntro(onDone) {
+  const intro = $("#intro");
+  let seen = false;
+  try { seen = sessionStorage.getItem("entered") === "1"; } catch {}
+  if (seen || !intro) { intro?.remove(); onDone(); return; }
+  intro.hidden = false;
+  document.body.classList.add("locked");
+  const finish = () => { intro.remove(); onDone(); };
+  $("#intro-start").focus();
+  $("#intro-start").addEventListener("click", () => {
+    if (intro.classList.contains("is-playing")) return;
+    taDum();
+    intro.classList.add("is-playing");
+    setTimeout(finish, matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3000);
+  });
+  $("#intro-skip").addEventListener("click", finish);
+}
+
 // ---------- Who's watching? ----------
 // The family account's profile screen. Only my profile opens: it's the only history here.
 const PROFILES = [
@@ -97,11 +158,23 @@ const LOCK_ICON = `<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height
 function setupProfiles() {
   const me = PROFILES.find((p) => p.me);
   $("#nav-avatar").innerHTML = avatar(me, "nav");
-  // The avatar goes back to "Who's watching?"
-  $("#switch-profile").addEventListener("click", () => {
-    try { sessionStorage.removeItem("entered"); } catch {}
-    scrollTo({ top: 0 });
-    location.reload();
+  // The avatar opens a Netflix-style profile menu.
+  const menu = $("#pmenu"), btn = $("#switch-profile");
+  const others = PROFILES.filter((p) => !p.me);
+  $("#pmenu-profiles").innerHTML = others.map((p, i) =>
+    `<button class="pmenu__profile" role="menuitem" type="button" data-other="${i}"><span class="avatar avatar--sm">${avatar(p, `m${i}`)}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>${p.name}</button>`).join("");
+  const setOpen = (open) => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
+  btn.addEventListener("click", (e) => { e.stopPropagation(); setOpen(menu.hidden); });
+  document.addEventListener("click", (e) => { if (!e.target.closest(".nav__menuwrap")) setOpen(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
+  const backToProfiles = () => { try { sessionStorage.removeItem("entered"); } catch {} scrollTo({ top: 0 }); location.reload(); };
+  $("#pmenu-exit").addEventListener("click", backToProfiles);
+  $("#pmenu-signout").addEventListener("click", backToProfiles);
+  $("#pmenu-profiles").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-other]");
+    if (!b) return;
+    const p = others[b.dataset.other];
+    toast(`That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
   });
   const gate = $("#profiles");
   let seen = false;
@@ -220,8 +293,21 @@ function row(title, sub, items) {
 const yearsOf = (s) => Object.keys(s.by_year).length;
 
 // The red label under a poster, like "Recently Added", but from my data.
+// A Netflix-style badge and episode chip for a wide tile, from my data.
+function badgeFor(name) {
+  const p = DATA.profile;
+  if (p.finished.some((f) => f.show === name)) return "Finished";
+  if (p.comebacks.some((c) => c.show === name)) return "Comeback";
+  return tagFor(name);
+}
+function wideTile(name, extra = "") {
+  const s = DATA.shows[name];
+  return tile(name, `<span class="tag">${esc(badgeFor(name))}</span>${s ? `<span class="tile__eps">${s.views} ${s.kind === "movie" ? "view" : "eps"}</span>` : ""}${extra}`);
+}
+
 function tagFor(name) {
   const s = DATA.shows[name];
+  if (!s) return "Watched";
   const owned = DATA.yearly.find((y) => y.show === name && y.year >= 2018);
   if (owned) return `#1 of ${owned.year}`;
   if (s.best_day.episodes >= 10) return `${s.best_day.episodes} in One Day`;
@@ -274,10 +360,20 @@ function setupRows() {
     row("Top 10 Shows in Suhani's Life", "", top.map((s, i) =>
       `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span>${tile(s.show, `<span class="tag">${esc(tagFor(s.show))}</span>`, { tall: true })}</div>`)),
     collection(),
+    row("Episodes of Me", "short films made from my history", [
+      ["password", "E1", "The Password Stopped Working", "Friends"], ["growing", "E2", "Singapore to the Forty Acres", "Jessie"],
+      ["friends", "E3", "The One With the Deadline", "Friends"], ["summer", "E4", "Home for the Summer", "Gossip Girl"],
+      ["dad", "E5", "Dad's Impeccable Timing", "Peaky Blinders"],
+    ].map(([key, ep, name, show]) => `<button class="tile film-tile" type="button" data-film="${key}" aria-label="Play ${ep}: ${esc(name)}">
+      ${art(show, { label: name })}<span class="tile__ribbon">EP<b>${ep.slice(1)}</b></span><span class="film-tile__play">▶</span></button>`)),
     row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
       tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
-    row("Home for Summer & Absolutely Starving", `a whole year of college, then ${n(windows.summer_2025.views)} views in two months`, windows.summer_2025.top.map((s) =>
-      tile(s.show, `<span class="tile__meta">${s.views} eps</span>`))),
+    ...DATA.because.map((b) => row(`Because I Finished ${b.seed}`, `what I started in the two months after ${fmtMonth(b.done.slice(0, 7))}`,
+      b.shows.map((x) => wideTile(x.show)))),
+    ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.map((t) => wideTile(t)))] : []),
+    row("Hooked From the First Episode", "4+ episodes on day one", DATA.hooked.map((h) =>
+      tile(h.show, `<span class="tag">${h.day_one} on Day One</span><span class="tile__eps">${h.views} eps</span>`))),
+    row("Home for Summer & Absolutely Starving", `a whole year of college, then ${n(windows.summer_2025.views)} views in two months`, windows.summer_2025.top.map((s) => wideTile(s.show))),
   ];
   const rows = $("#rows");
   rows.innerHTML = html.join("");
@@ -878,9 +974,60 @@ function growingFilm() {
   ];
 }
 
+function friendsFilm() {
+  const fr = DATA.profile.friends_race, { binges } = DATA;
+  const big = binges.find((b) => b.show === "Friends");
+  return [
+    { dur: 5, black: true, center: true, kicker: "December 1, 2019", line: "Friends is leaving<br><em>Netflix</em>", sub: "January 1, 2020. Thirty-one days left. Eighth grade, winter break coming." },
+    { dur: 5, img: backdropOf("Friends"), kicker: "December 2019", line: `${fr.december} episodes<br>in <em>one month</em>`, sub: "About six a day, every day." },
+    { dur: 5, black: true, center: true, kicker: fmtDate(big.date), line: `<span class="scene__counter" data-to="${big.episodes}">0</span> episodes<br>in <em>one day</em>`, sub: "Roughly eleven hours of Central Perk." },
+    { dur: 4.5, img: backdropOf("Friends"), alt: true, kicker: "December 25–31", line: `${fr.last_week} more,<br><em>racing the clock</em>`, sub: "Christmas Day alone: 8 episodes." },
+    { dur: 5, black: true, center: true, kicker: "December 31, 11:59 PM", line: "Just<br><em>one more</em>", sub: `Netflix logged ${fr.jan1} episodes on January 1, 2020. Past midnight. In denial.` },
+    { dur: 5.5, wall: true, center: true, kicker: "Then it was gone", line: `${fr.watched} of <em>${fr.total}</em>`, sub: "Every season but the first. I still haven't seen the pilot." },
+  ];
+}
+
+function summerFilm() {
+  const p = DATA.profile, { windows: w, streak, monthly } = DATA;
+  const gg = w.summer_2025.top[0];
+  const july = monthly.find((m) => m.month === "2025-07");
+  return [
+    { dur: 5, dorm: true, kicker: "Austin · spring 2025", line: "One more<br><em>final</em>", sub: `Freshman year on a family account: ${p.college.fall_2024} views a day in the fall.` },
+    { dur: 4.5, black: true, center: true, kicker: "May 2025", line: "Back on the<br><em>home Wi-Fi</em>", sub: "Dallas. The TV recognizes me again." },
+    { dur: 5.5, img: backdropOf(gg.show), kicker: "June – July 2025", line: `${gg.views} episodes<br>of <em>${esc(gg.show)}</em>`, sub: "Starving. Absolutely starving." },
+    { dur: 5, black: true, center: true, kicker: `${fmtShort(streak.from)} – ${fmtShort(streak.to)}`, line: `<span class="scene__counter" data-to="${streak.days}">0</span> days<br>in a <em>row</em>`, sub: "The longest streak of my life." },
+    { dur: 5, montage: w.summer_2025.top.slice(0, 5).map((s) => ({ img: posterOf(s.show), tag: `${s.views}` })), center: true, kicker: "July 2025", line: `${july.views} views<br>in <em>one month</em>`, sub: "My biggest month since Friends left." },
+    { dur: 5, img: backdropOf(w.fall_2025.top[0].show), alt: true, kicker: "August 2025", line: "Back to<br><em>Austin</em>", sub: `Sophomore fall: ${p.college.fall_2025} views a day. See you next summer.` },
+  ];
+}
+
+function dadFilm() {
+  const f = DATA.family;
+  if (!f) return [];
+  const md = f.dad_on_mothers_day.find((x) => x.show === "The Mother");
+  const h = f.dad_holidays;
+  return [
+    { dur: 5, wall: true, center: true, kicker: "A Tiwari household special", line: "Dad's impeccable<br><em>timing</em>", sub: "What Dad watches on the days that matter." },
+    ...(md ? [{ dur: 5, black: true, center: true, kicker: `Mother's Day ${md.year}`, line: "The<br><em>Mother</em>", sub: "The Jennifer Lopez assassin movie. Happy Mother's Day." }] : []),
+    { dur: 5, black: true, center: true, kicker: "My little sister's birthdays", line: `${esc(f.dad_sister_birthday_picks[0] || "")}<br><em>and ${esc(f.dad_sister_birthday_picks.at(-1) || "")}</em>`, sub: "Party energy." },
+    { dur: 5, black: true, center: true, kicker: "Christmas", line: "Merry<br><em>crime-mas</em>", sub: `${listOf(h.christmas.map(esc))}.` },
+    ...(h.valentines.length ? [{ dur: 4.5, black: true, center: true, kicker: "Valentine's Day", line: `${esc(h.valentines[0])}`, sub: "Romance." }] : []),
+    ...(h.fathers_day.length ? [{ dur: 4.5, black: true, center: true, kicker: "Father's Day", line: `${h.fathers_day[0].views} episodes of<br><em>${esc(h.fathers_day[0].show)}</em>`, sub: "He treats himself." }] : []),
+    { dur: 5, black: true, center: true, kicker: "The verdict", line: `Quits <em>${f.quit_rate.Dad}%</em><br>of shows`, sub: "After one episode. Samples everything. Commits to nothing. Except crime." },
+  ];
+}
+
 const FILMS = {
-  password: { ep: "E1", name: "The Password Stopped Working", subtitle: "One Household", scenes: passwordFilm, next: "growing" },
-  growing: { ep: "E2", name: "The Password Stopped Working", subtitle: "Singapore to the Forty Acres", scenes: growingFilm, next: null },
+  password: { ep: "E1", name: "The Password Stopped Working", subtitle: "One Household", scenes: passwordFilm, next: "growing", art: "Friends",
+    blurb: "Netflix decides an account belongs to one household. Suhani moves 200 miles away from hers." },
+  growing: { ep: "E2", name: "The Password Stopped Working", subtitle: "Singapore to the Forty Acres", scenes: growingFilm, next: "friends", art: "Jessie",
+    blurb: "A fourth-grader fresh from Singapore learns America through Disney Channel, and grows up into a Longhorn." },
+  friends: { ep: "E3", name: "The Password Stopped Working", subtitle: "The One With the Deadline", scenes: friendsFilm, next: "summer", art: "Friends",
+    blurb: "Friends is leaving Netflix in 31 days. An eighth-grader takes that personally." },
+  summer: { ep: "E4", name: "The Password Stopped Working", subtitle: "Home for the Summer", scenes: summerFilm, next: "dad", art: "Gossip Girl",
+    blurb: "A year of college on someone else's Wi-Fi. Then home, the TV, and 26 days in a row." },
+  dad: { ep: "E5", name: "The Password Stopped Working", subtitle: "Dad's Impeccable Timing", scenes: dadFilm, next: null, art: "Peaky Blinders",
+    blurb: "What one man watches on Mother's Day, Christmas and his daughter's birthday. A study in timing." },
 };
 
 function setupPlayer() {
@@ -906,11 +1053,11 @@ function setupPlayer() {
     }).join("");
     sceneEls = [...stage.children];
     $(".player__title").innerHTML = `<b>${esc(film.name)}</b> <span>${film.ep}</span> ${esc(film.subtitle)}`;
-    $("#player-next").textContent = film.next ? "Next Episode ›" : "Back to Browse ›";
+    $("#player-next").setAttribute("aria-label", film.next ? "Next episode" : "Back to browse");
     player.setAttribute("aria-label", `${film.name}, ${film.subtitle}`);
   };
 
-  let t = 0, playing = false, last = 0, current = -1, raf, idleTimer;
+  let t = 0, playing = false, last = 0, current = -1, raf, idleTimer, speed = 1, sound = false, key = null;
   const show = (i) => {
     if (i === current) return;
     sceneEls.forEach((el, k) => {
@@ -932,7 +1079,7 @@ function setupPlayer() {
   };
   const tick = (now) => {
     if (playing) {
-      t = Math.min(t + (now - last) / 1000, total);
+      t = Math.min(t + (now - last) / 1000 * speed, total);
       if (t >= total) {
         if (film.next) { start(film.next); return; }
         setPlaying(false);
@@ -955,9 +1102,12 @@ function setupPlayer() {
     clearTimeout(idleTimer);
     idleTimer = setTimeout(() => playing && player.classList.add("is-idle"), 2600);
   };
-  const start = (key) => {
+  const start = (k) => {
+    key = k;
     cancelAnimationFrame(raf);
-    load(key);
+    load(k);
+    if (sound) taDum();
+    closePanels();
     t = 0; current = -1; last = performance.now();
     setPlaying(true);
     raf = requestAnimationFrame(tick);
@@ -982,7 +1132,63 @@ function setupPlayer() {
 
   $("#play").addEventListener("click", (e) => { opener = e.currentTarget; open("password"); });
   $("#play-growing")?.addEventListener("click", (e) => { opener = e.currentTarget; open("growing"); });
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-film]");
+    if (b && FILMS[b.dataset.film]) { opener = b; open(b.dataset.film); }
+  });
   $("#player-back").addEventListener("click", close);
+  // Panels: next episode (hover), episodes, audio & subtitles, speed.
+  const panels = ["#pp-next", "#pp-episodes", "#pp-lang", "#pp-speed"].map((q) => $(q));
+  function closePanels() { panels.forEach((p) => { p.hidden = true; }); }
+  const toggle = (q) => { const p = $(q), was = p.hidden; closePanels(); p.hidden = !was; wake(); };
+  const epCard = (k, now) => { const f = FILMS[k]; return `<button class="pp-ep${now ? " is-now" : ""}" type="button" data-film-go="${k}">
+      <span class="pp-ep__head"><b>${f.ep.slice(1)}</b> ${esc(f.subtitle)}</span>
+      <span class="pp-ep__body"><span class="pp-ep__art">${art(f.art, { label: "", mark: false })}<i>${now ? "▮▮▮ Now Playing" : "▶"}</i></span><span>${esc(f.blurb)}</span></span></button>`; };
+  const fillNext = () => {
+    const nx = film.next;
+    $("#pp-next").innerHTML = nx ? `<h3>Next Episode</h3>${epCard(nx, false)}` : `<h3>That's the last episode</h3><p class="pp-note">Back to browse to see more.</p>`;
+  };
+  $("#player-next").addEventListener("mouseenter", () => { fillNext(); closePanels(); $("#pp-next").hidden = false; });
+  $("#pp-next").addEventListener("mouseleave", () => { $("#pp-next").hidden = true; });
+  $("#player-eps").addEventListener("click", () => {
+    $("#pp-episodes").innerHTML = `<h3>The Password Stopped Working</h3>${Object.keys(FILMS).map((k) => epCard(k, k === key)).join("")}`;
+    toggle("#pp-episodes");
+  });
+  $("#player-lang").addEventListener("click", () => toggle("#pp-lang"));
+  $("#player-speed").addEventListener("click", () => toggle("#pp-speed"));
+  player.addEventListener("click", (e) => {
+    const go = e.target.closest("[data-film-go]");
+    if (go) { start(go.dataset.filmGo); return; }
+    const sp = e.target.closest("[data-speed]");
+    if (sp) {
+      speed = +sp.dataset.speed;
+      $("#pp-speed").querySelectorAll("[data-speed]").forEach((b) => b.classList.toggle("is-on", b === sp));
+      if (speed === 3) toast("3x: now it sounds like Suhani telling you about her day.");
+    }
+    const au = e.target.closest("[data-audio]");
+    if (au) {
+      $("#pp-lang").querySelectorAll("[data-audio]").forEach((b) => b.classList.toggle("is-on", b === au));
+      if (au.dataset.audio === "hi") toast("हिंदी ऑडियो: these films are silent, but I'm fluent.");
+    }
+    const sb = e.target.closest("[data-subs]");
+    if (sb) {
+      $("#pp-lang").querySelectorAll("[data-subs]").forEach((b) => b.classList.toggle("is-on", b === sb));
+      player.classList.toggle("no-subs", sb.dataset.subs === "off");
+      if (sb.dataset.subs === "hi") toast("हिंदी उपशीर्षक जल्द आ रहे हैं (Hindi subtitles coming soon).");
+    }
+  });
+  $("#player-vol").addEventListener("click", (e) => {
+    sound = !sound;
+    e.currentTarget.setAttribute("aria-pressed", String(sound));
+    e.currentTarget.setAttribute("aria-label", sound ? "Sound on" : "Sound off");
+    player.classList.toggle("has-sound", sound);
+    if (sound) taDum();
+  });
+  $("#player-full").addEventListener("click", () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    else player.requestFullscreen?.().catch(() => {});
+  });
+  $("#player-flag").addEventListener("click", () => toast("Reported. (To Suhani. She'll fix it at 3x speed.)"));
   $("#player-toggle").addEventListener("click", () => (t >= total ? seek(0) : setPlaying(!playing)));
   $("#player-rew").addEventListener("click", () => seek(t - 10));
   $("#player-fwd").addEventListener("click", () => seek(t + 10));
@@ -997,7 +1203,7 @@ function setupPlayer() {
     if (e.key === "ArrowLeft") seek(t - 5);
     if (e.key === "ArrowRight") seek(t + 5);
   });
-  stage.addEventListener("click", () => setPlaying(!playing));
+  stage.addEventListener("click", () => { if (panels.some((p) => !p.hidden)) { closePanels(); return; } setPlaying(!playing); });
   player.addEventListener("pointermove", wake);
   document.addEventListener("keydown", (e) => {
     if (player.hidden) return;
@@ -1167,12 +1373,14 @@ function setupGlobal() {
   const note = $("#profiles-note");
   if (note) note.textContent = `${parse(t.to).getFullYear() - parse(t.from).getFullYear()} years. ${n(t.views)} things I pressed play on.`;
   $("#about-from").textContent = fmtDate(t.from);
+  $("#foot-since").textContent = `${fmtDate(t.from)}: ${n(t.views)} views and counting`;
+  $("#foot-switch")?.addEventListener("click", (e) => { e.preventDefault(); $("#switch-profile").click(); });
   $("#about-to").textContent = fmtDate(t.to);
   $("#still-sub").textContent =
     `${n(t.views)} views, ${n(t.titles)} titles and ${n(t.active_days)} days with something on. The most recent: ${fmtDate(t.to)}. Yes, I'm still watching.`;
 }
 
-setupProfiles();
+setupIntro(setupProfiles);
 Promise.all([
   fetch("data/site.json").then((r) => r.json()),
   fetch("data/art.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),

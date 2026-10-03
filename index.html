@@ -12,6 +12,16 @@
 </head>
 <body>
 
+<!-- The intro: our own ta-dum and logo zoom (not Netflix's), then the profile screen -->
+<div class="intro" id="intro" hidden>
+  <button class="intro__start" type="button" id="intro-start" aria-label="Start: play the intro">
+    <span class="intro__streaks" aria-hidden="true"></span>
+    <span class="intro__logo" aria-hidden="true">S</span>
+    <span class="intro__hint">Click to start <small>🔊 sound on</small></span>
+  </button>
+  <button class="intro__skip" type="button" id="intro-skip">Skip intro</button>
+</div>
+
 <!-- Who's watching? -->
 <section id="profiles" class="profiles" aria-label="Choose a profile">
   <div class="wordmark profiles__mark">Still Watching</div>
@@ -47,7 +57,18 @@
     <a href="case-study.html">Case Study</a>
     <a href="#about">About</a>
   </nav>
-  <button class="nav__me" type="button" id="switch-profile" aria-label="Switch profile"><span class="avatar avatar--sm" id="nav-avatar" aria-hidden="true"></span><span class="nav__caret" aria-hidden="true">▾</span></button>
+  <div class="nav__menuwrap">
+    <button class="nav__me" type="button" id="switch-profile" aria-haspopup="menu" aria-expanded="false" aria-label="Profile menu"><span class="avatar avatar--sm" id="nav-avatar" aria-hidden="true"></span><span class="nav__caret" aria-hidden="true">▾</span></button>
+    <div class="pmenu" id="pmenu" role="menu" hidden>
+      <div id="pmenu-profiles"></div>
+      <a class="pmenu__item" role="menuitem" href="#about"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>Manage Profiles</a>
+      <button class="pmenu__item" role="menuitem" type="button" id="pmenu-exit"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Exit Profile</button>
+      <a class="pmenu__item" role="menuitem" href="case-study.html#solution"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9.5" cy="10" r="1.2" fill="currentColor"/><circle cx="14.5" cy="10" r="1.2" fill="currentColor"/><path d="M9 13.5c1.6 1.2 4.4 1.2 6 0M8 21l3-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Transfer Profile</a>
+      <a class="pmenu__item" role="menuitem" href="case-study.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>Account</a>
+      <a class="pmenu__item" role="menuitem" href="#about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>Help Center</a>
+      <button class="pmenu__signout" role="menuitem" type="button" id="pmenu-signout">Sign out of Still Watching</button>
+    </div>
+  </div>
 </header>
 
 <main id="top">
@@ -144,7 +165,27 @@
     <p><strong>What it can't see.</strong> The export keeps only the latest date for each title, so a rewatched episode counts once, on the last day I watched it. It has dates but no times, so it can't tell when in the day I watched. It only knows this profile: anything I watched on someone else's account isn't here.</p>
     <p><strong>Privacy.</strong> The raw history never leaves my laptop. This site ships per-show and per-month summaries only.</p>
     <p><strong>Images.</strong> Show posters and backgrounds come from <a href="https://www.tvmaze.com" target="_blank" rel="noopener">TVmaze</a> and belong to their studios and networks. The moving poster wall is built from the shows in my own history.</p>
-    <p class="about__small">Not affiliated with Netflix. © 2026 Suhani Tiwari.</p>
+  </footer>
+
+  <footer class="foot" aria-label="Site footer">
+    <div class="foot__inner">
+      <div class="foot__social">
+        <a href="https://github.com/suhxnitiwari/still-watching" target="_blank" rel="noopener" aria-label="Code on GitHub">
+          <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.7s.8-.3 2.8 1a9.6 9.6 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg></a>
+        <a href="https://suhxnitiwari.github.io/listening-galaxy/" target="_blank" rel="noopener" aria-label="My Spotify project, Heavy Rotation">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7 9.5c3.5-1 7.5-.7 10.5 1M7.5 12.5c3-.8 6.2-.5 8.8.9M8 15.3c2.4-.6 4.8-.4 6.8.7" stroke="#141414" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg></a>
+        <a href="report/still-watching-report.pdf" download aria-label="Download the data report">
+          <svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="foot__cols">
+        <nav aria-label="Explore"><b>Explore</b><a href="#case">Who's Watching</a><a href="#growth">Growing Up</a><a href="#house">The Household</a><a href="#episodes">Episodes</a></nav>
+        <nav aria-label="The work"><b>The work</b><a href="case-study.html">PM case study</a><a href="report/still-watching-report.pdf" download>Data report (PDF)</a><a href="https://github.com/suhxnitiwari/still-watching" target="_blank" rel="noopener">Code &amp; pipeline</a></nav>
+        <nav aria-label="More from me"><b>More from me</b><a href="https://suhxnitiwari.github.io/listening-galaxy/" target="_blank" rel="noopener">Heavy Rotation (Spotify)</a><a href="#profiles-top" id="foot-switch">Switch profile</a></nav>
+        <nav aria-label="About the data"><b>About the data</b><a href="#about">How it was made</a><a href="#about">Privacy</a><a href="https://www.tvmaze.com" target="_blank" rel="noopener">Images: TVmaze</a></nav>
+      </div>
+      <p class="foot__still">Still watching since <span id="foot-since"></span>.</p>
+      <p class="foot__copy">© 2026 Suhani Tiwari · Not affiliated with Netflix</p>
+    </div>
   </footer>
 </main>
 
@@ -164,8 +205,25 @@
   <div class="player__chrome">
     <div class="player__top">
       <button class="player__icon" type="button" id="player-back" aria-label="Back to browse">
-        <svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M19 12H5m6-7-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
+      <button class="player__icon" type="button" id="player-flag" aria-label="Report a problem">
+        <svg viewBox="0 0 24 24"><path d="M5 21V4m0 0h9l-1 3h6v8h-8l1-3H5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="ppanel" id="pp-next" hidden></div>
+    <div class="ppanel" id="pp-episodes" hidden></div>
+    <div class="ppanel ppanel--lang" id="pp-lang" hidden>
+      <div><h4>Audio</h4><button type="button" class="pp-opt is-on" data-audio="en">English [Original]</button><button type="button" class="pp-opt" data-audio="hi">Hindi</button></div>
+      <div><h4>Subtitles</h4><button type="button" class="pp-opt" data-subs="off">Off</button><button type="button" class="pp-opt is-on" data-subs="en">English</button><button type="button" class="pp-opt" data-subs="hi">Hindi</button></div>
+    </div>
+    <div class="ppanel ppanel--speed" id="pp-speed" hidden>
+      <h4>Playback Speed</h4>
+      <div class="pp-speeds">
+        <button type="button" data-speed="0.5"><i></i>0.5x</button><button type="button" data-speed="0.75"><i></i>0.75x</button>
+        <button type="button" data-speed="1" class="is-on"><i></i>1x (Normal)</button><button type="button" data-speed="1.25"><i></i>1.25x</button>
+        <button type="button" data-speed="1.5"><i></i>1.5x</button><button type="button" data-speed="3"><i></i>3x (How Suhani Talks)</button>
+      </div>
     </div>
     <div class="player__bottom">
       <div class="player__track">
@@ -182,8 +240,25 @@
         <button class="player__icon" type="button" id="player-fwd" aria-label="Forward 10 seconds">
           <svg viewBox="0 0 24 24"><path d="M12 5V2l5 4-5 4V7a6 6 0 1 0 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><text x="12" y="16.5" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor">10</text></svg>
         </button>
+        <button class="player__icon" type="button" id="player-vol" aria-label="Sound off" aria-pressed="false">
+          <svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Z" fill="currentColor"/><path class="i-wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="i-mute" d="m16 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
         <p class="player__title"><b>The Password Stopped Working</b> <span>E1</span> One Household</p>
-        <button class="player__next" type="button" id="player-next">Next Episode ›</button>
+        <button class="player__icon" type="button" id="player-next" aria-label="Next episode">
+          <svg viewBox="0 0 24 24"><path d="M5 5v14l11-7Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M19 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-eps" aria-label="Episodes">
+          <svg viewBox="0 0 24 24"><rect x="3" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 7h12a2 2 0 0 1 2 2v7M10 4h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-lang" aria-label="Audio and subtitles">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v12H10l-4 4v-4H4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 9h3m2 0h3M8 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-speed" aria-label="Playback speed">
+          <svg viewBox="0 0 24 24"><path d="M5.6 18.4A9 9 0 1 1 18.4 18.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="m12 14 4-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="14" r="1.8" fill="currentColor"/></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-full" aria-label="Full screen">
+          <svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </div>
   </div>

@@ -873,6 +873,110 @@
    ]
   }
  },
+ "hooked": [
+  {
+   "show": "Sugar Rush",
+   "day_one": 12,
+   "views": 14
+  },
+  {
+   "show": "Life with Boys",
+   "day_one": 11,
+   "views": 21
+  },
+  {
+   "show": "Heeramandi",
+   "day_one": 8,
+   "views": 8
+  },
+  {
+   "show": "Mismatched",
+   "day_one": 8,
+   "views": 22
+  },
+  {
+   "show": "FUBAR",
+   "day_one": 7,
+   "views": 9
+  },
+  {
+   "show": "Fishbowl Wives",
+   "day_one": 7,
+   "views": 8
+  },
+  {
+   "show": "Shaque",
+   "day_one": 7,
+   "views": 7
+  },
+  {
+   "show": "XO, Kitty",
+   "day_one": 6,
+   "views": 19
+  },
+  {
+   "show": "Octonauts",
+   "day_one": 6,
+   "views": 6
+  },
+  {
+   "show": "The Witcher",
+   "day_one": 6,
+   "views": 6
+  },
+  {
+   "show": "Dragon Tales",
+   "day_one": 6,
+   "views": 7
+  },
+  {
+   "show": "Dubai Bling",
+   "day_one": 6,
+   "views": 25
+  }
+ ],
+ "because": [
+  {
+   "seed": "Friends",
+   "done": "2019-12-29",
+   "shows": [
+    {
+     "show": "The Fosters",
+     "views": 104
+    },
+    {
+     "show": "2 States",
+     "views": 1
+    },
+    {
+     "show": "Tall Girl",
+     "views": 1
+    }
+   ]
+  },
+  {
+   "seed": "Gossip Girl",
+   "done": "2025-07-19",
+   "shows": [
+    {
+     "show": "The Hunting Wives",
+     "views": 7
+    },
+    {
+     "show": "The Notebook",
+     "views": 1
+    },
+    {
+     "show": "How to Be Single",
+     "views": 1
+    },
+    {
+     "show": "La La Land",
+     "views": 1
+    }
+   ]
+  }
+ ],
  "life": [
   {
    "key": "elementary",
@@ -2020,6 +2124,18 @@
    "Her Mother's Killer",
    "The Mother"
   ],
+  "mom_first_titles": [
+   "Tribhuvan Mishra CA Topper",
+   "Saiyaara",
+   "Shaque",
+   "De De Pyaar De 2",
+   "Tere Ishk Mein",
+   "Chandigarh Kare Aashiqui",
+   "Operation Safed Sagar",
+   "Taskaree",
+   "Maa Behen",
+   "Ek Villain Returns"
+  ],
   "mom_hindi_lead": {
    "shared": 72,
    "mom_first": 51,
@@ -2332,6 +2448,26 @@
     "Dallas": 24
    }
   },
+  "2 States": {
+   "show": "2 States",
+   "kind": "movie",
+   "views": 1,
+   "first": "2020-01-02",
+   "last": "2020-01-02",
+   "days": 1,
+   "best_day": {
+    "date": "2020-01-02",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2020": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "A Family Affair": {
    "show": "A Family Affair",
    "kind": "movie",
@@ -2570,6 +2706,26 @@
     "Dallas": 91
    }
   },
+  "Chandigarh Kare Aashiqui": {
+   "show": "Chandigarh Kare Aashiqui",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-01-09",
+   "last": "2022-01-09",
+   "days": 1,
+   "best_day": {
+    "date": "2022-01-09",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Chris Rock": {
    "show": "Chris Rock",
    "kind": "series",
@@ -2628,6 +2784,26 @@
    },
    "eras": {
     "Austin": 7
+   }
+  },
+  "De De Pyaar De 2": {
+   "show": "De De Pyaar De 2",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-01-10",
+   "last": "2026-01-10",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-10",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Delhi Crime": {
@@ -2703,6 +2879,26 @@
     "Dallas": 6
    }
   },
+  "Ek Villain Returns": {
+   "show": "Ek Villain Returns",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-09-19",
+   "last": "2022-09-19",
+   "days": 1,
+   "best_day": {
+    "date": "2022-09-19",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Emily in Paris": {
    "show": "Emily in Paris",
    "kind": "series",
@@ -2734,6 +2930,31 @@
     "Dallas": 28
    }
   },
+  "FUBAR": {
+   "show": "FUBAR",
+   "kind": "series",
+   "views": 9,
+   "first": "2023-06-08",
+   "last": "2025-07-09",
+   "days": 3,
+   "best_day": {
+    "date": "2023-06-08",
+    "episodes": 7
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 1
+   },
+   "by_year": {
+    "2023": 8,
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1,
+    "Dallas": 8
+   }
+  },
   "Fabulous Lives of Bollywood Wives": {
    "show": "Fabulous Lives of Bollywood Wives",
    "kind": "series",
@@ -2760,6 +2981,26 @@
    "eras": {
     "Austin": 8,
     "Dallas": 15
+   }
+  },
+  "Fishbowl Wives": {
+   "show": "Fishbowl Wives",
+   "kind": "series",
+   "views": 8,
+   "first": "2022-04-23",
+   "last": "2022-04-24",
+   "days": 2,
+   "best_day": {
+    "date": "2022-04-23",
+    "episodes": 7
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2022": 8
+   },
+   "eras": {
+    "Dallas": 8
    }
   },
   "Friends": {
@@ -2997,6 +3238,26 @@
     "Dallas": 8
    }
   },
+  "How to Be Single": {
+   "show": "How to Be Single",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-07-23",
+   "last": "2025-07-23",
+   "days": 1,
+   "best_day": {
+    "date": "2025-07-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "Indian Matchmaking": {
    "show": "Indian Matchmaking",
    "kind": "series",
@@ -3120,6 +3381,26 @@
     "Dallas": 28
    }
   },
+  "La La Land": {
+   "show": "La La Land",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-09-13",
+   "last": "2025-09-13",
+   "days": 1,
+   "best_day": {
+    "date": "2025-09-13",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "Lab Rats": {
    "show": "Lab Rats",
    "kind": "series",
@@ -3231,6 +3512,26 @@
    },
    "eras": {
     "Dallas": 1
+   }
+  },
+  "Maa Behen": {
+   "show": "Maa Behen",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-06-08",
+   "last": "2026-06-08",
+   "days": 1,
+   "best_day": {
+    "date": "2026-06-08",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Mako Mermaids": {
@@ -3442,6 +3743,28 @@
     "Dallas": 34
    }
   },
+  "Octonauts": {
+   "show": "Octonauts",
+   "kind": "series",
+   "views": 6,
+   "first": "2017-03-23",
+   "last": "2017-03-23",
+   "days": 1,
+   "best_day": {
+    "date": "2017-03-23",
+    "episodes": 6
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 6
+   },
+   "by_year": {
+    "2017": 6
+   },
+   "eras": {
+    "Dallas": 6
+   }
+  },
   "Once Upon a Time": {
    "show": "Once Upon a Time",
    "kind": "series",
@@ -3463,6 +3786,26 @@
    },
    "eras": {
     "Dallas": 2
+   }
+  },
+  "Operation Safed Sagar": {
+   "show": "Operation Safed Sagar",
+   "kind": "series",
+   "views": 6,
+   "first": "2026-08-11",
+   "last": "2026-08-12",
+   "days": 2,
+   "best_day": {
+    "date": "2026-08-12",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2026": 6
+   },
+   "eras": {
+    "Austin": 6
    }
   },
   "Partner Track": {
@@ -3555,6 +3898,46 @@
    },
    "eras": {
     "Dallas": 21
+   }
+  },
+  "Saiyaara": {
+   "show": "Saiyaara",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-09-18",
+   "last": "2025-09-18",
+   "days": 1,
+   "best_day": {
+    "date": "2025-09-18",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Shaque": {
+   "show": "Shaque",
+   "kind": "series",
+   "views": 7,
+   "first": "2026-09-25",
+   "last": "2026-09-25",
+   "days": 1,
+   "best_day": {
+    "date": "2026-09-25",
+    "episodes": 7
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2026": 7
+   },
+   "eras": {
+    "Austin": 7
    }
   },
   "Single Papa": {
@@ -3661,6 +4044,66 @@
     "Dallas": 103
    }
   },
+  "Tall Girl": {
+   "show": "Tall Girl",
+   "kind": "movie",
+   "views": 1,
+   "first": "2020-01-10",
+   "last": "2020-01-10",
+   "days": 1,
+   "best_day": {
+    "date": "2020-01-10",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2020": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Taskaree": {
+   "show": "Taskaree",
+   "kind": "series",
+   "views": 1,
+   "first": "2026-01-18",
+   "last": "2026-01-18",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-18",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Tere Ishk Mein": {
+   "show": "Tere Ishk Mein",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-01-25",
+   "last": "2026-01-25",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-25",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "The Fosters": {
    "show": "The Fosters",
    "kind": "series",
@@ -3714,6 +4157,27 @@
     "Dallas": 10
    }
   },
+  "The Hunting Wives": {
+   "show": "The Hunting Wives",
+   "kind": "series",
+   "views": 7,
+   "first": "2025-08-14",
+   "last": "2026-02-16",
+   "days": 3,
+   "best_day": {
+    "date": "2026-02-16",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2025": 2,
+    "2026": 5
+   },
+   "eras": {
+    "Austin": 7
+   }
+  },
   "The Night Agent": {
    "show": "The Night Agent",
    "kind": "series",
@@ -3739,6 +4203,26 @@
    "eras": {
     "Austin": 25,
     "Dallas": 5
+   }
+  },
+  "The Notebook": {
+   "show": "The Notebook",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-07-23",
+   "last": "2025-07-23",
+   "days": 1,
+   "best_day": {
+    "date": "2025-07-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "The Originals": {
@@ -3837,6 +4321,28 @@
    },
    "eras": {
     "Dallas": 172
+   }
+  },
+  "The Witcher": {
+   "show": "The Witcher",
+   "kind": "series",
+   "views": 6,
+   "first": "2023-06-05",
+   "last": "2023-06-05",
+   "days": 1,
+   "best_day": {
+    "date": "2023-06-05",
+    "episodes": 6
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 6
+   },
+   "by_year": {
+    "2023": 6
+   },
+   "eras": {
+    "Dallas": 6
    }
   },
   "Tribhuvan Mishra CA Topper": {

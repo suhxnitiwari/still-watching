@@ -478,5 +478,51 @@
   "source": "https://www.tvmaze.com/shows/1588/the-royals",
   "poster": "img/posters/the-royals.jpg",
   "backdrop": "img/backdrops/the-royals.jpg"
+ },
+ "Fishbowl Wives": {
+  "match": "Fishbowl Wives (2022)",
+  "source": "https://www.tvmaze.com/shows/59890/fishbowl-wives",
+  "poster": "img/posters/fishbowl-wives.jpg",
+  "backdrop": "img/backdrops/fishbowl-wives.jpg"
+ },
+ "The Witcher": {
+  "match": "The Witcher (2019)",
+  "source": "https://www.tvmaze.com/shows/28276/the-witcher",
+  "poster": "img/posters/the-witcher.jpg",
+  "backdrop": "img/backdrops/the-witcher.jpg"
+ },
+ "2 States": {
+  "match": "2 Straten verder (1999)",
+  "source": "https://www.tvmaze.com/shows/34716/2-straten-verder",
+  "poster": "img/posters/2-states.jpg"
+ },
+ "La La Land": {
+  "match": "La La Land (2010)",
+  "source": "https://www.tvmaze.com/shows/4766/la-la-land",
+  "poster": "img/posters/la-la-land.jpg"
+ },
+ "Tall Girl": {
+  "match": "Tall Girl (2019)",
+  "source": "https://www.tvmaze.com/shows/57197/tall-girl",
+  "poster": "img/posters/tall-girl.jpg",
+  "backdrop": "img/backdrops/tall-girl.jpg"
+ },
+ "Vir Das": {
+  "match": "Was wir fürchten (2023)",
+  "source": "https://www.tvmaze.com/shows/72106/was-wir-furchten",
+  "poster": "img/posters/vir-das.jpg",
+  "backdrop": "img/backdrops/vir-das.jpg"
+ },
+ "ariana grande": {
+  "match": "Ariana Grande: Dangerous Woman Diaries (2018)",
+  "source": "https://www.tvmaze.com/shows/40711/ariana-grande-dangerous-woman-diaries",
+  "poster": "img/posters/ariana-grande.jpg",
+  "backdrop": "img/backdrops/ariana-grande.jpg"
+ },
+ "Taskaree": {
+  "match": "Taskaree: The Smuggler's Web (2026)",
+  "source": "https://www.tvmaze.com/shows/89739/taskaree-the-smugglers-web",
+  "poster": "img/posters/taskaree.jpg",
+  "backdrop": "img/backdrops/taskaree.jpg"
  }
 }

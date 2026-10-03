@@ -257,6 +257,7 @@ def family(meta):
         },
         "dad_on_mothers_day": [{"show": r.show, "year": int(r.date.year)} for r in dad_md.drop_duplicates("show").itertuples()],
         "mom_parent_titles": titles_of("Mom"), "dad_parent_titles": titles_of("Dad"),
+        "mom_first_titles": [t for t in g[g > 0].sort_values().index.tolist()][:10],
         "mom_hindi_lead": {"shared": int(len(f)), "mom_first": int((g > 0).sum()), "me_first": int((g < 0).sum()),
                            "next_week": int(((g > 0) & (g <= 7)).sum())},
         "me_to_sister": lead("Suhani", "Sister"),
@@ -330,6 +331,28 @@ def main():
 
     top = df["show"].value_counts()
     featured = set(top.head(30).index)
+    # Hooked from the first episode: shows where I watched 4+ episodes on day one.
+    ser_all = df[df["kind"] == "series"]
+    first_day = ser_all.groupby("show")["date"].transform("min") == ser_all["date"]
+    day_one = ser_all[first_day].groupby("show").size()
+    hooked = [{"show": k, "day_one": int(v), "views": int((ser_all["show"] == k).sum())}
+              for k, v in day_one[day_one >= 4].sort_values(ascending=False).head(12).items()]
+    featured |= {h["show"] for h in hooked}
+    # "Because I finished X": what I started in the 60 days after getting 90% through a show I finished.
+    because = []
+    for seed in ["The Vampire Diaries", "Gilmore Girls", "Friends", "Gossip Girl"]:
+        sd = ser_all[ser_all["show"] == seed].sort_values("date")
+        if len(sd) < 20:
+            continue
+        done = sd["date"].iloc[int(len(sd) * .9) - 1]
+        firsts = df.groupby("show")["date"].min()
+        nxt = firsts[(firsts > done) & (firsts <= done + pd.Timedelta(days=60))].index
+        counts = df[df["show"].isin(nxt)]["show"].value_counts()
+        kinds = df.drop_duplicates("show").set_index("show")["kind"]
+        picks = counts[[(kinds[k] == "movie") or v >= 2 for k, v in counts.items()]].head(8)  # skip one-off specials
+        if len(picks) >= 3:
+            because.append({"seed": seed, "done": day(done), "shows": [{"show": k, "views": int(v)} for k, v in picks.items()]})
+            featured |= set(picks.index)
     featured |= set(binges.head(20)["show"])
     for era in life:
         featured |= {t["show"] for t in era["top"]}
@@ -367,6 +390,9 @@ def main():
         windows[name] = {"from": start, "to": end, "views": int(len(s)),
                          "top": [{"show": k, "views": int(v)} for k, v in counts.items()]}
 
+    fam = family(meta)
+    if fam:
+        featured |= set(fam.get("mom_first_titles", []))
     monthly = df.groupby("month").size()
     all_months = pd.period_range(df["date"].min(), df["date"].max(), freq="M").astype(str)
     monthly = monthly.reindex(all_months, fill_value=0)
@@ -391,9 +417,11 @@ def main():
                    for r in binges.head(15).itertuples()],
         "yearly": yearly,
         "eras": eras,
+        "hooked": hooked,
+        "because": because,
         "life": life,
         "profile": profile(df, meta),
-        "family": family(meta),
+        "family": fam,
         "windows": windows,
         "gaps": gaps(active),
         "streak": longest_streak(active),
