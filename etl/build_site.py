@@ -254,7 +254,16 @@ def family(meta):
         reps = d[d["episode"].notna()].groupby("title").size()
         return {"top": [{"show": k, "views": int(v)} for k, v in d["show"].value_counts().head(3).items()],
                 "views": int(len(d)), "rewatched": int((reps > 1).sum()), "rewatch_pct": round((reps > 1).sum() / max(len(d), 1) * 100, 1)}
+    def habits(w):
+        d = h[h["who"] == w]
+        per = d.groupby(d["date"].dt.normalize()).size()
+        n = d[d["kind"] == "series"].groupby("show").size()
+        return {"binge_days": int((per >= 6).sum()), "eps_per_show": round(float(n.mean()), 1), "titles": int(d["show"].nunique()),
+                "movie_pct": round((d["kind"] == "movie").mean() * 100), "top5_pct": round(d["show"].value_counts().head(5).sum() / len(d) * 100),
+                "per_day": round(float(per.mean()), 1), "month": int(d["date"].dt.month.value_counts().idxmax()),
+                "hindi_pct": round(d["show"].map(lambda x: hindi(x)).mean() * 100)}
     return {
+        "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
         "dad_holidays": {
@@ -476,6 +485,18 @@ def genre_pie(df, meta):
     return out
 
 
+def dark_years(df, meta):
+    """Crime, thriller, horror and mystery, by year. Jane the Virgin is tagged Crime but it's a telenovela."""
+    dark = {"Crime", "Thriller", "Horror", "Mystery"}
+    is_dark = df["show"].map(lambda x: x != "Jane The Virgin" and bool(set((meta.get(x) or {}).get("genres", [])) & dark))
+    by_year = (is_dark.groupby(df["date"].dt.year).mean() * 100).round().astype(int)
+    window = df[is_dark & (df["date"] >= "2020-01-01") & (df["date"] <= "2021-12-31")]
+    hindi = df[is_dark & df["show"].map(lambda x: (meta.get(x) or {}).get("language") == "Hindi")]["show"].value_counts()
+    return {"by_year": {str(k): int(v) for k, v in by_year.items()},
+            "hindi": [{"show": k, "views": int(v)} for k, v in hindi[hindi > 1].head(4).items()],
+            "shows": [{"show": k, "views": int(v)} for k, v in window["show"].value_counts().head(4).items()]}
+
+
 def title_words(df):
     """Patterns in the words of what I watch, not in how much."""
     ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
@@ -613,6 +634,7 @@ def main():
         "friends_origin": friends_origin(df),
         "big_december": big_december(df),
         "genre_pie": genre_pie(df, meta),
+        "dark_years": dark_years(df, meta),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),

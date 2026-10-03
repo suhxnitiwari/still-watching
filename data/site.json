@@ -2370,7 +2370,97 @@
    "pct": 0.5
   }
  ],
+ "dark_years": {
+  "by_year": {
+   "2015": 6,
+   "2016": 11,
+   "2017": 2,
+   "2018": 3,
+   "2019": 1,
+   "2020": 19,
+   "2021": 21,
+   "2022": 6,
+   "2023": 15,
+   "2024": 4,
+   "2025": 16,
+   "2026": 15
+  },
+  "hindi": [
+   {
+    "show": "Delhi Crime",
+    "views": 18
+   },
+   {
+    "show": "Dabba Cartel",
+    "views": 7
+   },
+   {
+    "show": "Shaque",
+    "views": 7
+   }
+  ],
+  "shows": [
+   {
+    "show": "Manifest",
+    "views": 47
+   },
+   {
+    "show": "13 Reasons Why",
+    "views": 21
+   },
+   {
+    "show": "Riverdale",
+    "views": 18
+   },
+   {
+    "show": "Stranger Things",
+    "views": 17
+   }
+  ]
+ },
  "family": {
+  "habits": {
+   "Me": {
+    "binge_days": 128,
+    "eps_per_show": 15.0,
+    "titles": 466,
+    "movie_pct": 8,
+    "top5_pct": 25,
+    "per_day": 2.7,
+    "month": 12,
+    "hindi_pct": 8
+   },
+   "Mom": {
+    "binge_days": 5,
+    "eps_per_show": 5.7,
+    "titles": 334,
+    "movie_pct": 39,
+    "top5_pct": 18,
+    "per_day": 1.6,
+    "month": 1,
+    "hindi_pct": 59
+   },
+   "Dad": {
+    "binge_days": 27,
+    "eps_per_show": 3.3,
+    "titles": 771,
+    "movie_pct": 32,
+    "top5_pct": 16,
+    "per_day": 1.8,
+    "month": 12,
+    "hindi_pct": 1
+   },
+   "My sister": {
+    "binge_days": 68,
+    "eps_per_show": 12.3,
+    "titles": 176,
+    "movie_pct": 5,
+    "top5_pct": 32,
+    "per_day": 3.1,
+    "month": 7,
+    "hindi_pct": 0
+   }
+  },
   "profiles": {
    "Me": {
     "top": [

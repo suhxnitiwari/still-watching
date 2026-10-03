@@ -833,3 +833,11 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .pie__legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; font-size: 12px; color: #ddd; }
 .pie__legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
 .pie__legend b { color: #fff; }
+
+/* How we watch: the family table */
+.habits { width: 100%; border-collapse: collapse; font-size: 12px; margin: 4px 0 10px; }
+.habits th { text-align: right; color: var(--muted); font-weight: 700; padding: 3px 4px; }
+.habits td { text-align: right; padding: 4px; border-top: 1px solid #2a2a2a; color: #ddd; }
+.habits td:first-child, .habits th:first-child { text-align: left; color: var(--muted); }
+.habits td.hot { color: #fff; font-weight: 800; box-shadow: inset 0 -2px 0 var(--red); }
+.habits__type td { color: #fff !important; font-weight: 800; font-size: 11px; border-top: 0; }

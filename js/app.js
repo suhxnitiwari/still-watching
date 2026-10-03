@@ -622,6 +622,8 @@ function setupCase() {
       ev: `December is <b>${d.share}%</b> of everything I've ever watched (${n(d.views)} views), when an average month would be 8.3%. ${mo(d.quietest.month)} is my quietest, just ${d.quietest.views}, so I go from quietest to loudest in two months. ${d.top_days} of my 20 biggest days are in December. The big ones: ${d.years.map((y) => `<b>${y.year}</b>: ${y.views} (${esc(y.show)})`).join(" · ")}.` }; })()] : []),
     { label: "RHYTHM", img: bg("Gilmore Girls"), guess: "Every third day", signal: "How often anything is on",
       ev: `Something's on <b>${pct(DATA.totals.active_days / (daysBetween(DATA.totals.from, DATA.totals.to)) * 100)}</b> of the days in my history. My record: <b>${DATA.streak.days} days in a row</b>, ${fmtShort(DATA.streak.from)} to ${fmtDate(DATA.streak.to)}, home for summer.` },
+    ...(DATA.dark_years ? [(() => { const d = DATA.dark_years; const y = d.by_year; return { label: "THE DARK YEARS", img: bg("Stranger Things"), guess: "2020 and 2021 went dark", signal: "Crime, thriller, horror and mystery, share of each year",
+      ev: `Dark shows were ${Math.min(y["2017"], y["2018"], y["2019"])}–${Math.max(y["2017"], y["2018"], y["2019"])}% of 2017 to 2019. Then <b>${y["2020"]}% of 2020 and ${y["2021"]}% of 2021</b>: ${listOf(d.shows.map((x) => `${esc(x.show)} (${x.views})`))}. Riverdale in January 2020, 13 Reasons Why the COVID summer before moving to Dallas, Stranger Things in my darkest month. Then it eased: ${y["2022"]}% in 2022. Still never real horror. My crime now is Hindi crime, mostly with Mom: ${listOf(d.hindi.map((x) => esc(x.show)))}. Not too scary, a little funny, and it feels like home.` }; })()] : []),
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
       ev: `Goosebumps literally gave me goosebumps. That's the line. Everything tagged horror in my history is spooky-for-teens: ${listOf(p.spooky.slice(0, 4).map((x) => `${esc(x.show)} (${x.views})`))}. ${p.horror_films.length === 1 ? `Real horror, ever: <b>${esc(p.horror_films[0].show)}</b>. It scared me and I quit it.` : `Real horror films, ever: <b>${p.horror_films.length}</b>.`}` },
     ...(DATA.family && DATA.family.freeze.mine.length ? [{ label: "BLACKOUT", img: bg("Never Have I Ever"), guess: "Rom-coms through the Texas freeze", signal: "Feb 14–20, 2021: the power outages",
@@ -638,6 +640,28 @@ function setupCase() {
     const q = Object.entries(fam.pilot_quitters);
     const k = fam.kapil;
     groups.push(["Family", [
+      ...(fam.habits ? [(() => { const hb = fam.habits; const who = ["Me", "My sister", "Dad", "Mom"].filter((w) => hb[w]);
+        const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "short" });
+        const rows = [["Days with 6+ episodes", "binge_days"], ["Episodes per show", "eps_per_show"], ["Different titles", "titles"], ["Movies", "movie_pct", "%"], ["Top 5 shows' share", "top5_pct", "%"]];
+        const best = (k) => Math.max(...who.map((w) => hb[w][k]));
+        return { label: "HOW WE WATCH", img: bg("Fuller House"), guess: "A binger, a superfan, a sampler and a steady one", signal: "Every profile, side by side",
+          table: `<table class="habits"><thead><tr><th></th>${who.map((w) => `<th>${w === "My sister" ? "Sister" : w}</th>`).join("")}</tr></thead><tbody>
+            <tr class="habits__type"><td>Type</td>${who.map((w) => `<td>${{ Me: "The binger", "My sister": "The superfan", Dad: "The sampler", Mom: "The steady one" }[w]}</td>`).join("")}</tr>
+            ${rows.map(([l, k, u = ""]) => `<tr><td>${l}</td>${who.map((w) => `<td${hb[w][k] === best(k) ? ' class="hot"' : ""}>${n(hb[w][k])}${u}</td>`).join("")}</tr>`).join("")}
+            <tr><td>Favorite month</td>${who.map((w) => `<td>${mo(hb[w].month)}</td>`).join("")}</tr></tbody></table>`,
+          ev: `<b>Me, the binger:</b> ${hb.Me.binge_days} binge days, ${hb.Me.eps_per_show} episodes a show. <b>My sister, the superfan:</b> a third of everything is five shows, and she rewatches the most. <b>Mom, the steady one:</b> mostly Hindi, mostly movies, ${hb.Mom.binge_days} binge days in eleven years. <b>Dad, a serial killer… of pilots:</b> ${n(hb.Dad.titles)} different titles, more than anyone, about three episodes each, and his titles are scary: cartels, crime families and Spanish and Korean thrillers.` }; })()] : []),
+      ...(fam.habits ? (() => { const hb = fam.habits, pr = fam.profiles, q = fam.quit_rate; const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "long" });
+        const top = (w) => pr[w].top[0];
+        return [
+          { label: "ME: THE BINGER", img: bg(top("Me").show), guess: "All in, every time", signal: "Depth over breadth",
+            ev: `<b>${hb.Me.binge_days} days</b> with 6+ episodes, about one a month for eleven years. ${hb.Me.eps_per_show} episodes per show, the most in the family. I quit ${q.Me}% of pilots, but whatever survives gets finished, then rewatched. Peak season: ${mo(hb.Me.month)}.` },
+          { label: "SISTER: THE SUPERFAN", img: bg(top("My sister").show), guess: "Same five shows, forever", signal: "How concentrated her watching is",
+            ev: `<b>${hb["My sister"].top5_pct}%</b> of everything she watches is five shows, led by ${esc(top("My sister").show)} (${top("My sister").views} episodes). The most per day (${hb["My sister"].per_day}), the biggest rewatcher (${pr["My sister"].rewatch_pct}% repeats), the lowest quit rate (${q["My sister"]}%) and almost no movies (${hb["My sister"].movie_pct}%). Her month: ${mo(hb["My sister"].month)}, summer break.` },
+          { label: "DAD: THE SAMPLER", img: bg(top("Dad").show), guess: "A serial killer… of pilots", signal: "Breadth over depth",
+            ev: `<b>${n(hb.Dad.titles)} different titles</b>, more than the rest of us, at ${hb.Dad.eps_per_show} episodes each. He quits ${q.Dad}% after one episode. What survives is scary: ${listOf(pr.Dad.top.map((t) => esc(t.show)))}. A third of his watching is movies, and he's the only one watching Spanish and Korean crime. Rewatches: almost never.` },
+          { label: "MOM: THE STEADY ONE", img: bg(top("Mom").show), guess: "A little, in Hindi, every so often", signal: "Pace and language",
+            ev: `Only <b>${hb.Mom.binge_days} binge days</b> in eleven years, ${hb.Mom.per_day} things a day when she watches. Mostly Hindi, and the biggest movie person (${hb.Mom.movie_pct}%). Her show is ${esc(top("Mom").show)} (${top("Mom").views} episodes). She never rewatches, and she finds the Hindi shows before I do.` },
+        ]; })() : []),
       { label: "PILOT QUITTERS", img: bg(DATA.top[0].show), guess: `${Object.keys(fam.quit_rate).at(-1)} finishes what she starts`,
         signal: "Chance of quitting a show after episode 1",
         ev: Object.entries(fam.quit_rate).map(([w, r], i) => `${i === 0 ? "<b>" : ""}${w}: ${r}%${i === 0 ? "</b>" : ""} <span class="dim">(${fam.pilot_quitters[w]} of ${fam.shows_started[w]} shows)</span>`).join("<br>") },
@@ -690,9 +714,10 @@ function setupCase() {
     ["Who I am", ["AGE", "GENDER", "GENRES", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "STREAK", "BIG ON DECEMBER", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
+    ["How we watch", ["HOW WE WATCH", "ME: THE BINGER", "SISTER: THE SUPERFAN", "DAD: THE SAMPLER", "MOM: THE STEADY ONE"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
     ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "FAVORITES", "THE ME ERA"]],
-    ["How I feel", ["FRIENDS", "ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
+    ["How I feel", ["FRIENDS", "ATTACHMENT ISSUES", "MOOD", "THE DARK YEARS", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>
@@ -705,6 +730,7 @@ function setupCase() {
           <p class="clue__signal">Signal: ${esc(c.signal)}</p>
           ${c.chart ? spark(c.chart) : ""}
           ${c.pie ? pie(c.pie) : ""}
+          ${c.table || ""}
           <p class="clue__evidence">${c.ev2 || c.ev}</p>
         </div>
       </article>`).join("")}</div>
