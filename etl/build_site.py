@@ -5,6 +5,7 @@ The site ships per-show and per-month summaries, never the raw history.
     .venv/bin/python etl/pipeline.py && .venv/bin/python etl/build_site.py
 """
 import json
+import re
 from collections import Counter
 from pathlib import Path
 
@@ -317,6 +318,59 @@ def examples(ser, info, test, k=4):
     hits = ser[info.map(lambda x: bool(test(x)))]
     return [{"show": name, "views": int(v)} for name, v in hits["show"].value_counts().head(k).items()]
 
+# Show naming formulas don't count as my words: Liv and Maddie's -A-Rooney, Friends' "The One With", Jane's chapters.
+FORMULAS = [r"-A-Rooney", r"^The (One|Last One)\b.*", r"\bChapter\b.*", r"\bEpisode \d+", r"Masters of Spinjitzu", r"\bwith Boys\b",
+            r"\bPart \d+|\bPt\. ?\d", r"^Specials:", r"Trust No One:"]
+BEGIN = r"\b(pilot|first|beginning|begins?|start|new|welcome|hello)\b"
+END = r"\b(last|end|ending|goodbye|bye|farewell|finale|final|leaving)\b"
+
+
+# Last episodes, to see what I did after the goodbye.
+FINALES = {"Good Luck Charlie": "Goodbye Charlie: Pt. 2", "Jessie": "Jessie's Big Break", "Jane The Virgin": "Chapter One Hundred",
+           "Baby Daddy": "Daddy's Girl", "Friends": "The Last One", "Fuller House": "Our Very Last Show, Again", "Gilmore Girls": "Bon Voyage"}
+
+
+def loyalty(df):
+    """Picky about pilots, then I never leave: rewatches and episodes after the finale."""
+    ep = df[df["episode"].notna()]
+    twice = ep[ep.duplicated(["show", "episode"], keep=False)].drop_duplicates(["show", "episode"])
+    after = []
+    for show, last in FINALES.items():
+        s = ep[ep["show"] == show]
+        fin = s[s["episode"].str.contains(last, regex=False)]
+        if len(fin):
+            n = int((s["date"] > fin["date"].max()).sum())
+            if n:
+                after.append({"show": show, "after": n, "finale": day(fin["date"].max())})
+    words = ep.drop_duplicates(["show", "episode"]).assign(era=pd.cut(ep["date"], pd.to_datetime([l[2] for l in LIFE] + ["2100-01-01"]),
+                                                                       labels=[l[1] for l in LIFE], right=False))
+    me = words.groupby("era", observed=False)["episode"].apply(
+        lambda t: round(t.str.contains(r"(?i)^(?:i|i'm|i'll|i've)\b|\b(?:me|my|myself)\b").mean() * 100, 1))
+    return {"rewatched": int(len(twice)), "rewatch_top": twice["show"].value_counts().head(2).to_dict(),
+            "after_finale": sorted(after, key=lambda x: -x["after"]), "me_titles": me.to_dict()}
+
+
+def title_words(df):
+    """Patterns in the words of what I watch, not in how much."""
+    ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
+    ep = ep[~ep["show"].isin(["The Great Indian Kapil Show", "Jane The Virgin", "Stranger Things"])]
+    clean = ep["episode"].map(lambda t: re.sub("|".join(FORMULAS), " ", t, flags=re.I))
+    has = lambda rx: clean.str.contains(rx.replace("(", "(?:"), case=False, regex=True)
+    b, e = has(BEGIN), has(END)
+    names = sorted(df["show"].dropna().unique())
+    named = lambda rx: [t for t in names if re.search(rx, t, re.I)]
+    girl, boy = named(r"\bgirls?\b"), named(r"\bboys?\b")
+    love, pyaar = named(r"\blove\b"), named(r"\b(pyaar|pyar|dil|ishq|dulhania)\b")
+    return {
+        "episodes": int(len(ep)), "shows": int(ep["show"].nunique()),
+        "beginnings": int(b.sum()), "endings": int(e.sum()),
+        "begin_examples": [t for t in ep.loc[b, "episode"] if t != "Pilot"][:3], "pilots": int((ep["episode"] == "Pilot").sum()),
+        "girl": girl, "boy": boy,
+        "girl_shows": int(ep.loc[has(r"\bgirls?\b"), "show"].nunique()), "boy_shows": int(ep.loc[has(r"\bboys?\b"), "show"].nunique()),
+        "love": love, "hindi_love": pyaar,
+        "love_eps": int(has(r"\blove").sum()), "love_shows": int(ep.loc[has(r"\blove"), "show"].nunique()), "hate_eps": int(has(r"\bhate").sum()),
+    }
+
 
 def main():
     df = pd.read_csv(BUILD / "views.csv", parse_dates=["date"])
@@ -393,6 +447,8 @@ def main():
     fam = family(meta)
     if fam:
         featured |= set(fam.get("mom_first_titles", []))
+    words = title_words(df)
+    featured |= set(words["girl"] + words["boy"] + words["love"] + words["hindi_love"])
     monthly = df.groupby("month").size()
     all_months = pd.period_range(df["date"].min(), df["date"].max(), freq="M").astype(str)
     monthly = monthly.reindex(all_months, fill_value=0)
@@ -421,6 +477,8 @@ def main():
         "because": because,
         "life": life,
         "profile": profile(df, meta),
+        "words": words,
+        "loyalty": loyalty(df),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),

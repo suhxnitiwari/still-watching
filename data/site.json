@@ -2060,6 +2060,118 @@
    }
   ]
  },
+ "words": {
+  "episodes": 2824,
+  "shows": 206,
+  "beginnings": 99,
+  "endings": 41,
+  "begin_examples": [
+   "New York, New Nanny",
+   "Zuri's New Old Friend",
+   "The New Girl"
+  ],
+  "pilots": 18,
+  "girl": [
+   "American Girl",
+   "An American Girl",
+   "Gilmore Girls",
+   "Girl Meets World",
+   "Gossip Girl",
+   "Luckiest Girl Alive",
+   "Mean Girls",
+   "Mean Girls 2",
+   "Tall Girl",
+   "The Girl on the Train",
+   "The Powerpuff Girls"
+  ],
+  "boy": [
+   "Bad Boys",
+   "Life with Boys",
+   "Poster Boys",
+   "To All The Boys",
+   "To All the Boys",
+   "To All the Boys I’ve Loved Before"
+  ],
+  "girl_shows": 20,
+  "boy_shows": 7,
+  "love": [
+   "Crazy, Stupid, Love.",
+   "Endless Love",
+   "If Anything Happens I Love You",
+   "Love Again",
+   "Love Hard",
+   "Love Is Blind",
+   "Love Tactics",
+   "Love at First Sight",
+   "My First First Love"
+  ],
+  "hindi_love": [
+   "Ae Dil Hai Mushkil",
+   "Almost Pyaar With DJ Mohabbat",
+   "Badrinath Ki Dulhania",
+   "De De Pyaar De 2",
+   "Dil Chahta Hai",
+   "Dil Dhadakne Do",
+   "Dilwale Dulhania Le Jayenge",
+   "Humpty Sharma Ki Dulhania",
+   "Pyaar Ka Punchnama",
+   "Pyaar Ka Punchnama 2",
+   "Thoda Pyaar Thoda Magic"
+  ],
+  "love_eps": 54,
+  "love_shows": 27,
+  "hate_eps": 1
+ },
+ "loyalty": {
+  "rewatched": 123,
+  "rewatch_top": {
+   "Fuller House": 38,
+   "Bunk'd": 37
+  },
+  "after_finale": [
+   {
+    "show": "Good Luck Charlie",
+    "after": 60,
+    "finale": "2016-12-22"
+   },
+   {
+    "show": "Jessie",
+    "after": 57,
+    "finale": "2017-02-15"
+   },
+   {
+    "show": "Jane The Virgin",
+    "after": 55,
+    "finale": "2023-09-10"
+   },
+   {
+    "show": "Baby Daddy",
+    "after": 30,
+    "finale": "2018-03-16"
+   },
+   {
+    "show": "Friends",
+    "after": 18,
+    "finale": "2019-12-30"
+   },
+   {
+    "show": "Fuller House",
+    "after": 16,
+    "finale": "2025-05-05"
+   },
+   {
+    "show": "Gilmore Girls",
+    "after": 9,
+    "finale": "2023-01-09"
+   }
+  ],
+  "me_titles": {
+   "Elementary": 1.8,
+   "Middle School": 4.4,
+   "High School": 7.7,
+   "After Graduation": 3.1
+  }
+ },
  "family": {
   "freeze": {
    "family": 4,
@@ -2535,6 +2647,86 @@
     "Dallas": 6
    }
   },
+  "Ae Dil Hai Mushkil": {
+   "show": "Ae Dil Hai Mushkil",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-02-03",
+   "last": "2025-02-03",
+   "days": 1,
+   "best_day": {
+    "date": "2025-02-03",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Almost Pyaar With DJ Mohabbat": {
+   "show": "Almost Pyaar With DJ Mohabbat",
+   "kind": "movie",
+   "views": 1,
+   "first": "2023-04-03",
+   "last": "2023-04-03",
+   "days": 1,
+   "best_day": {
+    "date": "2023-04-03",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2023": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "American Girl": {
+   "show": "American Girl",
+   "kind": "series",
+   "views": 1,
+   "first": "2016-01-14",
+   "last": "2016-01-14",
+   "days": 1,
+   "best_day": {
+    "date": "2016-01-14",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2016": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "An American Girl": {
+   "show": "An American Girl",
+   "kind": "series",
+   "views": 1,
+   "first": "2015-11-26",
+   "last": "2015-11-26",
+   "days": 1,
+   "best_day": {
+    "date": "2015-11-26",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2015": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Baby Daddy": {
    "show": "Baby Daddy",
    "kind": "series",
@@ -2560,6 +2752,46 @@
    },
    "eras": {
     "Dallas": 96
+   }
+  },
+  "Bad Boys": {
+   "show": "Bad Boys",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-11-10",
+   "last": "2024-11-10",
+   "days": 1,
+   "best_day": {
+    "date": "2024-11-10",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Badrinath Ki Dulhania": {
+   "show": "Badrinath Ki Dulhania",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-03-23",
+   "last": "2025-03-23",
+   "days": 1,
+   "best_day": {
+    "date": "2025-03-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Best of The Great Indian Kapil Show": {
@@ -2766,6 +2998,26 @@
     "Austin": 1
    }
   },
+  "Crazy, Stupid, Love.": {
+   "show": "Crazy, Stupid, Love.",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-09-25",
+   "last": "2022-09-25",
+   "days": 1,
+   "best_day": {
+    "date": "2022-09-25",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Dabba Cartel": {
    "show": "Dabba Cartel",
    "kind": "series",
@@ -2830,6 +3082,66 @@
    "eras": {
     "Austin": 6,
     "Dallas": 12
+   }
+  },
+  "Dil Chahta Hai": {
+   "show": "Dil Chahta Hai",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-09-22",
+   "last": "2026-09-22",
+   "days": 1,
+   "best_day": {
+    "date": "2026-09-22",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Dil Dhadakne Do": {
+   "show": "Dil Dhadakne Do",
+   "kind": "movie",
+   "views": 1,
+   "first": "2023-04-23",
+   "last": "2023-04-23",
+   "days": 1,
+   "best_day": {
+    "date": "2023-04-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2023": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Dilwale Dulhania Le Jayenge": {
+   "show": "Dilwale Dulhania Le Jayenge",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-01-19",
+   "last": "2026-01-19",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-19",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Dragon Tales": {
@@ -2928,6 +3240,26 @@
    "eras": {
     "Austin": 4,
     "Dallas": 28
+   }
+  },
+  "Endless Love": {
+   "show": "Endless Love",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-07-07",
+   "last": "2022-07-07",
+   "days": 1,
+   "best_day": {
+    "date": "2022-07-07",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
    }
   },
   "FUBAR": {
@@ -3129,6 +3461,27 @@
     "Dallas": 12
    }
   },
+  "Girl Meets World": {
+   "show": "Girl Meets World",
+   "kind": "series",
+   "views": 2,
+   "first": "2016-12-16",
+   "last": "2017-12-29",
+   "days": 2,
+   "best_day": {
+    "date": "2016-12-16",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2016": 1,
+    "2017": 1
+   },
+   "eras": {
+    "Dallas": 2
+   }
+  },
   "Good Luck Charlie": {
    "show": "Good Luck Charlie",
    "kind": "series",
@@ -3256,6 +3609,46 @@
    },
    "eras": {
     "Austin": 1
+   }
+  },
+  "Humpty Sharma Ki Dulhania": {
+   "show": "Humpty Sharma Ki Dulhania",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-01-19",
+   "last": "2026-01-19",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-19",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "If Anything Happens I Love You": {
+   "show": "If Anything Happens I Love You",
+   "kind": "movie",
+   "views": 1,
+   "first": "2020-11-26",
+   "last": "2020-11-26",
+   "days": 1,
+   "best_day": {
+    "date": "2020-11-26",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2020": 1
+   },
+   "eras": {
+    "Dallas": 1
    }
   },
   "Indian Matchmaking": {
@@ -3514,6 +3907,126 @@
     "Dallas": 1
    }
   },
+  "Love Again": {
+   "show": "Love Again",
+   "kind": "movie",
+   "views": 1,
+   "first": "2025-02-22",
+   "last": "2025-02-22",
+   "days": 1,
+   "best_day": {
+    "date": "2025-02-22",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Love Hard": {
+   "show": "Love Hard",
+   "kind": "movie",
+   "views": 1,
+   "first": "2021-12-21",
+   "last": "2021-12-21",
+   "days": 1,
+   "best_day": {
+    "date": "2021-12-21",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2021": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Love Is Blind": {
+   "show": "Love Is Blind",
+   "kind": "series",
+   "views": 1,
+   "first": "2025-04-09",
+   "last": "2025-04-09",
+   "days": 1,
+   "best_day": {
+    "date": "2025-04-09",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Love Tactics": {
+   "show": "Love Tactics",
+   "kind": "movie",
+   "views": 1,
+   "first": "2023-07-26",
+   "last": "2023-07-26",
+   "days": 1,
+   "best_day": {
+    "date": "2023-07-26",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2023": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Love at First Sight": {
+   "show": "Love at First Sight",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-06-24",
+   "last": "2026-06-24",
+   "days": 1,
+   "best_day": {
+    "date": "2026-06-24",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Luckiest Girl Alive": {
+   "show": "Luckiest Girl Alive",
+   "kind": "movie",
+   "views": 2,
+   "first": "2022-10-09",
+   "last": "2022-10-12",
+   "days": 2,
+   "best_day": {
+    "date": "2022-10-09",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 2
+   },
+   "eras": {
+    "Dallas": 2
+   }
+  },
   "Maa Behen": {
    "show": "Maa Behen",
    "kind": "movie",
@@ -3602,6 +4115,47 @@
    },
    "eras": {
     "Dallas": 13
+   }
+  },
+  "Mean Girls": {
+   "show": "Mean Girls",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-08-07",
+   "last": "2022-08-07",
+   "days": 1,
+   "best_day": {
+    "date": "2022-08-07",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Mean Girls 2": {
+   "show": "Mean Girls 2",
+   "kind": "movie",
+   "views": 2,
+   "first": "2017-08-29",
+   "last": "2021-06-12",
+   "days": 2,
+   "best_day": {
+    "date": "2017-08-29",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2017": 1,
+    "2021": 1
+   },
+   "eras": {
+    "Dallas": 2
    }
   },
   "Merry Happy Whatever": {
@@ -3708,6 +4262,28 @@
    "seasons": {},
    "by_year": {
     "2018": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "My First First Love": {
+   "show": "My First First Love",
+   "kind": "series",
+   "views": 1,
+   "first": "2022-08-19",
+   "last": "2022-08-19",
+   "days": 1,
+   "best_day": {
+    "date": "2022-08-19",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 1": 1
+   },
+   "by_year": {
+    "2022": 1
    },
    "eras": {
     "Dallas": 1
@@ -3871,6 +4447,66 @@
    },
    "eras": {
     "Dallas": 18
+   }
+  },
+  "Poster Boys": {
+   "show": "Poster Boys",
+   "kind": "movie",
+   "views": 2,
+   "first": "2017-12-04",
+   "last": "2017-12-11",
+   "days": 2,
+   "best_day": {
+    "date": "2017-12-04",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2017": 2
+   },
+   "eras": {
+    "Dallas": 2
+   }
+  },
+  "Pyaar Ka Punchnama": {
+   "show": "Pyaar Ka Punchnama",
+   "kind": "movie",
+   "views": 1,
+   "first": "2022-05-20",
+   "last": "2022-05-20",
+   "days": 1,
+   "best_day": {
+    "date": "2022-05-20",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2022": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Pyaar Ka Punchnama 2": {
+   "show": "Pyaar Ka Punchnama 2",
+   "kind": "movie",
+   "views": 1,
+   "first": "2021-10-15",
+   "last": "2021-10-15",
+   "days": 1,
+   "best_day": {
+    "date": "2021-10-15",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2021": 1
+   },
+   "eras": {
+    "Dallas": 1
    }
   },
   "Riverdale": {
@@ -4129,6 +4765,26 @@
     "Dallas": 104
    }
   },
+  "The Girl on the Train": {
+   "show": "The Girl on the Train",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-06-08",
+   "last": "2026-06-08",
+   "days": 1,
+   "best_day": {
+    "date": "2026-06-08",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "The Great Indian Kapil Show": {
    "show": "The Great Indian Kapil Show",
    "kind": "series",
@@ -4343,6 +4999,88 @@
    },
    "eras": {
     "Dallas": 6
+   }
+  },
+  "Thoda Pyaar Thoda Magic": {
+   "show": "Thoda Pyaar Thoda Magic",
+   "kind": "movie",
+   "views": 1,
+   "first": "2026-01-22",
+   "last": "2026-01-22",
+   "days": 1,
+   "best_day": {
+    "date": "2026-01-22",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "To All The Boys": {
+   "show": "To All The Boys",
+   "kind": "series",
+   "views": 2,
+   "first": "2026-05-13",
+   "last": "2026-07-02",
+   "days": 2,
+   "best_day": {
+    "date": "2026-05-13",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 2
+   },
+   "eras": {
+    "Austin": 2
+   }
+  },
+  "To All the Boys": {
+   "show": "To All the Boys",
+   "kind": "series",
+   "views": 2,
+   "first": "2021-02-16",
+   "last": "2026-05-10",
+   "days": 2,
+   "best_day": {
+    "date": "2021-02-16",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2021": 1,
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1,
+    "Dallas": 1
+   }
+  },
+  "To All the Boys I’ve Loved Before": {
+   "show": "To All the Boys I’ve Loved Before",
+   "kind": "movie",
+   "views": 2,
+   "first": "2026-05-10",
+   "last": "2026-06-17",
+   "days": 2,
+   "best_day": {
+    "date": "2026-05-10",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 2
+   },
+   "eras": {
+    "Austin": 2
    }
   },
   "Tribhuvan Mishra CA Topper": {

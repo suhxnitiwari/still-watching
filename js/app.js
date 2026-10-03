@@ -582,6 +582,23 @@ function setupCase() {
         ev: `On my little sister's birthdays, Dad's picks: <b>${listOf(fam.dad_sister_birthday_picks.map(esc))}</b>. Happy birthday!` }] : []),
     ]]);
   }
+  // What the words in the titles give away (show naming formulas like "The One With" left out).
+  const w = DATA.words, ly = DATA.loyalty;
+  if (w) {
+    const me = Object.entries(ly.me_titles);
+    groups.push(["Titles", [
+      { label: "BEGINNINGS", img: bg("Gilmore Girls"), guess: "I like beginnings more than endings", signal: `Words for starting vs ending, in ${n(w.episodes)} episode titles`,
+        ev: `<b>${w.beginnings}</b> titles about starting (Pilot, First, New, Welcome) and only <b>${w.endings}</b> about ending (Last, Goodbye, Finale). "Pilot" alone: ${w.pilots} different shows.` },
+      { label: "GIRLY", img: bg("Gossip Girl"), guess: "Very girly", signal: "Girl vs Boy",
+        ev: `<b>${w.girl.length}</b> titles with "Girl" in the name: ${listOf(w.girl.filter((t) => !/^An? /.test(t)).slice(0, 5).map(esc))}. Only ${w.boy.length} with "Boy", and half of those are To All the Boys, a rom-com about a girl. In episode titles, "girl" shows up in <b>${w.girl_shows}</b> shows, "boy" in ${w.boy_shows}.` },
+      { label: "ROMANCE", img: bg("Love Hard"), guess: "Rom-coms, in Hindi and English", signal: "Love, in two languages",
+        ev: `"Love" is the most repeated word in my episode titles: <b>${w.love_eps} titles across ${w.love_shows} shows</b>. "Hate": ${w.hate_eps}. English: ${listOf(w.love.slice(0, 5).map(esc))}. Hindi: <b>${w.hindi_love.length}</b> films with Pyaar, Dil or Dulhania, from ${esc(w.hindi_love.find((t) => /Dilwale/.test(t)) || w.hindi_love[0])} to ${esc(w.hindi_love.find((t) => /Badrinath/.test(t)) || w.hindi_love.at(-1))}.` },
+      { label: "LOYAL", img: bg("Fuller House"), guess: "Picky about pilots, loyal for life", signal: "How I start shows vs how I leave them",
+        ev: `I quit <b>${DATA.family?.quit_rate?.Me ?? 47}%</b> of shows after one episode. But once I'm in, I don't leave: <b>${ly.rewatched}</b> episodes I watched twice (mostly ${listOf(Object.keys(ly.rewatch_top).map(esc))}), and after the finale I keep going: ${listOf(ly.after_finale.slice(0, 4).map((x) => `${esc(x.show)} <b>${x.after}</b> more`))}.` },
+      { label: "THE ME ERA", img: bg("Never Have I Ever"), guess: "High school was about me", signal: "Episode titles with I, me or my",
+        ev: me.map(([e, v]) => (v === Math.max(...me.map((x) => x[1])) ? `<b>${esc(e)}: ${v}%</b>` : `${esc(e)}: ${v}%`)).join(" · ") + `. The shows I picked got more first-person through middle and high school, then let go in college.` },
+    ]]);
+  }
   // Charts for the place clues
   const charts = {
     MOVED: { from: "2015-05", to: "2016-02", hot: ["2015-06", "2015-07"] },
@@ -596,6 +613,7 @@ function setupCase() {
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
+    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "THE ME ERA"]],
     ["How I feel", ["ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `

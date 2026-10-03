@@ -524,5 +524,72 @@
   "source": "https://www.tvmaze.com/shows/89739/taskaree-the-smugglers-web",
   "poster": "img/posters/taskaree.jpg",
   "backdrop": "img/backdrops/taskaree.jpg"
+ },
+ "American Girl": {
+  "match": "An American Girl (2009)",
+  "source": "https://www.tvmaze.com/shows/84713/an-american-girl",
+  "poster": "img/posters/american-girl.jpg"
+ },
+ "An American Girl": {
+  "match": "An American Girl (2009)",
+  "source": "https://www.tvmaze.com/shows/84713/an-american-girl",
+  "poster": "img/posters/an-american-girl.jpg"
+ },
+ "Bad Boys": {
+  "match": "Bad Boys (2000)",
+  "source": "https://www.tvmaze.com/shows/17813/bad-boys",
+  "poster": "img/posters/bad-boys.jpg"
+ },
+ "Endless Love": {
+  "match": "Endless Love (2019)",
+  "source": "https://www.tvmaze.com/shows/43330/endless-love",
+  "poster": "img/posters/endless-love.jpg",
+  "backdrop": "img/backdrops/endless-love.jpg"
+ },
+ "Love Again": {
+  "match": "Love Again (2025)",
+  "source": "https://www.tvmaze.com/shows/76357/love-again",
+  "poster": "img/posters/love-again.jpg",
+  "backdrop": "img/backdrops/love-again.jpg"
+ },
+ "Love Hard": {
+  "match": "Hard Love (2002)",
+  "source": "https://www.tvmaze.com/shows/14966/hard-love",
+  "poster": "img/posters/love-hard.jpg"
+ },
+ "Love Is Blind": {
+  "match": "Love Is Blind (2020)",
+  "source": "https://www.tvmaze.com/shows/46167/love-is-blind",
+  "poster": "img/posters/love-is-blind.jpg",
+  "backdrop": "img/backdrops/love-is-blind.jpg"
+ },
+ "Mean Girls": {
+  "match": "Mean Girls (2024)",
+  "source": "https://www.tvmaze.com/shows/82811/mean-girls",
+  "poster": "img/posters/mean-girls.jpg"
+ },
+ "My First First Love": {
+  "match": "My First First Love (2019)",
+  "source": "https://www.tvmaze.com/shows/38667/my-first-first-love",
+  "poster": "img/posters/my-first-first-love.jpg",
+  "backdrop": "img/backdrops/my-first-first-love.jpg"
+ },
+ "Poster Boys": {
+  "match": "The Bots Master (1993)",
+  "source": "https://www.tvmaze.com/shows/18669/the-bots-master",
+  "poster": "img/posters/poster-boys.jpg",
+  "backdrop": "img/backdrops/poster-boys.jpg"
+ },
+ "To All The Boys": {
+  "match": "To All the Boys (2018)",
+  "source": "https://www.tvmaze.com/shows/45990/to-all-the-boys",
+  "poster": "img/posters/to-all-the-boys.jpg",
+  "backdrop": "img/backdrops/to-all-the-boys.jpg"
+ },
+ "To All the Boys": {
+  "match": "To All the Boys (2018)",
+  "source": "https://www.tvmaze.com/shows/45990/to-all-the-boys",
+  "poster": "img/posters/to-all-the-boys.jpg",
+  "backdrop": "img/backdrops/to-all-the-boys.jpg"
  }
 }
