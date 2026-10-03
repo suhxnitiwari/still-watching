@@ -546,6 +546,14 @@ function setupCase() {
       ev: p.lifestyle.summers.map((x) => `${x.era} school: <b>${x.ratio}×</b>`).join(" · ") + `. In middle school summers were my quietest time; by college I watched almost three times as much in summer.` },
     { label: "MOVIE NIGHTS", img: bg("Bridgerton"), guess: "Movies are for breaks", signal: "When the movies happen",
       ev: `<b>${p.lifestyle.movies_on_breaks}%</b> of my movies land in December, January, June or July, a third of the year. Winter break 2026 alone: ${p.jan_2026.movies} movies.` },
+    ...(DATA.show_run?.days ? [{ label: "STREAK", img: bg(DATA.show_run.show), guess: "Home for summer, never off", signal: "Days in a row with something on",
+      chart: { from: "2025-04", to: "2025-10", hot: ["2025-06", "2025-07"] },
+      ev: `My longest streak: <b>${DATA.streak.days} days in a row</b>, ${fmtShort(DATA.streak.from)} to ${fmtDate(DATA.streak.to)}, my first summer home from college. ${DATA.show_run.days} of those days were <b>${esc(DATA.show_run.show)}</b>: ${DATA.show_run.episodes} episodes, almost the whole series, in under a month.` }] : []),
+    ...(DATA.friends_origin ? [(() => { const f = DATA.friends_origin; return { label: "FRIENDS", img: bg("Friends"), guess: "Hooked at 13, on a deadline", signal: "How Friends and I started, and why it was so rushed",
+      chart: { from: "2019-10", to: "2020-02", hot: ["2019-11", "2019-12"] },
+      ev: `My first Friends: ${fmtDate(f.sample)}, age ${f.sample_age}, ${f.sample_eps} episodes, then nothing for two and a half years. The real start was <b>${fmtDate(f.start)}, age ${f.age}</b>, with ${esc(f.start_ep)}. ${f.before_thanksgiving} episodes in the first two weeks, then Thanksgiving break hooked me: <b>${f.thanksgiving} on Thanksgiving Day</b>, ${f.thanksgiving_weekend} over the long weekend. But Friends was leaving U.S. Netflix on Jan 1, 2020, so I had <b>${f.days} days</b> for ten seasons: ${f.episodes} episodes, about ${Math.round(f.episodes / f.days)} a day. Our time together on Netflix was short, so I rushed it.` }; })()] : []),
+    ...(DATA.big_december ? [(() => { const d = DATA.big_december; const mo = (m) => new Date(2000, m - 1).toLocaleString("en-US", { month: "long" }); return { label: "BIG ON DECEMBER", img: bg(d.years[0].show), guess: "December is my month", signal: "Views by month",
+      ev: `December is <b>${d.share}%</b> of everything I've ever watched (${n(d.views)} views), when an average month would be 8.3%. ${mo(d.quietest.month)} is my quietest, just ${d.quietest.views}, so I go from quietest to loudest in two months. ${d.top_days} of my 20 biggest days are in December. The big ones: ${d.years.map((y) => `<b>${y.year}</b>: ${y.views} (${esc(y.show)})`).join(" · ")}.` }; })()] : []),
     { label: "RHYTHM", img: bg("Gilmore Girls"), guess: "Every third day", signal: "How often anything is on",
       ev: `Something's on <b>${pct(DATA.totals.active_days / (daysBetween(DATA.totals.from, DATA.totals.to)) * 100)}</b> of the days in my history. My record: <b>${DATA.streak.days} days in a row</b>, ${fmtShort(DATA.streak.from)} to ${fmtDate(DATA.streak.to)}, home for summer.` },
     { label: "SCARE THRESHOLD", img: bg("Stranger Things"), guess: "Spooky, never scary", signal: "What horror I actually watch",
@@ -615,10 +623,10 @@ function setupCase() {
   const themed = [
     ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
-    ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
+    ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "STREAK", "BIG ON DECEMBER", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
     ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "FAVORITES", "THE ME ERA"]],
-    ["How I feel", ["ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
+    ["How I feel", ["FRIENDS", "ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>

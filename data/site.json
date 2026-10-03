@@ -2232,6 +2232,52 @@
   "rachel_titles": 28,
   "ross_titles": 23
  },
+ "show_run": {
+  "days": 25,
+  "show": "Gossip Girl",
+  "from": "2025-06-28",
+  "to": "2025-07-22",
+  "episodes": 120
+ },
+ "friends_origin": {
+  "sample": "2017-03-12",
+  "sample_eps": 3,
+  "sample_age": 11,
+  "start": "2019-11-12",
+  "start_ep": "The One with the Thumb",
+  "age": 13,
+  "before_thanksgiving": 21,
+  "thanksgiving": 13,
+  "thanksgiving_weekend": 31,
+  "days": 51,
+  "episodes": 227
+ },
+ "big_december": {
+  "views": 492,
+  "share": 14.4,
+  "quietest": {
+   "month": 10,
+   "views": 87
+  },
+  "top_days": 7,
+  "years": [
+   {
+    "year": 2019,
+    "views": 181,
+    "show": "Friends"
+   },
+   {
+    "year": 2022,
+    "views": 98,
+    "show": "Gilmore Girls"
+   },
+   {
+    "year": 2016,
+    "views": 76,
+    "show": "Good Luck Charlie"
+   }
+  ]
+ },
  "family": {
   "freeze": {
    "family": 4,

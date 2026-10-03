@@ -390,6 +390,52 @@ def favorites(df):
             "ross_titles": int(fr["episode"].str.contains("Ross", na=False).sum())}
 
 
+def longest_show_run(df):
+    """The most consecutive days I watched one show."""
+    best = {"days": 0}
+    for show, g in df[df["kind"] == "series"].groupby("show"):
+        days = sorted(g["date"].dt.normalize().unique())
+        start = prev = days[0]
+        for d in days[1:] + [None]:
+            if d is not None and (d - prev).days == 1:
+                prev = d
+                continue
+            run = (prev - start).days + 1
+            if run > best["days"]:
+                eps = int(((g["date"] >= start) & (g["date"] <= prev)).sum())
+                best = {"days": run, "show": show, "from": day(start), "to": day(prev), "episodes": eps}
+            if d is not None:
+                start = prev = d
+    return best
+
+
+def friends_origin(df):
+    """From a three-episode sample at 11 to racing the Jan 1, 2020 deadline at 13."""
+    f = df[df["show"] == "Friends"].sort_values("date")
+    run = f[(f["date"] >= "2019-11-01") & (f["date"] <= "2020-01-01")]
+    start = run["date"].min()
+    born = pd.Timestamp("2006-03-06")
+    age = lambda d: int((d - born).days // 365.25)
+    return {"sample": day(f["date"].min()), "sample_eps": int((f["date"] == f["date"].min()).sum()), "sample_age": age(f["date"].min()),
+            "start": day(start), "start_ep": run.iloc[0]["episode"], "age": age(start),
+            "before_thanksgiving": int((run["date"] < "2019-11-28").sum()), "thanksgiving": int((run["date"] == "2019-11-28").sum()),
+            "thanksgiving_weekend": int(((run["date"] >= "2019-11-28") & (run["date"] <= "2019-12-01")).sum()),
+            "days": int((pd.Timestamp("2020-01-01") - start).days) + 1, "episodes": int(len(run))}
+
+
+def big_december(df):
+    """December against every other month."""
+    by_month = df.groupby(df["date"].dt.month).size()
+    dec = df[df["date"].dt.month == 12]
+    top_days = df.groupby(df["date"].dt.normalize()).size().nlargest(20)
+    years = dec.groupby(dec["date"].dt.year)
+    big = [{"year": int(y), "views": int(len(g)), "show": g["show"].value_counts().index[0]} for y, g in years]
+    return {"views": int(by_month[12]), "share": round(by_month[12] / len(df) * 100, 1),
+            "quietest": {"month": int(by_month.idxmin()), "views": int(by_month.min())},
+            "top_days": int(sum(d.month == 12 for d in top_days.index)),
+            "years": sorted(big, key=lambda x: -x["views"])[:3]}
+
+
 def title_words(df):
     """Patterns in the words of what I watch, not in how much."""
     ep = df[(df["kind"] == "series") & df["episode"].notna()].drop_duplicates(["show", "episode"])
@@ -523,6 +569,9 @@ def main():
         "loyalty": loyalty(df),
         "picky": pk,
         "favorites": favorites(df),
+        "show_run": longest_show_run(df),
+        "friends_origin": friends_origin(df),
+        "big_december": big_december(df),
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),
