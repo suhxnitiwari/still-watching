@@ -593,8 +593,10 @@ function setupCase() {
         ev: `<b>${w.girl.length}</b> titles with "Girl" in the name: ${listOf(w.girl.filter((t) => !/^An? /.test(t)).slice(0, 5).map(esc))}. Only ${w.boy.length} with "Boy", and half of those are To All the Boys, a rom-com about a girl. In episode titles, "girl" shows up in <b>${w.girl_shows}</b> shows, "boy" in ${w.boy_shows}.` },
       { label: "ROMANCE", img: bg("Love Hard"), guess: "Rom-coms, in Hindi and English", signal: "Love, in two languages",
         ev: `"Love" is the most repeated word in my episode titles: <b>${w.love_eps} titles across ${w.love_shows} shows</b>. "Hate": ${w.hate_eps}. English: ${listOf(w.love.slice(0, 5).map(esc))}. Hindi: <b>${w.hindi_love.length}</b> films with Pyaar, Dil or Dulhania, from ${esc(w.hindi_love.find((t) => /Dilwale/.test(t)) || w.hindi_love[0])} to ${esc(w.hindi_love.find((t) => /Badrinath/.test(t)) || w.hindi_love.at(-1))}.` },
-      { label: "LOYAL", img: bg("Fuller House"), guess: "Picky about pilots, loyal for life", signal: "How I start shows vs how I leave them",
-        ev: `I quit <b>${DATA.family?.quit_rate?.Me ?? 47}%</b> of shows after one episode. But once I'm in, I don't leave: <b>${ly.rewatched}</b> episodes I watched twice (mostly ${listOf(Object.keys(ly.rewatch_top).map(esc))}), and after the finale I keep going: ${listOf(ly.after_finale.slice(0, 4).map((x) => `${esc(x.show)} <b>${x.after}</b> more`))}.` },
+      { label: "LOYAL", img: bg("Fuller House"), guess: "I crave consistency", signal: "How I start shows vs how I leave them",
+        ev: `I quit <b>${DATA.family?.quit_rate?.Me ?? 47}%</b> of shows after one episode. But once I'm in, I don't leave. I rewatch: <b>${ly.rewatched}</b> episodes twice (mostly ${listOf(Object.keys(ly.rewatch_top).map(esc))}) and the same rom-coms again and again (${listOf(ly.movies_twice.slice(0, 4).map(esc))}). And when a show ends, I keep going. Episodes after the finale: ${listOf(ly.after_finale.slice(0, 4).map((x) => `${esc(x.show)} <b>${x.after}</b>`))}. Same characters, same places, no goodbyes.` },
+      ...(DATA.picky ? [(() => { const k = DATA.picky; return { label: "PICKY", img: bg("Outer Banks"), guess: "Hype doesn't get me in. Drama does.", signal: `${k.quit} shows I quit after one episode vs ${k.kept} I stayed with`,
+        ev: `<b>${k.netflix_quit}%</b> of my one-and-done shows are Netflix originals, vs ${k.netflix_kept}% of my keepers. I stay with network TV: ${listOf(k.network_kept.slice(0, 4).map(esc))}, 20+ episodes a season for years. ${k.dark_quits.length ? `Dark thrillers lose me after the pilot: ${listOf(k.dark_quits.map(esc))}. ` : ""}Dating shows too: ${listOf(k.dating_quit.map(esc))}, one episode each${k.matchmaking ? ` (Indian Matchmaking is the exception)` : ""}. K-dramas: ${k.korean_tried} tried, ${k.korean_kept} kept. Not enough drama, and drama is my thing: <b>${Math.round(k.drama_views / k.views * 100)}%</b> of everything I've watched is tagged Drama.` }; })()] : []),
       { label: "THE ME ERA", img: bg("Never Have I Ever"), guess: "High school was about me", signal: "Episode titles with I, me or my",
         ev: me.map(([e, v]) => (v === Math.max(...me.map((x) => x[1])) ? `<b>${esc(e)}: ${v}%</b>` : `${esc(e)}: ${v}%`)).join(" · ") + `. The shows I picked got more first-person through middle and high school, then let go in college.` },
     ]]);
@@ -613,7 +615,7 @@ function setupCase() {
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
-    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "THE ME ERA"]],
+    ["What the titles say", ["BEGINNINGS", "GIRLY", "ROMANCE", "LOYAL", "PICKY", "THE ME ERA"]],
     ["How I feel", ["ATTACHMENT ISSUES", "MOOD", "HOMESICK", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `

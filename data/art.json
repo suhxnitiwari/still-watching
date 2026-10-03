@@ -591,5 +591,41 @@
   "source": "https://www.tvmaze.com/shows/45990/to-all-the-boys",
   "poster": "img/posters/to-all-the-boys.jpg",
   "backdrop": "img/backdrops/to-all-the-boys.jpg"
+ },
+ "Crash Landing on You": {
+  "match": "Crash Landing on You (2019)",
+  "source": "https://www.tvmaze.com/shows/42756/crash-landing-on-you",
+  "poster": "img/posters/crash-landing-on-you.jpg",
+  "backdrop": "img/backdrops/crash-landing-on-you.jpg"
+ },
+ "Hometown Cha-Cha-Cha": {
+  "match": "Hometown Cha-Cha-Cha (2021)",
+  "source": "https://www.tvmaze.com/shows/56464/hometown-cha-cha-cha",
+  "poster": "img/posters/hometown-cha-cha-cha.jpg",
+  "backdrop": "img/backdrops/hometown-cha-cha-cha.jpg"
+ },
+ "Outer Banks": {
+  "match": "Outer Banks (2020)",
+  "source": "https://www.tvmaze.com/shows/42062/outer-banks",
+  "poster": "img/posters/outer-banks.jpg",
+  "backdrop": "img/backdrops/outer-banks.jpg"
+ },
+ "Pop the Balloon LIVE": {
+  "match": "Pop the Balloon LIVE (2025)",
+  "source": "https://www.tvmaze.com/shows/83631/pop-the-balloon-live",
+  "poster": "img/posters/pop-the-balloon-live.jpg",
+  "backdrop": "img/backdrops/pop-the-balloon-live.jpg"
+ },
+ "When Life Gives You Tangerines": {
+  "match": "When Life Gives You Tangerines (2025)",
+  "source": "https://www.tvmaze.com/shows/74399/when-life-gives-you-tangerines",
+  "poster": "img/posters/when-life-gives-you-tangerines.jpg",
+  "backdrop": "img/backdrops/when-life-gives-you-tangerines.jpg"
+ },
+ "You": {
+  "match": "You (2018)",
+  "source": "https://www.tvmaze.com/shows/26856/you",
+  "poster": "img/posters/you.jpg",
+  "backdrop": "img/backdrops/you.jpg"
  }
 }

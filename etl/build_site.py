@@ -346,8 +346,35 @@ def loyalty(df):
                                                                        labels=[l[1] for l in LIFE], right=False))
     me = words.groupby("era", observed=False)["episode"].apply(
         lambda t: round(t.str.contains(r"(?i)^(?:i|i'm|i'll|i've)\b|\b(?:me|my|myself)\b").mean() * 100, 1))
-    return {"rewatched": int(len(twice)), "rewatch_top": twice["show"].value_counts().head(2).to_dict(),
+    mv = df[df["kind"] == "movie"]
+    again = mv[mv.duplicated("title", keep=False)]["title"].unique().tolist()
+    return {"movies_twice": [t for t in ["13 Going on 30", "Anyone But You", "The Kissing Booth", "To All the Boys I’ve Loved Before", "Set It Up", "Wedding Season"] if t in again],
+            "rewatched": int(len(twice)), "rewatch_top": twice["show"].value_counts().head(2).to_dict(),
             "after_finale": sorted(after, key=lambda x: -x["after"]), "me_titles": me.to_dict()}
+
+
+def picky(df, meta):
+    """The shows I quit after one episode vs the ones I stayed with (10+), English scripted only."""
+    ser = df[df["kind"] == "series"]
+    n = ser.groupby("show").size()
+    info = lambda x: meta.get(x) or {}
+    scripted = lambda x: info(x).get("type") == "Scripted" and info(x).get("language") == "English"
+    quit, kept = [x for x in n[n == 1].index if scripted(x)], [x for x in n[n >= 10].index if scripted(x)]
+    share = lambda xs, f: round(sum(map(f, xs)) / len(xs) * 100)
+    netflix = lambda x: info(x).get("network") == "Netflix"
+    romance = lambda x: "Romance" in info(x).get("genres", [])
+    korean = [x for x in n.index if info(x).get("language") == "Korean" and info(x).get("type") == "Scripted"]
+    return {"quit": len(quit), "kept": len(kept),
+            "netflix_quit": share(quit, netflix), "netflix_kept": share(kept, netflix),
+            "romance_quit": share(quit, romance), "romance_kept": share(kept, romance),
+            "network_kept": [x for x in ["The Vampire Diaries", "Gossip Girl", "Jane The Virgin", "Switched at Birth", "The Fosters", "Baby Daddy"] if x in kept],
+            "dark_quits": [x for x in ["Outer Banks", "You"] if x in quit],
+            "korean_tried": len(korean), "korean_kept": int(sum(n[k] >= 10 for k in korean)),
+            "dating_quit": [x for x in ["Love Is Blind", "Pop the Balloon LIVE"] if n.get(x, 0) == 1],
+            "matchmaking": int(n.get("Indian Matchmaking", 0)),
+            "drama_views": int(sum(c for x, c in df.groupby("show").size().items() if "Drama" in info(x).get("genres", []))),
+            "views": int(len(df)),
+            "korean_quit": [x for x in ["Crash Landing on You", "Hometown Cha-Cha-Cha", "When Life Gives You Tangerines"] if n.get(x, 0) == 1]}
 
 
 def title_words(df):
@@ -448,6 +475,8 @@ def main():
     if fam:
         featured |= set(fam.get("mom_first_titles", []))
     words = title_words(df)
+    pk = picky(df, meta)
+    featured |= set(pk["dark_quits"] + pk["dating_quit"] + pk["korean_quit"])
     featured |= set(words["girl"] + words["boy"] + words["love"] + words["hindi_love"])
     monthly = df.groupby("month").size()
     all_months = pd.period_range(df["date"].min(), df["date"].max(), freq="M").astype(str)
@@ -479,6 +508,7 @@ def main():
         "profile": profile(df, meta),
         "words": words,
         "loyalty": loyalty(df),
+        "picky": pk,
         "family": fam,
         "windows": windows,
         "gaps": gaps(active),

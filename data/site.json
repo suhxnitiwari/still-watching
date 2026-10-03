@@ -2123,6 +2123,14 @@
   "hate_eps": 1
  },
  "loyalty": {
+  "movies_twice": [
+   "13 Going on 30",
+   "Anyone But You",
+   "The Kissing Booth",
+   "To All the Boys I’ve Loved Before",
+   "Set It Up",
+   "Wedding Season"
+  ],
   "rewatched": 123,
   "rewatch_top": {
    "Fuller House": 38,
@@ -2171,6 +2179,40 @@
    "High School": 7.7,
    "After Graduation": 3.1
   }
+ },
+ "picky": {
+  "quit": 35,
+  "kept": 32,
+  "netflix_quit": 54,
+  "netflix_kept": 34,
+  "romance_quit": 20,
+  "romance_kept": 38,
+  "network_kept": [
+   "The Vampire Diaries",
+   "Gossip Girl",
+   "Jane The Virgin",
+   "Switched at Birth",
+   "The Fosters",
+   "Baby Daddy"
+  ],
+  "dark_quits": [
+   "Outer Banks",
+   "You"
+  ],
+  "korean_tried": 9,
+  "korean_kept": 1,
+  "dating_quit": [
+   "Love Is Blind",
+   "Pop the Balloon LIVE"
+  ],
+  "matchmaking": 24,
+  "drama_views": 1808,
+  "views": 3425,
+  "korean_quit": [
+   "Crash Landing on You",
+   "Hometown Cha-Cha-Cha",
+   "When Life Gives You Tangerines"
+  ]
  },
  "family": {
   "freeze": {
@@ -2998,6 +3040,28 @@
     "Austin": 1
    }
   },
+  "Crash Landing on You": {
+   "show": "Crash Landing on You",
+   "kind": "series",
+   "views": 1,
+   "first": "2025-07-01",
+   "last": "2025-07-01",
+   "days": 1,
+   "best_day": {
+    "date": "2025-07-01",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Limited Series": 1
+   },
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "Crazy, Stupid, Love.": {
    "show": "Crazy, Stupid, Love.",
    "kind": "movie",
@@ -3589,6 +3653,28 @@
    },
    "eras": {
     "Dallas": 8
+   }
+  },
+  "Hometown Cha-Cha-Cha": {
+   "show": "Hometown Cha-Cha-Cha",
+   "kind": "series",
+   "views": 1,
+   "first": "2025-01-18",
+   "last": "2025-01-18",
+   "days": 1,
+   "best_day": {
+    "date": "2025-01-18",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Limited Series": 1
+   },
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "How to Be Single": {
@@ -4384,6 +4470,28 @@
     "Austin": 6
    }
   },
+  "Outer Banks": {
+   "show": "Outer Banks",
+   "kind": "series",
+   "views": 1,
+   "first": "2021-09-26",
+   "last": "2021-09-26",
+   "days": 1,
+   "best_day": {
+    "date": "2021-09-26",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 1": 1
+   },
+   "by_year": {
+    "2021": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
   "Partner Track": {
    "show": "Partner Track",
    "kind": "series",
@@ -4447,6 +4555,26 @@
    },
    "eras": {
     "Dallas": 18
+   }
+  },
+  "Pop the Balloon LIVE": {
+   "show": "Pop the Balloon LIVE",
+   "kind": "series",
+   "views": 1,
+   "first": "2025-04-14",
+   "last": "2025-04-14",
+   "days": 1,
+   "best_day": {
+    "date": "2025-04-14",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Poster Boys": {
@@ -5103,6 +5231,28 @@
     "Dallas": 1
    }
   },
+  "When Life Gives You Tangerines": {
+   "show": "When Life Gives You Tangerines",
+   "kind": "series",
+   "views": 1,
+   "first": "2025-03-28",
+   "last": "2025-03-28",
+   "days": 1,
+   "best_day": {
+    "date": "2025-03-28",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Limited Series": 1
+   },
+   "by_year": {
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
   "Workin' Moms": {
    "show": "Workin' Moms",
    "kind": "series",
@@ -5152,6 +5302,28 @@
    "eras": {
     "Austin": 11,
     "Dallas": 8
+   }
+  },
+  "You": {
+   "show": "You",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-10-12",
+   "last": "2024-10-12",
+   "days": 1,
+   "best_day": {
+    "date": "2024-10-12",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 1": 1
+   },
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Austin": 1
    }
   },
   "Young Sheldon": {
