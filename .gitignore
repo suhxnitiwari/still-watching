@@ -1,0 +1,16 @@
+# My real viewing history never goes in this repo.
+# Every profile's raw history (mine and my family's) stays on my laptop.
+*NetflixViewingHistory*.csv
+*.csv
+!requirements.txt
+ViewingActivity.csv
+netflix-report*.zip
+build/
+.venv/
+__pycache__/
+.DS_Store
+.claude/
+
+# Private lists: titles that never reach the site (and naming them publicly would defeat the point).
+etl/private/
+etl/household.py

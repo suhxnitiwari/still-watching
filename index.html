@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Still Watching | Suhani Tiwari</title>
+<meta name="description" content="Nine years of my Netflix viewing history, browsed like Netflix.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Yellowtail&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Who's watching? -->
+<section id="profiles" class="profiles" aria-label="Choose a profile">
+  <div class="wordmark profiles__mark">Still Watching</div>
+  <div class="profiles__lock" aria-hidden="true">
+    <svg viewBox="0 0 120 140"><defs>
+      <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset=".55" stop-color="#e50914"/><stop offset="1" stop-color="#b81d74"/></linearGradient>
+      <linearGradient id="shield-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fb1" stop-opacity=".9"/><stop offset="1" stop-color="#c2185b" stop-opacity=".6"/></linearGradient>
+    </defs>
+      <path d="M60 4 112 22v40c0 34-22 60-52 74C30 122 8 96 8 62V22Z" fill="url(#shield)"/>
+      <path d="M60 16 101 30v32c0 27-17 48-41 60C36 110 19 89 19 62V30Z" fill="url(#shield-in)"/>
+      <rect x="40" y="58" width="40" height="32" rx="6" fill="none" stroke="#fff" stroke-width="5"/>
+      <path d="M48 58v-8a12 12 0 0 1 24 0v8" fill="none" stroke="#fff" stroke-width="5" class="profiles__shackle"/>
+      <rect x="57.5" y="68" width="5" height="11" rx="2.5" fill="#fff"/>
+    </svg>
+  </div>
+  <p class="profiles__lock-text" id="lock-text">Profile Lock is currently on.</p>
+  <h1 class="profiles__title">Who's watching?</h1>
+  <div class="profiles__list" id="profile-list"></div>
+  <p class="profiles__hint" id="profile-hint" aria-live="polite"></p>
+  <button class="profiles__manage" type="button" id="manage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Manage Profiles</button>
+</section>
+
+<header class="nav" id="nav">
+  <a class="wordmark nav__mark" href="#top">Still Watching</a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="#top" class="is-active">Home</a>
+    <a href="#rows">Shows</a>
+    <a href="#case">Who's Watching</a>
+    <a href="#growth">Growing Up</a>
+    <a href="#house">The Household</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#episodes">Episodes</a>
+    <a href="case-study.html">Case Study</a>
+    <a href="#about">About</a>
+  </nav>
+  <span class="nav__me"><span class="avatar avatar--sm" id="nav-avatar" aria-hidden="true"></span><span class="nav__caret" aria-hidden="true">▾</span></span>
+</header>
+
+<main id="top">
+  <section class="hero" id="hero">
+    <div class="hero__card">
+      <div class="hero__wall" id="hero-wall" aria-hidden="true"></div>
+      <div class="hero__shade"></div>
+      <span class="hero__mark" aria-hidden="true">S</span>
+      <button class="hero__toggle" id="video-toggle" type="button" aria-label="Pause the background">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-pause" d="M7 5h3v14H7zM14 5h3v14h-3z" fill="currentColor"/><path class="i-play" d="M8 5v14l11-7z" fill="currentColor"/></svg>
+      </button>
+      <div class="hero__body">
+        <h2 class="logo" aria-label="The Password Stopped Working">
+          <span class="logo__the" aria-hidden="true">The</span>
+          <span class="logo__big" aria-hidden="true">Password</span>
+          <span class="logo__script" aria-hidden="true">Stopped</span>
+          <span class="logo__small" aria-hidden="true">Working</span>
+        </h2>
+        <p class="hero__meta" id="hero-meta"></p>
+        <p class="hero__copy" id="hero-copy"></p>
+        <div class="hero__actions">
+          <button class="btn btn--play" id="play" type="button"><span class="btn__icon">▶</span> Play</button>
+          <button class="btn btn--info" id="more-info" type="button">More Info</button>
+        </div>
+      </div>
+      <div class="hero__badges" id="hero-badges"></div>
+    </div>
+  </section>
+
+  <div id="rows" class="rows"></div>
+
+  <section class="case" id="case" aria-labelledby="case-title">
+    <p class="growth__kicker">The case file</p>
+    <h3 class="growth__title" id="case-title">Who's Watching?</h3>
+    <p class="growth__sub">Netflix never asked my age, where I live, who I live with or where my family is from. Pretend you don't know whose history this is. Here is what <span id="case-count">my</span> dates and titles give away.</p>
+    <div id="case-groups"></div>
+  </section>
+
+  <section class="growth" id="growth" aria-labelledby="growth-title">
+    <p class="growth__kicker">Nine years, three of me</p>
+    <h3 class="growth__title" id="growth-title">Growing Up on Netflix</h3>
+    <p class="growth__sub">The same profile from sixth grade to college. What I pressed play on changed as I did.</p>
+    <button class="btn btn--play growth__play" type="button" id="play-growing"><span class="btn__icon">▶</span> Play Episode 2: Sixth Grade to the Forty Acres</button>
+    <div class="eras3" id="eras3"></div>
+    <h4 class="growth__h">What changed</h4>
+    <div class="shifts" id="shifts"></div>
+  </section>
+
+  <section class="house" id="house" aria-labelledby="house-title">
+    <div class="house__stage">
+      <div class="house__copy">
+        <p class="house__kicker">Update on Sharing · May 23, 2023</p>
+        <h3 class="house__title" id="house-title">One Household</h3>
+        <div class="house__steps" id="house-steps"></div>
+        <p class="house__source"><a href="https://about.netflix.com/en/news/update-on-sharing-may-us" target="_blank" rel="noopener">Netflix, “Update on Sharing,” May 23, 2023</a></p>
+        <a class="btn btn--light house__case" href="case-study.html">Read the PM case study →</a>
+      </div>
+      <div class="house__art" id="house-art"></div>
+    </div>
+  </section>
+
+  <section class="section" id="timeline">
+    <h3 class="section__title">Every month since 2017</h3>
+    <p class="section__sub">Views per month. Hover a bar for the month; the markers are where the story turns.</p>
+    <div class="chart" id="chart"></div>
+  </section>
+
+  <section class="section" id="episodes">
+    <div class="episodes__head">
+      <h3 class="section__title">Episodes</h3>
+      <div class="seasons" role="tablist" id="season-tabs"></div>
+    </div>
+    <p class="section__sub" id="season-sub"></p>
+    <ol class="episodes" id="episode-list"></ol>
+  </section>
+
+  <section class="still" id="still">
+    <p class="still__q">Are you still watching?</p>
+    <p class="still__sub" id="still-sub"></p>
+    <div class="still__actions">
+      <a class="btn btn--light" href="#top">Continue Watching</a>
+      <a class="btn btn--ghost" href="#rows">Back to Browse</a>
+    </div>
+  </section>
+
+  <footer class="about" id="about">
+    <h3>About this data</h3>
+    <p>Netflix lets anyone download their viewing activity: one row per title with the date it was watched. Mine runs from <span id="about-from"></span> to <span id="about-to"></span>. A Python pipeline splits each title into show, season and episode, separates series from movies, and marks when I lived in Dallas and when I moved to Austin.</p>
+    <p><strong>What it can't see.</strong> The export keeps only the latest date for each title, so a rewatched episode counts once, on the last day I watched it. It has dates but no times, so it can't tell when in the day I watched. It only knows this profile: anything I watched on someone else's account isn't here.</p>
+    <p><strong>Privacy.</strong> The raw history never leaves my laptop. This site ships per-show and per-month summaries only.</p>
+    <p><strong>Images.</strong> Show posters and backgrounds come from <a href="https://www.tvmaze.com" target="_blank" rel="noopener">TVmaze</a> and belong to their studios and networks. The moving poster wall is built from the shows in my own history.</p>
+    <p class="about__small">Not affiliated with Netflix. © 2026 Suhani Tiwari.</p>
+  </footer>
+</main>
+
+<!-- Title detail -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+  <div class="modal__backdrop" data-close></div>
+  <article class="modal__card">
+    <button class="modal__close" type="button" data-close aria-label="Close">✕</button>
+    <div class="modal__art" id="modal-art"></div>
+    <div class="modal__body" id="modal-body"></div>
+  </article>
+</div>
+
+<!-- The player: Play runs the story as a short film -->
+<div class="player" id="player" role="dialog" aria-modal="true" aria-label="The Password Stopped Working, episode 1" hidden>
+  <div class="player__stage" id="player-stage"></div>
+  <div class="player__chrome">
+    <div class="player__top">
+      <button class="player__icon" type="button" id="player-back" aria-label="Back to browse">
+        <svg viewBox="0 0 24 24"><path d="M15 4 7 12l8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <div class="player__bottom">
+      <div class="player__track">
+        <div class="player__bar" id="player-bar" role="slider" aria-label="Seek" tabindex="0"><span class="player__fill" id="player-fill"></span><span class="player__knob" id="player-knob"></span></div>
+        <span class="player__time" id="player-time">0:00</span>
+      </div>
+      <div class="player__controls">
+        <button class="player__icon" type="button" id="player-toggle" aria-label="Pause">
+          <svg viewBox="0 0 24 24"><path class="i-pause" d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor"/><path class="i-play" d="M7 4v16l13-8z" fill="currentColor"/></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-rew" aria-label="Back 10 seconds">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2L7 6l5 4V7a6 6 0 1 1-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><text x="12" y="16.5" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor">10</text></svg>
+        </button>
+        <button class="player__icon" type="button" id="player-fwd" aria-label="Forward 10 seconds">
+          <svg viewBox="0 0 24 24"><path d="M12 5V2l5 4-5 4V7a6 6 0 1 0 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><text x="12" y="16.5" font-size="7" font-weight="700" text-anchor="middle" fill="currentColor">10</text></svg>
+        </button>
+        <p class="player__title"><b>The Password Stopped Working</b> <span>E1</span> One Household</p>
+        <button class="player__next" type="button" id="player-next">Next Episode ›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip" hidden></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

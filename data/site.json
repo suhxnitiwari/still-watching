@@ -1,0 +1,3082 @@
+{
+ "totals": {
+  "views": 2566,
+  "titles": 353,
+  "series": 163,
+  "movies": 190,
+  "binge_days": 319,
+  "active_days": 909,
+  "from": "2017-12-21",
+  "to": "2026-09-25"
+ },
+ "dates": {
+  "crackdown": "2023-05-23",
+  "austin": "2024-08-15"
+ },
+ "monthly": [
+  {
+   "month": "2017-12",
+   "views": 22
+  },
+  {
+   "month": "2018-01",
+   "views": 26
+  },
+  {
+   "month": "2018-02",
+   "views": 35
+  },
+  {
+   "month": "2018-03",
+   "views": 56
+  },
+  {
+   "month": "2018-04",
+   "views": 69
+  },
+  {
+   "month": "2018-05",
+   "views": 56
+  },
+  {
+   "month": "2018-06",
+   "views": 3
+  },
+  {
+   "month": "2018-07",
+   "views": 8
+  },
+  {
+   "month": "2018-08",
+   "views": 45
+  },
+  {
+   "month": "2018-09",
+   "views": 1
+  },
+  {
+   "month": "2018-10",
+   "views": 12
+  },
+  {
+   "month": "2018-11",
+   "views": 12
+  },
+  {
+   "month": "2018-12",
+   "views": 26
+  },
+  {
+   "month": "2019-01",
+   "views": 32
+  },
+  {
+   "month": "2019-02",
+   "views": 28
+  },
+  {
+   "month": "2019-03",
+   "views": 51
+  },
+  {
+   "month": "2019-04",
+   "views": 35
+  },
+  {
+   "month": "2019-05",
+   "views": 0
+  },
+  {
+   "month": "2019-06",
+   "views": 13
+  },
+  {
+   "month": "2019-07",
+   "views": 10
+  },
+  {
+   "month": "2019-08",
+   "views": 2
+  },
+  {
+   "month": "2019-09",
+   "views": 0
+  },
+  {
+   "month": "2019-10",
+   "views": 1
+  },
+  {
+   "month": "2019-11",
+   "views": 70
+  },
+  {
+   "month": "2019-12",
+   "views": 184
+  },
+  {
+   "month": "2020-01",
+   "views": 40
+  },
+  {
+   "month": "2020-02",
+   "views": 23
+  },
+  {
+   "month": "2020-03",
+   "views": 70
+  },
+  {
+   "month": "2020-04",
+   "views": 1
+  },
+  {
+   "month": "2020-05",
+   "views": 21
+  },
+  {
+   "month": "2020-06",
+   "views": 5
+  },
+  {
+   "month": "2020-07",
+   "views": 16
+  },
+  {
+   "month": "2020-08",
+   "views": 7
+  },
+  {
+   "month": "2020-09",
+   "views": 0
+  },
+  {
+   "month": "2020-10",
+   "views": 1
+  },
+  {
+   "month": "2020-11",
+   "views": 15
+  },
+  {
+   "month": "2020-12",
+   "views": 1
+  },
+  {
+   "month": "2021-01",
+   "views": 17
+  },
+  {
+   "month": "2021-02",
+   "views": 2
+  },
+  {
+   "month": "2021-03",
+   "views": 2
+  },
+  {
+   "month": "2021-04",
+   "views": 47
+  },
+  {
+   "month": "2021-05",
+   "views": 80
+  },
+  {
+   "month": "2021-06",
+   "views": 73
+  },
+  {
+   "month": "2021-07",
+   "views": 49
+  },
+  {
+   "month": "2021-08",
+   "views": 1
+  },
+  {
+   "month": "2021-09",
+   "views": 14
+  },
+  {
+   "month": "2021-10",
+   "views": 6
+  },
+  {
+   "month": "2021-11",
+   "views": 44
+  },
+  {
+   "month": "2021-12",
+   "views": 13
+  },
+  {
+   "month": "2022-01",
+   "views": 8
+  },
+  {
+   "month": "2022-02",
+   "views": 2
+  },
+  {
+   "month": "2022-03",
+   "views": 23
+  },
+  {
+   "month": "2022-04",
+   "views": 23
+  },
+  {
+   "month": "2022-05",
+   "views": 18
+  },
+  {
+   "month": "2022-06",
+   "views": 38
+  },
+  {
+   "month": "2022-07",
+   "views": 7
+  },
+  {
+   "month": "2022-08",
+   "views": 21
+  },
+  {
+   "month": "2022-09",
+   "views": 38
+  },
+  {
+   "month": "2022-10",
+   "views": 13
+  },
+  {
+   "month": "2022-11",
+   "views": 56
+  },
+  {
+   "month": "2022-12",
+   "views": 98
+  },
+  {
+   "month": "2023-01",
+   "views": 27
+  },
+  {
+   "month": "2023-02",
+   "views": 1
+  },
+  {
+   "month": "2023-03",
+   "views": 0
+  },
+  {
+   "month": "2023-04",
+   "views": 23
+  },
+  {
+   "month": "2023-05",
+   "views": 32
+  },
+  {
+   "month": "2023-06",
+   "views": 59
+  },
+  {
+   "month": "2023-07",
+   "views": 13
+  },
+  {
+   "month": "2023-08",
+   "views": 13
+  },
+  {
+   "month": "2023-09",
+   "views": 62
+  },
+  {
+   "month": "2023-10",
+   "views": 7
+  },
+  {
+   "month": "2023-11",
+   "views": 36
+  },
+  {
+   "month": "2023-12",
+   "views": 33
+  },
+  {
+   "month": "2024-01",
+   "views": 13
+  },
+  {
+   "month": "2024-02",
+   "views": 0
+  },
+  {
+   "month": "2024-03",
+   "views": 0
+  },
+  {
+   "month": "2024-04",
+   "views": 0
+  },
+  {
+   "month": "2024-05",
+   "views": 0
+  },
+  {
+   "month": "2024-06",
+   "views": 9
+  },
+  {
+   "month": "2024-07",
+   "views": 27
+  },
+  {
+   "month": "2024-08",
+   "views": 2
+  },
+  {
+   "month": "2024-09",
+   "views": 0
+  },
+  {
+   "month": "2024-10",
+   "views": 7
+  },
+  {
+   "month": "2024-11",
+   "views": 10
+  },
+  {
+   "month": "2024-12",
+   "views": 7
+  },
+  {
+   "month": "2025-01",
+   "views": 38
+  },
+  {
+   "month": "2025-02",
+   "views": 9
+  },
+  {
+   "month": "2025-03",
+   "views": 20
+  },
+  {
+   "month": "2025-04",
+   "views": 13
+  },
+  {
+   "month": "2025-05",
+   "views": 21
+  },
+  {
+   "month": "2025-06",
+   "views": 50
+  },
+  {
+   "month": "2025-07",
+   "views": 122
+  },
+  {
+   "month": "2025-08",
+   "views": 14
+  },
+  {
+   "month": "2025-09",
+   "views": 5
+  },
+  {
+   "month": "2025-10",
+   "views": 3
+  },
+  {
+   "month": "2025-11",
+   "views": 9
+  },
+  {
+   "month": "2025-12",
+   "views": 15
+  },
+  {
+   "month": "2026-01",
+   "views": 38
+  },
+  {
+   "month": "2026-02",
+   "views": 19
+  },
+  {
+   "month": "2026-03",
+   "views": 38
+  },
+  {
+   "month": "2026-04",
+   "views": 1
+  },
+  {
+   "month": "2026-05",
+   "views": 38
+  },
+  {
+   "month": "2026-06",
+   "views": 9
+  },
+  {
+   "month": "2026-07",
+   "views": 5
+  },
+  {
+   "month": "2026-08",
+   "views": 12
+  },
+  {
+   "month": "2026-09",
+   "views": 16
+  }
+ ],
+ "month_of_year": [
+  239,
+  119,
+  260,
+  212,
+  266,
+  259,
+  257,
+  117,
+  136,
+  50,
+  252,
+  399
+ ],
+ "weekday": {
+  "Sunday": 482,
+  "Saturday": 442,
+  "Monday": 402,
+  "Tuesday": 341,
+  "Friday": 326,
+  "Wednesday": 288,
+  "Thursday": 285
+ },
+ "top": [
+  {
+   "show": "Friends",
+   "views": 230
+  },
+  {
+   "show": "The Vampire Diaries",
+   "views": 171
+  },
+  {
+   "show": "Grey's Anatomy",
+   "views": 162
+  },
+  {
+   "show": "Gilmore Girls",
+   "views": 157
+  },
+  {
+   "show": "Gossip Girl",
+   "views": 121
+  },
+  {
+   "show": "The Fosters",
+   "views": 104
+  },
+  {
+   "show": "Switched at Birth",
+   "views": 103
+  },
+  {
+   "show": "Jane The Virgin",
+   "views": 100
+  },
+  {
+   "show": "Baby Daddy",
+   "views": 94
+  },
+  {
+   "show": "The Originals",
+   "views": 92
+  }
+ ],
+ "binges": [
+  {
+   "date": "2019-12-15",
+   "show": "Friends",
+   "episodes": 29
+  },
+  {
+   "date": "2019-12-14",
+   "show": "Friends",
+   "episodes": 19
+  },
+  {
+   "date": "2021-07-24",
+   "show": "Manifest",
+   "episodes": 16
+  },
+  {
+   "date": "2019-12-23",
+   "show": "Friends",
+   "episodes": 14
+  },
+  {
+   "date": "2021-05-25",
+   "show": "Grey's Anatomy",
+   "episodes": 13
+  },
+  {
+   "date": "2019-11-28",
+   "show": "Friends",
+   "episodes": 13
+  },
+  {
+   "date": "2019-12-21",
+   "show": "Friends",
+   "episodes": 12
+  },
+  {
+   "date": "2019-11-10",
+   "show": "Sugar Rush",
+   "episodes": 12
+  },
+  {
+   "date": "2019-12-31",
+   "show": "Friends",
+   "episodes": 11
+  },
+  {
+   "date": "2020-05-25",
+   "show": "The Vampire Diaries",
+   "episodes": 11
+  },
+  {
+   "date": "2025-06-08",
+   "show": "Ginny & Georgia",
+   "episodes": 10
+  },
+  {
+   "date": "2019-12-01",
+   "show": "Friends",
+   "episodes": 10
+  },
+  {
+   "date": "2023-06-09",
+   "show": "Never Have I Ever",
+   "episodes": 10
+  },
+  {
+   "date": "2025-07-16",
+   "show": "Gossip Girl",
+   "episodes": 10
+  },
+  {
+   "date": "2021-12-23",
+   "show": "Emily in Paris",
+   "episodes": 10
+  }
+ ],
+ "yearly": [
+  {
+   "year": 2017,
+   "views": 22,
+   "show": "Brain Games",
+   "episodes": 11
+  },
+  {
+   "year": 2018,
+   "views": 349,
+   "show": "Switched at Birth",
+   "episodes": 95
+  },
+  {
+   "year": 2019,
+   "views": 426,
+   "show": "Friends",
+   "episodes": 223
+  },
+  {
+   "year": 2020,
+   "views": 200,
+   "show": "The Fosters",
+   "episodes": 104
+  },
+  {
+   "year": 2021,
+   "views": 348,
+   "show": "Grey's Anatomy",
+   "episodes": 152
+  },
+  {
+   "year": 2022,
+   "views": 345,
+   "show": "Gilmore Girls",
+   "episodes": 132
+  },
+  {
+   "year": 2023,
+   "views": 306,
+   "show": "Jane The Virgin",
+   "episodes": 98
+  },
+  {
+   "year": 2024,
+   "views": 75,
+   "show": "The Great Indian Kapil Show",
+   "episodes": 15
+  },
+  {
+   "year": 2025,
+   "views": 319,
+   "show": "Gossip Girl",
+   "episodes": 117
+  },
+  {
+   "year": 2026,
+   "views": 176,
+   "show": "Bridgerton",
+   "episodes": 24
+  }
+ ],
+ "eras": {
+  "Austin": {
+   "views": 521,
+   "from": "2024-08-25",
+   "to": "2026-09-25",
+   "per_month": 20.8,
+   "top": [
+    {
+     "show": "Gossip Girl",
+     "views": 118
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 40
+    },
+    {
+     "show": "The Night Agent",
+     "views": 25
+    },
+    {
+     "show": "Bridgerton",
+     "views": 24
+    },
+    {
+     "show": "Mismatched",
+     "views": 22
+    },
+    {
+     "show": "Fuller House",
+     "views": 20
+    },
+    {
+     "show": "Dubai Bling",
+     "views": 19
+    },
+    {
+     "show": "XO, Kitty",
+     "views": 11
+    },
+    {
+     "show": "Partner Track",
+     "views": 10
+    },
+    {
+     "show": "Ginny & Georgia",
+     "views": 10
+    }
+   ]
+  },
+  "Dallas": {
+   "views": 2045,
+   "from": "2017-12-21",
+   "to": "2024-07-23",
+   "per_month": 25.9,
+   "top": [
+    {
+     "show": "Friends",
+     "views": 227
+    },
+    {
+     "show": "The Vampire Diaries",
+     "views": 171
+    },
+    {
+     "show": "Grey's Anatomy",
+     "views": 162
+    },
+    {
+     "show": "Gilmore Girls",
+     "views": 151
+    },
+    {
+     "show": "The Fosters",
+     "views": 104
+    },
+    {
+     "show": "Switched at Birth",
+     "views": 103
+    },
+    {
+     "show": "Jane The Virgin",
+     "views": 100
+    },
+    {
+     "show": "Baby Daddy",
+     "views": 94
+    },
+    {
+     "show": "The Originals",
+     "views": 92
+    },
+    {
+     "show": "Manifest",
+     "views": 62
+    }
+   ]
+  }
+ },
+ "life": [
+  {
+   "key": "middle",
+   "name": "Middle School",
+   "from": "2017-12-21",
+   "to": "2020-07-18",
+   "views": 973,
+   "per_month": 31.5,
+   "titles": 78,
+   "titles_per_month": 2.5,
+   "movie_share": 2.7,
+   "language": {
+    "English": 98.4,
+    "Russian": 1.4,
+    "Korean": 0.1
+   },
+   "type": {
+    "Scripted": 88.2,
+    "Reality": 5.6,
+    "Animation": 5.0,
+    "Documentary": 0.7,
+    "Talk Show": 0.2,
+    "Variety": 0.2
+   },
+   "genres": {
+    "Romance": 54.9,
+    "Drama": 47.4,
+    "Comedy": 46.4,
+    "Family": 35.7,
+    "Supernatural": 18.8,
+    "Children": 7.8,
+    "Mystery": 4.0,
+    "Adventure": 3.6,
+    "Thriller": 2.6,
+    "Food": 2.1,
+    "Crime": 2.0,
+    "Horror": 1.0,
+    "Fantasy": 0.8,
+    "Science-Fiction": 0.6,
+    "Music": 0.3,
+    "Nature": 0.2,
+    "History": 0.2,
+    "Action": 0.2,
+    "DIY": 0.1,
+    "Espionage": 0.1
+   },
+   "netflix_share": 10.1,
+   "median_premiere": 2011,
+   "classic_share": 24.2,
+   "fresh_share": 8.0,
+   "top": [
+    {
+     "show": "Friends",
+     "views": 227
+    },
+    {
+     "show": "The Vampire Diaries",
+     "views": 167
+    },
+    {
+     "show": "The Fosters",
+     "views": 104
+    },
+    {
+     "show": "Switched at Birth",
+     "views": 103
+    },
+    {
+     "show": "Baby Daddy",
+     "views": 94
+    },
+    {
+     "show": "Bunk'd",
+     "views": 53
+    },
+    {
+     "show": "Brain Games",
+     "views": 34
+    },
+    {
+     "show": "The Boss Baby",
+     "views": 27
+    }
+   ],
+   "examples": {
+    "hindi": [],
+    "family": [
+     {
+      "show": "The Fosters",
+      "views": 104
+     },
+     {
+      "show": "Switched at Birth",
+      "views": 103
+     },
+     {
+      "show": "Baby Daddy",
+      "views": 94
+     },
+     {
+      "show": "The Boss Baby",
+      "views": 27
+     }
+    ],
+    "drama": [
+     {
+      "show": "The Vampire Diaries",
+      "views": 167
+     },
+     {
+      "show": "The Fosters",
+      "views": 104
+     },
+     {
+      "show": "Switched at Birth",
+      "views": 103
+     },
+     {
+      "show": "13 Reasons Why",
+      "views": 21
+     }
+    ],
+    "medical_crime": [
+     {
+      "show": "Riverdale",
+      "views": 17
+     },
+     {
+      "show": "Peaky Blinders",
+      "views": 1
+     },
+     {
+      "show": "Money Heist",
+      "views": 1
+     }
+    ],
+    "talk": [
+     {
+      "show": "Chris Rock",
+      "views": 1
+     },
+     {
+      "show": "Beyond Stranger Things",
+      "views": 1
+     }
+    ],
+    "romance": [
+     {
+      "show": "Friends",
+      "views": 227
+     },
+     {
+      "show": "The Vampire Diaries",
+      "views": 167
+     },
+     {
+      "show": "The Fosters",
+      "views": 104
+     },
+     {
+      "show": "The Originals",
+      "views": 8
+     }
+    ]
+   },
+   "by_premiere": [
+    {
+     "show": "Friends",
+     "year": 1994
+    },
+    {
+     "show": "The Vampire Diaries",
+     "year": 2009
+    },
+    {
+     "show": "Brain Games",
+     "year": 2011
+    },
+    {
+     "show": "Switched at Birth",
+     "year": 2011
+    },
+    {
+     "show": "Baby Daddy",
+     "year": 2012
+    },
+    {
+     "show": "The Fosters",
+     "year": 2013
+    }
+   ],
+   "movies": 26,
+   "series_views": 947
+  },
+  {
+   "key": "high",
+   "name": "High School",
+   "from": "2020-08-01",
+   "to": "2024-01-27",
+   "views": 1036,
+   "per_month": 24.8,
+   "titles": 155,
+   "titles_per_month": 3.7,
+   "movie_share": 8.3,
+   "language": {
+    "English": 88.9,
+    "Hindi": 4.8,
+    "Korean": 1.8,
+    "Spanish": 1.1,
+    "Japanese": 0.8,
+    "Arabic": 0.6,
+    "Norwegian": 0.3,
+    "Polish": 0.3,
+    "Dutch": 0.1
+   },
+   "type": {
+    "Scripted": 91.8,
+    "Reality": 6.0,
+    "Variety": 0.5,
+    "Documentary": 0.3,
+    "Animation": 0.2,
+    "News": 0.2
+   },
+   "genres": {
+    "Drama": 81.8,
+    "Romance": 65.3,
+    "Comedy": 36.9,
+    "Medical": 17.1,
+    "Crime": 14.4,
+    "Science-Fiction": 10.6,
+    "Supernatural": 10.3,
+    "Family": 8.0,
+    "Mystery": 7.6,
+    "Horror": 2.5,
+    "Action": 2.0,
+    "Fantasy": 1.6,
+    "Thriller": 1.5,
+    "Adventure": 0.9,
+    "Espionage": 0.8,
+    "Food": 0.3,
+    "Legal": 0.3,
+    "Children": 0.2,
+    "History": 0.1
+   },
+   "netflix_share": 39.1,
+   "median_premiere": 2014,
+   "classic_share": 33.1,
+   "fresh_share": 18.4,
+   "top": [
+    {
+     "show": "Grey's Anatomy",
+     "views": 162
+    },
+    {
+     "show": "Gilmore Girls",
+     "views": 151
+    },
+    {
+     "show": "Jane The Virgin",
+     "views": 100
+    },
+    {
+     "show": "The Originals",
+     "views": 84
+    },
+    {
+     "show": "Manifest",
+     "views": 62
+    },
+    {
+     "show": "Fuller House",
+     "views": 53
+    },
+    {
+     "show": "Never Have I Ever",
+     "views": 30
+    },
+    {
+     "show": "Emily in Paris",
+     "views": 27
+    }
+   ],
+   "examples": {
+    "hindi": [
+     {
+      "show": "Fabulous Lives of Bollywood Wives",
+      "views": 15
+     },
+     {
+      "show": "Masaba Masaba",
+      "views": 13
+     },
+     {
+      "show": "Delhi Crime",
+      "views": 12
+     },
+     {
+      "show": "Bombay Begums",
+      "views": 5
+     }
+    ],
+    "family": [
+     {
+      "show": "Fuller House",
+      "views": 53
+     },
+     {
+      "show": "Workin' Moms",
+      "views": 18
+     },
+     {
+      "show": "Victorious",
+      "views": 4
+     },
+     {
+      "show": "Merry Happy Whatever",
+      "views": 1
+     }
+    ],
+    "drama": [
+     {
+      "show": "Grey's Anatomy",
+      "views": 162
+     },
+     {
+      "show": "Gilmore Girls",
+      "views": 151
+     },
+     {
+      "show": "Jane The Virgin",
+      "views": 100
+     },
+     {
+      "show": "The Originals",
+      "views": 84
+     }
+    ],
+    "medical_crime": [
+     {
+      "show": "Grey's Anatomy",
+      "views": 162
+     },
+     {
+      "show": "Jane The Virgin",
+      "views": 100
+     },
+     {
+      "show": "Ginny & Georgia",
+      "views": 12
+     },
+     {
+      "show": "Delhi Crime",
+      "views": 12
+     }
+    ],
+    "talk": [],
+    "romance": [
+     {
+      "show": "Grey's Anatomy",
+      "views": 162
+     },
+     {
+      "show": "Gilmore Girls",
+      "views": 151
+     },
+     {
+      "show": "Jane The Virgin",
+      "views": 100
+     },
+     {
+      "show": "The Originals",
+      "views": 84
+     }
+    ]
+   },
+   "by_premiere": [
+    {
+     "show": "Gilmore Girls",
+     "year": 2000
+    },
+    {
+     "show": "Grey's Anatomy",
+     "year": 2005
+    },
+    {
+     "show": "The Originals",
+     "year": 2013
+    },
+    {
+     "show": "Jane The Virgin",
+     "year": 2014
+    },
+    {
+     "show": "Fuller House",
+     "year": 2016
+    },
+    {
+     "show": "Manifest",
+     "year": 2018
+    }
+   ],
+   "movies": 86,
+   "series_views": 950
+  },
+  {
+   "key": "after",
+   "name": "After Graduation",
+   "from": "2024-06-27",
+   "to": "2026-09-25",
+   "views": 557,
+   "per_month": 20.7,
+   "titles": 146,
+   "titles_per_month": 5.4,
+   "movie_share": 14.0,
+   "language": {
+    "English": 66.0,
+    "Hindi": 28.2,
+    "Arabic": 4.0,
+    "Korean": 0.6,
+    "Spanish": 0.4,
+    "Japanese": 0.2
+   },
+   "type": {
+    "Scripted": 77.2,
+    "Talk Show": 10.9,
+    "Reality": 7.1,
+    "Documentary": 3.5,
+    "Animation": 0.4,
+    "Sports": 0.2
+   },
+   "genres": {
+    "Drama": 62.6,
+    "Romance": 47.8,
+    "Comedy": 23.4,
+    "Thriller": 9.2,
+    "Action": 7.1,
+    "Crime": 5.8,
+    "Mystery": 5.6,
+    "Family": 5.0,
+    "Sports": 3.3,
+    "Horror": 2.1,
+    "Science-Fiction": 2.1,
+    "History": 1.7,
+    "War": 1.3,
+    "Adventure": 0.8,
+    "Espionage": 0.4,
+    "Children": 0.2,
+    "Medical": 0.2,
+    "Western": 0.2,
+    "Legal": 0.2,
+    "Anime": 0.2,
+    "Nature": 0.2,
+    "Music": 0.2
+   },
+   "netflix_share": 67.0,
+   "median_premiere": 2020,
+   "classic_share": 3.5,
+   "fresh_share": 30.7,
+   "top": [
+    {
+     "show": "Gossip Girl",
+     "views": 118
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 50
+    },
+    {
+     "show": "Bridgerton",
+     "views": 31
+    },
+    {
+     "show": "The Night Agent",
+     "views": 25
+    },
+    {
+     "show": "Mismatched",
+     "views": 22
+    },
+    {
+     "show": "Fuller House",
+     "views": 20
+    },
+    {
+     "show": "Dubai Bling",
+     "views": 19
+    },
+    {
+     "show": "AMERICA'S SWEETHEARTS",
+     "views": 15
+    }
+   ],
+   "examples": {
+    "hindi": [
+     {
+      "show": "The Great Indian Kapil Show",
+      "views": 50
+     },
+     {
+      "show": "Mismatched",
+      "views": 22
+     },
+     {
+      "show": "Fabulous Lives of Bollywood Wives",
+      "views": 8
+     },
+     {
+      "show": "Heeramandi",
+      "views": 8
+     }
+    ],
+    "family": [
+     {
+      "show": "Fuller House",
+      "views": 20
+     },
+     {
+      "show": "Young Sheldon",
+      "views": 3
+     },
+     {
+      "show": "Chumbak",
+      "views": 1
+     }
+    ],
+    "drama": [
+     {
+      "show": "Gossip Girl",
+      "views": 118
+     },
+     {
+      "show": "Bridgerton",
+      "views": 31
+     },
+     {
+      "show": "Mismatched",
+      "views": 22
+     },
+     {
+      "show": "XO, Kitty",
+      "views": 11
+     }
+    ],
+    "medical_crime": [
+     {
+      "show": "Ginny & Georgia",
+      "views": 10
+     },
+     {
+      "show": "Dabba Cartel",
+      "views": 7
+     },
+     {
+      "show": "Delhi Crime",
+      "views": 6
+     },
+     {
+      "show": "Tribhuvan Mishra CA Topper",
+      "views": 1
+     }
+    ],
+    "talk": [
+     {
+      "show": "The Great Indian Kapil Show",
+      "views": 50
+     },
+     {
+      "show": "Kapil Sharma",
+      "views": 1
+     },
+     {
+      "show": "Best of The Great Indian Kapil Show",
+      "views": 1
+     }
+    ],
+    "romance": [
+     {
+      "show": "Gossip Girl",
+      "views": 118
+     },
+     {
+      "show": "Bridgerton",
+      "views": 31
+     },
+     {
+      "show": "Mismatched",
+      "views": 22
+     },
+     {
+      "show": "XO, Kitty",
+      "views": 11
+     }
+    ]
+   },
+   "by_premiere": [
+    {
+     "show": "Gossip Girl",
+     "year": 2007
+    },
+    {
+     "show": "Fuller House",
+     "year": 2016
+    },
+    {
+     "show": "Bridgerton",
+     "year": 2020
+    },
+    {
+     "show": "Mismatched",
+     "year": 2020
+    },
+    {
+     "show": "Dubai Bling",
+     "year": 2022
+    },
+    {
+     "show": "The Night Agent",
+     "year": 2023
+    }
+   ],
+   "movies": 78,
+   "series_views": 479
+  }
+ ],
+ "profile": {
+  "kids_by_year": {
+   "2017": 4.5,
+   "2018": 23.8,
+   "2019": 4.5,
+   "2020": 0.5,
+   "2021": 0.3,
+   "2022": 0.0,
+   "2023": 0.3,
+   "2024": 1.3,
+   "2025": 0.3,
+   "2026": 0.0
+  },
+  "kids_2018_top": [
+   "Bunk'd",
+   "The Boss Baby",
+   "Sofia the First"
+  ],
+  "teen_romcoms": [
+   "Sierra Burgess Is a Loser",
+   "The Perfect Date",
+   "F the Prom",
+   "Tall Girl",
+   "The Kissing Booth"
+  ],
+  "masha": {
+   "first": "2019-04-20",
+   "last": "2019-12-06",
+   "views": 13
+  },
+  "covid": {
+   "march_2020": 70,
+   "feb_2020": 23,
+   "after_closure": 55,
+   "top": "The Fosters"
+  },
+  "december": {
+   "before_20": 173,
+   "after_20": 226
+  },
+  "weekday_share": {
+   "school": 62.5,
+   "summer": 70.0
+  },
+  "college": {
+   "fall_2024": 0.18,
+   "summer_2025": 1.9,
+   "fall_2025": 0.15,
+   "winter_2025": 0.73
+  },
+  "hindi_films": {
+   "total": 86,
+   "movies": 190,
+   "by_era": [
+    {
+     "key": "middle",
+     "movies": 26,
+     "hindi": 4
+    },
+    {
+     "key": "high",
+     "movies": 86,
+     "hindi": 44
+    },
+    {
+     "key": "after",
+     "movies": 78,
+     "hindi": 38
+    }
+   ],
+   "first": "Aitraaz",
+   "first_date": "2018-04-04"
+  },
+  "jan_2026": {
+   "movies": 20,
+   "hindi": 12
+  },
+  "romance_share": 57.6,
+  "valentines": [
+   {
+    "date": "2019-02-14",
+    "show": "The Vampire Diaries"
+   },
+   {
+    "date": "2019-02-14",
+    "show": "The Vampire Diaries"
+   }
+  ]
+ },
+ "windows": {
+  "first_days": {
+   "from": "2017-12-21",
+   "to": "2017-12-31",
+   "views": 22,
+   "top": [
+    {
+     "show": "Brain Games",
+     "views": 11
+    },
+    {
+     "show": "Switched at Birth",
+     "views": 8
+    },
+    {
+     "show": "Planet Earth",
+     "views": 1
+    },
+    {
+     "show": "Peaky Blinders",
+     "views": 1
+    },
+    {
+     "show": "Girl Meets World",
+     "views": 1
+    }
+   ]
+  },
+  "friends_run": {
+   "from": "2019-11-12",
+   "to": "2019-12-31",
+   "views": 233,
+   "top": [
+    {
+     "show": "Friends",
+     "views": 223
+    },
+    {
+     "show": "Masha and the Bear",
+     "views": 9
+    },
+    {
+     "show": "Once Upon a Time",
+     "views": 1
+    }
+   ]
+  },
+  "after_crackdown": {
+   "from": "2023-05-23",
+   "to": "2023-12-31",
+   "views": 234,
+   "top": [
+    {
+     "show": "Jane The Virgin",
+     "views": 98
+    },
+    {
+     "show": "Indian Matchmaking",
+     "views": 22
+    },
+    {
+     "show": "Delhi Crime",
+     "views": 12
+    },
+    {
+     "show": "Fuller House",
+     "views": 12
+    },
+    {
+     "show": "Manifest",
+     "views": 10
+    }
+   ]
+  },
+  "last_summer_home": {
+   "from": "2024-06-27",
+   "to": "2024-08-14",
+   "views": 36,
+   "top": [
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 10
+    },
+    {
+     "show": "Heeramandi",
+     "views": 8
+    },
+    {
+     "show": "Bridgerton",
+     "views": 7
+    },
+    {
+     "show": "AMERICA'S SWEETHEARTS",
+     "views": 6
+    },
+    {
+     "show": "A Family Affair",
+     "views": 1
+    }
+   ]
+  },
+  "first_semester": {
+   "from": "2024-08-15",
+   "to": "2024-12-31",
+   "views": 26,
+   "top": [
+    {
+     "show": "Fabulous Lives of Bollywood Wives",
+     "views": 7
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 5
+    },
+    {
+     "show": "Young Sheldon",
+     "views": 3
+    },
+    {
+     "show": "Friends",
+     "views": 2
+    },
+    {
+     "show": "LEGO Ninjago",
+     "views": 1
+    }
+   ]
+  },
+  "summer_2025": {
+   "from": "2025-06-01",
+   "to": "2025-07-31",
+   "views": 172,
+   "top": [
+    {
+     "show": "Gossip Girl",
+     "views": 117
+    },
+    {
+     "show": "Ginny & Georgia",
+     "views": 10
+    },
+    {
+     "show": "Partner Track",
+     "views": 10
+    },
+    {
+     "show": "AMERICA'S SWEETHEARTS",
+     "views": 8
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 6
+    }
+   ]
+  },
+  "fall_2025": {
+   "from": "2025-08-15",
+   "to": "2025-12-31",
+   "views": 41,
+   "top": [
+    {
+     "show": "Stranger Things",
+     "views": 8
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 7
+    },
+    {
+     "show": "Gilmore Girls",
+     "views": 6
+    },
+    {
+     "show": "Delhi Crime",
+     "views": 6
+    },
+    {
+     "show": "Single Papa",
+     "views": 6
+    }
+   ]
+  },
+  "this_year": {
+   "from": "2026-01-01",
+   "to": "2026-09-25",
+   "views": 176,
+   "top": [
+    {
+     "show": "Bridgerton",
+     "views": 24
+    },
+    {
+     "show": "Mismatched",
+     "views": 22
+    },
+    {
+     "show": "The Great Indian Kapil Show",
+     "views": 14
+    },
+    {
+     "show": "Fuller House",
+     "views": 13
+    },
+    {
+     "show": "XO, Kitty",
+     "views": 10
+    }
+   ]
+  }
+ },
+ "gaps": [
+  {
+   "from": "2024-01-27",
+   "to": "2024-06-27",
+   "days": 152
+  },
+  {
+   "from": "2019-08-06",
+   "to": "2019-10-21",
+   "days": 76
+  },
+  {
+   "from": "2023-02-01",
+   "to": "2023-04-02",
+   "days": 60
+  },
+  {
+   "from": "2020-08-07",
+   "to": "2020-10-02",
+   "days": 56
+  },
+  {
+   "from": "2018-09-01",
+   "to": "2018-10-17",
+   "days": 46
+  }
+ ],
+ "streak": {
+  "days": 25,
+  "from": "2025-06-29",
+  "to": "2025-07-23"
+ },
+ "shows": {
+  "13 Reasons Why": {
+   "show": "13 Reasons Why",
+   "kind": "series",
+   "views": 21,
+   "first": "2020-05-23",
+   "last": "2020-07-07",
+   "days": 10,
+   "best_day": {
+    "date": "2020-07-07",
+    "episodes": 6
+   },
+   "binge_days": 3,
+   "seasons": {
+    "Season 3": 11,
+    "Season 4": 10
+   },
+   "by_year": {
+    "2020": 21
+   },
+   "eras": {
+    "Dallas": 21
+   }
+  },
+  "A Family Affair": {
+   "show": "A Family Affair",
+   "kind": "movie",
+   "views": 1,
+   "first": "2024-07-03",
+   "last": "2024-07-03",
+   "days": 1,
+   "best_day": {
+    "date": "2024-07-03",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "AMERICA'S SWEETHEARTS": {
+   "show": "AMERICA'S SWEETHEARTS",
+   "kind": "series",
+   "views": 15,
+   "first": "2024-06-27",
+   "last": "2026-06-18",
+   "days": 8,
+   "best_day": {
+    "date": "2025-06-20",
+    "episodes": 4
+   },
+   "binge_days": 2,
+   "seasons": {},
+   "by_year": {
+    "2024": 6,
+    "2025": 8,
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 9,
+    "Dallas": 6
+   }
+  },
+  "Baby Daddy": {
+   "show": "Baby Daddy",
+   "kind": "series",
+   "views": 94,
+   "first": "2018-01-30",
+   "last": "2018-06-03",
+   "days": 48,
+   "best_day": {
+    "date": "2018-02-25",
+    "episodes": 6
+   },
+   "binge_days": 11,
+   "seasons": {
+    "Season 2": 15,
+    "Season 3": 21,
+    "Season 4": 21,
+    "Season 5": 16,
+    "Season 6": 11
+   },
+   "by_year": {
+    "2018": 94
+   },
+   "eras": {
+    "Dallas": 94
+   }
+  },
+  "Best of The Great Indian Kapil Show": {
+   "show": "Best of The Great Indian Kapil Show",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-07-11",
+   "last": "2024-07-11",
+   "days": 1,
+   "best_day": {
+    "date": "2024-07-11",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Beyond Stranger Things": {
+   "show": "Beyond Stranger Things",
+   "kind": "series",
+   "views": 1,
+   "first": "2018-02-23",
+   "last": "2018-02-23",
+   "days": 1,
+   "best_day": {
+    "date": "2018-02-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2018": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Bombay Begums": {
+   "show": "Bombay Begums",
+   "kind": "series",
+   "views": 6,
+   "first": "2023-06-07",
+   "last": "2024-07-16",
+   "days": 2,
+   "best_day": {
+    "date": "2023-06-07",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2023": 5,
+    "2024": 1
+   },
+   "eras": {
+    "Dallas": 6
+   }
+  },
+  "Brain Games": {
+   "show": "Brain Games",
+   "kind": "series",
+   "views": 34,
+   "first": "2017-12-21",
+   "last": "2020-01-04",
+   "days": 20,
+   "best_day": {
+    "date": "2019-01-12",
+    "episodes": 5
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 2": 11,
+    "Season 3": 10,
+    "Season 4": 10,
+    "Season 5": 3
+   },
+   "by_year": {
+    "2017": 11,
+    "2018": 15,
+    "2019": 7,
+    "2020": 1
+   },
+   "eras": {
+    "Dallas": 34
+   }
+  },
+  "Bridgerton": {
+   "show": "Bridgerton",
+   "kind": "series",
+   "views": 33,
+   "first": "2022-03-13",
+   "last": "2026-03-09",
+   "days": 13,
+   "best_day": {
+    "date": "2024-07-03",
+    "episodes": 6
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 8,
+    "Season 3": 8,
+    "Season 4": 8
+   },
+   "by_year": {
+    "2022": 2,
+    "2024": 7,
+    "2026": 24
+   },
+   "eras": {
+    "Austin": 24,
+    "Dallas": 9
+   }
+  },
+  "Bunk'd": {
+   "show": "Bunk'd",
+   "kind": "series",
+   "views": 53,
+   "first": "2018-08-12",
+   "last": "2019-07-21",
+   "days": 23,
+   "best_day": {
+    "date": "2018-08-25",
+    "episodes": 7
+   },
+   "binge_days": 7,
+   "seasons": {
+    "Season 1": 20,
+    "Season 2": 21,
+    "Season 3": 12
+   },
+   "by_year": {
+    "2018": 52,
+    "2019": 1
+   },
+   "eras": {
+    "Dallas": 53
+   }
+  },
+  "Chris Rock": {
+   "show": "Chris Rock",
+   "kind": "series",
+   "views": 1,
+   "first": "2018-02-16",
+   "last": "2018-02-16",
+   "days": 1,
+   "best_day": {
+    "date": "2018-02-16",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2018": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Chumbak": {
+   "show": "Chumbak",
+   "kind": "series",
+   "views": 1,
+   "first": "2026-09-24",
+   "last": "2026-09-24",
+   "days": 1,
+   "best_day": {
+    "date": "2026-09-24",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Dabba Cartel": {
+   "show": "Dabba Cartel",
+   "kind": "series",
+   "views": 7,
+   "first": "2025-03-19",
+   "last": "2025-03-20",
+   "days": 2,
+   "best_day": {
+    "date": "2025-03-19",
+    "episodes": 5
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2025": 7
+   },
+   "eras": {
+    "Austin": 7
+   }
+  },
+  "Delhi Crime": {
+   "show": "Delhi Crime",
+   "kind": "series",
+   "views": 18,
+   "first": "2023-11-26",
+   "last": "2025-11-25",
+   "days": 5,
+   "best_day": {
+    "date": "2023-11-26",
+    "episodes": 5
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 7,
+    "Season 2": 5,
+    "Season 3": 6
+   },
+   "by_year": {
+    "2023": 12,
+    "2025": 6
+   },
+   "eras": {
+    "Austin": 6,
+    "Dallas": 12
+   }
+  },
+  "Dubai Bling": {
+   "show": "Dubai Bling",
+   "kind": "series",
+   "views": 25,
+   "first": "2023-12-29",
+   "last": "2025-07-20",
+   "days": 12,
+   "best_day": {
+    "date": "2023-12-29",
+    "episodes": 6
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 8,
+    "Season 3": 9
+   },
+   "by_year": {
+    "2023": 6,
+    "2024": 1,
+    "2025": 18
+   },
+   "eras": {
+    "Austin": 19,
+    "Dallas": 6
+   }
+  },
+  "Emily in Paris": {
+   "show": "Emily in Paris",
+   "kind": "series",
+   "views": 31,
+   "first": "2020-11-23",
+   "last": "2026-01-26",
+   "days": 12,
+   "best_day": {
+    "date": "2021-12-23",
+    "episodes": 10
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 10,
+    "Season 2": 10,
+    "Season 3": 8,
+    "Season 4": 3
+   },
+   "by_year": {
+    "2020": 10,
+    "2021": 10,
+    "2022": 7,
+    "2024": 1,
+    "2025": 2,
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 4,
+    "Dallas": 27
+   }
+  },
+  "Fabulous Lives of Bollywood Wives": {
+   "show": "Fabulous Lives of Bollywood Wives",
+   "kind": "series",
+   "views": 23,
+   "first": "2022-09-04",
+   "last": "2025-01-05",
+   "days": 9,
+   "best_day": {
+    "date": "2022-09-05",
+    "episodes": 8
+   },
+   "binge_days": 3,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 8,
+    "Season 3": 7
+   },
+   "by_year": {
+    "2022": 14,
+    "2023": 1,
+    "2024": 7,
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 8,
+    "Dallas": 15
+   }
+  },
+  "Friends": {
+   "show": "Friends",
+   "kind": "series",
+   "views": 230,
+   "first": "2019-11-12",
+   "last": "2025-01-05",
+   "days": 43,
+   "best_day": {
+    "date": "2019-12-15",
+    "episodes": 29
+   },
+   "binge_days": 29,
+   "seasons": {
+    "Season 2": 24,
+    "Season 3": 25,
+    "Season 4": 21,
+    "Season 5": 24,
+    "Season 6": 25,
+    "Season 7": 24,
+    "Season 8": 24,
+    "Season 9": 22,
+    "Season 10": 17
+   },
+   "by_year": {
+    "2019": 223,
+    "2020": 4,
+    "2024": 2,
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 3,
+    "Dallas": 227
+   }
+  },
+  "Fuller House": {
+   "show": "Fuller House",
+   "kind": "series",
+   "views": 75,
+   "first": "2020-01-02",
+   "last": "2026-09-11",
+   "days": 38,
+   "best_day": {
+    "date": "2022-06-14",
+    "episodes": 8
+   },
+   "binge_days": 8,
+   "seasons": {
+    "Season 1": 13,
+    "Season 2": 13,
+    "Season 3": 18,
+    "Season 4": 13,
+    "Season 5": 18
+   },
+   "by_year": {
+    "2020": 2,
+    "2022": 41,
+    "2023": 12,
+    "2025": 7,
+    "2026": 13
+   },
+   "eras": {
+    "Austin": 20,
+    "Dallas": 55
+   }
+  },
+  "Gilmore Girls": {
+   "show": "Gilmore Girls",
+   "kind": "series",
+   "views": 157,
+   "first": "2022-11-01",
+   "last": "2025-09-07",
+   "days": 53,
+   "best_day": {
+    "date": "2022-12-16",
+    "episodes": 9
+   },
+   "binge_days": 26,
+   "seasons": {
+    "Season 2": 22,
+    "Season 3": 22,
+    "Season 4": 22,
+    "Season 5": 22,
+    "Season 6": 22,
+    "Season 7": 22
+   },
+   "by_year": {
+    "2022": 132,
+    "2023": 19,
+    "2025": 6
+   },
+   "eras": {
+    "Austin": 6,
+    "Dallas": 151
+   }
+  },
+  "Ginny & Georgia": {
+   "show": "Ginny & Georgia",
+   "kind": "series",
+   "views": 22,
+   "first": "2022-03-12",
+   "last": "2025-06-08",
+   "days": 5,
+   "best_day": {
+    "date": "2025-06-08",
+    "episodes": 10
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 1": 2,
+    "Season 2": 10,
+    "Season 3": 10
+   },
+   "by_year": {
+    "2022": 2,
+    "2023": 10,
+    "2025": 10
+   },
+   "eras": {
+    "Austin": 10,
+    "Dallas": 12
+   }
+  },
+  "Girl Meets World": {
+   "show": "Girl Meets World",
+   "kind": "series",
+   "views": 1,
+   "first": "2017-12-29",
+   "last": "2017-12-29",
+   "days": 1,
+   "best_day": {
+    "date": "2017-12-29",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2017": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Gossip Girl": {
+   "show": "Gossip Girl",
+   "kind": "series",
+   "views": 121,
+   "first": "2019-08-06",
+   "last": "2026-06-02",
+   "days": 28,
+   "best_day": {
+    "date": "2025-07-16",
+    "episodes": 10
+   },
+   "binge_days": 23,
+   "seasons": {
+    "Season 1": 18,
+    "Season 2": 25,
+    "Season 3": 22,
+    "Season 4": 22,
+    "Season 5": 24,
+    "Season 6": 10
+   },
+   "by_year": {
+    "2019": 1,
+    "2020": 2,
+    "2025": 117,
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 118,
+    "Dallas": 3
+   }
+  },
+  "Grey's Anatomy": {
+   "show": "Grey's Anatomy",
+   "kind": "series",
+   "views": 162,
+   "first": "2021-05-23",
+   "last": "2023-04-21",
+   "days": 44,
+   "best_day": {
+    "date": "2021-05-25",
+    "episodes": 13
+   },
+   "binge_days": 27,
+   "seasons": {
+    "Season 1": 9,
+    "Season 2": 27,
+    "Season 3": 25,
+    "Season 4": 17,
+    "Season 5": 24,
+    "Season 6": 24,
+    "Season 7": 22,
+    "Season 8": 6,
+    "Season 9": 7,
+    "Season 16": 1
+   },
+   "by_year": {
+    "2021": 152,
+    "2022": 8,
+    "2023": 2
+   },
+   "eras": {
+    "Dallas": 162
+   }
+  },
+  "Heeramandi": {
+   "show": "Heeramandi",
+   "kind": "series",
+   "views": 8,
+   "first": "2024-07-15",
+   "last": "2024-07-15",
+   "days": 1,
+   "best_day": {
+    "date": "2024-07-15",
+    "episodes": 8
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2024": 8
+   },
+   "eras": {
+    "Dallas": 8
+   }
+  },
+  "Indian Matchmaking": {
+   "show": "Indian Matchmaking",
+   "kind": "series",
+   "views": 24,
+   "first": "2023-12-17",
+   "last": "2025-05-20",
+   "days": 10,
+   "best_day": {
+    "date": "2023-12-26",
+    "episodes": 5
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 8,
+    "Season 3": 8
+   },
+   "by_year": {
+    "2023": 22,
+    "2025": 2
+   },
+   "eras": {
+    "Austin": 2,
+    "Dallas": 22
+   }
+  },
+  "Jane The Virgin": {
+   "show": "Jane The Virgin",
+   "kind": "series",
+   "views": 100,
+   "first": "2023-08-27",
+   "last": "2024-01-26",
+   "days": 46,
+   "best_day": {
+    "date": "2023-09-09",
+    "episodes": 7
+   },
+   "binge_days": 13,
+   "seasons": {
+    "Chapter One": 1,
+    "Season 2": 22,
+    "Season 3": 20,
+    "Season 4": 17,
+    "Season 5": 19
+   },
+   "by_year": {
+    "2023": 98,
+    "2024": 2
+   },
+   "eras": {
+    "Dallas": 100
+   }
+  },
+  "Kapil Sharma": {
+   "show": "Kapil Sharma",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-07-08",
+   "last": "2024-07-08",
+   "days": 1,
+   "best_day": {
+    "date": "2024-07-08",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "LEGO Ninjago": {
+   "show": "LEGO Ninjago",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-08-25",
+   "last": "2024-08-25",
+   "days": 1,
+   "best_day": {
+    "date": "2024-08-25",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Austin": 1
+   }
+  },
+  "Manifest": {
+   "show": "Manifest",
+   "kind": "series",
+   "views": 62,
+   "first": "2021-07-17",
+   "last": "2023-06-04",
+   "days": 16,
+   "best_day": {
+    "date": "2021-07-24",
+    "episodes": 16
+   },
+   "binge_days": 8,
+   "seasons": {
+    "Season 1": 16,
+    "Season 2": 13,
+    "Season 3": 13,
+    "Season 4": 20
+   },
+   "by_year": {
+    "2021": 42,
+    "2022": 10,
+    "2023": 10
+   },
+   "eras": {
+    "Dallas": 62
+   }
+  },
+  "Masaba Masaba": {
+   "show": "Masaba Masaba",
+   "kind": "series",
+   "views": 13,
+   "first": "2022-09-15",
+   "last": "2022-09-19",
+   "days": 5,
+   "best_day": {
+    "date": "2022-09-16",
+    "episodes": 7
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 1": 6,
+    "Season 2": 7
+   },
+   "by_year": {
+    "2022": 13
+   },
+   "eras": {
+    "Dallas": 13
+   }
+  },
+  "Masha and the Bear": {
+   "show": "Masha and the Bear",
+   "kind": "series",
+   "views": 13,
+   "first": "2019-04-20",
+   "last": "2019-12-06",
+   "days": 4,
+   "best_day": {
+    "date": "2019-11-26",
+    "episodes": 6
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 1": 9,
+    "Season 2": 4
+   },
+   "by_year": {
+    "2019": 13
+   },
+   "eras": {
+    "Dallas": 13
+   }
+  },
+  "Merry Happy Whatever": {
+   "show": "Merry Happy Whatever",
+   "kind": "series",
+   "views": 1,
+   "first": "2023-11-05",
+   "last": "2023-11-05",
+   "days": 1,
+   "best_day": {
+    "date": "2023-11-05",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2023": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Mismatched": {
+   "show": "Mismatched",
+   "kind": "series",
+   "views": 22,
+   "first": "2026-05-10",
+   "last": "2026-05-13",
+   "days": 4,
+   "best_day": {
+    "date": "2026-05-12",
+    "episodes": 9
+   },
+   "binge_days": 3,
+   "seasons": {
+    "Season 1": 6,
+    "Season 2": 8,
+    "Season 3": 8
+   },
+   "by_year": {
+    "2026": 22
+   },
+   "eras": {
+    "Austin": 22
+   }
+  },
+  "Money Heist": {
+   "show": "Money Heist",
+   "kind": "series",
+   "views": 1,
+   "first": "2018-04-02",
+   "last": "2018-04-02",
+   "days": 1,
+   "best_day": {
+    "date": "2018-04-02",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Part 1": 1
+   },
+   "by_year": {
+    "2018": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Never Have I Ever": {
+   "show": "Never Have I Ever",
+   "kind": "series",
+   "views": 35,
+   "first": "2020-05-03",
+   "last": "2025-07-18",
+   "days": 6,
+   "best_day": {
+    "date": "2023-06-09",
+    "episodes": 10
+   },
+   "binge_days": 5,
+   "seasons": {
+    "Season 1": 5,
+    "Season 2": 10,
+    "Season 3": 10,
+    "Season 4": 10
+   },
+   "by_year": {
+    "2020": 4,
+    "2021": 9,
+    "2022": 11,
+    "2023": 10,
+    "2025": 1
+   },
+   "eras": {
+    "Austin": 1,
+    "Dallas": 34
+   }
+  },
+  "Once Upon a Time": {
+   "show": "Once Upon a Time",
+   "kind": "series",
+   "views": 1,
+   "first": "2019-11-17",
+   "last": "2019-11-17",
+   "days": 1,
+   "best_day": {
+    "date": "2019-11-17",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 5": 1
+   },
+   "by_year": {
+    "2019": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Partner Track": {
+   "show": "Partner Track",
+   "kind": "series",
+   "views": 10,
+   "first": "2025-06-18",
+   "last": "2025-06-24",
+   "days": 4,
+   "best_day": {
+    "date": "2025-06-23",
+    "episodes": 4
+   },
+   "binge_days": 2,
+   "seasons": {},
+   "by_year": {
+    "2025": 10
+   },
+   "eras": {
+    "Austin": 10
+   }
+  },
+  "Peaky Blinders": {
+   "show": "Peaky Blinders",
+   "kind": "series",
+   "views": 1,
+   "first": "2017-12-24",
+   "last": "2017-12-24",
+   "days": 1,
+   "best_day": {
+    "date": "2017-12-24",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 4": 1
+   },
+   "by_year": {
+    "2017": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Planet Earth": {
+   "show": "Planet Earth",
+   "kind": "series",
+   "views": 1,
+   "first": "2017-12-21",
+   "last": "2017-12-21",
+   "days": 1,
+   "best_day": {
+    "date": "2017-12-21",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2017": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Riverdale": {
+   "show": "Riverdale",
+   "kind": "series",
+   "views": 20,
+   "first": "2020-01-12",
+   "last": "2022-09-25",
+   "days": 9,
+   "best_day": {
+    "date": "2020-01-12",
+    "episodes": 7
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 2": 17,
+    "Season 4": 1,
+    "Season 5": 2
+   },
+   "by_year": {
+    "2020": 18,
+    "2022": 2
+   },
+   "eras": {
+    "Dallas": 20
+   }
+  },
+  "Single Papa": {
+   "show": "Single Papa",
+   "kind": "series",
+   "views": 6,
+   "first": "2025-12-20",
+   "last": "2025-12-20",
+   "days": 1,
+   "best_day": {
+    "date": "2025-12-20",
+    "episodes": 6
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2025": 6
+   },
+   "eras": {
+    "Austin": 6
+   }
+  },
+  "Stranger Things": {
+   "show": "Stranger Things",
+   "kind": "series",
+   "views": 36,
+   "first": "2018-01-21",
+   "last": "2026-01-01",
+   "days": 14,
+   "best_day": {
+    "date": "2021-01-03",
+    "episodes": 8
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Chapter Eight": 1,
+    "Chapter Five": 1,
+    "Chapter Four": 1,
+    "Chapter One": 1,
+    "Chapter Seven": 1,
+    "Chapter Six": 1,
+    "Chapter Three": 1,
+    "Chapter Two": 1
+   },
+   "by_year": {
+    "2018": 4,
+    "2021": 17,
+    "2022": 6,
+    "2025": 8,
+    "2026": 1
+   },
+   "eras": {
+    "Austin": 9,
+    "Dallas": 27
+   }
+  },
+  "Sugar Rush": {
+   "show": "Sugar Rush",
+   "kind": "series",
+   "views": 14,
+   "first": "2019-11-10",
+   "last": "2019-11-11",
+   "days": 2,
+   "best_day": {
+    "date": "2019-11-10",
+    "episodes": 12
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 8,
+    "Season 2": 6
+   },
+   "by_year": {
+    "2019": 14
+   },
+   "eras": {
+    "Dallas": 14
+   }
+  },
+  "Switched at Birth": {
+   "show": "Switched at Birth",
+   "kind": "series",
+   "views": 103,
+   "first": "2017-12-21",
+   "last": "2018-06-02",
+   "days": 47,
+   "best_day": {
+    "date": "2018-04-17",
+    "episodes": 7
+   },
+   "binge_days": 15,
+   "seasons": {
+    "Season 2": 21,
+    "Season 3": 22,
+    "Season 4": 20,
+    "Season 5": 10
+   },
+   "by_year": {
+    "2017": 8,
+    "2018": 95
+   },
+   "eras": {
+    "Dallas": 103
+   }
+  },
+  "The Boss Baby": {
+   "show": "The Boss Baby",
+   "kind": "series",
+   "views": 27,
+   "first": "2018-04-08",
+   "last": "2020-03-25",
+   "days": 10,
+   "best_day": {
+    "date": "2018-04-14",
+    "episodes": 7
+   },
+   "binge_days": 5,
+   "seasons": {},
+   "by_year": {
+    "2018": 25,
+    "2019": 1,
+    "2020": 1
+   },
+   "eras": {
+    "Dallas": 27
+   }
+  },
+  "The Fosters": {
+   "show": "The Fosters",
+   "kind": "series",
+   "views": 104,
+   "first": "2020-01-20",
+   "last": "2020-03-27",
+   "days": 32,
+   "best_day": {
+    "date": "2020-03-24",
+    "episodes": 9
+   },
+   "binge_days": 16,
+   "seasons": {
+    "Season 2": 21,
+    "Season 3": 20,
+    "Season 4": 20,
+    "Season 5": 22
+   },
+   "by_year": {
+    "2020": 104
+   },
+   "eras": {
+    "Dallas": 104
+   }
+  },
+  "The Great Indian Kapil Show": {
+   "show": "The Great Indian Kapil Show",
+   "kind": "series",
+   "views": 50,
+   "first": "2024-06-30",
+   "last": "2026-09-06",
+   "days": 36,
+   "best_day": {
+    "date": "2024-06-30",
+    "episodes": 3
+   },
+   "binge_days": 3,
+   "seasons": {
+    "Season 1": 10,
+    "Season 2": 13,
+    "Season 3": 13,
+    "Season 4": 14
+   },
+   "by_year": {
+    "2024": 15,
+    "2025": 21,
+    "2026": 14
+   },
+   "eras": {
+    "Austin": 40,
+    "Dallas": 10
+   }
+  },
+  "The Night Agent": {
+   "show": "The Night Agent",
+   "kind": "series",
+   "views": 30,
+   "first": "2023-04-19",
+   "last": "2026-03-08",
+   "days": 13,
+   "best_day": {
+    "date": "2025-01-30",
+    "episodes": 6
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 10,
+    "Season 2": 10,
+    "Season 3": 10
+   },
+   "by_year": {
+    "2023": 5,
+    "2025": 15,
+    "2026": 10
+   },
+   "eras": {
+    "Austin": 25,
+    "Dallas": 5
+   }
+  },
+  "The Originals": {
+   "show": "The Originals",
+   "kind": "series",
+   "views": 92,
+   "first": "2019-04-22",
+   "last": "2021-07-22",
+   "days": 36,
+   "best_day": {
+    "date": "2021-04-24",
+    "episodes": 9
+   },
+   "binge_days": 12,
+   "seasons": {
+    "Season 2": 22,
+    "Season 3": 22,
+    "Season 4": 13,
+    "Season 5": 13
+   },
+   "by_year": {
+    "2019": 8,
+    "2020": 7,
+    "2021": 77
+   },
+   "eras": {
+    "Dallas": 92
+   }
+  },
+  "The Vampire Diaries": {
+   "show": "The Vampire Diaries",
+   "kind": "series",
+   "views": 171,
+   "first": "2018-12-22",
+   "last": "2021-10-07",
+   "days": 80,
+   "best_day": {
+    "date": "2020-05-25",
+    "episodes": 11
+   },
+   "binge_days": 24,
+   "seasons": {
+    "Season 2": 22,
+    "Season 3": 22,
+    "Season 4": 23,
+    "Season 5": 22,
+    "Season 6": 22,
+    "Season 7": 22,
+    "Season 8": 16
+   },
+   "by_year": {
+    "2018": 22,
+    "2019": 133,
+    "2020": 15,
+    "2021": 1
+   },
+   "eras": {
+    "Dallas": 171
+   }
+  },
+  "Tribhuvan Mishra CA Topper": {
+   "show": "Tribhuvan Mishra CA Topper",
+   "kind": "series",
+   "views": 1,
+   "first": "2024-07-23",
+   "last": "2024-07-23",
+   "days": 1,
+   "best_day": {
+    "date": "2024-07-23",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2024": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Victorious": {
+   "show": "Victorious",
+   "kind": "series",
+   "views": 4,
+   "first": "2021-03-20",
+   "last": "2021-04-11",
+   "days": 3,
+   "best_day": {
+    "date": "2021-04-11",
+    "episodes": 2
+   },
+   "binge_days": 0,
+   "seasons": {
+    "Season 1": 4
+   },
+   "by_year": {
+    "2021": 4
+   },
+   "eras": {
+    "Dallas": 4
+   }
+  },
+  "Workin' Moms": {
+   "show": "Workin' Moms",
+   "kind": "series",
+   "views": 20,
+   "first": "2020-06-20",
+   "last": "2022-04-23",
+   "days": 6,
+   "best_day": {
+    "date": "2022-03-19",
+    "episodes": 9
+   },
+   "binge_days": 2,
+   "seasons": {
+    "Season 1": 13,
+    "Season 2": 7
+   },
+   "by_year": {
+    "2020": 2,
+    "2022": 18
+   },
+   "eras": {
+    "Dallas": 20
+   }
+  },
+  "XO, Kitty": {
+   "show": "XO, Kitty",
+   "kind": "series",
+   "views": 19,
+   "first": "2023-05-21",
+   "last": "2026-05-16",
+   "days": 7,
+   "best_day": {
+    "date": "2023-05-21",
+    "episodes": 6
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 1": 10,
+    "Season 2": 1,
+    "Season 3": 8
+   },
+   "by_year": {
+    "2023": 8,
+    "2025": 1,
+    "2026": 10
+   },
+   "eras": {
+    "Austin": 11,
+    "Dallas": 8
+   }
+  },
+  "Young Sheldon": {
+   "show": "Young Sheldon",
+   "kind": "series",
+   "views": 3,
+   "first": "2024-10-22",
+   "last": "2024-10-22",
+   "days": 1,
+   "best_day": {
+    "date": "2024-10-22",
+    "episodes": 3
+   },
+   "binge_days": 1,
+   "seasons": {
+    "Season 1": 3
+   },
+   "by_year": {
+    "2024": 3
+   },
+   "eras": {
+    "Austin": 3
+   }
+  }
+ }
+}

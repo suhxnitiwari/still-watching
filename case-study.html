@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One Household | A PM Case Study</title>
+<meta name="description" content="A product case study of Netflix paid sharing: why it was needed, what shipped, what it did, and what I would build next, with my own viewing history as evidence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Yellowtail&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/case.css">
+</head>
+<body class="cs">
+
+<header class="nav is-solid" id="nav">
+  <a class="wordmark nav__mark" href="index.html">Still Watching</a>
+  <nav class="nav__links" aria-label="Sections">
+    <a href="index.html">Home</a>
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#impact">Impact</a>
+    <a href="#me">A user of one</a>
+    <a href="#next">What I'd build</a>
+  </nav>
+</header>
+
+<main>
+  <section class="cs-hero">
+    <div class="cs-hero__wall" id="cs-wall" aria-hidden="true"></div>
+    <div class="cs-hero__body">
+      <p class="cs-kicker">Product case study · Netflix · 2022–2024</p>
+      <h1 class="cs-title">One Household</h1>
+      <p class="cs-lede">How Netflix turned 100 million freeloading households into its best growth years, and what the data says it cost one college student: me.</p>
+      <div class="cs-role">
+        <span><b>Feature</b> Paid sharing: household detection, Extra Member, Transfer Profile</span>
+        <span><b>My lens</b> PM retrospective + my own viewing history</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-tldr" aria-label="Results at a glance">
+    <div class="stat"><b>100M+</b><span>households watching on someone else's account (Apr 2022)</span></div>
+    <div class="stat"><b>−200K</b><span>subscribers in Q1 2022, the first loss in over a decade</span></div>
+    <div class="stat stat--hot"><b>+29.5M</b><span>net new members in 2023, after the US launch</span></div>
+    <div class="stat stat--hot"><b>301.6M</b><span>members by the end of 2024, revenue up 16% to $39B</span></div>
+  </section>
+
+  <!-- 1. Why it was needed -->
+  <section class="cs-sec" id="problem">
+    <p class="cs-step">01 · Why it was needed</p>
+    <h2 class="cs-h">Growth stalled while a third of viewers paid nothing</h2>
+    <div class="cs-split">
+      <div>
+        <p class="cs-p">In April 2022 Netflix reported its first subscriber loss in over ten years and, in the same letter, put a number on the problem: <b>more than 100 million households</b> were watching on a shared account, over 30 million of them in the U.S. and Canada.</p>
+        <p class="cs-p">Raising prices had limits, and new markets were saturating. The biggest pool of potential customers was already watching.</p>
+        <div class="cs-callout"><b>Problem statement.</b> How might we turn engaged non-paying viewers into paying members without driving away the people who already pay?</div>
+      </div>
+      <figure class="cs-fig">
+        <div class="donut" style="--p: 0.33"><div><b>~1 in 3</b><span>viewing households didn't pay</span></div></div>
+        <figcaption>222M paying vs 100M+ sharing households, early 2022</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 2. How the need was measured -->
+  <section class="cs-sec">
+    <p class="cs-step">02 · Measuring the need</p>
+    <h2 class="cs-h">Who is in the house, and who isn't</h2>
+    <div class="personas">
+      <article class="persona"><span class="persona__emoji" aria-hidden="true">💳</span><h3>The owner</h3><p>Pays. Shares with an ex, a cousin, a college roommate. Doesn't want to be the bad guy.</p><p class="persona__job">Job: keep my people watching without a fight.</p></article>
+      <article class="persona"><span class="persona__emoji" aria-hidden="true">🫥</span><h3>The borrower</h3><p>Lives elsewhere and watches a lot. Has a profile, a history, a list.</p><p class="persona__job">Job: keep my shows. Pay as little as possible.</p></article>
+      <article class="persona persona--edge"><span class="persona__emoji" aria-hidden="true">🎓</span><h3>The away member</h3><p>Part of the family, living somewhere else part of the year: college, travel, two homes.</p><p class="persona__job">Job: still feel like I'm home.</p></article>
+      <article class="persona"><span class="persona__emoji" aria-hidden="true">📈</span><h3>Netflix</h3><p>Needs revenue growth, not just reach, as the market matures.</p><p class="persona__job">Job: monetize sharing, protect retention.</p></article>
+    </div>
+    <p class="cs-p cs-note">The away member is the persona the policy handled least clearly. Netflix says everyone <i>living</i> in a household can watch anywhere. A college student lives somewhere else nine months a year.</p>
+  </section>
+
+  <!-- 3. What shipped -->
+  <section class="cs-sec" id="solution">
+    <p class="cs-step">03 · What shipped</p>
+    <h2 class="cs-h">Four pieces, tested market by market</h2>
+    <div class="features">
+      <article class="feature"><div class="feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M8 22 24 9l16 13v17H8Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M17 31a10 10 0 0 1 14 0M20 35a5 5 0 0 1 8 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <h3>Household detection</h3><p>IP address, device IDs and account activity decide which devices belong to the home. Others get a verification prompt.</p></article>
+      <article class="feature"><div class="feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="18" cy="17" r="7" fill="none" stroke="currentColor" stroke-width="3"/><path d="M5 40c1-8 6-12 13-12s12 4 13 12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M37 14v14M30 21h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <h3>Extra Member</h3><p>The owner pays to add someone outside the home: $2.99 in the first tests, $7.99 a month in the U.S.</p></article>
+      <article class="feature"><div class="feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="5" y="12" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><rect x="27" y="12" width="16" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 40h18m-5-4 5 4-5 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Transfer Profile</h3><p>Borrowers move their profile, history and list to a paid account of their own. This lowers the cost of switching.</p></article>
+      <article class="feature"><div class="feature__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="8" width="32" height="22" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><path d="M18 38h12M24 30v8" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="m18 19 4 4 8-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Manage Access &amp; Devices</h3><p>Owners see every signed-in device and can sign one out. It gives them control and a reason to clean up.</p></article>
+    </div>
+
+    <h3 class="cs-h3">The rollout</h3>
+    <ol class="rollout" id="rollout"></ol>
+    <p class="cs-p cs-note">Netflix dropped "Add a Home", tested in Argentina and four other markets, after customer feedback. Iterating in small markets before the U.S. kept the risk contained.</p>
+  </section>
+
+  <!-- 4. Outcome and impact -->
+  <section class="cs-sec" id="impact">
+    <p class="cs-step">04 · Outcome &amp; impact</p>
+    <h2 class="cs-h">It worked, for Netflix</h2>
+    <figure class="cs-chart">
+      <div id="net-adds"></div>
+      <figcaption>Paid net additions per quarter, in millions. Source: Netflix shareholder letters.</figcaption>
+    </figure>
+    <div class="impact">
+      <div class="impact__card"><b>73K</b><span>average daily U.S. sign-ups after the May 2023 launch, up 102% (Antenna)</span></div>
+      <div class="impact__card"><b>~100K</b><span>sign-ups on May 26–27, among the biggest days Antenna had ever measured</span></div>
+      <div class="impact__card impact__card--bad"><b>+25%</b><span>more cancellations, outweighed by new sign-ups</span></div>
+      <div class="impact__card impact__card--bad"><b>−1M</b><span>users in Spain in Q1 2023 (Kantar), the early backlash market</span></div>
+    </div>
+    <div class="cs-callout cs-callout--warn"><b>A PM caveat.</b> The ad-supported plan launched in November 2022 and grew over the same period, so not every new member is a converted borrower. A clean read would compare paid sharing markets with holdouts.</div>
+  </section>
+
+  <!-- 5. A user of one -->
+  <section class="cs-sec cs-me" id="me">
+    <p class="cs-step">05 · A user of one</p>
+    <h2 class="cs-h">What it did to me</h2>
+    <p class="cs-p">I'm the away member. My family's account lives in Dallas; I moved to Austin for UT in August 2024. I never bought an Extra Member and never opened my own account. I just watched less, except when I was home.</p>
+    <figure class="cs-chart">
+      <div id="me-chart"></div>
+      <figcaption>My views per month, from my Netflix viewing history.</figcaption>
+    </figure>
+    <div class="impact" id="me-stats"></div>
+    <div class="cs-callout"><b>The insight.</b> For Netflix's dashboard, I'm a retained subscriber. For engagement, the metric Netflix now calls its "best proxy for customer satisfaction", I'm a <b id="me-drop">big drop</b> during the school year. Paid sharing optimized for membership and quietly taxed the engagement of everyone who lives in two places.</div>
+  </section>
+
+  <!-- 6. What I'd build -->
+  <section class="cs-sec" id="next">
+    <p class="cs-step">06 · How I'd have done it</p>
+    <h2 class="cs-h">"Away at School"</h2>
+    <div class="cs-split cs-split--mock">
+      <div>
+        <p class="cs-p">Keep paid sharing. Add a verified status for household members who live away part of the year.</p>
+        <ul class="cs-list">
+          <li><b>Verify once:</b> a .edu email, renewed each school year.</li>
+          <li><b>Stay linked:</b> the student's devices stay in the household for the school year. No Extra Member fee, or a student price.</li>
+          <li><b>Use the pattern:</b> devices that come home every summer and winter break are household devices. My data shows the pattern clearly.</li>
+          <li><b>Hand off at graduation:</b> one tap to Transfer Profile into a first account of their own, with a discount.</li>
+        </ul>
+        <p class="cs-p">Why it pays off: today's 19-year-old on mom's plan is tomorrow's account owner. Keeping them engaged now protects a future subscription and the habit behind it.</p>
+      </div>
+      <figure class="mock" aria-label="Mockup of an Away at School prompt">
+        <div class="mock__phone">
+          <div class="mock__bar"><span class="wordmark">S</span><span>9:41</span></div>
+          <div class="mock__shield" aria-hidden="true">🎓</div>
+          <p class="mock__title">Away at school?</p>
+          <p class="mock__text">This device isn't on the Tiwari household Wi-Fi. Students can keep watching on their family's plan all school year.</p>
+          <button class="mock__btn" type="button">Verify with my .edu email</button>
+          <button class="mock__btn mock__btn--ghost" type="button">Get my own account</button>
+          <p class="mock__fine">Your profile, history and list stay with you.</p>
+        </div>
+      </figure>
+    </div>
+
+    <h3 class="cs-h3">How I'd measure it</h3>
+    <div class="metrics">
+      <div class="metric metric--north"><span>North star</span><b>Hours watched by household members aged 18–24 during the school year</b></div>
+      <div class="metric"><span>Input</span><b>Verification rate among off-network household devices</b></div>
+      <div class="metric"><span>Input</span><b>Share of verified students active weekly</b></div>
+      <div class="metric"><span>Long-term</span><b>Conversion to an owned account within 12 months of graduation</b></div>
+      <div class="metric metric--guard"><span>Guardrail</span><b>Extra Member revenue and new sign-ups in test markets</b></div>
+      <div class="metric metric--guard"><span>Guardrail</span><b>Abuse: verified students whose devices never come home</b></div>
+    </div>
+    <p class="cs-p cs-note"><b>Test plan:</b> launch in one market with a holdout. Compare student-age engagement and 12-month owner conversion against the holdout. Stop if Extra Member revenue drops more than the engagement gain is worth.</p>
+  </section>
+
+  <section class="cs-sec cs-sources">
+    <h2 class="cs-h3">Sources</h2>
+    <ul>
+      <li><a href="https://about.netflix.com/en/news/update-on-sharing-may-us" target="_blank" rel="noopener">Netflix, “Update on Sharing” (May 23, 2023)</a></li>
+      <li><a href="https://www.cnbc.com/2022/04/19/netflix-warns-password-sharing-crackdown-is-coming.html" target="_blank" rel="noopener">CNBC: 100M+ households sharing; first subscriber loss (Apr 2022)</a></li>
+      <li><a href="https://digitaltveurope.com/2022/03/17/netflix-to-test-out-of-household-sharing-plan" target="_blank" rel="noopener">Digital TV Europe: tests in Chile, Costa Rica and Peru (Mar 2022)</a></li>
+      <li><a href="https://about.netflix.com/news/update-to-paid-sharing" target="_blank" rel="noopener">Netflix: update to paid sharing, Add a Home sunset</a></li>
+      <li><a href="https://www.ghacks.net/2023/02/09/netflix-buy-an-extra-member-costs-more-than-the-basic-with-ads-plan/" target="_blank" rel="noopener">gHacks: February 2023 markets and prices</a></li>
+      <li><a href="https://www.axios.com/2023/06/09/netflix-password-share-streaming" target="_blank" rel="noopener">Axios: Antenna sign-up data after the U.S. launch</a></li>
+      <li><a href="https://www.kantar.com/Inspiration/FMCG/Netflix-crackdown-on-password-sharing-results-in-over-1-million-fewer-subscribers-in-Spain" target="_blank" rel="noopener">Kantar: over 1 million fewer users in Spain</a></li>
+      <li><a href="https://www.thewrap.com/netflix-earnings-q4-2023/" target="_blank" rel="noopener">TheWrap: Q4 2023 results</a></li>
+      <li><a href="https://licensinginternational.org/news/netflix-reports-q4-2024-financial-results/" target="_blank" rel="noopener">Q4 2024 results: 301.6M members, $39B revenue</a></li>
+      <li><a href="https://au.variety.com/2024/tv/news/netflix-stop-reporting-subscriber-numbers-starting-2025-13508" target="_blank" rel="noopener">Variety: Netflix stops reporting subscribers in 2025</a></li>
+    </ul>
+    <p class="about__small">Analysis and recommendations are my own. Not affiliated with Netflix. © 2026 Suhani Tiwari.</p>
+  </section>
+</main>
+
+<div class="tooltip" id="tooltip" hidden></div>
+<script src="js/case.js"></script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+{
+ "13 Reasons Why": {
+  "match": "13 Reasons Why (2017)",
+  "source": "https://www.tvmaze.com/shows/7194/13-reasons-why",
+  "poster": "img/posters/13-reasons-why.jpg",
+  "backdrop": "img/backdrops/13-reasons-why.jpg"
+ },
+ "AMERICA'S SWEETHEARTS": {
+  "match": "America's Sweethearts: Dallas Cowboys Cheerleaders (2024)",
+  "source": "https://www.tvmaze.com/shows/76218/americas-sweethearts-dallas-cowboys-cheerleaders",
+  "poster": "img/posters/america-s-sweethearts.jpg",
+  "backdrop": "img/backdrops/america-s-sweethearts.jpg"
+ },
+ "Baby Daddy": {
+  "match": "Baby Daddy (2012)",
+  "source": "https://www.tvmaze.com/shows/351/baby-daddy",
+  "poster": "img/posters/baby-daddy.jpg",
+  "backdrop": "img/backdrops/baby-daddy.jpg"
+ },
+ "Brain Games": {
+  "match": "Brain Games (2011)",
+  "source": "https://www.tvmaze.com/shows/3209/brain-games",
+  "poster": "img/posters/brain-games.jpg",
+  "backdrop": "img/backdrops/brain-games.jpg"
+ },
+ "Bridgerton": {
+  "match": "Bridgerton (2020)",
+  "source": "https://www.tvmaze.com/shows/42966/bridgerton",
+  "poster": "img/posters/bridgerton.jpg",
+  "backdrop": "img/backdrops/bridgerton.jpg"
+ },
+ "Bunk'd": {
+  "match": "Bunk'd (2015)",
+  "source": "https://www.tvmaze.com/shows/2643/bunkd",
+  "poster": "img/posters/bunk-d.jpg",
+  "backdrop": "img/backdrops/bunk-d.jpg"
+ },
+ "Delhi Crime": {
+  "match": "Delhi Crime (2019)",
+  "source": "https://www.tvmaze.com/shows/41322/delhi-crime",
+  "poster": "img/posters/delhi-crime.jpg",
+  "backdrop": "img/backdrops/delhi-crime.jpg"
+ },
+ "Dubai Bling": {
+  "match": "Dubai Bling (2022)",
+  "source": "https://www.tvmaze.com/shows/64145/dubai-bling",
+  "poster": "img/posters/dubai-bling.jpg",
+  "backdrop": "img/backdrops/dubai-bling.jpg"
+ },
+ "Emily in Paris": {
+  "match": "Emily in Paris (2020)",
+  "source": "https://www.tvmaze.com/shows/41632/emily-in-paris",
+  "poster": "img/posters/emily-in-paris.jpg",
+  "backdrop": "img/backdrops/emily-in-paris.jpg"
+ },
+ "Fabulous Lives of Bollywood Wives": {
+  "match": "Fabulous Lives of Bollywood Wives (2020)",
+  "source": "https://www.tvmaze.com/shows/61544/fabulous-lives-of-bollywood-wives",
+  "poster": "img/posters/fabulous-lives-of-bollywood-wives.jpg",
+  "backdrop": "img/backdrops/fabulous-lives-of-bollywood-wives.jpg"
+ },
+ "Friends": {
+  "match": "Friends (1994)",
+  "source": "https://www.tvmaze.com/shows/431/friends",
+  "poster": "img/posters/friends.jpg",
+  "backdrop": "img/backdrops/friends.jpg"
+ },
+ "Fuller House": {
+  "match": "Fuller House (2016)",
+  "source": "https://www.tvmaze.com/shows/3081/fuller-house",
+  "poster": "img/posters/fuller-house.jpg",
+  "backdrop": "img/backdrops/fuller-house.jpg"
+ },
+ "Gilmore Girls": {
+  "match": "Gilmore Girls (2000)",
+  "source": "https://www.tvmaze.com/shows/525/gilmore-girls",
+  "poster": "img/posters/gilmore-girls.jpg",
+  "backdrop": "img/backdrops/gilmore-girls.jpg"
+ },
+ "Ginny & Georgia": {
+  "match": "Ginny & Georgia (2021)",
+  "source": "https://www.tvmaze.com/shows/47549/ginny-georgia",
+  "poster": "img/posters/ginny-georgia.jpg",
+  "backdrop": "img/backdrops/ginny-georgia.jpg"
+ },
+ "Girl Meets World": {
+  "match": "Girl Meets World (2014)",
+  "source": "https://www.tvmaze.com/shows/252/girl-meets-world",
+  "poster": "img/posters/girl-meets-world.jpg",
+  "backdrop": "img/backdrops/girl-meets-world.jpg"
+ },
+ "Gossip Girl": {
+  "match": "Gossip Girl (2007)",
+  "source": "https://www.tvmaze.com/shows/567/gossip-girl",
+  "poster": "img/posters/gossip-girl.jpg",
+  "backdrop": "img/backdrops/gossip-girl.jpg"
+ },
+ "Grey's Anatomy": {
+  "match": "Grey's Anatomy (2005)",
+  "source": "https://www.tvmaze.com/shows/67/greys-anatomy",
+  "poster": "img/posters/grey-s-anatomy.jpg",
+  "backdrop": "img/backdrops/grey-s-anatomy.jpg"
+ },
+ "Heeramandi": {
+  "match": "Heeramandi: The Diamond Bazaar (2024)",
+  "source": "https://www.tvmaze.com/shows/56786/heeramandi-the-diamond-bazaar",
+  "poster": "img/posters/heeramandi.jpg",
+  "backdrop": "img/backdrops/heeramandi.jpg"
+ },
+ "Indian Matchmaking": {
+  "match": "Indian Matchmaking (2020)",
+  "source": "https://www.tvmaze.com/shows/49129/indian-matchmaking",
+  "poster": "img/posters/indian-matchmaking.jpg",
+  "backdrop": "img/backdrops/indian-matchmaking.jpg"
+ },
+ "Jane The Virgin": {
+  "match": "Jane the Virgin (2014)",
+  "source": "https://www.tvmaze.com/shows/128/jane-the-virgin",
+  "poster": "img/posters/jane-the-virgin.jpg",
+  "backdrop": "img/backdrops/jane-the-virgin.jpg"
+ },
+ "LEGO Ninjago": {
+  "match": "LEGO Ninjago: Masters of Spinjitzu (2012)",
+  "source": "https://www.tvmaze.com/shows/18374/lego-ninjago-masters-of-spinjitzu",
+  "poster": "img/posters/lego-ninjago.jpg",
+  "backdrop": "img/backdrops/lego-ninjago.jpg"
+ },
+ "Manifest": {
+  "match": "Manifest (2018)",
+  "source": "https://www.tvmaze.com/shows/31365/manifest",
+  "poster": "img/posters/manifest.jpg",
+  "backdrop": "img/backdrops/manifest.jpg"
+ },
+ "Masha and the Bear": {
+  "match": "Маша и медведь (2009)",
+  "source": "https://www.tvmaze.com/shows/11469/masa-i-medved",
+  "poster": "img/posters/masha-and-the-bear.jpg",
+  "backdrop": "img/backdrops/masha-and-the-bear.jpg"
+ },
+ "Mismatched": {
+  "match": "Mismatched (2020)",
+  "source": "https://www.tvmaze.com/shows/52027/mismatched",
+  "poster": "img/posters/mismatched.jpg",
+  "backdrop": "img/backdrops/mismatched.jpg"
+ },
+ "Never Have I Ever": {
+  "match": "Never Have I Ever (2020)",
+  "source": "https://www.tvmaze.com/shows/44592/never-have-i-ever",
+  "poster": "img/posters/never-have-i-ever.jpg",
+  "backdrop": "img/backdrops/never-have-i-ever.jpg"
+ },
+ "Once Upon a Time": {
+  "match": "Once Upon a Time (2011)",
+  "source": "https://www.tvmaze.com/shows/111/once-upon-a-time",
+  "poster": "img/posters/once-upon-a-time.jpg",
+  "backdrop": "img/backdrops/once-upon-a-time.jpg"
+ },
+ "Partner Track": {
+  "match": "Partner Track (2022)",
+  "source": "https://www.tvmaze.com/shows/59586/partner-track",
+  "poster": "img/posters/partner-track.jpg",
+  "backdrop": "img/backdrops/partner-track.jpg"
+ },
+ "Peaky Blinders": {
+  "match": "Peaky Blinders (2013)",
+  "source": "https://www.tvmaze.com/shows/269/peaky-blinders",
+  "poster": "img/posters/peaky-blinders.jpg",
+  "backdrop": "img/backdrops/peaky-blinders.jpg"
+ },
+ "Planet Earth": {
+  "match": "Planet Earth (2006)",
+  "source": "https://www.tvmaze.com/shows/768/planet-earth",
+  "poster": "img/posters/planet-earth.jpg",
+  "backdrop": "img/backdrops/planet-earth.jpg"
+ },
+ "Riverdale": {
+  "match": "Riverdale (2017)",
+  "source": "https://www.tvmaze.com/shows/5262/riverdale",
+  "poster": "img/posters/riverdale.jpg",
+  "backdrop": "img/backdrops/riverdale.jpg"
+ },
+ "Single Papa": {
+  "match": "Single Papa (2025)",
+  "source": "https://www.tvmaze.com/shows/88842/single-papa",
+  "poster": "img/posters/single-papa.jpg"
+ },
+ "Stranger Things": {
+  "match": "Stranger Things (2016)",
+  "source": "https://www.tvmaze.com/shows/2993/stranger-things",
+  "poster": "img/posters/stranger-things.jpg",
+  "backdrop": "img/backdrops/stranger-things.jpg"
+ },
+ "Sugar Rush": {
+  "match": "Sugar Rush (2018)",
+  "source": "https://www.tvmaze.com/shows/37674/sugar-rush",
+  "poster": "img/posters/sugar-rush.jpg",
+  "backdrop": "img/backdrops/sugar-rush.jpg"
+ },
+ "Switched at Birth": {
+  "match": "Switched at Birth (2011)",
+  "source": "https://www.tvmaze.com/shows/362/switched-at-birth",
+  "poster": "img/posters/switched-at-birth.jpg",
+  "backdrop": "img/backdrops/switched-at-birth.jpg"
+ },
+ "The Boss Baby": {
+  "match": "The Boss Baby: Back in Business (2018)",
+  "source": "https://www.tvmaze.com/shows/35181/the-boss-baby-back-in-business",
+  "poster": "img/posters/the-boss-baby.jpg",
+  "backdrop": "img/backdrops/the-boss-baby.jpg"
+ },
+ "The Fosters": {
+  "match": "The Fosters (2013)",
+  "source": "https://www.tvmaze.com/shows/198/the-fosters",
+  "poster": "img/posters/the-fosters.jpg",
+  "backdrop": "img/backdrops/the-fosters.jpg"
+ },
+ "The Great Indian Kapil Show": {
+  "match": "The Great Indian Kapil Show (2024)",
+  "source": "https://www.tvmaze.com/shows/75082/the-great-indian-kapil-show",
+  "poster": "img/posters/the-great-indian-kapil-show.jpg"
+ },
+ "The Night Agent": {
+  "match": "The Night Agent (2023)",
+  "source": "https://www.tvmaze.com/shows/56512/the-night-agent",
+  "poster": "img/posters/the-night-agent.jpg",
+  "backdrop": "img/backdrops/the-night-agent.jpg"
+ },
+ "The Originals": {
+  "match": "The Originals (2013)",
+  "source": "https://www.tvmaze.com/shows/62/the-originals",
+  "poster": "img/posters/the-originals.jpg",
+  "backdrop": "img/backdrops/the-originals.jpg"
+ },
+ "The Vampire Diaries": {
+  "match": "The Vampire Diaries (2009)",
+  "source": "https://www.tvmaze.com/shows/63/the-vampire-diaries",
+  "poster": "img/posters/the-vampire-diaries.jpg",
+  "backdrop": "img/backdrops/the-vampire-diaries.jpg"
+ },
+ "Workin' Moms": {
+  "match": "Workin' Moms (2017)",
+  "source": "https://www.tvmaze.com/shows/18212/workin-moms",
+  "poster": "img/posters/workin-moms.jpg",
+  "backdrop": "img/backdrops/workin-moms.jpg"
+ },
+ "XO, Kitty": {
+  "match": "XO, Kitty (2023)",
+  "source": "https://www.tvmaze.com/shows/60509/xo-kitty",
+  "poster": "img/posters/xo-kitty.jpg",
+  "backdrop": "img/backdrops/xo-kitty.jpg"
+ },
+ "Young Sheldon": {
+  "match": "Young Sheldon (2017)",
+  "source": "https://www.tvmaze.com/shows/26020/young-sheldon",
+  "poster": "img/posters/young-sheldon.jpg",
+  "backdrop": "img/backdrops/young-sheldon.jpg"
+ },
+ "Best of The Great Indian Kapil Show": {
+  "match": "Best of The Great Indian Kapil Show (2024)",
+  "source": "https://www.tvmaze.com/shows/78299/best-of-the-great-indian-kapil-show",
+  "poster": "img/posters/best-of-the-great-indian-kapil-show.jpg",
+  "backdrop": "img/backdrops/best-of-the-great-indian-kapil-show.jpg"
+ },
+ "Beyond Stranger Things": {
+  "match": "Beyond Stranger Things (2017)",
+  "source": "https://www.tvmaze.com/shows/32942/beyond-stranger-things",
+  "poster": "img/posters/beyond-stranger-things.jpg",
+  "backdrop": "img/backdrops/beyond-stranger-things.jpg"
+ },
+ "Chris Rock": {
+  "match": "The Chris Rock Show (1997)",
+  "source": "https://www.tvmaze.com/shows/6914/the-chris-rock-show",
+  "poster": "img/posters/chris-rock.jpg"
+ },
+ "Chumbak": {
+  "match": "Chumbak (2026)",
+  "source": "https://www.tvmaze.com/shows/93721/chumbak",
+  "poster": "img/posters/chumbak.jpg",
+  "backdrop": "img/backdrops/chumbak.jpg"
+ },
+ "Dabba Cartel": {
+  "match": "Dabba Cartel (2025)",
+  "source": "https://www.tvmaze.com/shows/75080/dabba-cartel",
+  "poster": "img/posters/dabba-cartel.jpg"
+ },
+ "Kapil Sharma": {
+  "match": "The Kapil Sharma Show (2016)",
+  "source": "https://www.tvmaze.com/shows/15479/the-kapil-sharma-show",
+  "poster": "img/posters/kapil-sharma.jpg",
+  "backdrop": "img/backdrops/kapil-sharma.jpg"
+ },
+ "Masaba Masaba": {
+  "match": "Masaba Masaba (2020)",
+  "source": "https://www.tvmaze.com/shows/49723/masaba-masaba",
+  "poster": "img/posters/masaba-masaba.jpg",
+  "backdrop": "img/backdrops/masaba-masaba.jpg"
+ },
+ "Merry Happy Whatever": {
+  "match": "Merry Happy Whatever (2019)",
+  "source": "https://www.tvmaze.com/shows/40974/merry-happy-whatever",
+  "poster": "img/posters/merry-happy-whatever.jpg",
+  "backdrop": "img/backdrops/merry-happy-whatever.jpg"
+ },
+ "Money Heist": {
+  "match": "La Casa de Papel (2017)",
+  "source": "https://www.tvmaze.com/shows/27436/la-casa-de-papel",
+  "poster": "img/posters/money-heist.jpg",
+  "backdrop": "img/backdrops/money-heist.jpg"
+ },
+ "Tribhuvan Mishra CA Topper": {
+  "match": "Tribhuvan Mishra CA Topper (2024)",
+  "source": "https://www.tvmaze.com/shows/78293/tribhuvan-mishra-ca-topper",
+  "poster": "img/posters/tribhuvan-mishra-ca-topper.jpg"
+ },
+ "Victorious": {
+  "match": "Victorious (2010)",
+  "source": "https://www.tvmaze.com/shows/2189/victorious",
+  "poster": "img/posters/victorious.jpg",
+  "backdrop": "img/backdrops/victorious.jpg"
+ }
+}
