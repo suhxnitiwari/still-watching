@@ -333,7 +333,8 @@ FINALES = {"Good Luck Charlie": "Goodbye Charlie: Pt. 2", "Jessie": "Jessie's Bi
 def loyalty(df):
     """Picky about pilots, then I never leave: rewatches and episodes after the finale."""
     ep = df[df["episode"].notna()]
-    twice = ep[ep.duplicated(["show", "episode"], keep=False)].drop_duplicates(["show", "episode"])
+    # Same full title on two profiles; "Episode 1" alone repeats across seasons.
+    twice = ep[ep.duplicated("title", keep=False)].drop_duplicates("title")
     after = []
     for show, last in FINALES.items():
         s = ep[ep["show"] == show]

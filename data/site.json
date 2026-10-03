@@ -1,10 +1,10 @@
 {
  "totals": {
-  "views": 3425,
-  "titles": 468,
-  "series": 210,
+  "views": 3421,
+  "titles": 467,
+  "series": 209,
   "movies": 258,
-  "binge_days": 423,
+  "binge_days": 422,
   "active_days": 1260,
   "from": "2015-06-16",
   "to": "2026-09-25"
@@ -184,7 +184,7 @@
   },
   {
    "month": "2018-12",
-   "views": 33
+   "views": 29
   },
   {
    "month": "2019-01",
@@ -571,13 +571,13 @@
   172,
   87,
   308,
-  496
+  492
  ],
  "weekday": {
   "Sunday": 627,
   "Saturday": 555,
   "Monday": 508,
-  "Tuesday": 476,
+  "Tuesday": 472,
   "Friday": 451,
   "Wednesday": 410,
   "Thursday": 398
@@ -661,28 +661,18 @@
    "episodes": 13
   },
   {
-   "date": "2019-11-10",
-   "show": "Sugar Rush",
-   "episodes": 12
-  },
-  {
    "date": "2019-12-21",
    "show": "Friends",
    "episodes": 12
   },
   {
-   "date": "2019-12-31",
-   "show": "Friends",
-   "episodes": 11
+   "date": "2019-11-10",
+   "show": "Sugar Rush",
+   "episodes": 12
   },
   {
    "date": "2021-07-23",
    "show": "Manifest",
-   "episodes": 11
-  },
-  {
-   "date": "2015-10-18",
-   "show": "Life with Boys",
    "episodes": 11
   },
   {
@@ -691,13 +681,23 @@
    "episodes": 11
   },
   {
-   "date": "2023-06-09",
-   "show": "Never Have I Ever",
-   "episodes": 10
+   "date": "2015-10-18",
+   "show": "Life with Boys",
+   "episodes": 11
+  },
+  {
+   "date": "2019-12-31",
+   "show": "Friends",
+   "episodes": 11
   },
   {
    "date": "2021-12-23",
    "show": "Emily in Paris",
+   "episodes": 10
+  },
+  {
+   "date": "2023-06-09",
+   "show": "Never Have I Ever",
    "episodes": 10
   }
  ],
@@ -722,7 +722,7 @@
   },
   {
    "year": 2018,
-   "views": 357,
+   "views": 353,
    "show": "Baby Daddy",
    "episodes": 95
   },
@@ -825,10 +825,10 @@
    ]
   },
   "Dallas": {
-   "views": 2893,
+   "views": 2889,
    "from": "2015-06-16",
    "to": "2024-07-23",
-   "per_month": 26.5,
+   "per_month": 26.4,
    "top": [
     {
      "show": "Friends",
@@ -1144,41 +1144,41 @@
    "name": "Middle School",
    "from": "2017-08-10",
    "to": "2020-07-18",
-   "views": 1053,
-   "per_month": 29.9,
-   "titles": 112,
-   "titles_per_month": 3.2,
-   "movie_share": 4.8,
+   "views": 1049,
+   "per_month": 29.8,
+   "titles": 111,
+   "titles_per_month": 3.1,
+   "movie_share": 4.9,
    "language": {
     "English": 99.6,
     "Korean": 0.1,
     "Hindi": 0.1
    },
    "type": {
-    "Scripted": 91.1,
+    "Scripted": 91.5,
     "Reality": 5.6,
-    "Animation": 1.9,
+    "Animation": 1.5,
     "Documentary": 0.7,
     "Talk Show": 0.2,
     "Variety": 0.2,
     "Game Show": 0.1
    },
    "genres": {
-    "Romance": 52.6,
-    "Drama": 47.0,
-    "Comedy": 46.5,
-    "Family": 35.5,
+    "Romance": 52.8,
+    "Drama": 46.8,
+    "Comedy": 46.7,
+    "Family": 35.7,
     "Supernatural": 18.7,
     "Children": 7.3,
     "Mystery": 4.2,
     "Thriller": 2.8,
     "Crime": 2.4,
     "Food": 2.0,
-    "Adventure": 1.7,
     "Horror": 1.5,
-    "Fantasy": 1.5,
     "Science-Fiction": 1.3,
+    "Adventure": 1.3,
     "Action": 1.2,
+    "Fantasy": 1.1,
     "Music": 0.4,
     "Nature": 0.2,
     "History": 0.2,
@@ -1188,7 +1188,7 @@
    "netflix_share": 11.0,
    "median_premiere": 2011,
    "classic_share": 23.3,
-   "fresh_share": 10.6,
+   "fresh_share": 10.2,
    "top": [
     {
      "show": "Friends",
@@ -1340,7 +1340,7 @@
     }
    ],
    "movies": 51,
-   "series_views": 1002
+   "series_views": 998
   },
   {
    "key": "high",
@@ -1787,14 +1787,14 @@
    "watched": 233,
    "total": 236,
    "jan1": 4,
-   "nye_last": "The One with the Rumor"
+   "nye_last": "The One That Could Have Been: Part 2"
   },
   "hindi_away": 35.2,
   "hindi_home": 13.6,
   "kapil_away": 30,
   "kapil_home": 10,
   "christmas_years": 6,
-  "series_share": 91.9,
+  "series_share": 91.8,
   "big_days": 27,
   "finished": [
    {
@@ -1972,7 +1972,7 @@
    "2015": 57.6,
    "2016": 67.0,
    "2017": 57.3,
-   "2018": 19.3,
+   "2018": 18.4,
    "2019": 1.2,
    "2020": 0.0,
    "2021": 0.3,
@@ -2004,7 +2004,7 @@
   },
   "december": {
    "before_20": 231,
-   "after_20": 265
+   "after_20": 261
   },
   "weekday_share": {
    "school": 64.1,
@@ -2048,7 +2048,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 44.4,
+  "romance_share": 44.5,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -2061,8 +2061,8 @@
   ]
  },
  "words": {
-  "episodes": 2824,
-  "shows": 206,
+  "episodes": 2820,
+  "shows": 205,
   "beginnings": 99,
   "endings": 41,
   "begin_examples": [
@@ -2131,7 +2131,7 @@
    "Set It Up",
    "Wedding Season"
   ],
-  "rewatched": 123,
+  "rewatched": 117,
   "rewatch_top": {
    "Fuller House": 38,
    "Bunk'd": 37
@@ -2206,8 +2206,8 @@
    "Pop the Balloon LIVE"
   ],
   "matchmaking": 24,
-  "drama_views": 1808,
-  "views": 3425,
+  "drama_views": 1804,
+  "views": 3421,
   "korean_quit": [
    "Crash Landing on You",
    "Hometown Cha-Cha-Cha",
@@ -2217,8 +2217,8 @@
  "favorites": {
   "gg_early": [
    "The Handmaiden's Tale",
-   "Victor, Victrola",
-   "Seventeen Candles"
+   "Seventeen Candles",
+   "Victor, Victrola"
   ],
   "gg_twice": [
    "Victor, Victrola",
@@ -2244,7 +2244,8 @@
    "christmas": [
     "Bad Blood",
     "Escape at Dannemora",
-    "Peaky Blinders"
+    "Peaky Blinders",
+    "Watership Down"
    ],
    "fathers_day": [
     {
@@ -2333,14 +2334,14 @@
    "Mom": 29
   },
   "shows_started": {
-   "Me": 211,
+   "Me": 210,
    "Mom": 74,
-   "Dad": 308,
+   "Dad": 309,
    "My sister": 116
   },
   "quit_rate": {
-   "Dad": 67,
-   "Me": 47,
+   "Dad": 66,
+   "Me": 48,
    "Mom": 39,
    "My sister": 32
   },
@@ -2379,7 +2380,7 @@
      "views": 1
     },
     {
-     "show": "The Pirate Fairy",
+     "show": "How to Train Your Dragon 2",
      "views": 1
     }
    ]
@@ -3589,6 +3590,31 @@
     "Dallas": 101
    }
   },
+  "Goosebumps": {
+   "show": "Goosebumps",
+   "kind": "series",
+   "views": 24,
+   "first": "2016-06-09",
+   "last": "2017-08-19",
+   "days": 10,
+   "best_day": {
+    "date": "2016-12-21",
+    "episodes": 5
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 2": 4,
+    "Season 3": 4,
+    "Season 4": 3
+   },
+   "by_year": {
+    "2016": 20,
+    "2017": 4
+   },
+   "eras": {
+    "Dallas": 24
+   }
+  },
   "Gossip Girl": {
    "show": "Gossip Girl",
    "kind": "series",
@@ -3713,6 +3739,27 @@
    },
    "eras": {
     "Austin": 1
+   }
+  },
+  "How to Train Your Dragon 2": {
+   "show": "How to Train Your Dragon 2",
+   "kind": "movie",
+   "views": 2,
+   "first": "2015-06-17",
+   "last": "2016-06-13",
+   "days": 2,
+   "best_day": {
+    "date": "2015-06-17",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2015": 1,
+    "2016": 1
+   },
+   "eras": {
+    "Dallas": 2
    }
   },
   "Humpty Sharma Ki Dulhania": {
@@ -5052,26 +5099,6 @@
    },
    "eras": {
     "Dallas": 92
-   }
-  },
-  "The Pirate Fairy": {
-   "show": "The Pirate Fairy",
-   "kind": "movie",
-   "views": 1,
-   "first": "2015-06-17",
-   "last": "2015-06-17",
-   "days": 1,
-   "best_day": {
-    "date": "2015-06-17",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2015": 1
-   },
-   "eras": {
-    "Dallas": 1
    }
   },
   "The Powerpuff Girls": {
