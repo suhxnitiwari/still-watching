@@ -35,8 +35,10 @@ LOOKUP = {
     "The Vampire Diaries": 2009, "Workin' Moms": 2017, "XO, Kitty": 2023, "Young Sheldon": 2017,
     "Masaba Masaba": 2020, "Money Heist": ("La Casa de Papel", 2017), "Victorious": 2010, "Merry Happy Whatever": 2019,
     "Dabba Cartel": 2025, "Tribhuvan Mishra CA Topper": 2024, "Beyond Stranger Things": 2017,
+    "Jessie": 2011, "Good Luck Charlie": 2010, "Lab Rats": 2012, "Liv and Maddie": 2013, "A.N.T. Farm": 2011,
+    "Phineas and Ferb": 2007, "Dragon Tales": 1999, "Mickey Mouse Clubhouse": 2006, "Mighty Med": 2013,
 }
-WIKI = {"A Family Affair": "A Family Affair (2024 film)"}
+WIKI = {"A Family Affair": "A Family Affair (2024 film)", "Lilo & Stitch": "Lilo & Stitch"}
 
 
 def get_json(url):

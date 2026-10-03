@@ -17,6 +17,7 @@ RAW = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "SuhaniNetflixViewingHi
 OUT = ROOT / "build"
 
 # Dates that frame the story.
+MOVED_TO_AMERICA = pd.Timestamp("2015-06-01")  # from Singapore
 CRACKDOWN = pd.Timestamp("2023-05-23")  # Netflix starts enforcing paid sharing in the US
 MOVED_TO_AUSTIN = pd.Timestamp("2024-08-15")
 
@@ -63,8 +64,27 @@ def binges(df):
     return days[days["episodes"] >= 3].sort_values("episodes", ascending=False)
 
 
+def early_years():
+    """My viewing before my own profile existed (2015 to Dec 2017): the kids' shows I watched on
+    Dad's profile, picked out by etl/household.py (local only). Nothing else from his file is used."""
+    path = OUT / "household.csv"
+    if not path.exists():
+        return None
+    h = pd.read_csv(path, parse_dates=["date"])
+    mine = h[(h["who"] == "Suhani") & (h["profile"] != "Suhani")]
+    return mine[["title", "date"]]
+
+
 def main():
-    df = transform(extract(RAW))
+    raw = extract(RAW)
+    early = early_years()
+    if early is not None:
+        raw = pd.concat([early, raw], ignore_index=True)
+    # Every day I watched anything, blocked titles included (dates only), so gaps and streaks stay true.
+    dates = pd.Series(sorted(raw["date"].dt.normalize().unique()), name="date")
+    OUT.mkdir(exist_ok=True)
+    dates.to_csv(OUT / "active_days.csv", index=False)
+    df = transform(raw)
     OUT.mkdir(exist_ok=True)
     df.to_csv(OUT / "views.csv", index=False)
     b = binges(df)

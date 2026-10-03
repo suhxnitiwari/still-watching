@@ -61,8 +61,9 @@ def longest_streak(dates):
     return {"days": best, "from": day(end - pd.Timedelta(days=best - 1)), "to": day(end)}
 
 
-# School eras: middle school, high school, and everything after graduating in May 2024.
-LIFE = [("middle", "Middle School", "2017-12-21", "2020-07-31"),
+# School eras: elementary (new in America, on Dad's profile), middle school, high school, and after graduating in May 2024.
+LIFE = [("elementary", "Elementary", "2015-01-01", "2017-07-31"),
+        ("middle", "Middle School", "2017-08-01", "2020-07-31"),
         ("high", "High School", "2020-08-01", "2024-05-31"),
         ("after", "After Graduation", "2024-06-01", None)]
 
@@ -94,7 +95,8 @@ def profile(df, meta):
     valentines = df[(df["date"].dt.month == 2) & (df["date"].dt.day == 14)]
     return {
         "kids_by_year": {str(k): v for k, v in kids_by_year.items()},
-        "kids_2018_top": df[kids & (df["date"].dt.year == 2018)]["show"].value_counts().head(3).index.tolist(),
+        "kids_early_top": df[kids & (df["date"].dt.year <= 2017)]["show"].value_counts().head(3).index.tolist(),
+        "first_title": df.sort_values("date")["show"].iloc[0],
         "teen_romcoms": [t for t in ["Sierra Burgess Is a Loser", "The Perfect Date", "F the Prom", "Tall Girl", "The Kissing Booth"]
                          if t in set(movies["show"])],
         "masha": {"first": day(masha["date"].min()), "last": day(masha["date"].max()), "views": int(len(masha))} if len(masha) else None,
@@ -164,6 +166,9 @@ def examples(ser, info, test, k=4):
 
 def main():
     df = pd.read_csv(BUILD / "views.csv", parse_dates=["date"])
+    # Silences and streaks come from every day I watched anything, so hidden titles can't fake a gap.
+    active_path = BUILD / "active_days.csv"
+    active = pd.read_csv(active_path, parse_dates=["date"])["date"] if active_path.exists() else df["date"]
     binges = pd.read_csv(BUILD / "binges.csv", parse_dates=["date"])
     titles = df.drop_duplicates("show")
     meta_path = BUILD / "meta.json"
@@ -194,7 +199,8 @@ def main():
 
     # Stretches of time the site's story talks about.
     windows = {}
-    for name, start, end in [("first_days", "2017-12-21", "2017-12-31"),
+    first = df["date"].min()
+    for name, start, end in [("first_days", day(first), day(first + pd.Timedelta(days=10))),
                              ("friends_run", "2019-11-12", "2019-12-31"),
                              ("after_crackdown", day(CRACKDOWN), "2023-12-31"),
                              ("last_summer_home", "2024-06-27", "2024-08-14"),
@@ -235,8 +241,8 @@ def main():
         "life": life,
         "profile": profile(df, meta),
         "windows": windows,
-        "gaps": gaps(df["date"]),
-        "streak": longest_streak(df["date"]),
+        "gaps": gaps(active),
+        "streak": longest_streak(active),
         "shows": {show: show_summary(df, show) for show in sorted(featured)},
     }
     OUT.parent.mkdir(exist_ok=True)

@@ -351,17 +351,18 @@ function setupPreview() {
 function setupCase() {
   const p = DATA.profile;
   $("#case-count").textContent = n(DATA.totals.views);
-  const [ms, hs, after] = DATA.life;
+  const { elementary: el, middle: ms, high: hs, after } = Object.fromEntries(DATA.life.map((e) => [e.key, e]));
   const bg = (show) => ART[show]?.backdrop || ART[show]?.poster || FALLBACK_BG();
   const pct = (x) => `${Math.round(x)}%`;
   const hf = p.hindi_films;
   const share = (e) => pct((e.hindi / e.movies) * 100);
   const decRate = (p.december.after_20 / 12) / (p.december.before_20 / 19);
   const silence = DATA.gaps[0];
+  const dallasGap = DATA.gaps.find((g) => g.from.startsWith("2020"));
   const groups = [
     ["Who I am", [
-      { label: "AGE", img: bg("Bunk'd"), guess: "A kid in 2018. A college student now.", signal: "Who the shows are made for",
-        ev: `Kids' shows were <b>${pct(p.kids_by_year["2018"])}</b> of 2018 (${listOf(p.kids_2018_top)}) and almost nothing after 2019. Then teen rom-coms: ${listOf(p.teen_romcoms.slice(0, 3))}. A sixth-grader in 2018 graduates in 2024.` },
+      { label: "AGE", img: bg(p.kids_early_top[0]), guess: "A kid in 2015. A college student now.", signal: "Who the shows are made for",
+        ev: `Kids' shows were <b>${pct(p.kids_by_year["2016"])}</b> of 2016 (${listOf(p.kids_early_top)}), ${pct(p.kids_by_year["2018"])} of 2018 and almost nothing after 2019. Then teen rom-coms: ${listOf(p.teen_romcoms.slice(0, 3))}. A fourth-grader in 2015 graduates in 2024.` },
       { label: "GENDER", img: bg("Bridgerton"), guess: "A woman", signal: "What I choose",
         ev: `<b>${pct(p.romance_share)}</b> of my series episodes are tagged Romance, and most of my movies are rom-coms. This is how ad platforms guess gender: crudely.` },
       { label: "CULTURAL BACKGROUND", img: bg("Heeramandi"), guess: "Indian, Hindi-speaking", signal: "The language of what I watch",
@@ -380,17 +381,30 @@ function setupCase() {
         ev: `Fall 2024: <b>${p.college.fall_2024}</b> views a day. Summer 2025, back home: <b>${p.college.summer_2025}</b>, ten times more. Fall 2025: ${p.college.fall_2025} again.` },
     ]],
     ["Who I live with", [
+      { label: "MOVED", img: bg(el.top[0].show), guess: "New to America in 2015", signal: "When the history starts",
+        ev: `The account's very first play: <b>${esc(p.first_title)}</b>, ${fmtDate(DATA.totals.from)}. Then a summer of Disney Channel. (We had just moved from Singapore to Cupertino.)` },
+      ...(dallasGap ? [{ label: "MOVED AGAIN", img: bg(hs.top[0].show), guess: "A second move, summer 2020", signal: "A silence right before high school",
+        ev: `<b>${dallasGap.days} days</b> with nothing, ${fmtShort(dallasGap.from)} to ${fmtDate(dallasGap.to)}, one of the longest gaps in my history. That was the move from Cupertino to Dallas. High school started in Texas.` }] : []),
       { label: "FAMILY", img: bg("Masha and the Bear"), guess: "A younger sibling", signal: "Shows made for someone smaller",
-        ev: p.masha ? `Masha and the Bear, a preschool cartoon, <b>${p.masha.views} episodes</b> in ${parse(p.masha.first).getFullYear()}, when I was in middle school. Someone little was borrowing my profile.` : "" },
+        ev: p.masha ? `Masha and the Bear, a preschool cartoon, <b>${p.masha.views} episodes</b> in ${parse(p.masha.first).getFullYear()}, when my little sister was about two. Someone small was borrowing my profile.` : "" },
       { label: "HOUSEHOLD", img: bg("Fuller House"), guess: "A shared family account", signal: "What happened when I left",
         ev: `When I moved out, my watching collapsed, and it came back every time I was home. That's what happens when the account belongs to a house, not to you.` },
       { label: "RELATIONSHIP STATUS", img: bg("The Vampire Diaries"), guess: "Single, at least in 2019", signal: "Valentine's Day",
-        ev: p.valentines.length ? `The only Valentine's Day in nine years with anything on: ${fmtDate(p.valentines[0].date)}, <b>${esc(p.valentines[0].show)}</b>, ${p.valentines.length === 2 ? "twice" : `${p.valentines.length} times`}.` : "" },
+        ev: p.valentines.length ? `The only Valentine's Day in ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years with anything on: ${fmtDate(p.valentines[0].date)}, <b>${esc(p.valentines[0].show)}</b>, ${p.valentines.length === 2 ? "twice" : `${p.valentines.length} times`}.` : "" },
       { label: "HOMESICK", img: bg("The Great Indian Kapil Show"), guess: "Bollywood is how I go home", signal: "Hindi films by era",
-        ev: `Hindi films were ${share(hf.by_era[0])} of my movies in middle school, ${share(hf.by_era[1])} in high school and ${share(hf.by_era[2])} after. Winter break, January 2026: <b>${p.jan_2026.movies} movies, ${p.jan_2026.hindi} of them Hindi</b>.` },
+        ev: `Hindi films were ${share(hf.by_era[1])} of my movies in middle school, ${share(hf.by_era[2])} in high school and ${share(hf.by_era[3])} after. Winter break, January 2026: <b>${p.jan_2026.movies} movies, ${p.jan_2026.hindi} of them Hindi</b>.` },
     ]],
   ];
-  $("#case-groups").innerHTML = groups.map(([title, clues]) => `
+  // Regroup the clues by theme.
+  const byLabel = Object.fromEntries(groups.flatMap(([, clues]) => clues).map((c) => [c.label, c]));
+  const themed = [
+    ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND"]],
+    ["Where I've lived", ["MOVED", "MOVED AGAIN", "HOME", "COLLEGE"]],
+    ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION"]],
+    ["Who I live with", ["FAMILY", "HOUSEHOLD"]],
+    ["How I feel", ["HOMESICK", "RELATIONSHIP STATUS"]],
+  ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
+  $("#case-groups").innerHTML = themed.map(([title, clues]) => `
     <h4 class="case__group">${title}</h4>
     <div class="clues">${clues.filter((c) => c.ev).map((c) => `
       <article class="clue">
@@ -407,18 +421,20 @@ function setupCase() {
 // Three eras of the same profile, and the shifts between them. Every number comes from
 // data/site.json (genres and languages are TVmaze's, counted over series episodes).
 function setupGrowth() {
-  const [ms, hs, after] = DATA.life;
+  const { elementary: el, middle: ms, high: hs, after } = Object.fromEntries(DATA.life.map((e) => [e.key, e]));
   const pct = (x) => `${Math.round(x || 0)}%`;
   const g = (era, k) => era.genres[k] || 0;
   const l = (era, k) => era.language[k] || 0;
   const t = (era, k) => era.type[k] || 0;
   const span = (e) => `${fmtMonth(e.from.slice(0, 7))} – ${e.key === "after" ? "now" : fmtMonth(e.to.slice(0, 7))}`;
   const who = {
-    middle: `<b>The family-drama kid.</b> Freeform and Disney after school, ${pct(g(ms, "Family"))} family shows, ${pct(l(ms, "English"))} in English, and nearly all of Friends over one winter break.`,
-    high: `<b>The serious-drama era.</b> Drama went from ${pct(g(ms, "Drama"))} to ${pct(g(hs, "Drama"))} of what I watched: hospitals, crime, Stars Hollow. I tried ${hs.titles} different titles, more than twice middle school.`,
+    elementary: `<b>New in America.</b> We moved from Singapore to Cupertino in 2015, right before fourth grade. I learned America through Disney Channel: ${listOf(el.top.slice(0, 3).map((s) => s.show))}. On Dad's profile, because I didn't have one yet.`,
+    middle: `<b>The family-drama kid.</b> Still in Cupertino. Freeform and Disney after school, ${pct(g(ms, "Family"))} family shows, ${pct(l(ms, "English"))} in English, and nearly all of Friends over one winter break.`,
+    high: `<b>The serious-drama era.</b> Drama went from ${pct(g(ms, "Drama"))} to ${pct(g(hs, "Drama"))} of what I watched: hospitals, crime, Stars Hollow. I tried ${hs.titles} different titles, ${(hs.titles / ms.titles).toFixed(1)}× middle school.`,
     after: `<b>Missing home, in Hindi.</b> After graduating, Hindi shows went from ${pct(l(hs, "Hindi"))} to ${pct(l(after, "Hindi"))}. Talk shows, new releases and movies over long commitments.`,
   };
   const stats = {
+    elementary: [[pct(g(el, "Family")), "family shows"], [el.views, "views on Dad's profile"], [el.titles_per_month, "new titles / month"]],
     middle: [[pct(g(ms, "Family")), "family shows"], [ms.titles_per_month, "new titles / month"], [pct(ms.classic_share), "older than me"]],
     high: [[pct(g(hs, "Drama")), "drama"], [pct(g(hs, "Medical") + g(hs, "Crime")), "medical + crime"], [hs.titles_per_month, "new titles / month"]],
     after: [[pct(l(after, "Hindi")), "in Hindi"], [after.median_premiere, "typical premiere"], [pct(after.movie_share), "movies"]],
@@ -440,22 +456,22 @@ function setupGrowth() {
   // Each shift shows the shows behind its number in every era, not a paragraph about them.
   const ex = (key) => DATA.life.map((e) => e.examples[key] || []);
   const shifts = [
-    { title: "Missing home, in Hindi", vals: [l(ms, "Hindi"), l(hs, "Hindi"), l(after, "Hindi")], shows: ex("hindi"), unit: "% of series in Hindi" },
-    { title: "Growing out of family TV", vals: [g(ms, "Family"), g(hs, "Family"), g(after, "Family")], shows: ex("family"), unit: "% family shows" },
-    { title: "High school got serious", vals: [g(ms, "Drama"), g(hs, "Drama"), g(after, "Drama")], shows: ex("drama"), unit: "% drama" },
-    { title: "Hospitals and crime", vals: [g(ms, "Medical") + g(ms, "Crime"), g(hs, "Medical") + g(hs, "Crime"), g(after, "Medical") + g(after, "Crime")], shows: ex("medical_crime"), unit: "% medical + crime" },
-    { title: "Laughing with talk shows", vals: [t(ms, "Talk Show"), t(hs, "Talk Show"), t(after, "Talk Show")], shows: ex("talk"), unit: "% talk shows" },
-    { title: "Watching what's new", vals: [ms.median_premiere, hs.median_premiere, after.median_premiere], year: true,
+    { title: "Missing home, in Hindi", vals: DATA.life.map((e) => l(e, "Hindi")), shows: ex("hindi"), unit: "% of series in Hindi" },
+    { title: "Growing out of family TV", vals: DATA.life.map((e) => g(e, "Family")), shows: ex("family"), unit: "% family shows" },
+    { title: "High school got serious", vals: DATA.life.map((e) => g(e, "Drama")), shows: ex("drama"), unit: "% drama" },
+    { title: "Hospitals and crime", vals: DATA.life.map((e) => g(e, "Medical") + g(e, "Crime")), shows: ex("medical_crime"), unit: "% medical + crime" },
+    { title: "Laughing with talk shows", vals: DATA.life.map((e) => t(e, "Talk Show")), shows: ex("talk"), unit: "% talk shows" },
+    { title: "Watching what's new", vals: DATA.life.map((e) => e.median_premiere), year: true,
       shows: DATA.life.map((e) => e.by_premiere.slice(-3).reverse().map((x) => ({ show: x.show, tag: x.year }))), unit: "typical premiere year" },
   ];
-  const labels = ["Middle School", "High School", "After"];
+  const labels = ["Elementary", "Middle", "High", "After"];
   const fmtVal = (s, v) => (s.year ? v : pct(v));
   $("#shifts").innerHTML = shifts.map((s) => {
     const hi = Math.max(...s.vals), lo = s.year ? Math.min(...s.vals) - 3 : 0;
     const peak = s.vals.indexOf(hi);
     return `<article class="shift">
       <p class="shift__title">${esc(s.title)}</p>
-      <p class="shift__big">${fmtVal(s, s.vals[0])} <span>→</span> ${fmtVal(s, s.vals[1])} <span>→</span> <b>${fmtVal(s, s.vals[2])}</b></p>
+      <p class="shift__big">${s.vals.map((v, i) => i === s.vals.length - 1 ? `<b>${fmtVal(s, v)}</b>` : fmtVal(s, v)).join(" <span>→</span> ")}</p>
       <p class="shift__signal">${esc(s.unit)}</p>
       <div class="shift__eras">${s.vals.map((v, i) => {
         const shows = (s.year || v >= 1 ? s.shows[i] : []).filter((x) => posterOf(x.show)).slice(0, 3);
@@ -633,8 +649,8 @@ function passwordFilm() {
   return [
     { dur: 6, wall: true, center: true, kicker: "A Suhani Tiwari true story", line: "The Password<br>Stopped Working",
       sub: `${n(totals.views)} things I pressed play on. One household. Then two cities.` },
-    { dur: 5, img: backdropOf(w.first_days.top[1].show), kicker: fmtDate(totals.from), line: "It starts<br>in <em>Dallas</em>",
-      sub: `${listOf(w.first_days.top.slice(0, 2).map((s) => s.show))}. Middle school. ${w.first_days.views} views in the first ${daysBetween(w.first_days.from, w.first_days.to)} days.` },
+    { dur: 5, img: backdropOf(w.first_days.top[1].show), kicker: fmtDate(totals.from), line: "It starts<br>in <em>Cupertino</em>",
+      sub: `Fresh from Singapore, about to start fourth grade. ${listOf(w.first_days.top.slice(0, 2).map((s) => s.show))}. ${w.first_days.views} views in the first ${daysBetween(w.first_days.from, w.first_days.to)} days.` },
     { dur: 5.5, img: backdropOf("Friends"), alt: true, kicker: "Winter break, 2019", line: `${w.friends_run.top[0].views} episodes<br>in <em>${daysBetween(w.friends_run.from, w.friends_run.to)} days</em>`,
       sub: `All of Friends, nearly. ${friends.episodes} of them on ${fmtDate(friends.date)} alone.` },
     { dur: 6.5, montage: owned.map((y) => ({ img: posterOf(y.show), tag: y.year })), center: true,
@@ -653,24 +669,28 @@ function passwordFilm() {
 }
 
 function growingFilm() {
-  const [ms, hs, after] = DATA.life;
+  const { elementary: el, middle: ms, high: hs, after } = Object.fromEntries(DATA.life.map((e) => [e.key, e]));
   const p = DATA.profile;
   const { windows: w, gaps, dates, totals } = DATA;
   const pct = (x) => `${Math.round(x || 0)}%`;
   const posters = (list) => list.map((s) => ({ img: posterOf(s.show), tag: "" }));
   const hindi = [...hs.examples.hindi, ...after.examples.hindi].filter((s, i, a) => a.findIndex((x) => x.show === s.show) === i);
   return [
-    { dur: 5, wall: true, center: true, kicker: "Episode 2", line: "Sixth Grade<br>to the <em>Forty Acres</em>",
-      sub: "Nine years of one Netflix profile, growing up." },
-    { dur: 4.5, img: backdropOf(p.kids_2018_top[0]), kicker: `${fmtDate(totals.from)} · sixth grade`, line: "A Disney kid<br>with a <em>profile</em>",
-      sub: `${listOf(p.kids_2018_top.slice(0, 2))}. Kids' shows were ${pct(p.kids_by_year["2018"])} of 2018.` },
-    { dur: 5, montage: posters(ms.top.slice(0, 6)), center: true, kicker: "Season 1 · Middle School", line: "The family-<br><em>drama</em> years",
+    { dur: 5, wall: true, center: true, kicker: "Episode 2", line: "Singapore<br>to the <em>Forty Acres</em>",
+      sub: `${parse(totals.to).getFullYear() - parse(totals.from).getFullYear()} years of Netflix, growing up.` },
+    { dur: 4.5, img: backdropOf(p.first_title), kicker: `${fmtDate(totals.from)} · just moved from Singapore`, line: "First play:<br><em>${esc(p.first_title)}</em>",
+      sub: "The very first thing our new account ever played." },
+    { dur: 5, montage: posters(el.top.slice(0, 6)), center: true, kicker: "Season 1 · Elementary", line: "Learning America<br>on <em>Disney</em>",
+      sub: `${listOf(el.top.slice(0, 3).map((s) => s.show))}. On Dad's profile: I didn't have my own yet.` },
+    { dur: 5, montage: posters(ms.top.slice(0, 6)), center: true, kicker: "Season 2 · Middle School", line: "The family-<br><em>drama</em> years",
       sub: `${pct(ms.genres.Family)} family shows. ${pct(ms.language.English)} in English.` },
     { dur: 4.5, img: backdropOf("Friends"), alt: true, kicker: "Eighth grade, winter break", line: `${w.friends_run.top[0].views} episodes<br>of <em>Friends</em>`,
       sub: `In ${daysBetween(w.friends_run.from, w.friends_run.to)} days.` },
     { dur: 4.5, img: backdropOf(p.covid.top), kicker: "March 13, 2020", line: "Sent<br><em>home</em>",
       sub: `Schools close. ${p.covid.after_closure} views before March is over, mostly ${p.covid.top}.` },
-    { dur: 5, montage: posters(hs.top.slice(0, 6)), center: true, kicker: "Season 2 · High School", line: "It gets<br><em>serious</em>",
+    ...(DATA.gaps.some((g) => g.from.startsWith("2020")) ? [{ dur: 4.5, black: true, center: true, kicker: "Summer 2020", line: "Cupertino<br>to <em>Dallas</em>",
+      sub: `${DATA.gaps.find((g) => g.from.startsWith("2020")).days} days without pressing play. Then high school, in Texas.` }] : []),
+    { dur: 5, montage: posters(hs.top.slice(0, 6)), center: true, kicker: "Season 3 · High School", line: "It gets<br><em>serious</em>",
       sub: `Drama goes from ${pct(ms.genres.Drama)} to ${pct(hs.genres.Drama)}. Hospitals, crime, Stars Hollow.` },
     { dur: 5, montage: posters(hindi.slice(0, 6)), center: true, kicker: "Finding home on screen", line: "Hindi,<br><em>more and more</em>",
       sub: `Hindi series: ${pct(ms.language.Hindi)} → ${pct(hs.language.Hindi)} → ${pct(after.language.Hindi)}. Hindi films: ${p.hindi_films.total} of ${p.hindi_films.movies}.` },
@@ -678,16 +698,16 @@ function growingFilm() {
       sub: "Graduation is busy." },
     { dur: 5.5, black: true, center: true, accent: "ut", kicker: fmtDate(dates.austin), line: "Hook 'em.<br><em>UT Austin.</em>",
       sub: `Freshman fall: ${p.college.fall_2024} views a day. Summer back home: ${p.college.summer_2025}.` },
-    { dur: 5, montage: posters(after.top.slice(0, 6)), center: true, kicker: "Season 3 · After Graduation", line: "Missing home,<br><em>in Hindi</em>",
+    { dur: 5, montage: posters(after.top.slice(0, 6)), center: true, kicker: "Season 4 · After Graduation", line: "Missing home,<br><em>in Hindi</em>",
       sub: `${pct(after.language.Hindi)} of my series. Talk shows, new releases, movie nights.` },
-    { dur: 5, wall: true, center: true, accent: "ut", kicker: "Still watching", line: "From sixth grade<br>to the <em>Forty Acres</em>",
+    { dur: 5, wall: true, center: true, accent: "ut", kicker: "Still watching", line: "From Singapore<br>to the <em>Forty Acres</em>",
       sub: `${n(totals.views)} views. Same profile. A different person.` },
   ];
 }
 
 const FILMS = {
   password: { ep: "E1", name: "The Password Stopped Working", subtitle: "One Household", scenes: passwordFilm, next: "growing" },
-  growing: { ep: "E2", name: "The Password Stopped Working", subtitle: "Sixth Grade to the Forty Acres", scenes: growingFilm, next: null },
+  growing: { ep: "E2", name: "The Password Stopped Working", subtitle: "Singapore to the Forty Acres", scenes: growingFilm, next: null },
 };
 
 function setupPlayer() {
@@ -928,7 +948,7 @@ function seasons() {
   const kapilTop3 = since.filter((k) => w[k].top.slice(0, 3).some((s) => s.show === kapil)).length;
   const gg = w.summer_2025.top[0];
   const sum = (o) => Object.values(o).reduce((a, b) => a + b, 0);
-  const [ms, hs, after] = DATA.life;
+  const { elementary: el, middle: ms, high: hs, after } = Object.fromEntries(DATA.life.map((e) => [e.key, e]));
   const sub = (e) => `${fmtDate(e.from)} to ${fmtDate(e.to)} · ${n(e.views)} views · ${e.per_month} a month`;
   const ep = {
         pilot: { title: "Pilot", art: firsts[0], stat: `${w.first_days.views} views`,
@@ -959,9 +979,10 @@ function seasons() {
           copy: `2026 so far: ${w.this_year.views} views, ${w.this_year.views > yearly.find((y) => y.year === 2024).views ? "already more than all of 2024" : "still catching up to 2024"}. ${w.this_year.top[0].show} leads with ${w.this_year.top[0].views}, then ${listOf(w.this_year.top.slice(1, 3).map((s) => s.show))}.` },
   };
   return [
-    { name: "Season 1: Middle School", sub: sub(ms), episodes: [ep.pilot, ep.friends, ep.winter] },
-    { name: "Season 2: High School", sub: sub(hs), episodes: [ep.yearly, ep.sunday, ep.password, ep.silence] },
-    { name: "Season 3: After Graduation", sub: `${sub(after)}, summers home included`,
+    { name: "Season 1: Elementary", sub: `${sub(el)} · on Dad's profile`, episodes: [ep.pilot] },
+    { name: "Season 2: Middle School", sub: sub(ms), episodes: [ep.friends, ep.winter] },
+    { name: "Season 3: High School", sub: sub(hs), episodes: [ep.yearly, ep.sunday, ep.password, ep.silence] },
+    { name: "Season 4: After Graduation", sub: `${sub(after)}, summers home included`,
       episodes: [ep.lastSummer, ep.moveIn, ep.summer, ep.back, ep.comfort, ep.still] },
   ];
 }
@@ -1067,7 +1088,7 @@ function setupGlobal() {
 
   const t = DATA.totals;
   const note = $("#profiles-note");
-  if (note) note.textContent = `One profile. Nine years. ${n(t.views)} things I pressed play on.`;
+  if (note) note.textContent = `${parse(t.to).getFullYear() - parse(t.from).getFullYear()} years. ${n(t.views)} things I pressed play on.`;
   $("#about-from").textContent = fmtDate(t.from);
   $("#about-to").textContent = fmtDate(t.to);
   $("#still-sub").textContent =

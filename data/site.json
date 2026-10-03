@@ -1,12 +1,12 @@
 {
  "totals": {
-  "views": 2566,
-  "titles": 353,
-  "series": 163,
-  "movies": 190,
-  "binge_days": 319,
-  "active_days": 909,
-  "from": "2017-12-21",
+  "views": 3294,
+  "titles": 404,
+  "series": 207,
+  "movies": 197,
+  "binge_days": 417,
+  "active_days": 1186,
+  "from": "2015-06-16",
   "to": "2026-09-25"
  },
  "dates": {
@@ -15,8 +15,128 @@
  },
  "monthly": [
   {
+   "month": "2015-06",
+   "views": 33
+  },
+  {
+   "month": "2015-07",
+   "views": 24
+  },
+  {
+   "month": "2015-08",
+   "views": 10
+  },
+  {
+   "month": "2015-09",
+   "views": 2
+  },
+  {
+   "month": "2015-10",
+   "views": 24
+  },
+  {
+   "month": "2015-11",
+   "views": 7
+  },
+  {
+   "month": "2015-12",
+   "views": 8
+  },
+  {
+   "month": "2016-01",
+   "views": 16
+  },
+  {
+   "month": "2016-02",
+   "views": 11
+  },
+  {
+   "month": "2016-03",
+   "views": 20
+  },
+  {
+   "month": "2016-04",
+   "views": 7
+  },
+  {
+   "month": "2016-05",
+   "views": 1
+  },
+  {
+   "month": "2016-06",
+   "views": 13
+  },
+  {
+   "month": "2016-07",
+   "views": 10
+  },
+  {
+   "month": "2016-08",
+   "views": 49
+  },
+  {
+   "month": "2016-09",
+   "views": 17
+  },
+  {
+   "month": "2016-10",
+   "views": 8
+  },
+  {
+   "month": "2016-11",
+   "views": 19
+  },
+  {
+   "month": "2016-12",
+   "views": 69
+  },
+  {
+   "month": "2017-01",
+   "views": 33
+  },
+  {
+   "month": "2017-02",
+   "views": 29
+  },
+  {
+   "month": "2017-03",
+   "views": 60
+  },
+  {
+   "month": "2017-04",
+   "views": 53
+  },
+  {
+   "month": "2017-05",
+   "views": 109
+  },
+  {
+   "month": "2017-06",
+   "views": 46
+  },
+  {
+   "month": "2017-07",
+   "views": 18
+  },
+  {
+   "month": "2017-08",
+   "views": 21
+  },
+  {
+   "month": "2017-09",
+   "views": 0
+  },
+  {
+   "month": "2017-10",
+   "views": 3
+  },
+  {
+   "month": "2017-11",
+   "views": 5
+  },
+  {
    "month": "2017-12",
-   "views": 22
+   "views": 25
   },
   {
    "month": "2018-01",
@@ -440,27 +560,27 @@
   }
  ],
  "month_of_year": [
-  239,
-  119,
-  260,
-  212,
-  266,
-  259,
-  257,
-  117,
-  136,
-  50,
-  252,
-  399
+  288,
+  159,
+  340,
+  272,
+  376,
+  351,
+  309,
+  197,
+  155,
+  85,
+  283,
+  479
  ],
  "weekday": {
-  "Sunday": 482,
-  "Saturday": 442,
-  "Monday": 402,
-  "Tuesday": 341,
-  "Friday": 326,
-  "Wednesday": 288,
-  "Thursday": 285
+  "Sunday": 600,
+  "Saturday": 550,
+  "Monday": 482,
+  "Tuesday": 456,
+  "Friday": 432,
+  "Wednesday": 388,
+  "Thursday": 386
  },
  "top": [
   {
@@ -484,6 +604,10 @@
    "views": 121
   },
   {
+   "show": "Jessie",
+   "views": 105
+  },
+  {
    "show": "The Fosters",
    "views": 104
   },
@@ -492,16 +616,12 @@
    "views": 103
   },
   {
+   "show": "Good Luck Charlie",
+   "views": 101
+  },
+  {
    "show": "Jane The Virgin",
    "views": 100
-  },
-  {
-   "show": "Baby Daddy",
-   "views": 94
-  },
-  {
-   "show": "The Originals",
-   "views": 92
   }
  ],
  "binges": [
@@ -531,6 +651,11 @@
    "episodes": 13
   },
   {
+   "date": "2017-05-14",
+   "show": "Mighty Med",
+   "episodes": 13
+  },
+  {
    "date": "2019-11-28",
    "show": "Friends",
    "episodes": 13
@@ -546,8 +671,8 @@
    "episodes": 12
   },
   {
-   "date": "2019-12-31",
-   "show": "Friends",
+   "date": "2015-10-18",
+   "show": "Life with Boys",
    "episodes": 11
   },
   {
@@ -556,23 +681,18 @@
    "episodes": 11
   },
   {
-   "date": "2025-06-08",
-   "show": "Ginny & Georgia",
-   "episodes": 10
-  },
-  {
-   "date": "2019-12-01",
+   "date": "2019-12-31",
    "show": "Friends",
-   "episodes": 10
-  },
-  {
-   "date": "2023-06-09",
-   "show": "Never Have I Ever",
-   "episodes": 10
+   "episodes": 11
   },
   {
    "date": "2025-07-16",
    "show": "Gossip Girl",
+   "episodes": 10
+  },
+  {
+   "date": "2025-06-08",
+   "show": "Ginny & Georgia",
    "episodes": 10
   },
   {
@@ -583,10 +703,22 @@
  ],
  "yearly": [
   {
+   "year": 2015,
+   "views": 108,
+   "show": "LEGO Ninjago",
+   "episodes": 27
+  },
+  {
+   "year": 2016,
+   "views": 240,
+   "show": "Good Luck Charlie",
+   "episodes": 48
+  },
+  {
    "year": 2017,
-   "views": 22,
-   "show": "Brain Games",
-   "episodes": 11
+   "views": 402,
+   "show": "Liv and Maddie",
+   "episodes": 74
   },
   {
    "year": 2018,
@@ -693,10 +825,10 @@
    ]
   },
   "Dallas": {
-   "views": 2045,
-   "from": "2017-12-21",
+   "views": 2773,
+   "from": "2015-06-16",
    "to": "2024-07-23",
-   "per_month": 25.9,
+   "per_month": 25.4,
    "top": [
     {
      "show": "Friends",
@@ -715,6 +847,10 @@
      "views": 151
     },
     {
+     "show": "Jessie",
+     "views": 105
+    },
+    {
      "show": "The Fosters",
      "views": 104
     },
@@ -723,74 +859,219 @@
      "views": 103
     },
     {
+     "show": "Good Luck Charlie",
+     "views": 101
+    },
+    {
      "show": "Jane The Virgin",
      "views": 100
     },
     {
-     "show": "Baby Daddy",
-     "views": 94
-    },
-    {
-     "show": "The Originals",
-     "views": 92
-    },
-    {
-     "show": "Manifest",
-     "views": 62
+     "show": "Lab Rats",
+     "views": 98
     }
    ]
   }
  },
  "life": [
   {
+   "key": "elementary",
+   "name": "Elementary",
+   "from": "2015-06-16",
+   "to": "2017-07-23",
+   "views": 696,
+   "per_month": 27.6,
+   "titles": 54,
+   "titles_per_month": 2.1,
+   "movie_share": 1.1,
+   "language": {
+    "English": 99.7,
+    "Japanese": 0.1
+   },
+   "type": {
+    "Scripted": 83.1,
+    "Animation": 16.9
+   },
+   "genres": {
+    "Comedy": 65.6,
+    "Family": 36.5,
+    "Drama": 35.6,
+    "Science-Fiction": 20.6,
+    "Children": 19.3,
+    "Action": 19.3,
+    "Adventure": 9.4,
+    "Music": 9.3,
+    "Horror": 5.1,
+    "Supernatural": 3.1,
+    "Fantasy": 2.0,
+    "Espionage": 0.3,
+    "Anime": 0.1,
+    "Crime": 0.1
+   },
+   "netflix_share": 2.3,
+   "median_premiere": 2011,
+   "classic_share": 18.6,
+   "fresh_share": 10.3,
+   "top": [
+    {
+     "show": "Jessie",
+     "views": 103
+    },
+    {
+     "show": "Good Luck Charlie",
+     "views": 101
+    },
+    {
+     "show": "Lab Rats",
+     "views": 92
+    },
+    {
+     "show": "Liv and Maddie",
+     "views": 75
+    },
+    {
+     "show": "A.N.T. Farm",
+     "views": 64
+    },
+    {
+     "show": "Mighty Med",
+     "views": 48
+    },
+    {
+     "show": "Bunk'd",
+     "views": 33
+    },
+    {
+     "show": "LEGO Ninjago",
+     "views": 28
+    }
+   ],
+   "examples": {
+    "hindi": [],
+    "family": [
+     {
+      "show": "Good Luck Charlie",
+      "views": 101
+     },
+     {
+      "show": "Liv and Maddie",
+      "views": 75
+     },
+     {
+      "show": "Mighty Med",
+      "views": 48
+     },
+     {
+      "show": "Life with Boys",
+      "views": 21
+     }
+    ],
+    "drama": [
+     {
+      "show": "Jessie",
+      "views": 103
+     },
+     {
+      "show": "Liv and Maddie",
+      "views": 75
+     },
+     {
+      "show": "A.N.T. Farm",
+      "views": 64
+     },
+     {
+      "show": "Mako Mermaids",
+      "views": 2
+     }
+    ],
+    "medical_crime": [
+     {
+      "show": "The Powerpuff Girls",
+      "views": 1
+     }
+    ],
+    "talk": [],
+    "romance": []
+   },
+   "by_premiere": [
+    {
+     "show": "Jessie",
+     "year": 1984
+    },
+    {
+     "show": "Good Luck Charlie",
+     "year": 2010
+    },
+    {
+     "show": "A.N.T. Farm",
+     "year": 2011
+    },
+    {
+     "show": "LEGO Ninjago",
+     "year": 2012
+    },
+    {
+     "show": "Lab Rats",
+     "year": 2012
+    },
+    {
+     "show": "Liv and Maddie",
+     "year": 2013
+    }
+   ],
+   "movies": 8,
+   "series_views": 688
+  },
+  {
    "key": "middle",
    "name": "Middle School",
-   "from": "2017-12-21",
+   "from": "2017-08-10",
    "to": "2020-07-18",
-   "views": 973,
-   "per_month": 31.5,
-   "titles": 78,
-   "titles_per_month": 2.5,
-   "movie_share": 2.7,
+   "views": 1005,
+   "per_month": 28.5,
+   "titles": 85,
+   "titles_per_month": 2.4,
+   "movie_share": 2.6,
    "language": {
-    "English": 98.4,
-    "Russian": 1.4,
+    "English": 98.5,
+    "Russian": 1.3,
     "Korean": 0.1
    },
    "type": {
-    "Scripted": 88.2,
-    "Reality": 5.6,
-    "Animation": 5.0,
+    "Scripted": 88.4,
+    "Reality": 5.4,
+    "Animation": 4.9,
     "Documentary": 0.7,
     "Talk Show": 0.2,
-    "Variety": 0.2
+    "Variety": 0.2,
+    "Game Show": 0.1
    },
    "genres": {
-    "Romance": 54.9,
-    "Drama": 47.4,
-    "Comedy": 46.4,
-    "Family": 35.7,
-    "Supernatural": 18.8,
-    "Children": 7.8,
-    "Mystery": 4.0,
+    "Romance": 53.1,
+    "Comedy": 47.8,
+    "Drama": 46.6,
+    "Family": 35.4,
+    "Supernatural": 19.0,
+    "Children": 8.1,
+    "Mystery": 3.9,
     "Adventure": 3.6,
     "Thriller": 2.6,
-    "Food": 2.1,
-    "Crime": 2.0,
-    "Horror": 1.0,
+    "Food": 2.0,
+    "Crime": 1.9,
+    "Horror": 1.4,
+    "Action": 1.2,
+    "Science-Fiction": 1.2,
     "Fantasy": 0.8,
-    "Science-Fiction": 0.6,
     "Music": 0.3,
     "Nature": 0.2,
     "History": 0.2,
-    "Action": 0.2,
     "DIY": 0.1,
     "Espionage": 0.1
    },
-   "netflix_share": 10.1,
+   "netflix_share": 9.8,
    "median_premiere": 2011,
-   "classic_share": 24.2,
-   "fresh_share": 8.0,
+   "classic_share": 23.6,
+   "fresh_share": 8.8,
    "top": [
     {
      "show": "Friends",
@@ -814,7 +1095,7 @@
     },
     {
      "show": "Bunk'd",
-     "views": 53
+     "views": 58
     },
     {
      "show": "Brain Games",
@@ -933,7 +1214,7 @@
     }
    ],
    "movies": 26,
-   "series_views": 947
+   "series_views": 979
   },
   {
    "key": "high",
@@ -1367,7 +1648,9 @@
  ],
  "profile": {
   "kids_by_year": {
-   "2017": 4.5,
+   "2015": 67.6,
+   "2016": 74.6,
+   "2017": 66.4,
    "2018": 23.8,
    "2019": 4.5,
    "2020": 0.5,
@@ -1378,11 +1661,12 @@
    "2025": 0.3,
    "2026": 0.0
   },
-  "kids_2018_top": [
-   "Bunk'd",
-   "The Boss Baby",
-   "Sofia the First"
+  "kids_early_top": [
+   "Good Luck Charlie",
+   "Lab Rats",
+   "Liv and Maddie"
   ],
+  "first_title": "Lilo & Stitch",
   "teen_romcoms": [
    "Sierra Burgess Is a Loser",
    "The Perfect Date",
@@ -1402,12 +1686,12 @@
    "top": "The Fosters"
   },
   "december": {
-   "before_20": 173,
-   "after_20": 226
+   "before_20": 224,
+   "after_20": 255
   },
   "weekday_share": {
-   "school": 62.5,
-   "summer": 70.0
+   "school": 63.6,
+   "summer": 71.1
   },
   "college": {
    "fall_2024": 0.18,
@@ -1417,8 +1701,13 @@
   },
   "hindi_films": {
    "total": 86,
-   "movies": 190,
+   "movies": 198,
    "by_era": [
+    {
+     "key": "elementary",
+     "movies": 8,
+     "hindi": 0
+    },
     {
      "key": "middle",
      "movies": 26,
@@ -1442,7 +1731,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 57.6,
+  "romance_share": 44.2,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -1456,28 +1745,28 @@
  },
  "windows": {
   "first_days": {
-   "from": "2017-12-21",
-   "to": "2017-12-31",
-   "views": 22,
+   "from": "2015-06-16",
+   "to": "2015-06-26",
+   "views": 16,
    "top": [
     {
-     "show": "Brain Games",
-     "views": 11
+     "show": "Phineas and Ferb",
+     "views": 6
     },
     {
-     "show": "Switched at Birth",
-     "views": 8
+     "show": "Dragon Tales",
+     "views": 6
     },
     {
-     "show": "Planet Earth",
+     "show": "LEGO Ninjago",
+     "views": 2
+    },
+    {
+     "show": "Lilo & Stitch",
      "views": 1
     },
     {
-     "show": "Peaky Blinders",
-     "views": 1
-    },
-    {
-     "show": "Girl Meets World",
+     "show": "Mickey Mouse Clubhouse",
      "views": 1
     }
    ]
@@ -1666,9 +1955,9 @@
  },
  "gaps": [
   {
-   "from": "2024-01-27",
+   "from": "2024-03-27",
    "to": "2024-06-27",
-   "days": 152
+   "days": 92
   },
   {
    "from": "2019-08-06",
@@ -1676,19 +1965,19 @@
    "days": 76
   },
   {
-   "from": "2023-02-01",
-   "to": "2023-04-02",
-   "days": 60
-  },
-  {
    "from": "2020-08-07",
    "to": "2020-10-02",
    "days": 56
   },
   {
-   "from": "2018-09-01",
-   "to": "2018-10-17",
-   "days": 46
+   "from": "2017-08-23",
+   "to": "2017-10-15",
+   "days": 53
+  },
+  {
+   "from": "2024-01-27",
+   "to": "2024-03-20",
+   "days": 53
   }
  ],
  "streak": {
@@ -1738,6 +2027,30 @@
    },
    "eras": {
     "Dallas": 1
+   }
+  },
+  "A.N.T. Farm": {
+   "show": "A.N.T. Farm",
+   "kind": "series",
+   "views": 64,
+   "first": "2016-01-23",
+   "last": "2017-02-05",
+   "days": 24,
+   "best_day": {
+    "date": "2016-08-10",
+    "episodes": 8
+   },
+   "binge_days": 10,
+   "seasons": {
+    "Season 2": 21,
+    "Season 3": 18
+   },
+   "by_year": {
+    "2016": 44,
+    "2017": 20
+   },
+   "eras": {
+    "Dallas": 64
    }
   },
   "AMERICA'S SWEETHEARTS": {
@@ -1909,26 +2222,28 @@
   "Bunk'd": {
    "show": "Bunk'd",
    "kind": "series",
-   "views": 53,
-   "first": "2018-08-12",
+   "views": 91,
+   "first": "2016-12-04",
    "last": "2019-07-21",
-   "days": 23,
+   "days": 40,
    "best_day": {
     "date": "2018-08-25",
     "episodes": 7
    },
-   "binge_days": 7,
+   "binge_days": 14,
    "seasons": {
-    "Season 1": 20,
-    "Season 2": 21,
+    "Season 1": 41,
+    "Season 2": 38,
     "Season 3": 12
    },
    "by_year": {
+    "2016": 13,
+    "2017": 25,
     "2018": 52,
     "2019": 1
    },
    "eras": {
-    "Dallas": 53
+    "Dallas": 91
    }
   },
   "Chris Rock": {
@@ -2015,6 +2330,26 @@
    "eras": {
     "Austin": 6,
     "Dallas": 12
+   }
+  },
+  "Dragon Tales": {
+   "show": "Dragon Tales",
+   "kind": "series",
+   "views": 7,
+   "first": "2015-06-22",
+   "last": "2015-08-10",
+   "days": 2,
+   "best_day": {
+    "date": "2015-06-22",
+    "episodes": 6
+   },
+   "binge_days": 1,
+   "seasons": {},
+   "by_year": {
+    "2015": 7
+   },
+   "eras": {
+    "Dallas": 7
    }
   },
   "Dubai Bling": {
@@ -2225,24 +2560,54 @@
     "Dallas": 12
    }
   },
-  "Girl Meets World": {
-   "show": "Girl Meets World",
+  "Good Luck Charlie": {
+   "show": "Good Luck Charlie",
    "kind": "series",
-   "views": 1,
-   "first": "2017-12-29",
-   "last": "2017-12-29",
-   "days": 1,
+   "views": 101,
+   "first": "2016-06-01",
+   "last": "2017-04-14",
+   "days": 43,
    "best_day": {
-    "date": "2017-12-29",
-    "episodes": 1
+    "date": "2017-03-27",
+    "episodes": 8
    },
-   "binge_days": 0,
-   "seasons": {},
+   "binge_days": 15,
+   "seasons": {
+    "Season 2": 30,
+    "Season 3": 23,
+    "Season 4": 21
+   },
    "by_year": {
-    "2017": 1
+    "2016": 48,
+    "2017": 53
    },
    "eras": {
-    "Dallas": 1
+    "Dallas": 101
+   }
+  },
+  "Goosebumps": {
+   "show": "Goosebumps",
+   "kind": "series",
+   "views": 24,
+   "first": "2016-06-09",
+   "last": "2017-08-19",
+   "days": 10,
+   "best_day": {
+    "date": "2016-12-21",
+    "episodes": 5
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 2": 4,
+    "Season 3": 4,
+    "Season 4": 3
+   },
+   "by_year": {
+    "2016": 20,
+    "2017": 4
+   },
+   "eras": {
+    "Dallas": 24
    }
   },
   "Gossip Girl": {
@@ -2382,6 +2747,32 @@
     "Dallas": 100
    }
   },
+  "Jessie": {
+   "show": "Jessie",
+   "kind": "series",
+   "views": 105,
+   "first": "2015-08-13",
+   "last": "2017-10-15",
+   "days": 54,
+   "best_day": {
+    "date": "2017-05-04",
+    "episodes": 8
+   },
+   "binge_days": 9,
+   "seasons": {
+    "Season 2": 28,
+    "Season 3": 27,
+    "Season 4": 20
+   },
+   "by_year": {
+    "2015": 13,
+    "2016": 30,
+    "2017": 62
+   },
+   "eras": {
+    "Dallas": 105
+   }
+  },
   "Kapil Sharma": {
    "show": "Kapil Sharma",
    "kind": "series",
@@ -2405,21 +2796,137 @@
   "LEGO Ninjago": {
    "show": "LEGO Ninjago",
    "kind": "series",
-   "views": 1,
-   "first": "2024-08-25",
+   "views": 29,
+   "first": "2015-06-25",
    "last": "2024-08-25",
+   "days": 13,
+   "best_day": {
+    "date": "2015-06-29",
+    "episodes": 6
+   },
+   "binge_days": 4,
+   "seasons": {},
+   "by_year": {
+    "2015": 27,
+    "2017": 1,
+    "2024": 1
+   },
+   "eras": {
+    "Austin": 1,
+    "Dallas": 28
+   }
+  },
+  "Lab Rats": {
+   "show": "Lab Rats",
+   "kind": "series",
+   "views": 98,
+   "first": "2016-03-30",
+   "last": "2017-11-17",
+   "days": 42,
+   "best_day": {
+    "date": "2017-05-26",
+    "episodes": 9
+   },
+   "binge_days": 13,
+   "seasons": {
+    "Season 2": 26,
+    "Season 3": 26,
+    "Season 4": 26
+   },
+   "by_year": {
+    "2016": 34,
+    "2017": 64
+   },
+   "eras": {
+    "Dallas": 98
+   }
+  },
+  "Life with Boys": {
+   "show": "Life with Boys",
+   "kind": "series",
+   "views": 21,
+   "first": "2015-10-18",
+   "last": "2015-10-24",
+   "days": 4,
+   "best_day": {
+    "date": "2015-10-18",
+    "episodes": 11
+   },
+   "binge_days": 4,
+   "seasons": {
+    "Season 2": 7
+   },
+   "by_year": {
+    "2015": 21
+   },
+   "eras": {
+    "Dallas": 21
+   }
+  },
+  "Lilo & Stitch": {
+   "show": "Lilo & Stitch",
+   "kind": "movie",
+   "views": 1,
+   "first": "2015-06-16",
+   "last": "2015-06-16",
    "days": 1,
    "best_day": {
-    "date": "2024-08-25",
+    "date": "2015-06-16",
     "episodes": 1
    },
    "binge_days": 0,
    "seasons": {},
    "by_year": {
-    "2024": 1
+    "2015": 1
    },
    "eras": {
-    "Austin": 1
+    "Dallas": 1
+   }
+  },
+  "Liv and Maddie": {
+   "show": "Liv and Maddie",
+   "kind": "series",
+   "views": 82,
+   "first": "2016-01-22",
+   "last": "2019-11-02",
+   "days": 37,
+   "best_day": {
+    "date": "2017-06-21",
+    "episodes": 9
+   },
+   "binge_days": 10,
+   "seasons": {
+    "Season 2": 24,
+    "Season 3": 20,
+    "Season 4": 15
+   },
+   "by_year": {
+    "2016": 6,
+    "2017": 74,
+    "2019": 2
+   },
+   "eras": {
+    "Dallas": 82
+   }
+  },
+  "Mako Mermaids": {
+   "show": "Mako Mermaids",
+   "kind": "series",
+   "views": 2,
+   "first": "2016-12-19",
+   "last": "2016-12-19",
+   "days": 1,
+   "best_day": {
+    "date": "2016-12-19",
+    "episodes": 2
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2016": 2
+   },
+   "eras": {
+    "Dallas": 2
    }
   },
   "Manifest": {
@@ -2513,6 +3020,49 @@
    },
    "eras": {
     "Dallas": 1
+   }
+  },
+  "Mickey Mouse Clubhouse": {
+   "show": "Mickey Mouse Clubhouse",
+   "kind": "series",
+   "views": 1,
+   "first": "2015-06-22",
+   "last": "2015-06-22",
+   "days": 1,
+   "best_day": {
+    "date": "2015-06-22",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2015": 1
+   },
+   "eras": {
+    "Dallas": 1
+   }
+  },
+  "Mighty Med": {
+   "show": "Mighty Med",
+   "kind": "series",
+   "views": 48,
+   "first": "2016-04-28",
+   "last": "2017-05-19",
+   "days": 10,
+   "best_day": {
+    "date": "2017-05-14",
+    "episodes": 13
+   },
+   "binge_days": 8,
+   "seasons": {
+    "Season 2": 22
+   },
+   "by_year": {
+    "2016": 8,
+    "2017": 40
+   },
+   "eras": {
+    "Dallas": 48
    }
   },
   "Mismatched": {
@@ -2655,24 +3205,27 @@
     "Dallas": 1
    }
   },
-  "Planet Earth": {
-   "show": "Planet Earth",
+  "Phineas and Ferb": {
+   "show": "Phineas and Ferb",
    "kind": "series",
-   "views": 1,
-   "first": "2017-12-21",
-   "last": "2017-12-21",
-   "days": 1,
+   "views": 18,
+   "first": "2015-06-21",
+   "last": "2015-07-16",
+   "days": 7,
    "best_day": {
-    "date": "2017-12-21",
-    "episodes": 1
+    "date": "2015-06-28",
+    "episodes": 4
    },
-   "binge_days": 0,
-   "seasons": {},
+   "binge_days": 5,
+   "seasons": {
+    "Season 2": 3,
+    "Season 3": 8
+   },
    "by_year": {
-    "2017": 1
+    "2015": 18
    },
    "eras": {
-    "Dallas": 1
+    "Dallas": 18
    }
   },
   "Riverdale": {
@@ -2930,6 +3483,26 @@
    },
    "eras": {
     "Dallas": 92
+   }
+  },
+  "The Powerpuff Girls": {
+   "show": "The Powerpuff Girls",
+   "kind": "series",
+   "views": 1,
+   "first": "2016-03-28",
+   "last": "2016-03-28",
+   "days": 1,
+   "best_day": {
+    "date": "2016-03-28",
+    "episodes": 1
+   },
+   "binge_days": 0,
+   "seasons": {},
+   "by_year": {
+    "2016": 1
+   },
+   "eras": {
+    "Dallas": 1
    }
   },
   "The Vampire Diaries": {

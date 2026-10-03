@@ -317,5 +317,87 @@
   "source": "https://www.tvmaze.com/shows/2189/victorious",
   "poster": "img/posters/victorious.jpg",
   "backdrop": "img/backdrops/victorious.jpg"
+ },
+ "A.N.T. Farm": {
+  "match": "A.N.T. Farm (2011)",
+  "source": "https://www.tvmaze.com/shows/4884/ant-farm",
+  "poster": "img/posters/a-n-t-farm.jpg",
+  "backdrop": "img/backdrops/a-n-t-farm.jpg"
+ },
+ "Bombay Begums": {
+  "match": "Bombay Begums (2021)",
+  "source": "https://www.tvmaze.com/shows/53574/bombay-begums",
+  "poster": "img/posters/bombay-begums.jpg",
+  "backdrop": "img/backdrops/bombay-begums.jpg"
+ },
+ "Dragon Tales": {
+  "match": "Dragon Tales (1999)",
+  "source": "https://www.tvmaze.com/shows/14821/dragon-tales",
+  "poster": "img/posters/dragon-tales.jpg",
+  "backdrop": "img/backdrops/dragon-tales.jpg"
+ },
+ "Good Luck Charlie": {
+  "match": "Good Luck Charlie (2010)",
+  "source": "https://www.tvmaze.com/shows/759/good-luck-charlie",
+  "poster": "img/posters/good-luck-charlie.jpg",
+  "backdrop": "img/backdrops/good-luck-charlie.jpg"
+ },
+ "Goosebumps": {
+  "match": "Goosebumps (2023)",
+  "source": "https://www.tvmaze.com/shows/60343/goosebumps",
+  "poster": "img/posters/goosebumps.jpg",
+  "backdrop": "img/backdrops/goosebumps.jpg"
+ },
+ "Jessie": {
+  "match": "Jessie (2011)",
+  "source": "https://www.tvmaze.com/shows/514/jessie",
+  "poster": "img/posters/jessie.jpg",
+  "backdrop": "img/backdrops/jessie.jpg"
+ },
+ "Lab Rats": {
+  "match": "Lab Rats (2012)",
+  "source": "https://www.tvmaze.com/shows/1362/lab-rats",
+  "poster": "img/posters/lab-rats.jpg",
+  "backdrop": "img/backdrops/lab-rats.jpg"
+ },
+ "Life with Boys": {
+  "match": "Life with Boys (2011)",
+  "source": "https://www.tvmaze.com/shows/9307/life-with-boys",
+  "poster": "img/posters/life-with-boys.jpg"
+ },
+ "Liv and Maddie": {
+  "match": "Liv & Maddie (2013)",
+  "source": "https://www.tvmaze.com/shows/2885/liv-maddie",
+  "poster": "img/posters/liv-and-maddie.jpg"
+ },
+ "Mako Mermaids": {
+  "match": "Mako Mermaids (2013)",
+  "source": "https://www.tvmaze.com/shows/4225/mako-mermaids",
+  "poster": "img/posters/mako-mermaids.jpg",
+  "backdrop": "img/backdrops/mako-mermaids.jpg"
+ },
+ "Mickey Mouse Clubhouse": {
+  "match": "Mickey Mouse Clubhouse (2006)",
+  "source": "https://www.tvmaze.com/shows/710/mickey-mouse-clubhouse",
+  "poster": "img/posters/mickey-mouse-clubhouse.jpg",
+  "backdrop": "img/backdrops/mickey-mouse-clubhouse.jpg"
+ },
+ "Mighty Med": {
+  "match": "Mighty Med (2013)",
+  "source": "https://www.tvmaze.com/shows/2487/mighty-med",
+  "poster": "img/posters/mighty-med.jpg",
+  "backdrop": "img/backdrops/mighty-med.jpg"
+ },
+ "Phineas and Ferb": {
+  "match": "Phineas and Ferb (2007)",
+  "source": "https://www.tvmaze.com/shows/672/phineas-and-ferb",
+  "poster": "img/posters/phineas-and-ferb.jpg",
+  "backdrop": "img/backdrops/phineas-and-ferb.jpg"
+ },
+ "The Powerpuff Girls": {
+  "match": "The Powerpuff Girls (1998)",
+  "source": "https://www.tvmaze.com/shows/1955/the-powerpuff-girls",
+  "poster": "img/posters/the-powerpuff-girls.jpg",
+  "backdrop": "img/backdrops/the-powerpuff-girls.jpg"
  }
 }
