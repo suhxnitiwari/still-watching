@@ -151,6 +151,29 @@ def profile(df, meta):
     }
 
 
+def family(meta):
+    """Family comparisons Suhani's family agreed to share: aggregates only, Mom and Dad unnamed, my sister
+    unnamed, and no dates."""
+    path = BUILD / "household.csv"
+    if not path.exists():
+        return None
+    h = pd.read_csv(path, parse_dates=["date"])
+    h = h[h["show"].notna()]
+    label = {"Suhani": "Me", "Mom": "Mom", "Dad": "Dad", "Sister": "My sister"}
+    ser = h[h["kind"] == "series"]
+    quitters = {label[w]: int((ser[ser["who"] == w]["show"].value_counts() == 1).sum()) for w in label}
+    kapil = h[h["show"] == "The Great Indian Kapil Show"]
+    same_day = kapil.groupby("date")["who"].nunique()
+    birthdays = h[(h["who"] == "Dad") & (h["date"] >= "2016-11-13") & (h["date"].dt.month == 11) &
+                  (h["date"].dt.day == 13)]["show"].unique().tolist()
+    return {
+        "pilot_quitters": dict(sorted(quitters.items(), key=lambda x: -x[1])),
+        "kapil": {label[w]: int(n) for w, n in kapil["who"].value_counts().items()},
+        "kapil_same_day": int((same_day > 1).sum()),
+        "dad_sister_birthday_picks": birthdays,
+    }
+
+
 def life_eras(df, meta):
     """How my taste changed: language, type, genre, how new the shows were, how much I explored."""
     out = []
@@ -274,6 +297,7 @@ def main():
         "eras": eras,
         "life": life,
         "profile": profile(df, meta),
+        "family": family(meta),
         "windows": windows,
         "gaps": gaps(active),
         "streak": longest_streak(active),

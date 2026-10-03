@@ -439,6 +439,20 @@ function setupCase() {
     { label: "HOLIDAYS", img: bg("Gilmore Girls"), guess: "Home for Christmas", signal: "December 24–26",
       ev: `Something on over Christmas in <b>${p.christmas_years} of ${parse(DATA.totals.to).getFullYear() - parse(DATA.totals.from).getFullYear()} years</b>, mostly a winter-break binge.` },
   ]]);
+  // My family agreed to share these: aggregates only, no names or dates.
+  const fam = DATA.family;
+  if (fam) {
+    const q = Object.entries(fam.pilot_quitters);
+    const k = fam.kapil;
+    groups.push(["Family", [
+      { label: "PILOT QUITTERS", img: bg(DATA.top[0].show), guess: `${q.at(-1)[0]} finishes what she starts`, signal: "Shows quit after one episode",
+        ev: q.map(([w, n], i) => i === 0 ? `<b>${w}: ${n}</b>` : `${w}: ${n}`).join(" · ") + `. ${q[0][0]} samples everything; ${q.at(-1)[0]} commits.` },
+      { label: "THE FAMILY SHOW", img: bg("The Great Indian Kapil Show"), guess: "The Great Indian Kapil Show", signal: "The one show Mom and I share most",
+        ev: `Mom: <b>${k.Mom || 0}</b> episodes. Me: <b>${k.Me || 0}</b>. We watched it on the same day ${fam.kapil_same_day} times.${k.Dad ? ` Dad: ${k.Dad}.` : ""}` },
+      ...(fam.dad_sister_birthday_picks.length ? [{ label: "DAD'S PARTY PICKS", img: bg(DATA.top[2].show), guess: "Birthday-party energy", signal: "What Dad watched on my sister's birthdays",
+        ev: `On my little sister's birthdays, Dad's picks: <b>${listOf(fam.dad_sister_birthday_picks.map(esc))}</b>. Happy birthday!` }] : []),
+    ]]);
+  }
   // Charts for the place clues
   const charts = {
     MOVED: { from: "2015-05", to: "2016-02", hot: ["2015-06", "2015-07"] },
@@ -452,7 +466,7 @@ function setupCase() {
     ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "A FINISHER", "A TV PERSON", "BIRTHDAY"]],
     ["Where I've lived", ["MOVED", "MOVED AGAIN", "U.S. CATALOG", "COLLEGE"]],
     ["How I live", ["ROUTINE", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
-    ["Who I live with", ["FAMILY", "HOUSEHOLD"]],
+    ["Who I live with", ["HOUSEHOLD", "PILOT QUITTERS", "THE FAMILY SHOW", "DAD'S PARTY PICKS", "FAMILY"]],
     ["How I feel", ["HOMESICK", "DENIAL", "SCARE THRESHOLD", "RELATIONSHIP STATUS"]],
   ].map(([title, labels]) => [title, labels.map((l) => byLabel[l]).filter(Boolean)]);
   $("#case-groups").innerHTML = themed.map(([title, clues]) => `

@@ -1892,6 +1892,25 @@
    }
   ]
  },
+ "family": {
+  "pilot_quitters": {
+   "Dad": 205,
+   "Me": 100,
+   "My sister": 37,
+   "Mom": 29
+  },
+  "kapil": {
+   "Mom": 53,
+   "Me": 50,
+   "Dad": 1
+  },
+  "kapil_same_day": 6,
+  "dad_sister_birthday_picks": [
+   "Inglourious Basterds",
+   "Trial 4",
+   "Narcos"
+  ]
+ },
  "windows": {
   "first_days": {
    "from": "2015-06-16",
