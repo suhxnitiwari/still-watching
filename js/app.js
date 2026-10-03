@@ -683,6 +683,65 @@ function setupHouse() {
 const posterOf = (show) => ART[show]?.poster;
 const backdropOf = (show) => ART[show]?.backdrop || ART[show]?.poster || FALLBACK_BG();
 
+// The cold open: me on my dorm bed in Austin, and the screen every college student dreaded.
+function dormSVG() {
+  const lights = Array.from({ length: 22 }, (_, i) => {
+    const x = 40 + i * 72, y = 70 + Math.sin(i / 1.6) * 18;
+    return `<circle class="dorm__light" style="--i:${i}" cx="${x}" cy="${y}" r="7" fill="#ffd27a"/>`;
+  }).join("");
+  return `<svg class="dorm" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="dwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d1833"/><stop offset="1" stop-color="#0c0a15"/></linearGradient>
+      <radialGradient id="dglow" cx=".72" cy=".33" r=".55"><stop offset="0" stop-color="#e50914" stop-opacity=".45"/><stop offset="1" stop-color="#e50914" stop-opacity="0"/></radialGradient>
+      <linearGradient id="dscreen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a0f1c"/><stop offset=".6" stop-color="#2a0710"/><stop offset="1" stop-color="#141026"/></linearGradient>
+      <linearGradient id="dblanket" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6d3fa8"/><stop offset="1" stop-color="#3b1f66"/></linearGradient>
+    </defs>
+    <rect width="1600" height="900" fill="url(#dwall)"/>
+    <rect width="1600" height="900" fill="url(#dglow)" class="dorm__glow"/>
+    <path d="M0 60 Q400 110 800 70 T1600 80" fill="none" stroke="#3a3350" stroke-width="3"/>${lights}
+    <g transform="translate(150 170)"><path d="M0 0 L180 40 L0 80 Z" fill="#bf5700"/><text x="22" y="48" font-size="26" font-weight="800" fill="#fff" font-family="Inter, sans-serif">AUSTIN</text></g>
+    <rect x="110" y="300" width="250" height="190" rx="8" fill="#0a1426" stroke="#3a3350" stroke-width="10"/>
+    <circle cx="300" cy="350" r="26" fill="#f4e9c8" opacity=".85"/><circle cx="170" cy="340" r="2.5" fill="#fff"/><circle cx="220" cy="400" r="2" fill="#fff"/><circle cx="330" cy="440" r="2" fill="#fff"/>
+    <g class="dorm__tv">
+      <rect x="840" y="150" width="660" height="390" rx="14" fill="#0b0b0b"/>
+      <rect x="860" y="168" width="620" height="354" rx="6" fill="url(#dscreen)" class="dorm__screen"/>
+      <g class="dorm__msg" font-family="Inter, sans-serif" text-anchor="middle">
+        <text x="1170" y="290" font-size="34" font-weight="800" fill="#fff">Your TV isn't part of the</text>
+        <text x="1170" y="334" font-size="34" font-weight="800" fill="#fff">household for this account</text>
+        <text x="1170" y="372" font-size="17" fill="#ddd">Create an account to keep watching.</text>
+        <rect x="1080" y="392" width="180" height="40" rx="5" fill="#fff"/><text x="1170" y="418" font-size="16" font-weight="700" fill="#111">Create an Account</text>
+        <rect x="985" y="456" width="170" height="34" rx="4" fill="#5b5b5b"/><text x="1070" y="478" font-size="14" font-weight="700" fill="#fff">Update Household</text>
+        <rect x="1170" y="456" width="140" height="34" rx="4" fill="#5b5b5b"/><text x="1240" y="478" font-size="14" font-weight="700" fill="#fff">I'm Traveling</text>
+      </g>
+      <rect x="1150" y="540" width="40" height="40" fill="#141414"/>
+    </g>
+    <rect x="80" y="610" width="1000" height="70" rx="10" fill="#d9d4e8"/>
+    <rect x="60" y="670" width="1040" height="160" rx="16" fill="#2a2440"/>
+    <rect x="110" y="560" width="230" height="90" rx="40" fill="#f2eef8"/>
+    <path d="M330 640 Q620 560 1080 620 L1080 700 L330 700 Z" fill="url(#dblanket)"/>
+    <g class="dorm__girl">
+      <path d="M470 700 Q470 540 600 520 Q730 540 730 700 Z" fill="#c2185b"/>
+      <path d="M690 600 Q800 560 880 520" stroke="#c98b5e" stroke-width="28" stroke-linecap="round" fill="none" class="dorm__arm"/>
+      <rect x="868" y="498" width="44" height="22" rx="6" fill="#222" transform="rotate(-25 890 509)" class="dorm__remote"/>
+      <path d="M520 430 Q520 330 600 330 Q690 330 690 440 L700 560 Q600 520 500 560 Z" fill="#1f130d"/>
+      <circle cx="600" cy="440" r="78" fill="#c98b5e"/>
+      <path d="M525 420 Q540 350 610 352 Q675 356 680 420 Q640 385 600 392 Q560 388 525 420 Z" fill="#1f130d"/>
+      <g class="dorm__face">
+        <ellipse cx="572" cy="440" rx="14" ry="18" fill="#fff"/><ellipse cx="630" cy="440" rx="14" ry="18" fill="#fff"/>
+        <circle cx="575" cy="444" r="7" fill="#2a1a12"/><circle cx="633" cy="444" r="7" fill="#2a1a12"/>
+        <path d="M556 414 L586 420 M646 414 L616 420" stroke="#1f130d" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="602" cy="490" rx="16" ry="20" fill="#5a2a1a"/>
+      </g>
+      <path class="dorm__sweat" d="M690 400 q10 18 0 26 q-10 -8 0 -26 Z" fill="#7fd3ff"/>
+      <path class="dorm__sweat dorm__sweat--2" d="M515 410 q9 16 0 23 q-9 -7 0 -23 Z" fill="#7fd3ff"/>
+    </g>
+    <g class="dorm__bubble dorm__bubble--1"><rect x="330" y="230" width="230" height="86" rx="20" fill="#fff"/><path d="M470 312 L520 352 L500 312 Z" fill="#fff"/>
+      <text x="445" y="285" text-anchor="middle" font-family="Inter, sans-serif" font-size="34" font-weight="800" fill="#111">WAIT.</text></g>
+    <g class="dorm__bubble dorm__bubble--2"><rect x="280" y="210" width="330" height="96" rx="22" fill="#e50914"/><path d="M480 302 L530 350 L510 302 Z" fill="#e50914"/>
+      <text x="445" y="272" text-anchor="middle" font-family="Inter, sans-serif" font-size="40" font-weight="900" fill="#fff">NO NO NO</text></g>
+  </svg>`;
+}
+
 function passwordFilm() {
   const { windows: w, binges, yearly, gaps, dates, totals, monthly, streak } = DATA;
   const friends = binges.find((b) => b.show === "Friends");
@@ -691,6 +750,8 @@ function passwordFilm() {
   const july = monthly.find((m) => m.month === "2025-07");
   const owned = yearly.filter((y) => y.year >= 2018);
   return [
+    { dur: 7, dorm: true, kicker: `Austin · ${fmtMonth(dates.austin.slice(0, 7))} · 11:47 PM`, line: "Wait,<br><em>what?</em>",
+      sub: "First weeks of college. One more episode before bed. Netflix had other plans." },
     { dur: 6, wall: true, center: true, kicker: "A Suhani Tiwari true story", line: "The Password<br>Stopped Working",
       sub: `${n(totals.views)} things I pressed play on. One household. Then two cities.` },
     { dur: 5, img: backdropOf(w.first_days.top[1].show), kicker: fmtDate(totals.from), line: "It starts<br>in <em>Cupertino</em>",
@@ -767,7 +828,8 @@ function setupPlayer() {
     total = starts.at(-1) + list.at(-1).dur;
     stage.innerHTML = list.map((s) => {
       let bg = "";
-      if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
+      if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
+      else if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
       else if (s.montage?.length) bg = `<div class="montage" style="--cols:${Math.max(3, Math.ceil(s.montage.length / 2))}">${s.montage.map((m, k) =>
         `<figure style="--k:${k}"><img src="${m.img}" alt="" loading="lazy">${m.tag ? `<figcaption>${m.tag}</figcaption>` : ""}</figure>`).join("")}</div>`;
       else if (s.img) bg = `<div class="scene__bg" style="background-image:url('${s.img}')"></div>`;
