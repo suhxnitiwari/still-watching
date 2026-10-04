@@ -347,6 +347,42 @@ def parents(h, meta):
     }
 
 
+day_str = lambda ts: ts.strftime("%Y-%m-%d")
+
+
+def arrival(h):
+    """November 13, 2016: my sister comes home. Weekly watching before and after, by person."""
+    born = pd.Timestamp("2016-11-13")
+    def weekly(w, lo, hi):
+        d = h[(h["who"] == w) & (h["date"] >= born + pd.Timedelta(days=lo)) & (h["date"] <= born + pd.Timedelta(days=hi))]
+        return round(len(d) / ((hi - lo + 1) / 7), 1)
+    me = h[(h["who"] == "Suhani") & (h["date"] >= born) & (h["date"] <= born + pd.Timedelta(days=60))]
+    glc = h[(h["who"] == "Suhani") & (h["show"] == "Good Luck Charlie") & (h["date"] >= born) & (h["date"] <= born + pd.Timedelta(days=180))]
+    return {"me_before": weekly("Suhani", -60, -1), "me_after": weekly("Suhani", 14, 60),
+            "dad_before": weekly("Dad", -60, -1), "dad_after": weekly("Dad", 14, 60),
+            "mom_after": weekly("Mom", 0, 180), "top_after": me["show"].value_counts().index[0],
+            "glc_6mo": int(len(glc)), "glc_6wk": int(((glc["date"] >= born + pd.Timedelta(days=14)) & (glc["date"] <= born + pd.Timedelta(days=60))).sum())}
+
+
+def detective(h):
+    """What the four files give away with no names: who owned which profile, read from the data alone."""
+    dad_file = h[h["profile"] == "Dad"]
+    by_year = dad_file.groupby(dad_file["date"].dt.year).size()
+    mom_file = h[h["profile"] == "Mom"]
+    hindi = mom_file["show"].map(lambda x: x in HINDI_FILMS)
+    day = mom_file.assign(hi=hindi).groupby(mom_file["date"].dt.normalize())["hi"].agg(["any", "all"])
+    freeze = h[(h["date"] >= "2021-02-14") & (h["date"] <= "2021-02-20")]
+    week_after = h[(h["date"] >= "2021-02-21") & (h["date"] <= "2021-02-27")]
+    share = h.groupby(["profile", "who"]).size().unstack(fill_value=0)
+    pct = lambda prof, who: round(share.loc[prof, who] / share.loc[prof].sum() * 100) if prof in share.index and who in share.columns else 0
+    return {"kids_file": {str(k): int(v) for k, v in by_year.items()},
+            "my_profile_from": day_str(h[h["profile"] == "Suhani"]["date"].min()),
+            "sister_profile_from": day_str(h[h["profile"] == "Sister"]["date"].min()),
+            "freeze": int(len(freeze)), "week_after": int(len(week_after)),
+            "dad_file_daughters": pct("Dad", "Suhani") + pct("Dad", "Sister"), "dad_file_dad": pct("Dad", "Dad"),
+            "mom_file_dad": pct("Mom", "Dad"), "mom_file_mom": pct("Mom", "Mom")}
+
+
 def family(meta):
     """Family comparisons Suhani's family agreed to share: aggregates only, Mom and Dad unnamed, my sister
     unnamed, and no dates."""
@@ -400,6 +436,8 @@ def family(meta):
         "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
         "parents": parents(h, meta),
+        "arrival": arrival(h),
+        "detective": detective(h),
         # Copy cat: every title my sister and I share, with when I found it and when she did.
         "copy_cat": [{"show": k, "me": int(r["Suhani"].year), "her": int(r["Sister"].year), "years": round((r["Sister"] - r["Suhani"]).days / 365.25, 1)}
                      for k, r in h[h["who"].isin(["Suhani", "Sister"])].groupby(["show", "who"])["date"].min().unstack().dropna()

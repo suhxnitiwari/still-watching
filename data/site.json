@@ -3141,6 +3141,40 @@
     ]
    }
   },
+  "arrival": {
+   "me_before": 3.1,
+   "me_after": 14.1,
+   "dad_before": 7.7,
+   "dad_after": 1.2,
+   "mom_after": 0.5,
+   "top_after": "Good Luck Charlie",
+   "glc_6mo": 80,
+   "glc_6wk": 25
+  },
+  "detective": {
+   "kids_file": {
+    "2015": 97,
+    "2016": 260,
+    "2017": 436,
+    "2018": 19,
+    "2019": 166,
+    "2020": 202,
+    "2021": 274,
+    "2022": 125,
+    "2023": 27,
+    "2024": 11,
+    "2025": 8,
+    "2026": 19
+   },
+   "my_profile_from": "2017-12-21",
+   "sister_profile_from": "2023-09-24",
+   "freeze": 4,
+   "week_after": 5,
+   "dad_file_daughters": 95,
+   "dad_file_dad": 4,
+   "mom_file_dad": 60,
+   "mom_file_mom": 31
+  },
   "copy_cat": [
    {
     "show": "The Secret Life of Pets",
