@@ -181,7 +181,6 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 .wall__col { flex: 0 0 auto; width: clamp(110px, 10.5vw, 180px); display: flex; flex-direction: column; gap: 14px; animation: drift var(--speed, 70s) linear infinite; }
 .wall__col:nth-child(even) { animation-direction: reverse; margin-top: -60px; }
 .wall__col img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 8px; display: block; box-shadow: 0 10px 30px rgba(0, 0, 0, .55); filter: saturate(.9) brightness(.82); }
-@keyframes drift { to { transform: translateY(-50%); } }
 .wall.is-paused .wall__col { animation-play-state: paused; }
 .wall::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(60% 75% at 8% 55%, rgba(229, 9, 20, .55), transparent 70%), linear-gradient(0deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .35)); mix-blend-mode: normal; }
 .wall::after { content: ""; position: absolute; inset: 0; z-index: 1; background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .22) 0 1px, transparent 1px 3px); pointer-events: none; }
@@ -1165,15 +1164,7 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .profiles__peek span { color: #bbb; font-size: 15px; }
 .profiles__manage { opacity: .5; transform: scale(.85); }
 .avatar { position: relative; overflow: hidden; }
-.avatar__data { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; justify-content: center; gap: 1px; padding: 6px; background: #050505; color: #e50914; font: 700 9px/1.25 "Courier New", monospace; white-space: nowrap; overflow: hidden; pointer-events: none; animation: resolve 2.6s ease .4s forwards; }
-.avatar__data span { animation: drift 1.2s linear infinite; }
-.avatar__data span:nth-child(even) { color: #ff7aa2; animation-direction: reverse; }
-.profile .avatar img { animation: sharpen 2.6s ease .4s both; }
-@keyframes resolve { 0% { opacity: 1; } 55% { opacity: .85; } 100% { opacity: 0; } }
 @keyframes drift { from { transform: translateX(0); } to { transform: translateX(-30px); } }
-@keyframes sharpen { 0% { filter: blur(14px) saturate(0) contrast(2); transform: scale(1.15); } 100% { filter: none; transform: none; } }
-.profile:hover .avatar__data { animation: replay 1.2s ease; }
-@keyframes replay { 0%, 100% { opacity: 0; } 30% { opacity: .9; } }
 
 /* ---------- Suhani's PIN screen: the dataset, explained by unlocking ---------- */
 .pin { display: grid; justify-items: center; gap: 14px; text-align: center; max-width: 560px; padding: 0 16px; }
@@ -1222,3 +1213,12 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .peek__ghostrow i { flex: 0 0 160px; height: 96px; border-radius: 6px; background: linear-gradient(135deg, #3a3a3a, #1d1d1d); }
 .peek__locked { position: relative; z-index: 2; margin: 0 auto 0; max-width: 520px; background: rgba(20, 20, 20, .92); min-height: 40vh; display: flex; flex-direction: column; justify-content: center; }
 .peek__head { display: none; }
+
+/* Avatar reveal: a face rebuilt from data on a canvas, then the real portrait */
+.profile .avatar img { opacity: 0; transition: opacity .9s ease, filter .9s ease; filter: saturate(.4) contrast(1.3); }
+.profile .avatar.is-revealed img { opacity: 1; filter: none; }
+.avatar__recon { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; transition: opacity .9s ease; pointer-events: none; }
+.avatar.is-revealed .avatar__recon { opacity: 0; }
+.avatar__status { position: absolute; left: 0; right: 0; bottom: 6px; z-index: 2; text-align: center; font: 700 8px/1 "Courier New", monospace; letter-spacing: .14em; color: #fff; text-shadow: 0 0 6px #e50914; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.avatar.is-reconstructing .avatar__status { opacity: 1; }
+.avatar__lock, .avatar__kids { z-index: 3; }

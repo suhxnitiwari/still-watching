@@ -183,6 +183,65 @@ const DATA_BITS = {
   Suhani: ["Friends", "2019-12-15", "29 eps", "Gossip Girl", "Jessie", "Vampire Diaries", "Austin"],
   Sister: ["iCarly", "Masha", "Sofia", "2023-09-24", "Barbie", "PJ Masks", "Little Baby Bum"],
 };
+// The reveal: the computer rebuilds each face from data. It samples the real portrait's pixels and redraws
+// them as glyphs (bits, digits and letters from that person's own titles), each tinted with the pixel's color.
+// Noise first, then a scanline locks the glyphs into a face, then the glyphs dissolve into the photo.
+function reconstruct(avatarEl, name) {
+  const img = avatarEl.querySelector("img"), cv = avatarEl.querySelector(".avatar__recon"), status = avatarEl.querySelector(".avatar__status");
+  if (!img || !cv) return () => {};
+  const N = 34, words = (DATA_BITS[name] || []).join(" ").replace(/[^A-Za-z0-9]/g, "").toUpperCase() || "01";
+  let grid = null, raf = 0;
+  const sample = () => {
+    const off = document.createElement("canvas"); off.width = off.height = N;
+    const g = off.getContext("2d"); g.drawImage(img, 0, 0, N, N);
+    const d = g.getImageData(0, 0, N, N).data;
+    grid = Array.from({ length: N * N }, (_, k) => {
+      const r = d[k * 4], gg = d[k * 4 + 1], b = d[k * 4 + 2], lum = (0.3 * r + 0.59 * gg + 0.11 * b) / 255;
+      const ch = lum < .22 ? "0" : lum < .45 ? "1" : words[(k * 7) % words.length];
+      return { r, g: gg, b, lum, ch, t: (Math.floor(k / N) / N) * .75 + Math.random() * .12 };
+    });
+  };
+  const play = () => {
+    if (!img.complete || !img.naturalWidth) { img.addEventListener("load", play, { once: true }); return; }
+    if (!grid) sample();
+    cancelAnimationFrame(raf);
+    const size = cv.clientWidth || 140, dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = cv.height = size * dpr;
+    const ctx = cv.getContext("2d"), cell = (size * dpr) / N;
+    ctx.font = `700 ${cell * 1.05}px "Courier New", monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    avatarEl.classList.remove("is-revealed"); avatarEl.classList.add("is-reconstructing");
+    const start = performance.now(), NOISE = 650, SCAN = 1900, HOLD = 450;
+    const frame = (now) => {
+      const t = now - start, scan = Math.max(0, (t - NOISE) / SCAN);
+      ctx.fillStyle = "#050505"; ctx.fillRect(0, 0, cv.width, cv.height);
+      for (let k = 0; k < grid.length; k++) {
+        const c = grid[k], x = (k % N + .5) * cell, y = (Math.floor(k / N) + .5) * cell;
+        if (scan >= c.t) {
+          // a pixel block in the portrait's color, with a glyph printed on it
+          const fresh = Math.min(1, (scan - c.t) * 6);
+          ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${.25 + .6 * fresh})`;
+          ctx.fillRect(x - cell / 2 + .5, y - cell / 2 + .5, cell - 1, cell - 1);
+          const lift = (v) => Math.min(255, v + 70);
+          ctx.fillStyle = fresh < 1 ? "#fff" : `rgb(${lift(c.r)},${lift(c.g)},${lift(c.b)})`;
+          ctx.fillText(c.ch, x, y);
+        } else {
+          ctx.fillStyle = Math.random() < .12 ? "rgba(255,255,255,.7)" : `rgba(229,9,20,${.25 + Math.random() * .4})`;
+          ctx.fillText(Math.random() < .5 ? "0" : "1", x, y);
+        }
+      }
+      if (scan > 0 && scan < .95) {  // the scanline
+        const sy = Math.min(scan / .87, 1) * cv.height;
+        ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.fillRect(0, sy - dpr, cv.width, 2 * dpr);
+        ctx.fillStyle = "rgba(229,9,20,.18)"; ctx.fillRect(0, sy - 14 * dpr, cv.width, 14 * dpr);
+      }
+      status.textContent = t < NOISE ? "SCANNING…" : scan < 1 ? `RECONSTRUCTING ${Math.min(99, Math.round(scan * 100))}%` : "MATCH FOUND";
+      if (t < NOISE + SCAN + HOLD) raf = requestAnimationFrame(frame);
+      else { avatarEl.classList.remove("is-reconstructing"); avatarEl.classList.add("is-revealed"); }
+    };
+    raf = requestAnimationFrame(frame);
+  };
+  return play;
+}
 function dataRain(name) {
   const words = DATA_BITS[name] || [];
   const line = (i) => Array.from({ length: 6 }, (_, k) => (k + i) % 3 === 0 && words.length ? words[(k * 3 + i) % words.length] : Math.random().toString(2).slice(2, 10)).join(" ");
@@ -362,13 +421,23 @@ function setupProfiles() {
 
   $("#profile-list").innerHTML = PROFILES.map((p, i) => `
     <button class="profile" type="button" data-profile="${i}">
-      <span class="avatar">${avatar(p, i)}${dataRain(p.name)}${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
+      <span class="avatar">${avatar(p, i)}<canvas class="avatar__recon" aria-hidden="true"></canvas><span class="avatar__status" aria-hidden="true"></span>${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
       <span class="profile__name">${p.name}</span>
     </button>`).join("") + `
     <button class="profile profile--add" type="button" data-profile="add">
       <span class="avatar" aria-hidden="true">+</span><span class="profile__name">Add Profile</span>
     </button>`;
 
+  // Rebuild each face from data, one after another; hovering replays it.
+  [...document.querySelectorAll("#profile-list .profile")].forEach((b, i) => {
+    const p = PROFILES[b.dataset.profile];
+    if (!p) return;
+    const av = b.querySelector(".avatar"), play = reconstruct(av, p.name);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { av.classList.add("is-revealed"); return; }
+    setTimeout(play, 300 + i * 450);
+    let last = 0;
+    b.addEventListener("mouseenter", () => { if (av.classList.contains("is-revealed") && performance.now() - last > 3500) { last = performance.now(); play(); } });
+  });
   const hint = $("#profile-hint");
   const say = (button, text) => {
     hint.textContent = text;
