@@ -1174,5 +1174,11 @@
   "match": "Pitaah",
   "source": "https://en.wikipedia.org/wiki/Pitaah",
   "poster": "img/posters/pitaah.jpg"
+ },
+ "Lilo & Stitch": {
+  "match": "Lilo & Stitch: The Series (2003)",
+  "source": "https://www.tvmaze.com/shows/9803/lilo-stitch-the-series",
+  "poster": "img/posters/lilo-stitch.jpg",
+  "backdrop": "img/backdrops/lilo-stitch.jpg"
  }
 }

@@ -55,5 +55,23 @@ def main():
     print(f"wrote {OUT.relative_to(ROOT)}: {len(out)} shows")
 
 
+def episode_stills():
+    """Add TVmaze's still to every episode in data/episodes.json ([name, month, same-day count, still])."""
+    path = ROOT / "data" / "episodes.json"
+    data = json.loads(path.read_text())
+    for name, entry in data.items():
+        rows = [e for eps in entry["seasons"].values() for e in eps]
+        if all(len(e) == 4 for e in rows):
+            continue
+        sid = tvmaze_id(name)
+        imgs = {norm(e["name"]): (e.get("image") or {}).get("medium") for e in get_json(f"https://api.tvmaze.com/shows/{sid}/episodes")} if sid else {}
+        for e in rows:
+            if imgs.get(norm(e[0])):
+                e[3:] = [imgs[norm(e[0])]]
+        print(f"  {name}: {sum(len(e) == 4 for e in rows)} stills")
+        time.sleep(0.6)
+    path.write_text(json.dumps(data, separators=(",", ":"), ensure_ascii=False))
+
 if __name__ == "__main__":
     main()
+    episode_stills()

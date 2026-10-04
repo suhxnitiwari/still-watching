@@ -30,15 +30,15 @@ LOOKUP = {
     "Indian Matchmaking": 2020, "Jane The Virgin": 2014, "LEGO Ninjago": ("Ninjago: Masters of Spinjitzu", 2011),
     "Manifest": 2018, "Masha and the Bear": 2009, "Mismatched": 2020, "Never Have I Ever": 2020,
     "Once Upon a Time": 2011, "Partner Track": 2022, "Peaky Blinders": 2013, "Planet Earth": 2006, "Riverdale": 2017, "Single Papa": 2024,
-    "Stranger Things": 2016, "Sugar Rush": 2018, "Switched at Birth": 2011, "The Boss Baby": ("The Boss Baby: Back in Business", 2018), "The Fosters": 2013,
+    "Stranger Things": 2016, "Sugar Rush": 2018, "Switched at Birth": 2011, "The Boss Baby": ("The Boss Baby: Back in Business", 2018), "Lilo & Stitch": ("Lilo & Stitch: The Series", 2003), "The Fosters": 2013,
     "The Great Indian Kapil Show": 2024, "The Night Agent": 2023, "The Originals": 2013,
     "The Vampire Diaries": 2009, "Workin' Moms": 2017, "XO, Kitty": 2023, "Young Sheldon": 2017,
     "Masaba Masaba": 2020, "Money Heist": ("La Casa de Papel", 2017), "Victorious": 2010, "Merry Happy Whatever": 2019,
     "Dabba Cartel": 2025, "Tribhuvan Mishra CA Topper": 2024, "Beyond Stranger Things": 2017,
-    "Jessie": 2011, "Good Luck Charlie": 2010, "Lab Rats": 2012, "Liv and Maddie": 2013, "A.N.T. Farm": 2011,
+    "Jessie": 2011, "Richie Rich": 2015, "Goosebumps": 1995, "Inspector Gadget": 2015, "One Day at a Time": 2017, "Pretty Little Liars": 2010, "Good Luck Charlie": 2010, "Lab Rats": 2012, "Liv and Maddie": 2013, "A.N.T. Farm": 2011,
     "Phineas and Ferb": 2007, "Dragon Tales": 1999, "Mickey Mouse Clubhouse": 2006, "Mighty Med": 2013,
 }
-WIKI = {"A Family Affair": "A Family Affair (2024 film)", "Lilo & Stitch": "Lilo & Stitch",
+WIKI = {"A Family Affair": "A Family Affair (2024 film)",
         # Mom's Shah Rukh Khan shelf: films, so Wikipedia, not TVmaze (which matches TV shows with the same name).
         "Om Shanti Om": "Om Shanti Om", "Chennai Express": "Chennai Express", "Dilwale": "Dilwale (2015 film)",
         "Dunki": "Dunki (film)", "Raees": "Raees (film)", "Kabhi Khushi Kabhie Gham": "Kabhi Khushi Kabhie Gham...",

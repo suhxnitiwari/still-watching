@@ -122,6 +122,25 @@ def comebacks(df, min_gap_years=3, min_after=5):
     return sorted(out, key=lambda x: -x["years"])
 
 
+# Hand-coded facts TVmaze doesn't have, for my most-watched series: the lead's age in season 1,
+# where the show is set, and whether it's a mother-daughter story.
+LEAD_AGE = {"Friends": 25, "The Vampire Diaries": 17, "Grey's Anatomy": 26, "Gilmore Girls": 16, "Gossip Girl": 17, "Jessie": 18,
+            "Jane The Virgin": 23, "The Fosters": 16, "Switched at Birth": 16, "Good Luck Charlie": 15, "Lab Rats": 15, "Baby Daddy": 23,
+            "Liv and Maddie": 15, "A.N.T. Farm": 11, "Mighty Med": 15, "Stranger Things": 12, "Never Have I Ever": 15, "Bridgerton": 21,
+            "13 Reasons Why": 17, "Ginny & Georgia": 15, "Riverdale": 16, "XO, Kitty": 16, "Mismatched": 19}
+SETTING = {"Friends": "New York", "Gossip Girl": "New York", "Jessie": "New York", "Baby Daddy": "New York", "Manifest": "New York",
+           "The Vampire Diaries": "a small town", "Gilmore Girls": "a small town", "Liv and Maddie": "a small town", "Stranger Things": "a small town",
+           "Ginny & Georgia": "a small town", "Riverdale": "a small town", "13 Reasons Why": "a small town", "Bunk'd": "a small town",
+           "Grey's Anatomy": "Seattle", "Fuller House": "San Francisco", "A.N.T. Farm": "San Francisco", "Jane The Virgin": "Miami",
+           "The Fosters": "San Diego", "Switched at Birth": "Kansas City", "Good Luck Charlie": "Denver", "Lab Rats": "California",
+           "Never Have I Ever": "Los Angeles", "The Originals": "New Orleans", "Mighty Med": "Philadelphia", "Bridgerton": "London",
+           "Emily in Paris": "Paris", "The Night Agent": "Washington", "Dubai Bling": "Dubai", "The Great Indian Kapil Show": "Mumbai",
+           "Fabulous Lives of Bollywood Wives": "Mumbai", "Mismatched": "Jaipur", "XO, Kitty": "Seoul", "Delhi Crime": "Delhi",
+           "Workin' Moms": "Toronto", "AMERICA'S SWEETHEARTS": "Dallas"}
+MOTHER_DAUGHTER = {"Gilmore Girls", "Jane The Virgin", "Ginny & Georgia", "Never Have I Ever", "Switched at Birth", "The Fosters", "Workin' Moms"}
+SCHOOL = [(0, 11, "elementary"), (11, 14, "middle"), (14, 18, "high"), (18, 30, "college")]
+
+
 def profile(df, meta):
     """The detective file: what the history gives away without being told."""
     per_day = lambda s, a, b: round(len(s[(s["date"] >= a) & (s["date"] <= b)]) / ((pd.Timestamp(b) - pd.Timestamp(a)).days + 1), 2)
@@ -158,7 +177,62 @@ def profile(df, meta):
     totals = json.loads(counts_path.read_text()) if counts_path.exists() else {}
     finished = [{"show": k, "watched": int((df["show"] == k).sum()), "total": v} for k, v in totals.items()
                 if v >= 40 and (df["show"] == k).sum() / v >= .95]
+    # What I watch, beyond genre: how old the shows are, whose network they're from, and release-day seasons.
+    ser = df[df["kind"] == "series"]
+    year_of = lambda x: int(str((meta.get(x) or {}).get("premiered") or "")[:4] or 0) or None
+    aged = ser.assign(p=ser["show"].map(year_of)).dropna(subset=["p"])
+    older = aged[aged["p"] < 2006]
+    nets = ser["show"].map(lambda x: (meta.get(x) or {}).get("network")).value_counts(normalize=True)
+    cw = ser[ser["show"].map(lambda x: (meta.get(x) or {}).get("network") == "The CW")]["show"].value_counts()
+    release = []
+    sd_path = BUILD / "season_dates.json"
+    for show, seasons in (json.loads(sd_path.read_text()) if sd_path.exists() else {}).items():
+        for n, rel in seasons.items():
+            x = ser[(ser["show"] == show) & ser["season"].fillna("").str.fullmatch(rf"(?:Season|Part|Volume) {n}")]
+            rel = pd.Timestamp(rel)
+            # Netflix keeps each episode's latest date, so only a whole season inside its release week counts.
+            if len(x) >= 6 and x["date"].min() >= rel and (x["date"].max() - rel).days <= 3:
+                release.append({"show": show, "season": int(n), "month": rel.strftime("%Y-%m"), "days": int((x["date"].max() - rel).days) + 1, "episodes": int(len(x))})
+    wd = df["date"].dt.day_name().value_counts(normalize=True)
+    born = pd.Timestamp("2006-03-06")
+    era_of = lambda a: next(name for lo, hi, name in SCHOOL if lo <= a < hi)
+    aged_me = ser.assign(age=(ser["date"] - born).dt.days / 365.25)
+    aged_me = aged_me.assign(era=aged_me["age"].map(era_of))
+    lead = aged_me[aged_me["show"].isin(LEAD_AGE)]
+    lead = lead.assign(gap=lead["show"].map(LEAD_AGE) - lead["age"])
+    mom_d = aged_me["show"].isin(MOTHER_DAUGHTER)
+    in_college = aged_me["date"] >= MOVED_TO_AUSTIN
+    june_july = aged_me["date"].dt.month.isin([6, 7])
+    where = ser["show"].map(SETTING).value_counts()
+    eras = [e for _, _, e in SCHOOL]
+    what_more = {
+        "ahead": {"coverage": round(len(lead) / len(ser) * 100), "older_pct": round((lead["gap"] > 0).mean() * 100),
+                  "by_era": {e: round(float(lead[lead["era"] == e]["gap"].mean()), 1) for e in eras if (lead["era"] == e).any()},
+                  "example": {"show": "The Vampire Diaries", "lead": LEAD_AGE["The Vampire Diaries"],
+                              "me": int(lead[lead["show"] == "The Vampire Diaries"]["age"].min())},
+                  "college": lead[lead["era"] == "college"]["show"].value_counts().index[:2].tolist()},
+        "mothers": {"pct": round(mom_d.mean() * 100, 1), "by_era": {e: round(float(mom_d[aged_me["era"] == e].mean() * 100), 1) for e in eras},
+                    "top": aged_me[mom_d]["show"].value_counts().index[:3].tolist(),
+                    "away": round(float(mom_d[in_college & ~june_july].mean() * 100), 1), "home": round(float(mom_d[in_college & june_july].mean() * 100), 1)},
+        "places": {"coverage": round(ser["show"].map(SETTING).notna().mean() * 100),
+                   "top": [{"place": k, "views": int(v)} for k, v in where.head(6).items()],
+                   "nyc": ser[ser["show"].map(SETTING) == "New York"]["show"].value_counts().index[:3].tolist(),
+                   "town": ser[ser["show"].map(SETTING) == "a small town"]["show"].value_counts().index[:3].tolist()},
+    }
+    favs = ser["show"].value_counts().head(4).index
+    fav_years = [year_of(x) for x in favs if year_of(x)]
+    what_more["show_age"] = {"favorites": [{"show": x, "year": year_of(x)} for x in favs], "fav_year": round(sum(fav_years) / len(fav_years)),
+                             "median_year": int(aged["p"].median())}
+    what = {**what_more, "older_pct": round(len(older) / len(aged) * 100, 1),
+            "older": [{"show": k, "year": year_of(k), "views": int(v)} for k, v in older["show"].value_counts().head(3).items()],
+            "median_age": int((aged["date"].dt.year - aged["p"]).median()),
+            "fresh_pct": round(((aged["date"].dt.year - aged["p"]) <= 1).mean() * 100),
+            "netflix_pct": round(nets.get("Netflix", 0) * 100), "cw_pct": round(nets.get("The CW", 0) * 100),
+            "cw_top": cw.index[:3].tolist(), "networks": [{"network": k, "pct": round(v * 100)} for k, v in nets.head(5).items()],
+            "release": sorted(release, key=lambda r: (r["days"], r["month"])),
+            "top_day": wd.index[0], "top_day_pct": round(wd.iloc[0] * 100), "low_day": wd.index[-1], "low_day_pct": round(wd.iloc[-1] * 100)}
     return {
+        "what": what,
         "senior_spring": {"views": int(len(spring)), "days": int(spring["date"].nunique()), "months": 6,
                           # The same January–June stretch in every high school year, for comparison.
                           "by_year": {str(y): int(((df["date"] >= f"{y}-01-01") & (df["date"] <= f"{y}-06-26")).sum()) for y in range(2021, 2025)},
@@ -229,13 +303,19 @@ def amaira(h):
              "per_episode": round(len(m) / m["title"].nunique(), 1)} if len(m) else None
     lbb = a[a["show"] == "Little Baby Bum"]
     bum = {"episodes": int(lbb["title"].nunique()), "profiles": int(lbb["profile"].nunique())} if len(lbb) else None
-    return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years, "masha": masha, "bum": bum}
+    # Growing up with Netflix from day one: whose profile raised her.
+    share = a["profile"].value_counts(normalize=True)
+    return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years, "masha": masha, "bum": bum,
+            "on_dad": round(float(share.get("Dad", 0)) * 100), "on_own": round(float(share.get("Sister", 0)) * 100), "titles": int(a["show"].nunique())}
 
 
 # Watched together on Mom's account, so they don't count as her favorites.
 FAMILY_TOGETHER = {"The Great Indian Kapil Show", "The Night Agent"}
 SRK = ["Om Shanti Om", "Chennai Express", "Dilwale", "Dunki", "Raees", "Kabhi Khushi Kabhie Gham", "Dil To Pagal Hai",
        "Phir Bhi Dil Hai Hindustani", "Deewana", "Anjaam", "Chak De! India", "Dear Zindagi", "Jawan", "Zero"]
+SRK_YEARS = {"Om Shanti Om": 2007, "Chennai Express": 2013, "Dilwale": 2015, "Dunki": 2023, "Raees": 2017,
+             "Kabhi Khushi Kabhie Gham": 2001, "Dil To Pagal Hai": 1997, "Phir Bhi Dil Hai Hindustani": 2000, "Deewana": 1992,
+             "Anjaam": 1994, "Chak De! India": 2007, "Dear Zindagi": 2016, "Jawan": 2023, "Zero": 2018}
 
 
 DIWALI = {2015: "11-11", 2016: "10-30", 2017: "10-19", 2018: "11-07", 2019: "10-27", 2020: "11-14", 2021: "11-04",
@@ -338,13 +418,28 @@ def parents(h, meta):
         mom_years.append({"year": int(y), "movies": int((g["kind"] == "movie").sum()),
                           "titles": g["show"].value_counts().index[:12].tolist(),
                           "show": sv.index[0] if len(sv) and sv.iloc[0] >= 5 else None, "episodes": int(sv.iloc[0]) if len(sv) else 0})
+    # "Who he is / who she is": what each parent's history gives away, beyond their favorites.
+    def who(d):
+        ser = d[d["kind"] == "series"]
+        docs = ser[ser["show"].map(lambda x: (meta.get(x) or {}).get("type") == "Documentary")]
+        hist = docs[docs["show"].map(lambda x: "History" in (meta.get(x) or {}).get("genres", []) or "War" in (meta.get(x) or {}).get("genres", []))]
+        wd = d["date"].dt.day_name().value_counts(normalize=True)
+        year_of = lambda x: int(str((meta.get(x) or {}).get("premiered") or "")[:4] or 0) or None
+        fresh = ser.assign(p=ser["show"].map(year_of)).dropna(subset=["p"])
+        prem = fresh["p"].astype(int)
+        return {"docs": int(len(docs)), "history_docs": hist["show"].value_counts().index[:4].tolist(),
+                "top_day": wd.index[0], "top_day_pct": round(wd.iloc[0] * 100), "low_day": wd.index[-1], "low_day_pct": round(wd.iloc[-1] * 100),
+                "median_premiere": int(prem.median()) if len(prem) else None,
+                "fresh_pct": round(((fresh["date"].dt.year - fresh["p"].astype(int)) <= 1).mean() * 100) if len(fresh) else None,
+                "by_year": {str(k): int(v) for k, v in d.groupby(d["date"].dt.year).size().items()}}
     return {
-        "Dad": {"top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
+        "Dad": {"who": who(dad), "top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
                 "years": dad_years, "genres": genres(dad), "fast": fast(dad), "special": special_days(dad), "timing": dad_timing(h)},
         "Mom": {"top": [{"show": k, "views": int(v)} for k, v in mser["show"].value_counts().head(10).items()],
                 "years": [y for y in mom_years if y["movies"] or y["show"]], "genres": genres(mser), "fast": fast(mom),
                 "movies": int(mmov["show"].nunique()), "movie_pct": round(len(mmov) / len(mom) * 100),
-                "srk": [t for t in SRK if t in set(mom["show"])]},
+                "srk": [t for t in SRK if t in set(mom["show"])],
+                "srk_years": {t: SRK_YEARS[t] for t in SRK if t in set(mom["show"])}, "who": who(mom)},
     }
 
 
@@ -432,7 +527,8 @@ def family(meta):
         return {"binge_days": int((per >= 6).sum()), "eps_per_show": round(float(n.mean()), 1), "titles": int(d["show"].nunique()),
                 "movie_pct": round((d["kind"] == "movie").mean() * 100), "top5_pct": round(d["show"].value_counts().head(5).sum() / len(d) * 100),
                 "per_day": round(float(per.mean()), 1), "month": int(d["date"].dt.month.value_counts().idxmax()),
-                "hindi_pct": round(d["show"].map(lambda x: hindi(x)).mean() * 100)}
+                "hindi_pct": round(d["show"].map(lambda x: hindi(x)).mean() * 100),
+                "netflix_pct": round(float((d[d["kind"] == "series"]["show"].map(lambda x: (meta.get(x) or {}).get("network")).dropna() == "Netflix").mean() * 100))}
     return {
         "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
@@ -841,6 +937,35 @@ def main():
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(site, indent=1, ensure_ascii=False))
+    # Every episode of a featured series, for the title modal's episode list. Published by month only (no exact
+    # dates): how many I watched that same day and my longest break are worked out here, and only the results ship.
+    ep_path = OUT.parent / "episodes.json"
+    old_eps = json.loads(ep_path.read_text()) if ep_path.exists() else {}
+    stills = {}  # keep the TVmaze stills etl/fetch_stills.py already found
+    for show, entry in old_eps.items():
+        for rows in (entry.get("seasons", entry) if isinstance(entry, dict) else {}).values():
+            for r in rows:
+                if isinstance(r, list) and r and isinstance(r[-1], str) and r[-1].startswith("http"):
+                    stills[(show, r[0])] = r[-1]
+    eps = {}
+    feat = df[df["show"].isin(featured) & (df["kind"] == "series")].sort_values("date", kind="stable")
+    for show, g in feat.groupby("show", sort=False):
+        same_day = g.groupby("date")["date"].transform("size")
+        seasons = {}
+        for r, n in zip(g.itertuples(), same_day):
+            name = r.episode if isinstance(r.episode, str) else r.title
+            row = [name, r.date.strftime("%Y-%m"), int(n)]
+            if (show, name) in stills:
+                row.append(stills[(show, name)])
+            seasons.setdefault(r.season if isinstance(r.season, str) else "", []).append(row)
+        days = pd.Series(sorted(g["date"].unique()))
+        breaks = days.diff().dt.days
+        gap = None
+        if len(days) > 1 and breaks.max() >= 180:
+            i = int(breaks.idxmax())
+            gap = {"days": int(breaks[i]), "back": days[i].strftime("%Y-%m"), "episodes": int((g["date"] == days[i]).sum())}
+        eps[show] = {"seasons": seasons, "gap": gap}
+    ep_path.write_text(json.dumps(eps, separators=(",", ":"), ensure_ascii=False))
     print(f"wrote {OUT.relative_to(ROOT)} ({OUT.stat().st_size / 1024:.0f} KB, {len(site['shows'])} shows)")
 
 

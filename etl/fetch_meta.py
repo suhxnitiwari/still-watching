@@ -38,11 +38,18 @@ def search(name):
             "genres": show.get("genres", []), "type": show.get("type"), "network": network}
 
 
+# Titles TVmaze only matches to the wrong show (they're films or too generic): no metadata beats wrong metadata.
+NO_MATCH = {"LEGO", "One Day", "Spy Kids", "Trolls"}
+
+
 def main():
     views = pd.read_csv(ROOT / "build" / "views.csv")
     series = sorted(views.loc[views["kind"] == "series", "show"].dropna().unique())
     meta = json.loads(OUT.read_text()) if OUT.exists() else {}
     for name in series:
+        if name in NO_MATCH:
+            meta[name] = None
+            continue
         if name in meta:
             continue
         try:

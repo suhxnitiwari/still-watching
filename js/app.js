@@ -7,6 +7,8 @@ const SVG = "http://www.w3.org/2000/svg";
 
 let DATA;
 const BIRTH_YEAR = 2006;
+// Amaira was born in November 2016, so for most of any year she is (year - 2017) years old.
+const sisterAge = (year) => year - 2017;
 let ART = {};
 let STILLS = {};  // episode stills by show and year (data/stills.json)
 
@@ -306,39 +308,75 @@ function peekPersona(name) {
     <p class="peek__about">${P.about}</p><div class="peek__stats">${P.stats.join("")}</div></div>`;
 }
 
+// Who he is / who she is: what each parent's history gives away beyond favorites, with the evidence.
+function whoFacts(name) {
+  const f = DATA?.family, pp = f?.parents?.[name], w = pp?.who, d = f?.detective;
+  if (!w || !d) return [];
+  const a = f.arrival, yr = w.by_year;
+  const since = Object.entries(yr).filter(([y]) => y > "2022").map(([, v]) => v);
+  const fact = (label, guess, signal, ev, bg) => ({ label, guess, signal, ev, bg });
+  return (name === "Dad" ? [
+    fact("Family", "A dad of<br><em>two girls</em>", "Whose shows fill his profile",
+      `Only ${d.dad_file_dad}% of the Dad profile is Dad. ${d.dad_file_daughters}% is his daughters: Disney Channel, teen dramas, then cartoons. He moved to Mom's profile, where he's ${d.mom_file_dad}% of the views.`, { montage: postersOf(["Liv and Maddie", "Jessie", "Good Luck Charlie", "Lab Rats", "Bunk'd", "Mighty Med"]) }),
+    fact("November 2016", `${a.dad_before} a week<br>→ <em>${a.dad_after}</em>`, "His views per week, before and after",
+      "The two months before her sister arrived in November 2016, against the weeks after. A new baby at home. Something small took over his evenings.", { black: true }),
+    w.docs >= 50 && fact("Interests", "A history<br><em>buff</em>", "Documentaries, by topic",
+      `${w.docs} documentary episodes: ${listOf(w.history_docs.slice(0, 3))}. Empires, wars and outlaws.`, { img: backdropOf(w.history_docs[0]) }),
+    fact("Routine", `${w.top_day} is<br><em>TV night</em>`, "Which day of the week he presses play",
+      `${w.top_day}: ${w.top_day_pct}% of his watching. ${w.low_day}: ${w.low_day_pct}%. The week belongs to work.`, { black: true }),
+  ] : [
+    fact("Her profile", "Shared with<br><em>her husband</em>", "Who's really watching on the Mom profile",
+      `Only ${d.mom_file_mom}% of the Mom profile is Mom. ${d.mom_file_dad}% is Dad's cartels and war documentaries; the rest is us kids. I split it by language, genre and kids' tags.`, { wall: true }),
+    w.fresh_pct != null && fact("Timing", `${w.fresh_pct}%<br><em>brand new</em>`, "How old a show is when she starts it",
+      `${w.fresh_pct}% of her series episodes were watched within a year of the premiere. Dad: ${f.parents.Dad.who.fresh_pct}%. She watches what just came out.`, { black: true }),
+    f.mom_hindi_lead && fact("Taste", `First on<br><em>${f.mom_hindi_lead.mom_first} of ${f.mom_hindi_lead.shared}</em>`, "Who got to a shared Hindi title first",
+      "The Hindi titles she and I both watched. She found most of them first. The family's Hindi tastemaker.", { montage: postersOf(f.mom_first_titles || []) }),
+    yr["2021"] && yr["2022"] && since.length && fact("2022", `${yr["2021"]} → <em>${yr["2022"]}</em>`, "Her views per year",
+      `2021 to 2022, and ${Math.min(...since)} to ${Math.max(...since)} every year since. Netflix became hers.`, { black: true }),
+    pp.srk_years && fact("Generation", "'90s<br><em>Shah Rukh</em>", "The oldest films she goes back to",
+      Object.entries(pp.srk_years).sort((x, y) => x[1] - y[1]).slice(0, 3).map(([t, y]) => `${t} (${y})`).join(", ") + ". She came of age with these.", { montage: (pp.srk || []).map((t) => ({ img: posterOf(t), tag: pp.srk_years[t] })) }),
+    f.kapil_same_day && fact("Watches with", "Her<br><em>daughter</em>", "Same show, same day",
+      `The Great Indian Kapil Show: she and I watched it on the same day ${f.kapil_same_day} times.`, { img: backdropOf("The Great Indian Kapil Show") }),
+  ]).filter(Boolean);
+}
+const whoScenes = (name) => whoFacts(name).map((x, i) => ({ dur: 5.5, ...x.bg, center: !x.bg.img, alt: i % 2 === 1,
+  kicker: `${name === "Dad" ? "Who he is" : "Who she is"} · ${x.label}`, line: x.guess, sub: `${x.signal}. ${x.ev}` }));
+
 // Netflix's Top 10 look (big outlined numbers), in one scrollable row.
-function peekTop10(list) {
-  return `<div class="peek__row">${list.map((t, i) => `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="tile tile--static" aria-label="${esc(t.show)}">${art(t.show, { tall: true })}<span class="tag">${t.views} eps</span></div></div>`).join("")}</div>`;
+const saysLine = (show, who) => { const x = saysFor(show, who); return x ? `<span class="says">${esc(x)}</span>` : ""; };
+function peekTop10(list, who, title = "Top 10") {
+  return row(title, "", list.map((t, i) => `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="top10__col"><div class="tile tile--static" aria-label="${esc(t.show)}">${art(t.show, { tall: true })}<span class="tag">${t.views} eps</span></div>${saysLine(t.show, who)}</div></div>`));
+}
+// A Netflix wide tile with its two caption lines underneath (title, then a grey line), like "Hooked from the First Episode".
+function capTile(show, { badge = "", top = esc(show), line = "", tag = "div", cls = "", attrs = "" } = {}) {
+  return `<${tag} class="cap${cls ? ` ${cls}` : ""}" ${attrs}><span class="tile tile--static">${art(show)}${badge ? `<span class="tag">${esc(badge)}</span>` : ""}</span>
+    <b class="cap__top">${top}</b>${line ? `<span class="cap__line">${esc(line)}</span>` : ""}</${tag}>`;
 }
 
 // Dad's and Mom's approved peek: top genre, top 10, each year (Mom: movies a year), then the lock.
 function peekParent(name) {
   const pp = DATA?.family?.parents?.[name];
   if (!pp) return "";
-  const his = name === "Dad" ? "His" : "Her";
+  const his = name === "Dad" ? "His" : "Her", f = DATA.family;
   const genre = name === "Mom" ? "Bollywood movies, and Hindi crime for series" : pp.genres.slice(0, 2).map((g) => g.genre.toLowerCase()).join(" and ").replace(/^drama and crime$/, "crime drama");
-  const years = pp.years.map((y) => name === "Dad"
-    ? `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`
-    : (() => { const pick = (y.titles || []).find((t) => ART[t]?.poster) || y.show;
-        return `<div class="peek__year peek__year--poster">${art(pick, { tall: true })}<span class="peek__count"><b>${y.movies}</b>movies</span><b>${y.year}</b><span>${esc(pick || "")}</span></div>`; })()).join("");
-  return `<p class="peek__label">${his} top genre</p><p class="peek__genre">${esc(genre)}</p>
-    <p class="peek__label">${his} top 10${name === "Mom" ? " series" : ""}</p>
-    ${peekTop10(pp.top)}
-    <p class="peek__label">${name === "Dad" ? "His #1 show every year" : "Hindi movies every year"}</p>
-    <div class="peek__years">${years}</div>
-    ${name === "Mom" ? (() => { const f = DATA.family, shelf = (list) => `<div class="peek__years">${list.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>`;
-      return `<p class="peek__label">Mumma watched it first · ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles</p>${shelf(f.mom_first_titles)}
-        <p class="peek__label">Moms, dads and grandparents · ${f.mom_parent_titles.length} titles (Dad has ${f.dad_parent_titles.length}, both deadly)</p>${shelf(f.mom_parent_titles)}`; })() : ""}
-    ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__years">${pp.srk.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>` : ""}`;
+  const rows = [peekTop10(pp.top, name, `${his} Top 10${name === "Mom" ? " Series" : ""}`)];
+  if (name === "Dad") rows.push(row("His #1 Show Every Year", genre, pp.years.map((y) => capTile(y.show, { badge: `#1 of ${y.year}`, line: saysFor(y.show, "Dad") }))));
+  else {
+    rows.push(row("Hindi Movies Every Year", genre, pp.years.map((y) => { const pick = (y.titles || []).find((t) => ART[t]) || y.show;
+      return capTile(pick, { badge: `${y.movies} movies`, top: `${y.year} · ${esc(pick)}`, line: saysFor(pick, "Mom") }); })));
+    rows.push(row("Mumma Watched It First", `${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles`, f.mom_first_titles.map((t) => capTile(t, { badge: "Mumma First", line: saysFor(t, "Mom") }))));
+    rows.push(row("Moms, Dads and Grandparents", `${f.mom_parent_titles.length} titles. Dad has ${f.dad_parent_titles.length}, both deadly`, f.mom_parent_titles.map((t) => capTile(t))));
+  }
+  if (pp.srk?.length) rows.push(row("The Shah Rukh Shelf", `${pp.srk.length} films`, pp.srk.map((t) => capTile(t, { badge: pp.srk_years?.[t] ? String(pp.srk_years[t]) : "" }))));
+  return rows.join("");
 }
 
 // Dad's impeccable timing: poster cards for what he pressed play on, on the days that matter. Click one for the story.
 function peekSpecial(pp) {
   const t = pp.timing || [];
   if (!t.length) return "";
-  return `<p class="peek__label">Impeccable timing · tap a poster for the story</p>
-    <div class="peek__years peek__timing">${t.map((r, i) => `<button class="peek__year peek__tcard" type="button" data-t="${i}">${art(r.show, { tall: true })}<b>${esc(r.day)} ${r.year}</b><span>${esc(r.show)}</span></button>`).join("")}</div>
-    <div class="peek__story" id="peek-story" hidden></div>`;
+  return row("Impeccable Timing", "tap a title for the story", t.map((r, i) => capTile(r.show, { tag: "button", cls: "peek__tcard", attrs: `type="button" data-t="${i}"`, badge: `${r.day} ${r.year}`, line: "Tap for the story" })))
+    + `<div class="peek__story" id="peek-story" hidden></div>`;
 }
 function wireTiming(el) {
   const t = DATA?.family?.parents?.Dad?.timing || [];
@@ -357,14 +395,11 @@ function wireTiming(el) {
 
 // Amaira is public (data only): her top 10 and her #1 show every year.
 function peekAmaira() {
-  const a = DATA?.family?.amaira;
+  const a = DATA?.family?.amaira, c = DATA?.family?.copy_cat || [];
   if (!a?.top?.length) return "";
-  return `<p class="peek__label">Her top 10</p>
-    ${peekTop10(a.top)}
-    <p class="peek__label">Her #1 show every year</p>
-    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}${y.rewatched ? " · on repeat" : ""}</span></div>`).join("")}</div>
-    ${DATA.family.copy_cat?.length >= 5 ? `<p class="peek__label">Copy cat · ${DATA.family.copy_cat.length} titles she watched after me. She's never found one first.</p>
-    <div class="peek__years">${DATA.family.copy_cat.map((c) => `<div class="peek__year">${art(c.show, { tall: true })}<b>Me ${c.me} → her ${c.her}</b><span>${esc(c.show)}</span></div>`).join("")}</div>` : ""}`;
+  return peekTop10(a.top, "Sister", "Her Top 10")
+    + row("Watch Me Grow Up", "her #1 show at every age", a.years.map((y) => capTile(y.show, { badge: `Age ${sisterAge(y.year)}`, top: `${esc(y.show)} · ${y.year}`, line: saysFor(y.show, "Sister") })))
+    + (c.length >= 5 ? row("Copy Cat", `${c.length} titles she watched after me. She's never found one first.`, c.map((x) => capTile(x.show, { badge: `Me ${x.me} → her ${x.her}` }))) : "");
 }
 
 function peekProfile(p) {
@@ -384,19 +419,74 @@ function peekProfile(p) {
   const heroImg = p.name === "Sister" ? backdropOf(DATA?.family?.amaira?.top?.[0]?.show) : backdropOf(heroShow);
   el.innerHTML = `<div class="peek__card">
     <button class="peek__close" type="button" aria-label="Close">×</button>
-    <div class="peek__hero" style="${heroImg ? `background-image:url('${heroImg}')` : ""}"><div class="peek__herotext"><p class="peek__kicker">${p.name === "Sister" ? "my sister" : p.name}'s profile</p><h2 class="peek__herotitle">Hi, ${p.name === "Sister" ? "Amaira" : p.name}</h2></div></div>
+    <div class="peek__hero" style="${heroImg ? `background-image:url('${heroImg}')` : ""}"><div class="peek__stage" aria-hidden="true"></div><div class="peek__herotext">
+      ${SPECIAL[p.name] && FILMS[SPECIAL[p.name]] ? (() => { const sf = FILMS[SPECIAL[p.name]], [who, title] = sf.subtitle.split(": ");
+        return `<p class="peek__because">Because you opened ${NICK[p.name]}'s profile</p>
+        <p class="peek__mark"><span class="peek__s">S</span>SPECIAL · ${sf.ep}</p>
+        <h2 class="peek__herotitle">${esc(who)}<small>${esc(title || "")}</small></h2>
+        <p class="hero__meta peek__billmeta">${[["Special"], [BILL[p.name].genre], [BILL[p.name].years], [runtime(sf)]].map(([x]) => `<span>${x}</span>`).join('<span class="dot"></span>')}<span class="dot"></span><span class="rating">${BILL[p.name].rating}</span></p>
+        <p class="peek__billcopy">${esc(sf.blurb)}</p>
+        <div class="peek__billbtns"><button class="btn btn--light" type="button" data-film="${SPECIAL[p.name]}">▶ Play</button><button class="btn btn--dark" type="button" data-peek-more>More Info</button></div>
+        <span class="peek__badge"><i></i>Household Special</span>`; })()
+        : `<h2 class="peek__herotitle">${NICK[p.name] || p.name}</h2>`}</div></div>
     <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
-    ${peekPersona(p.name)}
-    ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + (p.name === "Dad" ? peekSpecial(DATA.family.parents.Dad) : `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>`)
-      : p.name === "Sister" && DATA?.family?.amaira ? peekAmaira() + `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
+    ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + (p.name === "Dad" ? peekSpecial(DATA.family.parents.Dad) : "")
+      : p.name === "Sister" && DATA?.family?.amaira ? peekAmaira() : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
     <div class="peek__wall" aria-hidden="true">${Array.from({ length: 3 }, () => `<div class="peek__ghostrow">${Array.from({ length: 7 }, () => "<i></i>").join("")}</div>`).join("")}</div>
     <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
   </div>`;
   el.hidden = false;
+  playBehind(el.querySelector(".peek__stage"), SPECIAL[p.name], () => el.hidden);
+  el.querySelector("[data-peek-more]")?.addEventListener("click", () => el.querySelector(".row")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  el.querySelectorAll("[data-film]").forEach((b) => b.addEventListener("click", () => { el.hidden = true; }));
   wireTiming(el);
+  wireRows(el);
   el.querySelector(".peek__close").focus();
+}
+
+// Manage Profiles: Netflix's account page, pointed at this project.
+function openAccount() {
+  let el = $("#acct");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "acct"; el.className = "acct"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); el.setAttribute("aria-label", "Profiles");
+    document.body.appendChild(el);
+    el.addEventListener("click", (e) => {
+      if (e.target.closest("[data-acct-close]")) { el.hidden = true; document.body.classList.remove("locked"); }
+      const r = e.target.closest("[data-acct-profile]");
+      if (!r) return;
+      const p = PROFILES.find((x) => x.name === r.dataset.acctProfile);
+      el.hidden = true; document.body.classList.remove("locked");
+      if (!p.me && DATA?.family) peekProfile(p);
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !el.hidden) { el.hidden = true; document.body.classList.remove("locked"); } });
+  }
+  const hb = DATA?.family?.habits || {};
+  const type = { Dad: "The sampler", Mom: "The movie person", Suhani: "The binger", Sister: "The superfan" };
+  const views = { Dad: hb.Dad, Mom: hb.Mom, Suhani: hb.Me, Sister: hb["My sister"] };
+  const nav = [["Overview", "#top", '<path d="M4 11 12 4l8 7v9H4Z" />'], ["Membership", "case-study.html", '<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/>'],
+    ["Devices", "#house", '<rect x="3" y="5" width="13" height="10" rx="1.5"/><rect x="16" y="9" width="5" height="10" rx="1"/><path d="M7 19h6"/>'], ["Profiles", null, '<rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 10h.01M15 10h.01M9 15c2 1.5 4 1.5 6 0"/>']];
+  el.innerHTML = `<div class="acct__top"><span class="acct__logo">STILL WATCHING</span><span class="avatar avatar--sm">${avatar(PROFILES.find((p) => p.me))}</span></div>
+    <div class="acct__body">
+      <aside class="acct__nav"><button type="button" class="acct__back" data-acct-close>← Back to Still Watching</button>
+        ${nav.map(([t, href, icon]) => `<${href ? `a href="${href}" data-acct-close` : 'span aria-current="page"'} class="acct__link${href ? "" : " is-on"}"><svg viewBox="0 0 24 24">${icon}</svg>${t}</${href ? "a" : "span"}>`).join("")}</aside>
+      <main class="acct__main"><h1>Profiles</h1><p class="acct__sub">Privacy controls and permissions</p>
+        <details class="acct__card"><summary><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6Z M12 8v5M12 16h.01"/></svg><span><b>Adjust privacy controls</b><small>What I blocked, and what never leaves my laptop</small></span><i>›</i></summary>
+          <p>The raw exports (mine and my family's) are gitignored. The site ships only per-show and per-month summaries. Titles that shouldn't be public are filtered by a private blocklist, and the list itself stays private, since publishing it would reveal exactly what it hides. Silences and streaks are computed from every active day, blocked titles included, so hiding a title can't fake a gap.</p></details>
+        <h2>Profile Settings</h2>
+        <div class="acct__list">${PROFILES.map((p) => `<button type="button" class="acct__row" data-acct-profile="${p.name}">
+          <span class="avatar avatar--sm">${avatar(p)}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
+          <span class="acct__who"><b>${p.name === "Sister" ? "Amaira" : p.name}</b><small>${type[p.name]}${views[p.name] ? ` · ${n(views[p.name].titles)} titles` : ""}</small></span>
+          ${p.me ? '<span class="acct__now">Now Watching</span>' : ""}<i>›</i></button>`).join("")}
+          <button type="button" class="acct__add" id="acct-add">Add Profile</button>
+          <p class="acct__note">Add up to 5 profiles for anyone who lives with you.</p></div>
+      </main></div>`;
+  el.querySelector("#acct-add").addEventListener("click", () => toast("This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister."));
+  el.hidden = false;
+  document.body.classList.add("locked");
+  el.querySelector(".acct__back").focus();
 }
 
 function setupProfiles() {
@@ -412,7 +502,7 @@ function setupProfiles() {
   document.addEventListener("click", (e) => { if (!e.target.closest(".nav__menuwrap")) setOpen(false); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") setOpen(false); });
   const backToProfiles = () => { try { sessionStorage.removeItem("entered"); } catch {} scrollTo({ top: 0 }); location.reload(); };
-  $("#pmenu-exit").addEventListener("click", backToProfiles);
+  $("#pmenu-manage").addEventListener("click", () => { setOpen(false); openAccount(); });
   $("#pmenu-signout").addEventListener("click", backToProfiles);
   $("#pmenu-profiles").addEventListener("click", (e) => {
     const b = e.target.closest("[data-other]");
@@ -514,7 +604,7 @@ function setupHero() {
   const after = DATA.windows.after_crackdown;
   const dot = '<span class="dot"></span>';
 
-  $("#hero-meta").innerHTML = ["Documentary", "Coming of Age", "2024", "2 Seasons"].map((x) => `<span>${x}</span>`).join(dot);
+  $("#hero-meta").innerHTML = ["Documentary", "Coming of Age", "2024", "2 Seasons"].map((x) => `<span>${x}</span>`).join(dot) + dot + '<span class="rating">TV-14</span>';
   $("#hero-copy").textContent =
     `In May 2023, Netflix started checking whether you watch from the account's home Wi-Fi. ` +
     `At home in Dallas, nothing changed: ${n(after.views)} views by the end of the year. ` +
@@ -660,13 +750,13 @@ function setupRows() {
   const { top, yearly, windows } = DATA;
   const html = [
     row("Top 10 Shows in Suhani's Life", "", top.map((s, i) =>
-      `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span>${tile(s.show, `<span class="tag">${esc(tagFor(s.show))}</span>`, { tall: true })}</div>`)),
+      `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="top10__col">${tile(s.show, `<span class="tag">${esc(tagFor(s.show))}</span>`, { tall: true })}${saysLine(s.show, "Me")}</div></div>`)),
     collection(),
     row("Episodes", "five seasons of short films made from my history", Object.entries(FILMS).map(([key, f]) => `<button class="tile film-tile" type="button" data-film="${key}" aria-label="Play ${f.ep}: ${esc(f.subtitle)}">
       ${art(f.art, { label: f.tile || f.subtitle })}<span class="tile__ribbon">S${f.season}<b>E${f.num}</b></span><span class="film-tile__play">▶</span></button>`)),
     row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
-      tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
-    ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.map((t) => wideTile(t)))] : []),
+      `<div class="grow">${tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`)}${saysLine(y.show, "Me")}</div>`)),
+    ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.filter((t) => t !== "Tribhuvan Mishra CA Topper").map((t) => wideTile(t)))] : []),
     row("Hooked From the First Episode", "4+ episodes on day one", DATA.hooked.map((h) =>
       tile(h.show, `<span class="tag">${h.day_one} on Day One</span><span class="tile__eps">${h.views} eps</span>`))),
     row("Home for Summer & Absolutely Starving", `a whole year of college, then ${n(windows.summer_2025.views)} views in two months`, windows.summer_2025.top.map((s) => wideTile(s.show))),
@@ -848,6 +938,20 @@ function setupCase() {
   ];
   const fr = p.friends_race;
   const finished = p.finished.slice(0, 6).map((f) => f.show);
+  const wh = p.what, momFresh = DATA.family?.parents?.Mom?.who?.fresh_pct;
+  const pctOf = (x) => `${Math.round(x)}%`, yrs = (x) => `${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x)} years`;
+  if (wh) groups.push(["Watch", [
+    { label: "WATCHING AHEAD", img: bg(wh.ahead.example.show), guess: "Always a few years ahead", signal: "The lead's age in season 1 vs. mine that day (hand-tagged, my top shows)",
+      ev: `In <b>${wh.ahead.older_pct}%</b> of those episodes the lead is older than me. At ${wh.ahead.example.me} I started ${esc(wh.ahead.example.show)}, about a ${wh.ahead.example.lead}-year-old. Middle school: <b>${yrs(wh.ahead.by_era.middle)}</b> ahead on average. High school: ${yrs(wh.ahead.by_era.high)}. College flipped it to <b>${yrs(wh.ahead.by_era.college)}</b>: I went back to high school with ${esc(wh.ahead.college[0])}.` },
+    { label: "MOTHERS & DAUGHTERS", img: bg(wh.mothers.top[0]), guess: "High school was mother-daughter TV", signal: "Shows about a mom and her daughter, by school",
+      ev: `Elementary ${pctOf(wh.mothers.by_era.elementary)}, middle school ${pctOf(wh.mothers.by_era.middle)}, high school <b>${pctOf(wh.mothers.by_era.high)}</b>: ${listOf(wh.mothers.top.map(esc))}. Then I moved out: <b>${wh.mothers.by_era.college}%</b> in college. ${wh.mothers.away}% in Austin, ${wh.mothers.home}% home for the summer.` },
+    { label: "CITY GIRL", img: bg(wh.places.nyc[1] || wh.places.nyc[0]), guess: "Big city, small circle", signal: "Where each show is set (hand-tagged, my top shows)",
+      ev: `New York: <b>${wh.places.top[0].views}</b> episodes (${listOf(wh.places.nyc.map(esc))}). Small towns: <b>${wh.places.top[1].views}</b> (${listOf(wh.places.town.map(esc))}). Practically a tie, and that's me: I want a lively city with endless things to explore, and a small circle inside it. The Gilmore Girls feeling: the same coffee shop every morning, the same faces every day.` },
+    { label: "SHOW AGE", img: bg(wh.show_age.favorites[0].show), guess: `My shows are ${parse(DATA.totals.to).getFullYear() - wh.show_age.fav_year}. I'm ${Math.floor((parse(DATA.totals.to) - parse("2006-03-06")) / 3.156e10)}.`, signal: "When my most-watched shows premiered",
+      ev: `My top four: ${listOf(wh.show_age.favorites.map((x) => `${esc(x.show)} (${x.year})`))}. On average they premiered in <b>${wh.show_age.fav_year}</b>, older than me. Across every episode, the median show premiered in ${wh.show_age.median_year}, and <b>${wh.older_pct}%</b> of my episodes are from shows that started before I was born.${momFresh != null ? ` Only ${wh.fresh_pct}% were watched within a year of the premiere. Mumma's: ${momFresh}%.` : ""}` },
+    ...(wh.release.length ? [{ label: "RELEASE DAY", img: bg(wh.release[0].show), guess: `${wh.release.length} seasons I couldn't wait for`, signal: "Release date vs. my last episode",
+      ev: wh.release.map((r) => `${esc(r.show)} season ${r.season} (${fmtMonth(r.month)}): <b>all ${r.episodes} within ${r.days === 1 ? "a day" : `${r.days} days`}</b>`).join(". ") + ". Everything else waits years." }] : []),
+  ]]);
   groups.push(["More", [
     { label: "A FINISHER", img: bg("The Vampire Diaries"), guess: `${p.finished.length} shows, start to finish`, signal: "Episodes watched against episodes made",
       ev: `Every episode, or nearly: ${listOf(finished)}. Friends: <b>${fr.watched} of ${fr.total}</b>.` },
@@ -949,7 +1053,7 @@ function setupCase() {
   const themed = [
     ["Who I am", ["AGE", "GENDER", "CULTURAL BACKGROUND", "EDUCATION", "FAMILY", "RELATIONSHIP STATUS"]],
     ["Where I've lived", ["HOME", "MOVED", "MOVED AGAIN", "BLACKOUT", "U.S. CATALOG"]],
-    ["What I watch", ["GENRES", "A TV PERSON", "A FINISHER"]],
+    ["What I watch", ["WATCHING AHEAD", "MOTHERS & DAUGHTERS", "CITY GIRL", "SHOW AGE", "RELEASE DAY", "GENRES", "A TV PERSON", "A FINISHER"]],
     ["How I live", ["ROUTINE", "SUMMERS", "MOVIE NIGHTS", "RHYTHM", "STREAK", "BIG ON DECEMBER", "MARCH 2020", "GRADUATION", "HOLIDAYS"]],
     ["How we watch", ["ME: THE BINGER", "SISTER: THE SUPERFAN", "DAD: THE SAMPLER", "MOM: THE STEADY ONE"]],
     ["Who I live with", ["HOUSEHOLD", "TASTEMAKERS", "PILOT QUITTERS", "HAPPY MOTHER'S DAY", "TITLE ENERGY", "THE FAMILY SHOW", "DAD'S PARTY PICKS"]],
@@ -1128,8 +1232,8 @@ function houseSVG() {
     </g>
 
     <text class="place" x="450" y="626" text-anchor="middle">DALLAS</text>
-    <g class="warning"><text x="880" y="455" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Not part of</text>
-      <text x="880" y="477" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">the household</text></g>
+    <g class="warning"><text x="880" y="455" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Not part of the</text>
+      <text x="880" y="477" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">(Netflix) household</text></g>
     <text class="place place--austin" x="880" y="712" text-anchor="middle">AUSTIN</text>
   </svg>`;
 }
@@ -1431,16 +1535,82 @@ function watchFilm() {
   ];
 }
 
+// What a #1 or top-10 show says about the person who picked it.
+const SAYS = {
+  // Papa
+  "Apocalypse": "History first, always", "Breaking Bad": "A family man with a plan", "Sons of Anarchy": "Loyalty to the crew",
+  "Queen of the South": "Respects a self-made boss", "Undercover": "Wants to know who's lying", "Narcos": "The real story behind the headlines",
+  "Ozark": "Survives by thinking ahead", "Rise of Empires": "Strategy and the long game", "Fool Me Once": "Can't resist a twist",
+  "Blood Coast": "Subtitles don't scare him", "Criminal Code": "Cops and crooks, anywhere", "El Chapo": "How power really works",
+  "Peaky Blinders": "Family business, sharp suits", "The Borgias": "Dynasties and politics", "Money Heist": "Loves a perfect plan", "Suburra": "Power, politics, Rome",
+  // Mumma
+  "Delhi Crime": "Women who get justice done", "Jamtara - Sabka Number Ayega": "Small-town hustlers, real India", "Sacred Games": "Big Bombay stories",
+  "Khakee": "Honest cops vs the system", "Yeh Kaali Kaali Ankhein": "Loves a little drama", "Maamla Legal Hai": "Laughs at everyday chaos",
+  "Class": "Keeps up with what's new", "Choona": "A good con and a laugh", "The Fame Game": "Bollywood behind the scenes",
+  "Raja, Rasoi aur Anya Kahaniyan": "Food, history and home", "Aranyak": "A mystery in the hills", "Black Warrant": "True stories of justice",
+  // Amaira
+  "Little Baby Bum": "Sing it again", "Masha and the Bear": "A fearless troublemaker", "Sofia the First": "Princess phase",
+  "PJ Masks": "Wants to be a hero", "Ben & Holly's Little Kingdom": "Fairies and magic", "Barbie Dreamhouse Adventures": "Big dreams",
+  "The Thundermans": "Superpowers and sibling fights", "iCarly": "Wants her own show", "Victorious": "A performer", "Pocoyo": "Curious about everything",
+  "The Boss Baby": "Thinks she runs the house",
+  // Me
+  "LEGO Ninjago": "A brand-new kid in America", "Good Luck Charlie": "Becoming a big sister", "Liv and Maddie": "Two sides of one girl",
+  "Baby Daddy": "Loves a found family", "Friends": "Wants her people", "The Fosters": "The family you choose", "Grey's Anatomy": "Drama under pressure",
+  "Gilmore Girls": "Fast talk, books, her mom", "Jane The Virgin": "A hopeless romantic", "The Great Indian Kapil Show": "Homesick, laughing in Hindi",
+  "Gossip Girl": "Ambitious city girl", "Bridgerton": "Romance, done properly", "The Vampire Diaries": "Love triangles, forever",
+  "Fuller House": "A big, loud family", "Jessie": "Disney Channel kid", "Switched at Birth": "Two families, one girl",
+};
+// Fuller House is mine and Amaira's; on her page it means something else.
+const saysFor = (show, who) => (who === "Sister" && show === "Fuller House" ? "Big sister's show, now hers" : SAYS[show] || "");
+const READING = {
+  Dad: "Every #1 is about power: who has it, how a family keeps it, and the plan behind it. He roots for the man protecting his people.",
+  Mom: "Her #1s are Indian stories about ordinary people up against a system: cops, scammers, courts and classrooms. Justice, with a sense of humor.",
+  Sister: "Songs, then princesses, then superheroes, then girls with their own show. She wants to be the main character.",
+  Me: "Family first, then friends who become family, then love. Sentimental, every single year.",
+};
+const readingScene = (who, list) => ({ dur: 7, montage: list.map((x) => ({ img: posterOf(x.show), tag: x.year || "" })), center: true,
+  kicker: "What the #1s say", line: who === "Dad" ? "Who he<br><em>roots for</em>" : who === "Mom" ? "What she<br><em>believes in</em>" : who === "Sister" ? "Who she<br><em>wants to be</em>" : "Who I<br><em>am</em>",
+  sub: READING[who] });
+
+// Specials: everything on Dad's, Mom's and Amaira's profile pages, as one episode each.
+const SPECIAL = { Dad: "dad", Mom: "mom", Sister: "copycat" };
+const NICK = { Dad: "Papa", Mom: "Mumma", Sister: "Amaira" };
+const BILL = { Dad: { genre: "Crime", years: "2015–2026", rating: "TV-MA" }, Mom: { genre: "Hindi Drama", years: "2015–2026", rating: "TV-14" },
+  Sister: { genre: "Kids & Family", years: "2017–2026", rating: "TV-Y7" } };
+const runtime = (f) => { const t = Math.round(f.scenes().reduce((a, x) => a + x.dur, 0)); return t >= 60 ? `${Math.floor(t / 60)}m ${t % 60}s` : `${t}s`; };
+// A billboard's background video: the special's scenes, picture only, looping until the page closes.
+function playBehind(stage, key, closed) {
+  if (!stage || !FILMS[key] || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const list = FILMS[key].scenes().map((x) => x.montage ? { ...x, montage: x.montage.filter((m) => m.img) } : x)
+    .filter((x) => x.img || x.montage?.length || x.wall).map(({ cast, say, viz, ...x }) => x);  // picture only
+  if (!list.length) return;
+  stage.innerHTML = list.map(sceneHTML).join("");
+  const scenes = [...stage.children];
+  let i = 0;
+  const step = () => {
+    if (closed() || !stage.isConnected) return;
+    scenes.forEach((sc, k) => sc.classList.toggle("is-on", k === i));
+    setTimeout(step, list[i].dur * 1000);
+    i = (i + 1) % scenes.length;
+  };
+  step();
+}
 function dadFilm() {
-  const t = DATA.family?.parents?.Dad?.timing || [];
-  if (!t.length) return [];
+  const f = DATA.family, pp = f?.parents?.Dad, hb = f?.habits?.Dad;
+  if (!pp || !hb) return [];
+  const t = pp.timing || [];
   return [
-    { dur: 5, cast: "dad", kicker: "Season 5 · A Tiwari household special", line: "Dad's impeccable<br><em>timing</em>", sub: "What Dad presses play on, on the days that matter." },
-    ...t.slice(0, 9).map((r, i) => ({ dur: 5, img: posterOf(r.show) || backdropOf(r.show), alt: i % 2 === 1, kicker: `${r.day} ${r.year}`, line: esc(r.show), sub: r.irony })),
-    { dur: 5, cast: "dad", kicker: "The verdict", line: `Quits <em>${DATA.family.quit_rate.Dad}%</em><br>of shows`, sub: "After one episode. Samples everything. Commits to nothing. Except crime." },
+    { dur: 5, cast: "dad", kicker: "A Tiwari household special", line: "Hi,<br><em>Papa</em>", sub: "Who he is, read from his history alone." },
+    { dur: 6, black: true, center: true, kicker: "Watcher type", line: "The<br><em>sampler</em>", sub: `${n(hb.titles)} different titles. He quits ${f.quit_rate.Dad}% after one episode, ${hb.eps_per_show} episodes a show, ${hb.movie_pct}% movies. A serial killer… of pilots.` },
+    ...whoScenes("Dad"),
+    { dur: 5.5, montage: postersOf(pp.top), center: true, kicker: "His top 10", line: "Cartels, bikers,<br><em>crime families</em>", sub: `${pp.top[0].show}: ${pp.top[0].views} episodes. Plus the only Spanish and Korean thrillers in the house.` },
+    { dur: 5.5, montage: pp.years.map((y) => ({ img: posterOf(y.show), tag: y.year })), center: true, kicker: "His #1 show every year", line: `${pp.years[0].year} to<br><em>${pp.years.at(-1).year}</em>`, sub: listOf(pp.years.slice(-3).map((y) => `${y.show} (${y.year})`)) + "." },
+    readingScene("Dad", pp.years),
+    ...(t.length ? [{ dur: 4.5, cast: "dad", kicker: "And then there's", line: "His impeccable<br><em>timing</em>", sub: "What Dad presses play on, on the days that matter." }] : []),
+    ...t.slice(0, 6).map((r, i) => ({ dur: 5, img: posterOf(r.show) || backdropOf(r.show), alt: i % 2 === 1, kicker: `${r.day} ${r.year}`, line: esc(r.show), sub: r.irony })),
+    { dur: 5, cast: "dad", kicker: "The verdict", line: `Quits <em>${f.quit_rate.Dad}%</em><br>of shows`, sub: "Samples everything. Commits to nothing. Except crime." },
   ];
 }
-
 // The cast: illustrated portraits of the four of us.
 const CAST = { suhani: { name: "Suhani", color: "#ff2079" }, dad: { name: "Dad", color: "#0033cc" }, mom: { name: "Mom", color: "#c00010" }, amaira: { name: "Amaira", color: "#7a00c2" } };
 const castImg = (who) => `img/profiles/${who}.jpg`;
@@ -1650,26 +1820,56 @@ function detectiveFilm() {
   ];
 }
 function momFilm() {
-  const m = DATA.family?.parents?.Mom;
+  const f = DATA.family, m = f?.parents?.Mom;
   if (!m) return [];
   return [
-    { dur: 5.5, cast: "mom", kicker: "Mumma", line: "The movie<br><em>person</em>", sub: `${n(m.movies)} Hindi movies. ${m.movie_pct}% of everything she watches. One sitting, done.` },
-    { dur: 5.5, montage: m.srk.map((t) => ({ img: posterOf(t), tag: "" })).filter((x) => x.img), center: true, kicker: "The Shah Rukh shelf", line: `${m.srk.length}<br><em>SRK films</em>`, sub: listOf(m.srk.slice(0, 5)) + "." },
+    { dur: 5, cast: "mom", kicker: "A Tiwari household special", line: "Hi,<br><em>Mumma</em>", sub: "Who she is, read from her history alone." },
+    { dur: 5.5, black: true, center: true, kicker: "Watcher type", line: "The movie<br><em>person</em>", sub: `${n(m.movies)} Hindi movies, ${m.movie_pct}% of everything she watches. ${m.fast}% of the series she picks are done in 3 days. Rewatches: ${f.profiles.Mom.rewatched}, ever.` },
+    ...whoScenes("Mom"),
     { dur: 5, montage: postersOf(m.top), center: true, kicker: "Her top 10 series", line: "Hindi<br><em>crime</em>", sub: "Not too scary. A little funny." },
-    { dur: 5, black: true, center: true, kicker: "When she picks a series", line: `${m.fast}% done<br>in <em>3 days</em>`, sub: "Faster than anyone in the house." },
-    { dur: 5, black: true, center: true, kicker: "Hindi movies a year", line: `${m.years.at(-1).movies} in<br><em>${m.years.at(-1).year}</em>`, sub: "Her biggest year yet.", viz: viz(`<div class="mbars">${m.years.map((y) => `<span style="--h:${y.movies}"><i></i>${String(y.year).slice(2)}</span>`).join("")}</div>`) },
+    readingScene("Mom", m.years.filter((y) => y.show)),
+    { dur: 5.5, black: true, center: true, kicker: "Hindi movies a year", line: `${m.years.at(-1).movies} in<br><em>${m.years.at(-1).year}</em>`, sub: "Her biggest year yet.", viz: viz(`<div class="mbars">${m.years.map((y) => `<span style="--h:${y.movies}"><i></i>${String(y.year).slice(2)}</span>`).join("")}</div>`) },
+    ...(f.mom_parent_titles?.length ? [{ dur: 5, montage: postersOf(f.mom_parent_titles), center: true, kicker: "Moms, dads and grandparents", line: `${f.mom_parent_titles.length}<br><em>titles</em>`, sub: `Family in the title. Dad has ${f.dad_parent_titles.length}, and his are deadly.` }] : []),
     { dur: 4.5, cast: "mom", kicker: "Mumma", line: "One sitting,<br><em>done</em>", sub: "", say: "One more movie." },
   ];
 }
 function copyCatFilm() {
-  const c = DATA.family?.copy_cat || [], a = DATA.family?.amaira;
-  if (!c.length) return [];
+  const f = DATA.family, c = f?.copy_cat || [], a = f?.amaira, hb = f?.habits?.["My sister"];
+  if (!a) return [];
   return [
-    { dur: 5, cast: "amaira", kicker: "Amaira", line: "Copy<br><em>cat</em>", sub: `${c.length} shared shows. I found every one first.`, say: "I was going to find them anyway." },
-    { dur: 5, montage: (a?.top || []).map((t) => ({ img: posterOf(t.show), tag: t.views })).filter((m) => m.img), center: true, kicker: "Her top 10", line: "The<br><em>superfan</em>", sub: "" },
-    { dur: 5, montage: (a?.years || []).map((y) => ({ img: posterOf(y.show), tag: y.year })).filter((m) => m.img), center: true, kicker: "Watch her grow up", line: "Toddler to<br><em>tween</em>", sub: "" },
-    { dur: 5.5, montage: postersOf(c.slice(0, 8).map((x) => x.show)), center: true, kicker: `${c[0].show}: me ${c[0].me}, her ${c[0].her}`, line: "Years<br><em>later</em>", sub: listOf(c.slice(0, 4).map((x) => `${x.show} (${Math.round(x.years)} yrs)`)) + "." },
-    ...(a?.masha ? [{ dur: 5, img: backdropOf("Masha and the Bear"), kicker: "Her real obsession", line: "Little Baby Bum,<br><em>then Masha</em>", sub: `Every Masha episode on ${a.masha.profiles} profiles, ${a.masha.per_episode} times each.` }] : []),
+    { dur: 5, cast: "amaira", kicker: "A Tiwari household special", line: "Hi,<br><em>Amaira</em>", sub: "My little sister, read from her history alone.", say: "Finally, my own episode." },
+    ...(hb ? [{ dur: 5.5, black: true, center: true, kicker: "Watcher type", line: "The<br><em>superfan</em>", sub: `${hb.top5_pct}% of everything she watches is five shows. ${f.profiles["My sister"].rewatch_pct}% of it is a repeat, the most in the family.` }] : []),
+    { dur: 5, montage: a.top.map((t) => ({ img: posterOf(t.show), tag: t.views })), center: true, kicker: "Her top 10", line: `${esc(a.top[0].show)},<br><em>${a.top[0].views} episodes</em>`, sub: listOf(a.top.slice(1, 4).map((t) => t.show)) + "." },
+    { dur: 6, montage: a.years.map((y) => ({ img: posterOf(y.show), tag: `Age ${sisterAge(y.year)}` })), center: true, kicker: "Watch her grow up", line: "Toddler to<br><em>tween</em>", sub: listOf([a.years[0], a.years[Math.floor(a.years.length / 2)], a.years.at(-1)].map((y) => `${y.show} at ${sisterAge(y.year)}`)) + "." },
+    readingScene("Sister", a.years),
+    ...(a.masha ? [{ dur: 5, img: backdropOf("Masha and the Bear"), kicker: "Her real obsession", line: "Little Baby Bum,<br><em>then Masha</em>", sub: `Netflix keeps one date per episode, so rewatches hide. But every Masha episode shows up on ${a.masha.profiles} profiles, ${a.masha.per_episode} times each.` }] : []),
+    ...(c.length ? [{ dur: 5, cast: "amaira", kicker: "Copy cat", line: `${c.length} shows,<br><em>after me</em>`, sub: "I found every one first.", say: "I was going to find them anyway." },
+      { dur: 5.5, montage: postersOf(c.slice(0, 8).map((x) => x.show)), center: true, kicker: `${c[0].show}: me ${c[0].me}, her ${c[0].her}`, line: "Years<br><em>later</em>", sub: listOf(c.slice(0, 4).map((x) => `${x.show} (${Math.round(x.years)} yrs)`)) + "." }] : []),
+    ...(f.me_to_sister ? [{ dur: 5, wall: true, center: true, kicker: "Big sister", line: `First on<br><em>${f.me_to_sister.first} of ${f.me_to_sister.shared}</em>`, sub: "The shows we share. I'm her tastemaker." }] : []),
+  ];
+}
+// Amaira never knew a house without Netflix: growing up with it from day one.
+function bornStreamingFilm() {
+  const f = DATA.family, a = f?.amaira, d = f?.detective;
+  if (!a?.years?.length) return [];
+  const ys = a.years, max = Math.max(...ys.map((y) => y.views));
+  // Her preschool peak: too young before it, school after it.
+  const peak = ys.filter((y) => sisterAge(y.year) <= 4).reduce((m, y) => (y.views > m.views ? y : m));
+  const age = sisterAge;
+  const year = (y) => ys.find((x) => x.year === y);
+  const school = [2021, 2022, 2023].map(year).filter(Boolean);
+  const meAge = Math.floor((parse(DATA.totals.from) - parse("2006-03-06")) / 3.156e10);
+  return [
+    { dur: 5.5, black: true, center: true, kicker: "November 2016", line: "Born<br><em>streaming</em>", sub: "Amaira has never lived in a house without Netflix. The account was already 17 months old." },
+    { dur: 6, img: backdropOf("Little Baby Bum"), kicker: "Her first show", line: "Little Baby Bum,<br><em>on repeat</em>", sub: `Nursery rhymes, the same few episodes over and over${a.bum ? `, on ${a.bum.profiles} profiles` : ""}. Netflix keeps only the latest date for each episode, so every rewatch erased the one before. Her first show hid itself.` },
+    { dur: 5.5, cast: "suhani", kicker: "For comparison", line: `Me: ${meAge} years old.<br><em>Her: a baby.</em>`, sub: "My first play was Lilo & Stitch, fresh off the plane from Singapore. She was born into the queue.", say: "She'll never know life before autoplay." },
+    { dur: 6, montage: postersOf(["Sofia the First", "Masha and the Bear", "PJ Masks", "Pocoyo", "The Boss Baby", "Octonauts"]), center: true, kicker: "Raised on Dad's profile", line: `${a.on_dad}%<br><em>on Dad's profile</em>`, sub: `${a.on_dad > 50 ? "More than half" : a.on_dad === 50 ? "Half" : "Much"} of everything she's ever watched. Sofia, Masha, PJ Masks. He never got it back.` },
+    { dur: 7, black: true, center: true, kicker: "Her views, every year of her life", line: `Age ${age(peak.year)}:<br><em>${peak.views}</em>`, sub: `Her preschool peak. Too young before it, school right after. ${ys.map((y) => `${age(y.year)}: ${y.views}`).join(" · ")}.`,
+      viz: viz(`<div class="mbars">${ys.map((y) => `<span style="--h:${Math.round(y.views / max * 45)}"><i></i>${age(y.year)}</span>`).join("")}</div>`) },
+    ...(school.length === 3 ? [{ dur: 5.5, img: backdropOf("Ben & Holly's Little Kingdom"), alt: true, kicker: "Then school started", line: `${school[0].views} → ${school[1].views}<br>→ <em>${school[2].views}</em>`, sub: `Ages ${age(2021)} to ${age(2023)}. Kindergarten and first grade did what no parent could.` }] : []),
+    ...(d ? [{ dur: 5.5, cast: "amaira", kicker: fmtMonth(d.sister_profile_from.slice(0, 7)), line: "Her own<br><em>profile</em>", sub: `Six years old, and finally a profile with her name on it. It's ${a.on_own}% of her history now, and growing.`, say: "Finally. My own." }] : []),
+    { dur: 6, montage: postersOf(["iCarly", "Victorious", "The Thundermans", "Sam & Cat", "Alexa & Katie", "Fuller House"]), center: true, kicker: `${ys.at(-1).year} · age ${age(ys.at(-1).year)}`, line: `${ys.at(-1).views} views<br><em>and counting</em>`, sub: `Now she watches more than ever: ${Math.round(ys.at(-1).views / peak.views * 10) / 10}× her preschool peak, and the year isn't over. ${a.titles} titles in ${age(ys.at(-1).year)} years.` },
+    { dur: 5, cast: "amaira", kicker: "Still watching", line: "Born<br><em>streaming</em>", sub: "Day one to today. She's never known a TV that didn't ask \"Are you still watching?\"", say: "Obviously I'm still watching." },
   ];
 }
 function accountFilm() {
@@ -1711,9 +1911,10 @@ const FILMS = {
   still: { season: 4, subtitle: "Still Watching", scenes: stillFilm, art: "Bridgerton", blurb: "Eleven years later. Are you still watching?" },
   detective: { season: 5, subtitle: "Four Files, No Names", scenes: detectiveFilm, art: "Fuller House", blurb: "Four zip files, no labels. The data figures out the family anyway." },
   watch: { season: 5, subtitle: "How We Watch", scenes: watchFilm, art: "Fuller House", blurb: "A binger, a superfan, a sampler and a movie person." },
-  dad: { season: 5, subtitle: "Dad's Impeccable Timing", scenes: dadFilm, art: "Peaky Blinders", blurb: "24 Hours to Live on his birthday. Born in the Purple the week Amaira was born." },
-  mom: { season: 5, subtitle: "Mumma, the Movie Person", scenes: momFilm, art: "Delhi Crime", blurb: "303 Hindi movies and a Shah Rukh shelf." },
-  copycat: { season: 5, subtitle: "Copy Cat", scenes: copyCatFilm, art: "Masha and the Bear", blurb: "Every show Amaira watched after her big sister." },
+  dad: { season: 5, subtitle: "Papa: The Sampler", scenes: dadFilm, art: "Sons of Anarchy", blurb: "A household special. Who Papa is, from his history alone: two daughters, a new baby, a history buff, and impeccable timing." },
+  mom: { season: 5, subtitle: "Mumma: The Movie Person", scenes: momFilm, art: "Delhi Crime", blurb: "A household special. Who Mumma is, from her history alone: a shared profile, brand-new releases and '90s Shah Rukh." },
+  born: { season: 5, subtitle: "Born Streaming", scenes: bornStreamingFilm, art: "Octonauts", blurb: "Amaira has never lived without Netflix. A first show that erased itself, a preschool peak at four, and more TV than ever at nine." },
+  copycat: { season: 5, subtitle: "Amaira: The Superfan", scenes: copyCatFilm, art: "iCarly", blurb: "A household special. Little Baby Bum to iCarly, her #1 show at every age, and every show she copied from me." },
   account: { season: 5, subtitle: "The Account", scenes: accountFilm, art: "Narcos", blurb: "Whose profile is it, really?" },
 };
 Object.values(FILMS).forEach((f) => { f.name = "Still Watching"; });
@@ -2003,41 +2204,84 @@ function miniRow(label, value, max, hot = true) {
     <span class="mini__n">${n(value)}</span></div>`;
 }
 
+// Where I was and what grade I was in on a given day. Class of 2024; college starts that August.
+const GRADES = ["", "1st grade", "2nd grade", "3rd grade", "4th grade", "5th grade", "6th grade", "7th grade", "8th grade",
+  "freshman year", "sophomore year", "junior year", "senior year", "freshman year of college", "sophomore year of college",
+  "junior year of college", "senior year of college"];
+function lifeAt(iso) {
+  const d = parse(iso), m = d.getMonth();
+  const grade = 12 - (2024 - (m >= 7 ? d.getFullYear() + 1 : d.getFullYear()));
+  const summer = m === 5 || m === 6;
+  const stage = summer ? (grade === 12 ? "the summer before college" : `the summer before ${GRADES[grade + 1]}`) : GRADES[grade];
+  const move = DATA.gaps.find((g) => g.from.startsWith("2020"));
+  const place = move && iso <= move.from ? "Cupertino" : iso < DATA.dates.austin || summer ? "Dallas" : "Austin";
+  return { stage, place };
+}
+const lifeLine = (iso) => { const l = lifeAt(iso); return `${l.stage}, ${l.place}`; };
+
+let EPISODES;
+const loadEpisodes = () => (EPISODES ||= fetch("data/episodes.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})));
+
+function yearsMonths(days) {
+  const y = Math.floor(days / 365.25), m = Math.round((days - y * 365.25) / 30.44);
+  return y ? `${y} year${y === 1 ? "" : "s"}${m ? `, ${m} month${m === 1 ? "" : "s"}` : ""}` : `${m} month${m === 1 ? "" : "s"}`;
+}
+
 function openShow(name) {
   const s = DATA.shows[name];
   if (!s) return;
-  const t = DATA.totals;
-  const share = s.views / t.views * 100;
+  const share = s.views / DATA.totals.views * 100;
   const rank = DATA.top.findIndex((x) => x.show === name);
   const y1 = parse(s.first).getFullYear(), y2 = parse(s.last).getFullYear();
-  const seasons = Object.entries(s.seasons);
-  const years = Object.entries(s.by_year);
-  let copy;
-  if (s.kind === "movie") {
-    copy = `<p class="modal__copy">Watched on ${fmtDate(s.last)}${s.eras.Austin ? ", after I moved to Austin" : ", in Dallas"}.</p>`;
-  } else {
-    copy = `<p class="modal__copy">${n(s.views)} episode${s.views === 1 ? "" : "s"} over ${s.days} day${s.days === 1 ? "" : "s"}, from ${fmtDate(s.first)} to ${fmtDate(s.last)}.</p>`;
-    if (s.best_day.episodes > 1) copy += `<p class="modal__copy">My biggest day: ${s.best_day.episodes} episodes on ${fmtDate(s.best_day.date)}.${s.binge_days ? ` ${s.binge_days} binge day${s.binge_days === 1 ? "" : "s"} of 3 or more.` : ""}</p>`;
-  }
-  const eraLine = [s.eras.Dallas && `${n(s.eras.Dallas)} in Dallas`, s.eras.Austin && `${n(s.eras.Austin)} since Austin`].filter(Boolean).join(", ");
-  const maxS = Math.max(...seasons.map(([, v]) => v), 1);
-  const maxY = Math.max(...years.map(([, v]) => v), 1);
-  openModal(name, `
-    <p class="modal__meta"><span class="match">${share >= 1 ? share.toFixed(1) : share.toFixed(2)}% of my watching</span>
+  const seasons = Object.keys(s.seasons);
+  const meta = `<p class="modal__meta"><span class="match">${share >= 1 ? share.toFixed(1) : share.toFixed(2)}% of my watching</span>
       <span>${y1 === y2 ? y1 : `${y1}–${y2}`}</span>
       <span class="pill">${s.kind === "movie" ? "Movie" : "Series"}</span>
       ${seasons.length ? `<span>${seasons.length} season${seasons.length === 1 ? "" : "s"}</span>` : ""}
-      ${rank >= 0 ? `<span class="top-badge">TOP<b>10</b></span><span>#${rank + 1} in Suhani's Life</span>` : ""}</p>
-    <div class="modal__grid">
-      <div>${copy}</div>
-      <div class="modal__side">
-        <p><b>Watched:</b> ${eraLine}</p>
-        <p><b>First:</b> ${fmtDate(s.first)}</p>
-        <p><b>Last:</b> ${fmtDate(s.last)}</p>
-      </div>
-    </div>
-    ${seasons.length > 1 ? `<h4>Episodes by season</h4><div class="mini">${seasons.map(([k, v]) => miniRow(k, v, maxS)).join("")}</div>` : ""}
-    ${years.length > 1 ? `<h4>By year</h4><div class="mini">${years.map(([k, v]) => miniRow(k, v, maxY)).join("")}</div>` : ""}`);
+      ${rank >= 0 ? `<span class="top-badge">TOP<b>10</b></span><span>#${rank + 1} in Suhani's Life</span>` : ""}</p>`;
+  if (s.kind === "movie") {
+    openModal(name, `${meta}<p class="modal__lead">Watched in ${fmtMonth(s.last.slice(0, 7))}, ${lifeLine(s.last)}.</p>`);
+    return;
+  }
+  const first = lifeAt(s.first), last = lifeAt(s.last);
+  const lead = s.first === s.last ? `All ${s.views} in one day, in ${fmtMonth(s.first.slice(0, 7))}: ${lifeLine(s.first)}.`
+    : `I started it in ${first.stage} in ${first.place}. The last episode was in ${last.stage}${last.place === first.place ? "" : ` in ${last.place}`}.`;
+  openModal(name, `${meta}
+    <p class="modal__lead">${lead}</p>
+    <div class="modal__facts" id="show-facts"></div>
+    <div class="eplist__head"><h4>Episodes</h4><span class="eplist__note">in the order I watched them</span>
+      ${seasons.length > 1 ? `<select class="eplist__season" id="show-season" aria-label="Season">${seasons.map((k) => `<option>${esc(k)}</option>`).join("")}</select>` : ""}</div>
+    <ol class="eplist" id="show-eps"></ol>`);
+
+  loadEpisodes().then((all) => {
+    const entry = all[name];
+    if (!entry || $("#modal").hidden) return;
+    // Published by month only; same-day counts and the longest break come precomputed from the pipeline.
+    const bySeason = entry.seasons, gap = entry.gap, mid = (m) => `${m}-15`;
+    const flat = Object.values(bySeason).flat().map(([, m]) => m).sort();
+    const places = [...new Set(flat.map((m) => lifeAt(mid(m)).place))];
+    const facts = [
+      s.best_day.episodes >= 3 && `<div><b>${s.best_day.episodes} episodes</b><span>in one day, ${fmtMonth(s.best_day.date.slice(0, 7))}, ${lifeAt(s.best_day.date).stage}.</span></div>`,
+      gap && `<div><b>Gone ${yearsMonths(gap.days)}</b><span>then came back in ${fmtMonth(gap.back)} for ${gap.episodes} episode${gap.episodes === 1 ? "" : "s"}.</span></div>`,
+      places.length > 1 && `<div><b>${places.join(" → ")}</b><span>it moved with me.</span></div>`,
+    ].filter(Boolean);
+    $("#show-facts").innerHTML = facts.join("");
+
+    const stills = {};
+    Object.values(STILLS[name] || {}).flat().forEach((x) => { stills[x.ep] = x.img; });
+    const best = s.best_day.date.slice(0, 7);
+    const render = (season) => {
+      const list = bySeason[season] || Object.values(bySeason)[0];
+      $("#show-eps").innerHTML = list.map(([ep, m, same, img], i) => `<li class="ep${m === best && same === s.best_day.episodes ? " ep--best" : ""}">
+          <span class="ep__num">${i + 1}</span>
+          <span class="ep__thumb">${img || stills[ep] ? `<img src="${esc(img || stills[ep])}" alt="" loading="lazy">` : art(name, { label: "", mark: false })}</span>
+          <span class="ep__text"><span class="ep__top"><b>${esc(ep)}</b><span>${fmtMonth(m)}</span></span>
+            <span class="ep__copy">${esc(lifeLine(mid(m)))}${same >= 3 ? ` · <em>${same} that day</em>` : ""}</span></span></li>`).join("");
+    };
+    const pick = $("#show-season");
+    pick?.addEventListener("change", () => render(pick.value));
+    render(pick ? pick.value : "");
+  });
 }
 
 let lastFocus;

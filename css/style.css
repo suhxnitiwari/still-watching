@@ -1225,3 +1225,152 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .avatar__recon { background: #050505 repeating-linear-gradient(0deg, rgba(229, 9, 20, .08) 0 2px, transparent 2px 6px); }
 .profile .avatar:not(.is-revealed):not(.is-reconstructing) .avatar__status::after { content: "WAITING…"; }
 .profile .avatar:not(.is-revealed) .avatar__status { opacity: 1; }
+
+/* Title modal: a story line, a few facts, and every episode with the day I watched it. */
+.modal__lead { font-size: 19px; line-height: 1.5; margin: 0 0 20px; max-width: 46ch; }
+.modal__facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 0 0 8px; }
+.modal__facts:empty { display: none; }
+.modal__facts div { border-left: 3px solid var(--red); padding: 2px 0 2px 12px; }
+.modal__facts b { display: block; font-size: 18px; }
+.modal__facts span { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.eplist__head { display: flex; align-items: baseline; gap: 12px; margin: 32px 0 8px; }
+.eplist__head h4 { margin: 0; }
+.eplist__note { color: var(--muted); font-size: 14px; flex: 1; }
+.eplist__season { background: #242424; color: #fff; border: 1px solid #4d4d4d; border-radius: 4px; padding: 8px 12px; font: inherit; font-size: 15px; }
+.eplist { list-style: none; margin: 0; padding: 0; }
+.ep { display: grid; grid-template-columns: 36px 140px 1fr; gap: 16px; align-items: center; padding: 16px 8px; border-bottom: 1px solid #404040; border-radius: 4px; }
+.ep--best { background: #2a2a2a; }
+.ep__num { font-size: 22px; color: #d2d2d2; text-align: center; }
+.ep__thumb { position: relative; aspect-ratio: 16 / 9; border-radius: 4px; overflow: hidden; background: #222; }
+.ep__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ep__thumb .art { position: absolute; inset: 0; }
+.ep__top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+.ep__top span { color: #fff; font-weight: 600; white-space: nowrap; font-size: 14px; }
+.ep__copy { color: #bcbcbc; font-size: 14px; display: block; }
+.ep__copy em { color: var(--red); font-style: normal; font-weight: 700; }
+.peek .row { margin: 4px 0 16px; padding: 0; }
+.peek .row__title { font-size: 15px; padding: 0; }
+.peek .row__scroller { padding-left: 0; padding-right: 0; }
+.peek .tile { width: 230px; }
+@media (max-width: 600px) {
+  .ep { grid-template-columns: 100px 1fr; gap: 12px; padding: 12px 4px; }
+  .ep__num { display: none; }
+  .ep__top { flex-direction: column; gap: 2px; }
+  .eplist__head { flex-wrap: wrap; }
+}
+
+/* Who he is / who she is: guess, signal, evidence. */
+.who-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 0 0 24px; }
+.who { background: #1f1f1f; border-left: 3px solid var(--red); border-radius: 6px; padding: 14px 16px; }
+.who__label { color: var(--red); font-size: 11px; font-weight: 700; letter-spacing: .14em; margin: 0 0 6px; }
+.who h4 { font-size: 18px; margin: 0 0 4px; }
+.who__signal { color: var(--muted); font-size: 13px; font-style: italic; margin: 0 0 8px; }
+.who__ev { font-size: 14px; line-height: 1.5; margin: 0; color: #d6d6d6; }
+.who__ev b { color: #fff; }
+
+/* What a show says about the person: a quiet line under the poster. */
+.says { display: block; color: #bdbdbd; font-size: 12px; font-style: italic; line-height: 1.3; margin-top: 6px; }
+.top10__col { display: flex; flex-direction: column; }
+.top10__col .says { max-width: clamp(120px, 10.5vw, 170px); min-height: 2.6em; }
+.peek__row .top10__col .says { max-width: 96px; font-size: 11px; }
+.peek__year .says { color: #9a9a9a; font-size: 10.5px; margin-top: 0; }
+.grow { flex: 0 0 auto; display: flex; flex-direction: column; }
+.grow .says { padding-left: 2px; }
+
+/* Billboards: Netflix's meta line with a rating box, and the special playing behind, picture only. */
+.rating { border: 1px solid rgba(255, 255, 255, .55); padding: 1px 6px; font-weight: 500; font-size: .85em; letter-spacing: .04em; }
+.peek__hero { overflow: hidden; }
+.peek__stage { position: absolute; inset: 0; z-index: 0; }
+.peek__stage .scene { position: absolute; inset: 0; opacity: 0; transition: opacity 1s; }
+.peek__stage .scene.is-on { opacity: 1; }
+.peek__stage .scene__text, .peek__stage .cast figcaption, .peek__stage .say { display: none; }
+.peek__hero::after { z-index: 1; }
+.peek__herotext { position: relative; z-index: 2; }
+.peek__billmeta { margin: 10px 0 8px; font-size: 15px; }
+.peek__billcopy { max-width: 46ch; margin: 0 0 16px; line-height: 1.5; color: #e6e6e6; }
+.peek__billbtns { display: flex; gap: 10px; }
+.btn--dark { background: rgba(109, 109, 110, .7); color: #fff; }
+.btn--dark:hover { background: rgba(109, 109, 110, .5); }
+
+/* Profile pages at Netflix scale: a full billboard, white row titles, home-sized posters. */
+.peek__hero { height: min(82vh, 56.25vw); min-height: 460px; padding-bottom: clamp(48px, 8vh, 110px); margin-bottom: 8px; }
+.peek__herotext { max-width: min(640px, 92vw); }
+.peek__because { margin: 0 0 14px; font-size: clamp(14px, 1.1vw, 18px); font-weight: 600; color: #e5e5e5; }
+.peek__mark { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; color: #e5e5e5; font-weight: 700; letter-spacing: .3em; font-size: clamp(12px, .9vw, 15px); }
+.peek__s { font-family: var(--display); color: var(--red); font-size: 2.2em; line-height: 1; letter-spacing: 0; }
+.peek__herotitle small { display: block; font-size: .52em; line-height: 1; margin-top: .08em; }
+.peek__billmeta { font-size: clamp(15px, 1.25vw, 19px); }
+.peek__billcopy { font-size: clamp(15px, 1.2vw, 20px); }
+.peek__billbtns .btn { font-size: clamp(15px, 1.2vw, 20px); padding: .55em 1.6em; }
+.peek .peek__label { color: #e5e5e5; text-transform: none; letter-spacing: 0; font-weight: 700; font-size: clamp(18px, 1.45vw, 24px); margin: 34px 0 12px; }
+.peek .peek__genre { font-size: clamp(18px, 1.4vw, 22px); font-weight: 400; color: #bcbcbc; margin-top: -6px; }
+.peek__row .top10 .tile { width: clamp(120px, 10.5vw, 170px); }
+.peek__row .top10__num { font-size: clamp(170px, 15vw, 250px); }
+.peek__row .top10__col .says { max-width: clamp(120px, 10.5vw, 170px); font-size: 13px; }
+.peek__years { gap: 10px; }
+.peek__year, .peek__tcard { flex: 0 0 clamp(130px, 11.5vw, 200px); font-size: 14px; gap: 5px; }
+.peek__year b { font-size: 15px; }
+.peek__year span { font-size: 14px; }
+.peek__year .says { font-size: 12.5px; }
+.peek__count b { font-size: 26px; }
+.peek .row__title { font-size: clamp(18px, 1.45vw, 24px); }
+.peek .tile { width: clamp(220px, 19vw, 340px); }
+
+/* Manage Profiles: Netflix's white account page. */
+.acct { position: fixed; inset: 0; z-index: 130; overflow-y: auto; background: #f5f5f1; color: #141414; }
+.acct[hidden] { display: none; }
+.acct__top { display: flex; justify-content: space-between; align-items: center; padding: 18px clamp(20px, 11vw, 230px); background: #fff; border-bottom: 1px solid #e3e3e3; }
+.acct__logo { font-family: var(--display); color: var(--red); font-size: 34px; letter-spacing: .02em; }
+.acct__top .avatar { width: 40px; }
+.acct__body { display: grid; grid-template-columns: minmax(200px, 400px) minmax(0, 1080px); gap: 12px; padding: 40px clamp(20px, 11vw, 230px) 80px; }
+.acct__nav { display: flex; flex-direction: column; gap: 6px; }
+.acct__back { align-self: flex-start; border: 0; background: none; font: inherit; font-size: 17px; color: #141414; cursor: pointer; padding: 8px 18px 28px; }
+.acct__link { display: flex; align-items: center; gap: 16px; padding: 12px 18px; border-radius: 6px; font-size: 19px; font-weight: 600; color: #141414; text-decoration: none; }
+.acct__link:hover { background: #ebebeb; }
+.acct__link.is-on { background: #e2e2e2; }
+.acct__link svg, .acct__card svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; flex: none; }
+.acct__main h1 { font-size: clamp(36px, 3.4vw, 54px); margin: 0; letter-spacing: -.02em; }
+.acct__sub { font-size: 21px; color: #333; margin: 4px 0 22px; }
+.acct__main h2 { font-size: 21px; font-weight: 500; margin: 40px 0 14px; }
+.acct__card { background: #fff; border: 1px solid #cfcfcf; border-radius: 8px; }
+.acct__card summary { display: flex; align-items: center; gap: 18px; padding: 26px; cursor: pointer; list-style: none; }
+.acct__card summary::-webkit-details-marker { display: none; }
+.acct__card summary span { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.acct__card b { font-size: 19px; }
+.acct__card small, .acct__who small { color: #555; font-size: 15px; }
+.acct__card i, .acct__row i { font-style: normal; font-size: 30px; color: #141414; }
+.acct__card[open] i { transform: rotate(90deg); }
+.acct__card p { margin: 0; padding: 0 26px 24px 70px; line-height: 1.6; color: #333; }
+.acct__list { background: #fff; border: 1px solid #cfcfcf; border-radius: 8px; padding: 6px 16px 18px; }
+.acct__row { display: flex; align-items: center; gap: 18px; width: 100%; padding: 22px 6px; border: 0; border-bottom: 1px solid #e3e3e3; background: none; font: inherit; color: inherit; text-align: left; cursor: pointer; }
+.acct__row:hover { background: #fafafa; }
+.acct__row .avatar { width: 54px; position: relative; flex: none; }
+.acct__who { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+.acct__who b { font-size: 21px; }
+.acct__now { background: #d2e3fc; color: #174ea6; font-size: 15px; font-weight: 500; padding: 5px 10px; border-radius: 4px; }
+.acct__add { display: block; width: 100%; margin-top: 24px; padding: 16px; border: 0; border-radius: 4px; background: #d9d9d9; font: inherit; font-size: 21px; font-weight: 600; color: #141414; cursor: pointer; }
+.acct__add:hover { background: #cfcfcf; }
+.acct__note { text-align: center; color: #555; margin: 18px 0 0; }
+@media (max-width: 760px) { .acct__body { grid-template-columns: 1fr; } .acct__nav { display: none; } .acct__top, .acct__body { padding-left: 16px; padding-right: 16px; } }
+
+/* Profile pages as a Netflix home: an inset billboard card, full-bleed rows of wide tiles with captions. */
+.peek__hero { margin: 24px 0 36px; border-radius: 22px; height: min(80vh, 780px); min-height: 480px; padding: 0 clamp(24px, 3vw, 48px) clamp(32px, 6vh, 64px); box-shadow: 0 30px 60px rgba(0, 0, 0, .45); }
+.peek__badge { position: absolute; right: clamp(20px, 3vw, 48px); bottom: clamp(32px, 6vh, 64px); display: flex; align-items: center; gap: 8px; z-index: 2;
+  background: rgba(20, 20, 20, .75); border-radius: 6px; padding: 8px 14px; font-weight: 600; font-size: clamp(13px, 1vw, 17px); }
+.peek__badge i { width: 18px; height: 14px; background: linear-gradient(135deg, #ff2079, var(--red)); clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 70%); }
+.peek__herotext { position: static; }
+.peek .row { margin: 0 calc(var(--gutter) * -1) 40px; padding: 0; }
+.peek .row__title { font-size: clamp(19px, 1.75vw, 30px); margin: 0 var(--gutter) 14px; }
+.peek .row__scroller { padding: 6px var(--gutter) 14px; }
+.peek .row__sub { color: #9a9a9a; }
+.cap { flex: 0 0 auto; width: clamp(220px, 18.4vw, 380px); display: flex; flex-direction: column; gap: 4px; scroll-snap-align: start;
+  border: 0; padding: 0; background: none; color: inherit; font: inherit; text-align: left; }
+.cap .tile { width: 100%; display: block; margin-bottom: 8px; }
+.cap .tile .art { position: absolute; inset: 0; }
+.cap__top { font-size: clamp(15px, 1.15vw, 19px); font-weight: 700; color: #fff; }
+.cap__line { font-size: clamp(13px, .95vw, 16px); color: #a3a3a3; }
+button.cap { cursor: pointer; }
+button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red); }
+.peek .peek__story { margin: -24px 0 36px; }
+.peek__herotext > :not(.peek__badge) { position: relative; z-index: 2; }
+.cap .art--img .art__name { display: none; }

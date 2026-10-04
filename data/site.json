@@ -1,11 +1,11 @@
 {
  "totals": {
-  "views": 3363,
+  "views": 3361,
   "titles": 459,
   "series": 201,
   "movies": 258,
   "binge_days": 413,
-  "active_days": 1248,
+  "active_days": 1246,
   "from": "2015-06-16",
   "to": "2026-09-25"
  },
@@ -24,7 +24,7 @@
   },
   {
    "month": "2015-08",
-   "views": 13
+   "views": 11
   },
   {
    "month": "2015-09",
@@ -567,7 +567,7 @@
   385,
   367,
   315,
-  223,
+  221,
   172,
   65,
   307,
@@ -575,11 +575,11 @@
  ],
  "weekday": {
   "Sunday": 614,
-  "Saturday": 545,
+  "Saturday": 544,
   "Monday": 492,
   "Tuesday": 472,
   "Friday": 445,
-  "Wednesday": 403,
+  "Wednesday": 402,
   "Thursday": 392
  },
  "top": [
@@ -704,7 +704,7 @@
  "yearly": [
   {
    "year": 2015,
-   "views": 97,
+   "views": 95,
    "show": "LEGO Ninjago",
    "episodes": 27
   },
@@ -825,7 +825,7 @@
    ]
   },
   "Dallas": {
-   "views": 2831,
+   "views": 2829,
    "from": "2015-06-16",
    "to": "2024-07-23",
    "per_month": 25.9,
@@ -851,11 +851,11 @@
      "views": 105
     },
     {
-     "show": "The Fosters",
+     "show": "Jane The Virgin",
      "views": 104
     },
     {
-     "show": "Jane The Virgin",
+     "show": "The Fosters",
      "views": 104
     },
     {
@@ -941,39 +941,36 @@
    "name": "Elementary",
    "from": "2015-06-16",
    "to": "2017-07-08",
-   "views": 714,
-   "per_month": 28.9,
-   "titles": 98,
-   "titles_per_month": 4.0,
+   "views": 712,
+   "per_month": 28.8,
+   "titles": 97,
+   "titles_per_month": 3.9,
    "movie_share": 8.0,
    "language": {
-    "English": 100.0
+    "English": 99.8
    },
    "type": {
-    "Scripted": 84.6,
-    "Animation": 15.2,
-    "Reality": 0.2
+    "Scripted": 86.4,
+    "Animation": 13.4
    },
    "genres": {
-    "Comedy": 66.1,
-    "Drama": 37.6,
-    "Family": 35.2,
-    "Science-Fiction": 21.6,
-    "Action": 19.3,
-    "Children": 19.0,
+    "Comedy": 80.5,
+    "Family": 35.3,
+    "Drama": 22.0,
+    "Children": 21.8,
+    "Science-Fiction": 21.7,
+    "Action": 19.1,
     "Music": 9.9,
     "Adventure": 8.7,
     "Horror": 5.3,
-    "Supernatural": 3.0,
-    "Fantasy": 2.1,
+    "Fantasy": 5.2,
     "Romance": 0.8,
-    "Espionage": 0.3,
     "Crime": 0.2
    },
-   "netflix_share": 2.4,
+   "netflix_share": 3.8,
    "median_premiere": 2011,
-   "classic_share": 18.9,
-   "fresh_share": 10.8,
+   "classic_share": 4.6,
+   "fresh_share": 9.0,
    "top": [
     {
      "show": "Jessie",
@@ -1030,10 +1027,6 @@
     ],
     "drama": [
      {
-      "show": "Jessie",
-      "views": 103
-     },
-     {
       "show": "Liv and Maddie",
       "views": 75
      },
@@ -1044,6 +1037,10 @@
      {
       "show": "Mako Mermaids",
       "views": 2
+     },
+     {
+      "show": "Once Upon a Time",
+      "views": 1
      }
     ],
     "medical_crime": [
@@ -1070,15 +1067,15 @@
    },
    "by_premiere": [
     {
-     "show": "Jessie",
-     "year": 1984
-    },
-    {
      "show": "Good Luck Charlie",
      "year": 2010
     },
     {
      "show": "A.N.T. Farm",
+     "year": 2011
+    },
+    {
+     "show": "Jessie",
      "year": 2011
     },
     {
@@ -1095,7 +1092,7 @@
     }
    ],
    "movies": 57,
-   "series_views": 657
+   "series_views": 655
   },
   {
    "key": "middle",
@@ -1108,44 +1105,42 @@
    "titles_per_month": 3.1,
    "movie_share": 4.9,
    "language": {
-    "English": 99.7,
-    "Korean": 0.1
+    "English": 99.1,
+    "Spanish": 0.1
    },
    "type": {
-    "Scripted": 92.4,
-    "Reality": 5.7,
+    "Scripted": 92.3,
+    "Reality": 5.4,
     "Documentary": 0.7,
-    "Animation": 0.5,
+    "Animation": 0.4,
     "Talk Show": 0.2,
-    "Variety": 0.2,
-    "Game Show": 0.1
+    "Variety": 0.2
    },
    "genres": {
-    "Romance": 53.3,
-    "Drama": 47.3,
-    "Comedy": 47.2,
-    "Family": 36.0,
-    "Supernatural": 18.9,
-    "Children": 6.4,
-    "Mystery": 4.3,
+    "Romance": 53.4,
+    "Comedy": 47.0,
+    "Drama": 46.7,
+    "Family": 36.1,
+    "Supernatural": 18.5,
+    "Children": 6.7,
+    "Mystery": 4.5,
     "Thriller": 2.8,
     "Crime": 2.4,
     "Food": 2.0,
-    "Horror": 1.5,
     "Science-Fiction": 1.3,
+    "Horror": 1.3,
     "Action": 1.2,
+    "Fantasy": 0.7,
     "Adventure": 0.5,
-    "Fantasy": 0.3,
     "Music": 0.3,
     "Nature": 0.2,
     "History": 0.2,
-    "DIY": 0.1,
-    "Espionage": 0.1
+    "DIY": 0.1
    },
-   "netflix_share": 11.0,
+   "netflix_share": 10.8,
    "median_premiere": 2011,
-   "classic_share": 23.6,
-   "fresh_share": 10.2,
+   "classic_share": 23.7,
+   "fresh_share": 9.1,
    "top": [
     {
      "show": "Friends",
@@ -1720,6 +1715,194 @@
   }
  ],
  "profile": {
+  "what": {
+   "ahead": {
+    "coverage": 64,
+    "older_pct": 79,
+    "by_era": {
+     "elementary": 4.1,
+     "middle": 6.5,
+     "high": 3.8,
+     "college": -2.1
+    },
+    "example": {
+     "show": "The Vampire Diaries",
+     "lead": 17,
+     "me": 12
+    },
+    "college": [
+     "Gossip Girl",
+     "Bridgerton"
+    ]
+   },
+   "mothers": {
+    "pct": 17.7,
+    "by_era": {
+     "elementary": 0.0,
+     "middle": 13.2,
+     "high": 35.6,
+     "college": 3.5
+    },
+    "top": [
+     "Gilmore Girls",
+     "Jane The Virgin",
+     "The Fosters"
+    ],
+    "away": 2.2,
+    "home": 6.2
+   },
+   "places": {
+    "coverage": 83,
+    "top": [
+     {
+      "place": "New York",
+      "views": 628
+     },
+     {
+      "place": "a small town",
+      "views": 609
+     },
+     {
+      "place": "San Francisco",
+      "views": 180
+     },
+     {
+      "place": "Seattle",
+      "views": 164
+     },
+     {
+      "place": "San Diego",
+      "views": 104
+     },
+     {
+      "place": "Miami",
+      "views": 104
+     }
+    ],
+    "nyc": [
+     "Friends",
+     "Gossip Girl",
+     "Jessie"
+    ],
+    "town": [
+     "The Vampire Diaries",
+     "Gilmore Girls",
+     "Bunk'd"
+    ]
+   },
+   "show_age": {
+    "favorites": [
+     {
+      "show": "Friends",
+      "year": 1994
+     },
+     {
+      "show": "The Vampire Diaries",
+      "year": 2009
+     },
+     {
+      "show": "Grey's Anatomy",
+      "year": 2005
+     },
+     {
+      "show": "Gilmore Girls",
+      "year": 2000
+     }
+    ],
+    "fav_year": 2002,
+    "median_year": 2012
+   },
+   "older_pct": 19.5,
+   "older": [
+    {
+     "show": "Friends",
+     "year": 1994,
+     "views": 233
+    },
+    {
+     "show": "Grey's Anatomy",
+     "year": 2005,
+     "views": 164
+    },
+    {
+     "show": "Gilmore Girls",
+     "year": 2000,
+     "views": 158
+    }
+   ],
+   "median_age": 6,
+   "fresh_pct": 10,
+   "netflix_pct": 27,
+   "cw_pct": 22,
+   "cw_top": [
+    "The Vampire Diaries",
+    "Gilmore Girls",
+    "Gossip Girl"
+   ],
+   "networks": [
+    {
+     "network": "Netflix",
+     "pct": 27
+    },
+    {
+     "network": "The CW",
+     "pct": 22
+    },
+    {
+     "network": "Freeform",
+     "pct": 10
+    },
+    {
+     "network": "Disney Channel",
+     "pct": 10
+    },
+    {
+     "network": "DisneyNOW",
+     "pct": 9
+    }
+   ],
+   "release": [
+    {
+     "show": "Emily in Paris",
+     "season": 2,
+     "month": "2021-12",
+     "days": 2,
+     "episodes": 10
+    },
+    {
+     "show": "Never Have I Ever",
+     "season": 3,
+     "month": "2022-08",
+     "days": 2,
+     "episodes": 10
+    },
+    {
+     "show": "Never Have I Ever",
+     "season": 4,
+     "month": "2023-06",
+     "days": 2,
+     "episodes": 10
+    },
+    {
+     "show": "Ginny & Georgia",
+     "season": 2,
+     "month": "2023-01",
+     "days": 4,
+     "episodes": 10
+    },
+    {
+     "show": "Ginny & Georgia",
+     "season": 3,
+     "month": "2025-06",
+     "days": 4,
+     "episodes": 10
+    }
+   ],
+   "top_day": "Sunday",
+   "top_day_pct": 18,
+   "low_day": "Thursday",
+   "low_day_pct": 12
+  },
   "senior_spring": {
    "views": 14,
    "days": 6,
@@ -1914,11 +2097,11 @@
    }
   ],
   "kids_by_year": {
-   "2015": 67.0,
-   "2016": 67.0,
-   "2017": 56.8,
+   "2015": 80.0,
+   "2016": 86.0,
+   "2017": 71.2,
    "2018": 16.0,
-   "2019": 1.2,
+   "2019": 1.0,
    "2020": 0.0,
    "2021": 0.3,
    "2022": 0.0,
@@ -1928,9 +2111,9 @@
    "2026": 0.0
   },
   "kids_early_top": [
+   "Jessie",
    "Good Luck Charlie",
-   "Lab Rats",
-   "Liv and Maddie"
+   "Lab Rats"
   ],
   "first_title": "Lilo & Stitch",
   "teen_romcoms": [
@@ -1993,7 +2176,7 @@
    "movies": 20,
    "hindi": 12
   },
-  "romance_share": 45.3,
+  "romance_share": 45.4,
   "valentines": [
    {
     "date": "2019-02-14",
@@ -2075,7 +2258,7 @@
    "Set It Up",
    "Wedding Season"
   ],
-  "rewatched": 115,
+  "rewatched": 114,
   "rewatch_top": {
    "Fuller House": 38,
    "Bunk'd": 37
@@ -2118,19 +2301,19 @@
    }
   ],
   "me_titles": {
-   "Elementary": 1.8,
+   "Elementary": 1.9,
    "Middle School": 4.5,
    "High School": 7.8,
    "After Graduation": 3.1
   }
  },
  "picky": {
-  "quit": 35,
-  "kept": 31,
-  "netflix_quit": 54,
-  "netflix_kept": 35,
-  "romance_quit": 20,
-  "romance_kept": 39,
+  "quit": 34,
+  "kept": 32,
+  "netflix_quit": 53,
+  "netflix_kept": 38,
+  "romance_quit": 18,
+  "romance_kept": 38,
   "network_kept": [
    "The Vampire Diaries",
    "Gossip Girl",
@@ -2143,15 +2326,15 @@
    "Outer Banks",
    "You"
   ],
-  "korean_tried": 9,
+  "korean_tried": 8,
   "korean_kept": 1,
   "dating_quit": [
    "Love Is Blind",
    "Pop the Balloon LIVE"
   ],
   "matchmaking": 24,
-  "drama_views": 1790,
-  "views": 3363,
+  "drama_views": 1681,
+  "views": 3361,
   "korean_quit": [
    "Crash Landing on You",
    "Hometown Cha-Cha-Cha",
@@ -2225,33 +2408,33 @@
  "genre_pie": [
   {
    "genre": "Romance",
-   "views": 928,
+   "views": 929,
    "shows": [
     "Friends",
     "Gilmore Girls",
     "Gossip Girl"
    ],
-   "pct": 30.1
+   "pct": 30.2
   },
   {
    "genre": "Kids & Disney",
-   "views": 716,
+   "views": 737,
    "shows": [
     "Jessie",
     "Good Luck Charlie",
     "Lab Rats"
    ],
-   "pct": 23.2
+   "pct": 23.9
   },
   {
    "genre": "Supernatural",
-   "views": 434,
+   "views": 408,
    "shows": [
     "The Vampire Diaries",
     "The Originals",
     "Manifest"
    ],
-   "pct": 14.1
+   "pct": 13.2
   },
   {
    "genre": "Comedy",
@@ -2265,13 +2448,13 @@
   },
   {
    "genre": "Reality & talk",
-   "views": 236,
+   "views": 231,
    "shows": [
     "The Great Indian Kapil Show",
     "Brain Games",
     "Dubai Bling"
    ],
-   "pct": 7.7
+   "pct": 7.5
   },
   {
    "genre": "Medical",
@@ -2305,13 +2488,13 @@
   },
   {
    "genre": "Other",
-   "views": 16,
+   "views": 23,
    "shows": [
+    "Trolls",
     "Queen Cleopatra",
-    "The Exchange",
-    "Miss Congeniality 2"
+    "The Exchange"
    ],
-   "pct": 0.5
+   "pct": 0.7
   }
  ],
  "dark_years": {
@@ -2396,10 +2579,10 @@
    }
   ],
   "stay": {
-   "1": 28,
-   "2": 47,
-   "3": 59,
-   "5": 66
+   "1": 29,
+   "2": 48,
+   "3": 60,
+   "5": 67
   },
   "tried": 124,
   "past_pilot": 60
@@ -2414,7 +2597,8 @@
     "top5_pct": 25,
     "per_day": 2.7,
     "month": 12,
-    "hindi_pct": 8
+    "hindi_pct": 8,
+    "netflix_pct": 27
    },
    "Mom": {
     "binge_days": 4,
@@ -2424,27 +2608,30 @@
     "top5_pct": 18,
     "per_day": 1.6,
     "month": 1,
-    "hindi_pct": 63
+    "hindi_pct": 63,
+    "netflix_pct": 93
    },
    "Dad": {
     "binge_days": 28,
     "eps_per_show": 3.3,
-    "titles": 729,
+    "titles": 730,
     "movie_pct": 30,
     "top5_pct": 17,
     "per_day": 1.8,
     "month": 1,
-    "hindi_pct": 1
+    "hindi_pct": 1,
+    "netflix_pct": 50
    },
    "My sister": {
-    "binge_days": 69,
-    "eps_per_show": 12.2,
-    "titles": 178,
+    "binge_days": 68,
+    "eps_per_show": 12.3,
+    "titles": 177,
     "movie_pct": 5,
     "top5_pct": 32,
     "per_day": 3.0,
     "month": 7,
-    "hindi_pct": 0
+    "hindi_pct": 0,
+    "netflix_pct": 30
    }
   },
   "profiles": {
@@ -2463,9 +2650,9 @@
       "views": 164
      }
     ],
-    "views": 3368,
-    "rewatched": 120,
-    "rewatch_pct": 3.6
+    "views": 3366,
+    "rewatched": 119,
+    "rewatch_pct": 3.5
    },
    "Mom": {
     "top": [
@@ -2501,7 +2688,7 @@
       "views": 45
      }
     ],
-    "views": 1445,
+    "views": 1447,
     "rewatched": 16,
     "rewatch_pct": 1.1
    },
@@ -2520,13 +2707,42 @@
       "views": 104
      }
     ],
-    "views": 1514,
+    "views": 1508,
     "rewatched": 122,
     "rewatch_pct": 8.1
    }
   },
   "parents": {
    "Dad": {
+    "who": {
+     "docs": 139,
+     "history_docs": [
+      "Rise of Empires",
+      "World War II in Colour",
+      "Wyatt Earp and The Cowboy War",
+      "Blood Sacrifice"
+     ],
+     "top_day": "Sunday",
+     "top_day_pct": 21,
+     "low_day": "Thursday",
+     "low_day_pct": 11,
+     "median_premiere": 2017,
+     "fresh_pct": 39,
+     "by_year": {
+      "2015": 117,
+      "2016": 193,
+      "2017": 206,
+      "2018": 167,
+      "2019": 105,
+      "2020": 68,
+      "2021": 117,
+      "2022": 87,
+      "2023": 121,
+      "2024": 95,
+      "2025": 77,
+      "2026": 94
+     }
+    },
     "top": [
      {
       "show": "Sons of Anarchy",
@@ -2634,7 +2850,7 @@
     "genres": [
      {
       "genre": "Drama",
-      "pct": 46
+      "pct": 45
      },
      {
       "genre": "Crime",
@@ -2642,7 +2858,7 @@
      },
      {
       "genre": "Action",
-      "pct": 21
+      "pct": 23
      }
     ],
     "fast": 41,
@@ -3296,7 +3512,51 @@
      "Dear Zindagi",
      "Jawan",
      "Zero"
-    ]
+    ],
+    "srk_years": {
+     "Om Shanti Om": 2007,
+     "Chennai Express": 2013,
+     "Dilwale": 2015,
+     "Dunki": 2023,
+     "Raees": 2017,
+     "Kabhi Khushi Kabhie Gham": 2001,
+     "Dil To Pagal Hai": 1997,
+     "Phir Bhi Dil Hai Hindustani": 2000,
+     "Deewana": 1992,
+     "Anjaam": 1994,
+     "Chak De! India": 2007,
+     "Dear Zindagi": 2016,
+     "Jawan": 2023,
+     "Zero": 2018
+    },
+    "who": {
+     "docs": 8,
+     "history_docs": [
+      "Raja, Rasoi aur Anya Kahaniyan",
+      "The Hunt for Veerappan",
+      "The Indrani Mukerjea Story"
+     ],
+     "top_day": "Sunday",
+     "top_day_pct": 18,
+     "low_day": "Thursday",
+     "low_day_pct": 11,
+     "median_premiere": 2022,
+     "fresh_pct": 79,
+     "by_year": {
+      "2015": 2,
+      "2016": 19,
+      "2017": 34,
+      "2018": 33,
+      "2019": 49,
+      "2020": 49,
+      "2021": 24,
+      "2022": 98,
+      "2023": 88,
+      "2024": 84,
+      "2025": 75,
+      "2026": 89
+     }
+    }
    }
   },
   "arrival": {
@@ -3313,7 +3573,7 @@
    "kids_file": {
     "2015": 97,
     "2016": 260,
-    "2017": 436,
+    "2017": 430,
     "2018": 19,
     "2019": 166,
     "2020": 202,
@@ -3328,8 +3588,8 @@
    "sister_profile_from": "2023-09-24",
    "freeze": 4,
    "week_after": 5,
-   "dad_file_daughters": 95,
-   "dad_file_dad": 4,
+   "dad_file_daughters": 94,
+   "dad_file_dad": 5,
    "mom_file_dad": 60,
    "mom_file_mom": 31
   },
@@ -3480,7 +3740,7 @@
    }
   ],
   "amaira": {
-   "views": 1514,
+   "views": 1508,
    "top": [
     {
      "show": "iCarly",
@@ -3528,7 +3788,7 @@
      "year": 2017,
      "show": "Little Baby Bum",
      "episodes": 0,
-     "views": 7,
+     "views": 1,
      "rewatched": true
     },
     {
@@ -3596,7 +3856,10 @@
    "bum": {
     "episodes": 8,
     "profiles": 3
-   }
+   },
+   "on_dad": 50,
+   "on_own": 39,
+   "titles": 177
   },
   "freeze": {
    "family": 4,
@@ -3691,22 +3954,22 @@
    "within_week": 0
   },
   "dad_and_me": {
-   "shared": 27,
-   "first": 20,
+   "shared": 28,
+   "first": 21,
    "second": 7,
    "within_week": 3
   },
   "pilot_quitters": {
    "Dad": 205,
-   "Me": 98,
+   "Me": 99,
    "My sister": 38,
    "Mom": 29
   },
   "shows_started": {
    "Me": 202,
    "Mom": 73,
-   "Dad": 309,
-   "My sister": 118
+   "Dad": 310,
+   "My sister": 117
   },
   "quit_rate": {
    "Dad": 66,
