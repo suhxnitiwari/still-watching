@@ -1222,3 +1222,6 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .avatar__status { position: absolute; left: 0; right: 0; bottom: 6px; z-index: 2; text-align: center; font: 700 8px/1 "Courier New", monospace; letter-spacing: .14em; color: #fff; text-shadow: 0 0 6px #e50914; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .avatar.is-reconstructing .avatar__status { opacity: 1; }
 .avatar__lock, .avatar__kids { z-index: 3; }
+.avatar__recon { background: #050505 repeating-linear-gradient(0deg, rgba(229, 9, 20, .08) 0 2px, transparent 2px 6px); }
+.profile .avatar:not(.is-revealed):not(.is-reconstructing) .avatar__status::after { content: "WAITING…"; }
+.profile .avatar:not(.is-revealed) .avatar__status { opacity: 1; }
