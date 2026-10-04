@@ -276,7 +276,9 @@ function peekAmaira() {
     ${peekTop10(a.top)}
     ${a.masha ? `<div class="peek__callout">Her first obsession was <b>Little Baby Bum</b>, then <b>Masha and the Bear</b>. Neither is her #1 on paper, and that's Netflix's fault: it keeps one date per episode per profile, so rewatching doesn't count. ${a.bum ? `Little Baby Bum shows up on ${a.bum.profiles} profiles. ` : ""}Masha: every one of its ${a.masha.episodes} episodes on <b>${a.masha.profiles} different profiles</b>, about <b>${a.masha.per_episode} times each</b>, more than any other show she watches.</div>` : ""}
     <p class="peek__label">Her #1 show every year</p>
-    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`).join("")}</div>`;
+    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`).join("")}</div>
+    ${DATA.family.copy_cat?.length >= 5 ? `<p class="peek__label">Copy cat · ${DATA.family.copy_cat.length} titles she watched after me. She's never found one first.</p>
+    <div class="peek__years">${DATA.family.copy_cat.map((c) => `<div class="peek__year">${art(c.show, { tall: true })}<b>Me ${c.me} → her ${c.her}</b><span>${esc(c.show)}</span></div>`).join("")}</div>` : ""}`;
 }
 
 function peekProfile(p) {
@@ -519,10 +521,6 @@ function setupRows() {
       ${art(f.art, { label: f.tile || f.subtitle })}<span class="tile__ribbon">S${f.season}<b>E${f.num}</b></span><span class="film-tile__play">▶</span></button>`)),
     row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
       tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
-    ...(DATA.family?.amaira?.top.length ? [
-      ...(DATA.family?.copy_cat?.length >= 5 ? [row("Copy Cat", `${DATA.family.copy_cat.length} titles my sister watched after me. She's never found one first.`, DATA.family.copy_cat.map((c) =>
-        `<div class="tile tile--static" aria-label="${esc(c.show)}: me ${c.me}, her ${c.her}">${art(c.show)}<span class="tile__ribbon">ME<b>${String(c.me).slice(2)}</b></span><span class="tile__meta tile__meta--left">her: ${c.her}${c.years >= 1 ? ` · ${Math.round(c.years)} yr${Math.round(c.years) > 1 ? "s" : ""} later` : ""}</span></div>`))] : []),
-    ] : []),
     ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.map((t) => wideTile(t)))] : []),
     row("Hooked From the First Episode", "4+ episodes on day one", DATA.hooked.map((h) =>
       tile(h.show, `<span class="tag">${h.day_one} on Day One</span><span class="tile__eps">${h.views} eps</span>`))),
