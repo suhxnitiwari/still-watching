@@ -1051,3 +1051,12 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 @media (max-width: 560px) { .peek__top10 { grid-template-columns: repeat(3, 1fr); } }
 .peek__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .peek__chips span { background: rgba(229, 9, 20, .14); border: 1px solid rgba(229, 9, 20, .45); border-radius: 999px; padding: 4px 10px; font-size: 12px; }
+.peek__days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 16px; scrollbar-width: thin; }
+.peek__day { flex: 0 0 150px; display: flex; flex-direction: column; gap: 4px; background: #000; border: 1px solid #2a2a2a; border-radius: 8px; padding: 12px; }
+.peek__dayname { color: var(--red); font-weight: 800; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.peek__day b { font-family: var(--display); font-weight: 400; font-size: 22px; line-height: 1; }
+.peek__day span:last-child { color: var(--muted); font-size: 11px; }
+.peek__row { display: flex; overflow-x: auto; padding: 4px 0 10px; margin-bottom: 14px; scrollbar-width: thin; }
+.peek__row .top10 .tile { width: 96px; }
+.peek__row .top10__num { font-size: 120px; }
+.peek__callout { border-left: 4px solid var(--red); background: rgba(229, 9, 20, .1); padding: 12px 14px; border-radius: 0 8px 8px 0; font-size: 14px; line-height: 1.5; margin: 0 0 16px; }

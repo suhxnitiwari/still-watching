@@ -336,12 +336,6 @@
   "poster": "img/posters/good-luck-charlie.jpg",
   "backdrop": "img/backdrops/good-luck-charlie.jpg"
  },
- "Goosebumps": {
-  "match": "Goosebumps (2023)",
-  "source": "https://www.tvmaze.com/shows/60343/goosebumps",
-  "poster": "img/posters/goosebumps.jpg",
-  "backdrop": "img/backdrops/goosebumps.jpg"
- },
  "Jessie": {
   "match": "Jessie (2011)",
   "source": "https://www.tvmaze.com/shows/514/jessie",
@@ -681,11 +675,6 @@
   "source": "https://www.tvmaze.com/shows/6495/pocoyo",
   "poster": "img/posters/pocoyo.jpg"
  },
- "Anjaam": {
-  "match": "Anjaan: Rural Myths (2018)",
-  "source": "https://www.tvmaze.com/shows/46798/anjaan-rural-myths",
-  "poster": "img/posters/anjaam.jpg"
- },
  "Apocalypse": {
   "match": "Apocalypse (2026)",
   "source": "https://www.tvmaze.com/shows/93595/apocalypse",
@@ -731,22 +720,6 @@
   "source": "https://www.tvmaze.com/shows/71503/dna-do-crime",
   "poster": "img/posters/criminal-code.jpg"
  },
- "Deewana": {
-  "match": "Ek Deewana Tha (?)",
-  "source": "https://www.tvmaze.com/shows/36212/ek-deewana-tha",
-  "poster": "img/posters/deewana.jpg"
- },
- "Dilwale": {
-  "match": "Mighty Little Bheem: Diwali (2019)",
-  "source": "https://www.tvmaze.com/shows/61908/mighty-little-bheem-diwali",
-  "poster": "img/posters/dilwale.jpg"
- },
- "Dunki": {
-  "match": "Slam Dunk (1993)",
-  "source": "https://www.tvmaze.com/shows/4254/slam-dunk",
-  "poster": "img/posters/dunki.jpg",
-  "backdrop": "img/backdrops/dunki.jpg"
- },
  "El Chapo": {
   "match": "El Chapo (2017)",
   "source": "https://www.tvmaze.com/shows/26955/el-chapo",
@@ -764,12 +737,6 @@
   "source": "https://www.tvmaze.com/shows/45536/jamtara-sabka-number-ayega",
   "poster": "img/posters/jamtara-sabka-number-ayega.jpg",
   "backdrop": "img/backdrops/jamtara-sabka-number-ayega.jpg"
- },
- "Jawan": {
-  "match": "Kisah Tanah Jawa: Merapi (2019)",
-  "source": "https://www.tvmaze.com/shows/44831/kisah-tanah-jawa-merapi",
-  "poster": "img/posters/jawan.jpg",
-  "backdrop": "img/backdrops/jawan.jpg"
  },
  "Khakee": {
   "match": "Khakee: The Bihar Chapter (2022)",
@@ -792,11 +759,6 @@
   "source": "https://www.tvmaze.com/shows/7015/queen-of-the-south",
   "poster": "img/posters/queen-of-the-south.jpg",
   "backdrop": "img/backdrops/queen-of-the-south.jpg"
- },
- "Raees": {
-  "match": "Zel Al Raees (2017)",
-  "source": "https://www.tvmaze.com/shows/52702/zel-al-raees",
-  "poster": "img/posters/raees.jpg"
  },
  "Raja, Rasoi aur Anya Kahaniyan": {
   "match": "Raja, Rasoi Aur Anya Kahaniyaan (2014)",
@@ -844,10 +806,171 @@
   "poster": "img/posters/yeh-kaali-kaali-ankhein.jpg",
   "backdrop": "img/backdrops/yeh-kaali-kaali-ankhein.jpg"
  },
+ "Ask the StoryBots": {
+  "match": "Ask the StoryBots (2016)",
+  "source": "https://www.tvmaze.com/shows/19760/ask-the-storybots",
+  "poster": "img/posters/ask-the-storybots.jpg",
+  "backdrop": "img/backdrops/ask-the-storybots.jpg"
+ },
+ "Barbie Life in the Dreamhouse": {
+  "match": "Barbie: Life in the Dreamhouse (2012)",
+  "source": "https://www.tvmaze.com/shows/7402/barbie-life-in-the-dreamhouse",
+  "poster": "img/posters/barbie-life-in-the-dreamhouse.jpg",
+  "backdrop": "img/backdrops/barbie-life-in-the-dreamhouse.jpg"
+ },
+ "Little Baby Bum": {
+  "match": "Little Baby Bum: Music Time (2023)",
+  "source": "https://www.tvmaze.com/shows/56476/little-baby-bum-music-time",
+  "poster": "img/posters/little-baby-bum.jpg"
+ },
+ "Om Shanti Om": {
+  "match": "Om Shanti Om",
+  "source": "https://en.wikipedia.org/wiki/Om_Shanti_Om",
+  "poster": "img/posters/om-shanti-om.jpg"
+ },
+ "Chennai Express": {
+  "match": "Chennai Express",
+  "source": "https://en.wikipedia.org/wiki/Chennai_Express",
+  "poster": "img/posters/chennai-express.jpg"
+ },
+ "Dilwale": {
+  "match": "Dilwale (2015 film)",
+  "source": "https://en.wikipedia.org/wiki/Dilwale_(2015_film)",
+  "poster": "img/posters/dilwale.jpg"
+ },
+ "Dunki": {
+  "match": "Dunki (film)",
+  "source": "https://en.wikipedia.org/wiki/Dunki_(film)",
+  "poster": "img/posters/dunki.jpg"
+ },
+ "Kabhi Khushi Kabhie Gham": {
+  "match": "Kabhi Khushi Kabhie Gham",
+  "source": "https://en.wikipedia.org/wiki/Kabhi_Khushi_Kabhie_Gham",
+  "poster": "img/posters/kabhi-khushi-kabhie-gham.jpg"
+ },
+ "Dil To Pagal Hai": {
+  "match": "Dil To Pagal Hai",
+  "source": "https://en.wikipedia.org/wiki/Dil_To_Pagal_Hai",
+  "poster": "img/posters/dil-to-pagal-hai.jpg"
+ },
+ "Phir Bhi Dil Hai Hindustani": {
+  "match": "Phir Bhi Dil Hai Hindustani",
+  "source": "https://en.wikipedia.org/wiki/Phir_Bhi_Dil_Hai_Hindustani",
+  "poster": "img/posters/phir-bhi-dil-hai-hindustani.jpg"
+ },
+ "Deewana": {
+  "match": "Deewana (1992 film)",
+  "source": "https://en.wikipedia.org/wiki/Deewana_(1992_film)",
+  "poster": "img/posters/deewana.jpg"
+ },
+ "Anjaam": {
+  "match": "Anjaam",
+  "source": "https://en.wikipedia.org/wiki/Anjaam",
+  "poster": "img/posters/anjaam.jpg"
+ },
+ "Chak De! India": {
+  "match": "Chak De! India",
+  "source": "https://en.wikipedia.org/wiki/Chak_De!_India",
+  "poster": "img/posters/chak-de-india.jpg"
+ },
+ "Dear Zindagi": {
+  "match": "Dear Zindagi",
+  "source": "https://en.wikipedia.org/wiki/Dear_Zindagi",
+  "poster": "img/posters/dear-zindagi.jpg"
+ },
+ "Jawan": {
+  "match": "Jawan (film)",
+  "source": "https://en.wikipedia.org/wiki/Jawan_(film)",
+  "poster": "img/posters/jawan.jpg"
+ },
  "Zero": {
-  "match": "Zero (2021)",
-  "source": "https://www.tvmaze.com/shows/42928/zero",
-  "poster": "img/posters/zero.jpg",
-  "backdrop": "img/backdrops/zero.jpg"
+  "match": "Zero (2018 film)",
+  "source": "https://en.wikipedia.org/wiki/Zero_(2018_film)",
+  "poster": "img/posters/zero.jpg"
+ },
+ "LEGO": {
+  "match": "Lego",
+  "source": "https://en.wikipedia.org/wiki/Lego",
+  "poster": "img/posters/lego.jpg"
+ },
+ "The Secret Life of Pets": {
+  "match": "The Secret Life of Pets",
+  "source": "https://en.wikipedia.org/wiki/The_Secret_Life_of_Pets",
+  "poster": "img/posters/the-secret-life-of-pets.jpg"
+ },
+ "The Emoji Movie": {
+  "match": "The Emoji Movie",
+  "source": "https://en.wikipedia.org/wiki/The_Emoji_Movie",
+  "poster": "img/posters/the-emoji-movie.jpg"
+ },
+ "Despicable Me 3": {
+  "match": "Despicable Me 3",
+  "source": "https://en.wikipedia.org/wiki/Despicable_Me_3",
+  "poster": "img/posters/despicable-me-3.jpg"
+ },
+ "Minions": {
+  "match": "Minions (film)",
+  "source": "https://en.wikipedia.org/wiki/Minions_(film)",
+  "poster": "img/posters/minions.jpg"
+ },
+ "Home": {
+  "match": "Home (2015 film)",
+  "source": "https://en.wikipedia.org/wiki/Home_(2015_film)",
+  "poster": "img/posters/home.jpg"
+ },
+ "The Jungle Book": {
+  "match": "The Jungle Book (2016 film)",
+  "source": "https://en.wikipedia.org/wiki/The_Jungle_Book_(2016_film)",
+  "poster": "img/posters/the-jungle-book.jpg"
+ },
+ "Leap!": {
+  "match": "Ballerina (2016 film)",
+  "source": "https://en.wikipedia.org/wiki/Ballerina_(2016_film)",
+  "poster": "img/posters/leap.jpg"
+ },
+ "Kung Fu Panda": {
+  "match": "Kung Fu Panda (film)",
+  "source": "https://en.wikipedia.org/wiki/Kung_Fu_Panda_(film)",
+  "poster": "img/posters/kung-fu-panda.jpg"
+ },
+ "YES DAY": {
+  "match": "Yes Day",
+  "source": "https://en.wikipedia.org/wiki/Yes_Day",
+  "poster": "img/posters/yes-day.jpg"
+ },
+ "Mickey's Once Upon a Christmas": {
+  "match": "Mickey's Once Upon a Christmas",
+  "source": "https://en.wikipedia.org/wiki/Mickey's_Once_Upon_a_Christmas",
+  "poster": "img/posters/mickey-s-once-upon-a-christmas.jpg"
+ },
+ "Trolls": {
+  "match": "Trolls (film)",
+  "source": "https://en.wikipedia.org/wiki/Trolls_(film)",
+  "poster": "img/posters/trolls.jpg"
+ },
+ "Peter Rabbit": {
+  "match": "Peter Rabbit (film)",
+  "source": "https://en.wikipedia.org/wiki/Peter_Rabbit_(film)",
+  "poster": "img/posters/peter-rabbit.jpg"
+ },
+ "Coco": {
+  "match": "Coco (2017 film)",
+  "source": "https://en.wikipedia.org/wiki/Coco_(2017_film)",
+  "poster": "img/posters/coco.jpg"
+ },
+ "Sing": {
+  "match": "Sing (2016 American film)",
+  "source": "https://en.wikipedia.org/wiki/Sing_(2016_American_film)",
+  "poster": "img/posters/sing.jpg"
+ },
+ "Goosebumps": {
+  "match": "Goosebumps (1995 TV series)",
+  "source": "https://en.wikipedia.org/wiki/Goosebumps_(1995_TV_series)",
+  "poster": "img/posters/goosebumps.jpg"
+ },
+ "My Little Pony": {
+  "match": "My Little Pony: Friendship Is Magic",
+  "source": "https://en.wikipedia.org/wiki/My_Little_Pony%3A_Friendship_Is_Magic",
+  "poster": "img/posters/my-little-pony.jpg"
  }
 }

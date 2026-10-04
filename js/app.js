@@ -210,7 +210,7 @@ function peekLines(name) {
     ].filter(Boolean);
   }
   if (name === "Mom") return [
-    `Her parent titles are comedies: <b>${listOf(f.mom_parent_titles.map(esc))}</b>.`,
+    `<b>${f.mom_parent_titles.length} titles about moms, dads and grandparents</b>: ${listOf(f.mom_parent_titles.map(esc))}. Dad's only two: ${listOf(f.dad_parent_titles.map(esc))}.`,
     `Watched ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles before me. She's my Hindi recommendation engine.`,
     `Rewatches: basically never.`,
   ];
@@ -239,6 +239,11 @@ function peekPersona(name) {
     <p class="peek__about">${P.about}</p><div class="peek__stats">${P.stats.join("")}</div></div>`;
 }
 
+// Netflix's Top 10 look (big outlined numbers), in one scrollable row.
+function peekTop10(list) {
+  return `<div class="peek__row">${list.map((t, i) => `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="tile tile--static" aria-label="${esc(t.show)}">${art(t.show, { tall: true })}<span class="tag">${t.views} eps</span></div></div>`).join("")}</div>`;
+}
+
 // Dad's and Mom's approved peek: top genre, top 10, each year (Mom: movies a year), then the lock.
 function peekParent(name) {
   const pp = DATA?.family?.parents?.[name];
@@ -250,10 +255,28 @@ function peekParent(name) {
     : `<div class="peek__year peek__year--mom"><b>${y.year}</b><span class="peek__movies">${y.movies}</span><span>movies${y.show ? ` · ${esc(y.show)}` : ""}</span></div>`).join("");
   return `<p class="peek__label">${his} top genre</p><p class="peek__genre">${esc(genre)}</p>
     <p class="peek__label">${his} top 10${name === "Mom" ? " series" : ""}</p>
-    <div class="peek__top10">${pp.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
+    ${peekTop10(pp.top)}
     <p class="peek__label">${name === "Dad" ? "His #1 show every year" : "Hindi movies every year"}</p>
     <div class="peek__years">${years}</div>
-    ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__chips">${pp.srk.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}`;
+    ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__years">${pp.srk.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>` : ""}`;
+}
+
+// Dad's impeccable timing: what he pressed play on, on the days that matter.
+function peekSpecial(pp) {
+  if (!pp.special?.length) return "";
+  return `<p class="peek__label">Impeccable timing · what he watched on the days that matter</p>
+    <div class="peek__days">${pp.special.map((r) => `<div class="peek__day"><span class="peek__dayname">${esc(r.day)} ${r.year}</span><b>${esc(r.show)}</b><span>${r.views > 1 ? `${r.views} episodes` : "1 view"}</span></div>`).join("")}</div>`;
+}
+
+// Amaira is public (data only): her top 10 and her #1 show every year.
+function peekAmaira() {
+  const a = DATA?.family?.amaira;
+  if (!a?.top?.length) return "";
+  return `<p class="peek__label">Her top 10</p>
+    ${peekTop10(a.top)}
+    ${a.masha ? `<div class="peek__callout">Her first obsession was <b>Little Baby Bum</b>, then <b>Masha and the Bear</b>. Neither is her #1 on paper, and that's Netflix's fault: it keeps one date per episode per profile, so rewatching doesn't count. ${a.bum ? `Little Baby Bum shows up on ${a.bum.profiles} profiles. ` : ""}Masha: every one of its ${a.masha.episodes} episodes on <b>${a.masha.profiles} different profiles</b>, about <b>${a.masha.per_episode} times each</b>, more than any other show she watches.</div>` : ""}
+    <p class="peek__label">Her #1 show every year</p>
+    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`).join("")}</div>`;
 }
 
 function peekProfile(p) {
@@ -273,7 +296,8 @@ function peekProfile(p) {
     <button class="peek__close" type="button" aria-label="Close">×</button>
     <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
     ${peekPersona(p.name)}
-    ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
+    ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + (p.name === "Dad" ? peekSpecial(DATA.family.parents.Dad) : `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>`)
+      : p.name === "Sister" && DATA?.family?.amaira ? peekAmaira() + `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
     <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
@@ -442,7 +466,8 @@ function tagFor(name) {
   if (owned) return `#1 of ${owned.year}`;
   if (s.best_day.episodes >= 10) return `${s.best_day.episodes} in One Day`;
   if (yearsOf(s) >= 4) return "Comfort Show";
-  return `${s.views} Episodes`;
+  if (s.kind === "movie") return "Movie";
+  return s.views === 1 ? "Pilot Only" : `${s.views} Episodes`;
 }
 
 function comfortShows() {
@@ -494,12 +519,9 @@ function setupRows() {
       ${art(f.art, { label: f.tile || f.subtitle })}<span class="tile__ribbon">S${f.season}<b>E${f.num}</b></span><span class="film-tile__play">▶</span></button>`)),
     row("Watch Me Grow Up", "my #1 show at every age", yearly.map((y) =>
       tile(y.show, `<span class="tile__ribbon">AGE<b>${y.year - BIRTH_YEAR}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span>`))),
-    // Amaira's own rows. Her shows aren't in my history, so the tiles don't open a title page.
     ...(DATA.family?.amaira?.top.length ? [
-      row("Top 10 Shows in Amaira's Life", `my little sister, ${n(DATA.family.amaira.views)} views and counting`, DATA.family.amaira.top.map((s, i) =>
-        `<div class="top10"><span class="top10__num" aria-hidden="true">${i + 1}</span><div class="tile tile--static" aria-label="${esc(s.show)}, ${s.views} episodes">${art(s.show, { tall: true })}<span class="tag">${s.views} eps</span></div></div>`)),
-      row("Watch Amaira Grow Up", "her #1 show every year", DATA.family.amaira.years.map((y) =>
-        `<div class="tile tile--static" aria-label="${y.year}: ${esc(y.show)}">${art(y.show)}<span class="tile__ribbon">YEAR<b>${String(y.year).slice(2)}</b></span><span class="tile__meta tile__meta--left">${y.year} · ${y.episodes} eps</span></div>`)),
+      ...(DATA.family?.copy_cat?.length >= 5 ? [row("Copy Cat", `${DATA.family.copy_cat.length} titles my sister watched after me. She's never found one first.`, DATA.family.copy_cat.map((c) =>
+        `<div class="tile tile--static" aria-label="${esc(c.show)}: me ${c.me}, her ${c.her}">${art(c.show)}<span class="tile__ribbon">ME<b>${String(c.me).slice(2)}</b></span><span class="tile__meta tile__meta--left">her: ${c.her}${c.years >= 1 ? ` · ${Math.round(c.years)} yr${Math.round(c.years) > 1 ? "s" : ""} later` : ""}</span></div>`))] : []),
     ] : []),
     ...(DATA.family?.mom_first_titles?.length ? [row("Because Mumma Kept Recommending It", "she watched them first, I eventually gave in", DATA.family.mom_first_titles.map((t) => wideTile(t)))] : []),
     row("Hooked From the First Episode", "4+ episodes on day one", DATA.hooked.map((h) =>

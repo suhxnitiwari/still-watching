@@ -215,13 +215,44 @@ def amaira(h):
     for y, g in a.groupby(a["date"].dt.year):
         vc = g["show"].value_counts()
         years.append({"year": int(y), "show": vc.index[0], "episodes": int(vc.iloc[0]), "views": int(len(g))})
-    return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years}
+    m = a[a["show"] == "Masha and the Bear"]
+    masha = {"episodes": int(m["title"].nunique()), "profiles": int(m["profile"].nunique()),
+             "per_episode": round(len(m) / m["title"].nunique(), 1)} if len(m) else None
+    lbb = a[a["show"] == "Little Baby Bum"]
+    bum = {"episodes": int(lbb["title"].nunique()), "profiles": int(lbb["profile"].nunique())} if len(lbb) else None
+    return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years, "masha": masha, "bum": bum}
 
 
 # Watched together on Mom's account, so they don't count as her favorites.
 FAMILY_TOGETHER = {"The Great Indian Kapil Show", "The Night Agent"}
 SRK = ["Om Shanti Om", "Chennai Express", "Dilwale", "Dunki", "Raees", "Kabhi Khushi Kabhie Gham", "Dil To Pagal Hai",
        "Phir Bhi Dil Hai Hindustani", "Deewana", "Anjaam", "Chak De! India", "Dear Zindagi", "Jawan", "Zero"]
+
+
+DIWALI = {2015: "11-11", 2016: "10-30", 2017: "10-19", 2018: "11-07", 2019: "10-27", 2020: "11-14", 2021: "11-04",
+          2022: "10-24", 2023: "11-12", 2024: "11-01", 2025: "10-20"}
+
+
+def special_days(d):
+    """What one person watched on the days that matter (Valentine's Day stays private)."""
+    def nth(y, m, wd, k):
+        x = pd.Timestamp(y, m, 1)
+        return x + pd.Timedelta(days=(wd - x.dayofweek) % 7) + pd.Timedelta(weeks=k - 1)
+    days = {}
+    for y in range(2015, 2027):
+        days.update({pd.Timestamp(y, 4, 26): "His birthday", nth(y, 5, 6, 2): "Mother's Day", nth(y, 6, 6, 3): "Father's Day",
+                     pd.Timestamp(y, 12, 24): "Christmas Eve", pd.Timestamp(y, 12, 25): "Christmas", pd.Timestamp(y, 1, 1): "New Year's Day",
+                     pd.Timestamp(y, 12, 31): "New Year's Eve", nth(y, 11, 3, 4): "Thanksgiving", pd.Timestamp(y, 10, 31): "Halloween"})
+        if y >= 2016:
+            days[pd.Timestamp(y, 11, 13)] = "My sister's birthday"
+        if y in DIWALI:
+            days[pd.Timestamp(f"{y}-{DIWALI[y]}")] = "Diwali"
+    x = d[d["date"].isin(days) & ~d["show"].isin({"Swan Princess", "The Chronicles of Narnia", "Supergirl"})]  # kids' picks, not his
+    out = []
+    for (day, show), g in x.groupby([x["date"].map(days), "show"]):
+        out.append({"day": day, "year": int(g["date"].dt.year.min()), "show": show, "views": int(len(g))})
+    order = list(dict.fromkeys(days.values()))
+    return sorted(out, key=lambda r: (order.index(r["day"]), r["year"]))
 
 
 def parents(h, meta):
@@ -251,7 +282,7 @@ def parents(h, meta):
                           "show": sv.index[0] if len(sv) and sv.iloc[0] >= 5 else None, "episodes": int(sv.iloc[0]) if len(sv) else 0})
     return {
         "Dad": {"top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
-                "years": dad_years, "genres": genres(dad), "fast": fast(dad)},
+                "years": dad_years, "genres": genres(dad), "fast": fast(dad), "special": special_days(dad)},
         "Mom": {"top": [{"show": k, "views": int(v)} for k, v in mser["show"].value_counts().head(10).items()],
                 "years": [y for y in mom_years if y["movies"] or y["show"]], "genres": genres(mser), "fast": fast(mom),
                 "movies": int(mmov["show"].nunique()), "movie_pct": round(len(mmov) / len(mom) * 100),
@@ -292,7 +323,7 @@ def family(meta):
         return d + pd.Timedelta(days=(6 - d.dayofweek) % 7) + pd.Timedelta(weeks=n - 1)
     mothers_days = {nth_sunday(y, 5, 2) for y in range(2015, 2027)}
     dad_md = h[(h["who"] == "Dad") & h["date"].isin(mothers_days)]
-    fam_word = r"\b(?:Mom|Mother|Mummy|Mumma|Dad|Daddy|Papa|Father)\b"
+    fam_word = r"\b(?:Mom|Mother|Mummy|Mumma|Maa|Mai|Dad|Daddy|Papa|Father|Baap|Pitaah|Nani|Daadi|Dadi|Grandson)\b"
     titles_of = lambda w: sorted(set(h[(h["who"] == w) & h["show"].str.contains(fam_word, regex=True)]["show"]))
     # A peek at each profile: top shows and how often they rewatch (same full title on two profiles).
     def peek(w):
@@ -312,6 +343,10 @@ def family(meta):
         "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
         "parents": parents(h, meta),
+        # Copy cat: every title my sister and I share, with when I found it and when she did.
+        "copy_cat": [{"show": k, "me": int(r["Suhani"].year), "her": int(r["Sister"].year), "years": round((r["Sister"] - r["Suhani"]).days / 365.25, 1)}
+                     for k, r in h[h["who"].isin(["Suhani", "Sister"])].groupby(["show", "who"])["date"].min().unstack().dropna()
+                     .assign(g=lambda f: f["Sister"] - f["Suhani"]).sort_values("g", ascending=False).iterrows()],
         # Amaira's own section (her family said yes): her 10 favorites and her #1 show each year.
         "amaira": amaira(h),
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
@@ -702,7 +737,8 @@ def main():
                              | {t["show"] for t in (fam or {}).get("amaira", {}).get("top", []) + (fam or {}).get("amaira", {}).get("years", [])}
                              | {t["show"] for p in (fam or {}).get("parents", {}).values() for t in p["top"]}
                              | {y["show"] for p in (fam or {}).get("parents", {}).values() for y in p["years"] if y.get("show")}
-                             | set((fam or {}).get("parents", {}).get("Mom", {}).get("srk", []))) - featured),
+                             | set((fam or {}).get("parents", {}).get("Mom", {}).get("srk", []))
+                             | {c["show"] for c in (fam or {}).get("copy_cat", [])}) - featured),
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(site, indent=1, ensure_ascii=False))

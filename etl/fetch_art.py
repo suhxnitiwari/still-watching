@@ -38,7 +38,15 @@ LOOKUP = {
     "Jessie": 2011, "Good Luck Charlie": 2010, "Lab Rats": 2012, "Liv and Maddie": 2013, "A.N.T. Farm": 2011,
     "Phineas and Ferb": 2007, "Dragon Tales": 1999, "Mickey Mouse Clubhouse": 2006, "Mighty Med": 2013,
 }
-WIKI = {"A Family Affair": "A Family Affair (2024 film)", "Lilo & Stitch": "Lilo & Stitch"}
+WIKI = {"A Family Affair": "A Family Affair (2024 film)", "Lilo & Stitch": "Lilo & Stitch",
+        # Mom's Shah Rukh Khan shelf: films, so Wikipedia, not TVmaze (which matches TV shows with the same name).
+        "Om Shanti Om": "Om Shanti Om", "Chennai Express": "Chennai Express", "Dilwale": "Dilwale (2015 film)",
+        "Dunki": "Dunki (film)", "Raees": "Raees (film)", "Kabhi Khushi Kabhie Gham": "Kabhi Khushi Kabhie Gham...",
+        "Dil To Pagal Hai": "Dil To Pagal Hai", "Phir Bhi Dil Hai Hindustani": "Phir Bhi Dil Hai Hindustani",
+        "Deewana": "Deewana (1992 film)", "Anjaam": "Anjaam", "Chak De! India": "Chak De! India",
+        "Dear Zindagi": "Dear Zindagi", "Jawan": "Jawan (film)", "Zero": "Zero (2018 film)",
+        # Films that TVmaze matched to TV shows with the same name.
+        "The Secret Life of Pets": "The Secret Life of Pets", "The Emoji Movie": "The Emoji Movie", "Despicable Me 3": "Despicable Me 3", "Minions": "Minions (film)", "Home": "Home (2015 film)", "The Jungle Book": "The Jungle Book (2016 film)", "Leap!": "Ballerina (2016 film)", "Kung Fu Panda": "Kung Fu Panda (film)", "YES DAY": "Yes Day", "Mickey's Once Upon a Christmas": "Mickey's Once Upon a Christmas", "Trolls": "Trolls (film)", "Peter Rabbit": "Peter Rabbit (film)", "Coco": "Coco (2017 film)", "Sing": "Sing (2016 American film)", "Goosebumps": "Goosebumps (1995 TV series)", "LEGO": "Lego", "My Little Pony": "My Little Pony: Friendship Is Magic"}
 
 
 def get_json(url):
