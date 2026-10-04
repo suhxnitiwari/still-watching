@@ -8,6 +8,7 @@ const SVG = "http://www.w3.org/2000/svg";
 let DATA;
 const BIRTH_YEAR = 2006;
 let ART = {};
+let STILLS = {};  // episode stills by show and year (data/stills.json)
 
 // ---------- helpers ----------
 const n = (x) => x.toLocaleString("en-US");
@@ -165,32 +166,14 @@ function setupIntro(onDone) {
 // ---------- Who's watching? ----------
 // The family account's profile screen. Only my profile opens: it's the only history here.
 const PROFILES = [
-  { name: "Dad", bg: ["#2f8cff", "#1559c9"], hair: "boy" },
-  { name: "Mom", bg: ["#a53bff", "#6a17d6"], hair: "bun" },
-  { name: "Suhani", bg: ["#ff3fa4", "#d81b7a"], hair: "bear", me: true },
-  { name: "Sister", bg: ["#33a8ff", "#2ea44f"], hair: "frog", kids: true },
+  { name: "Dad", img: "dad" },
+  { name: "Mom", img: "mom" },
+  { name: "Suhani", img: "suhani", me: true },
+  { name: "Sister", img: "amaira", kids: true },
 ];
 
-function avatar(p, id) {
-  const [a, b] = p.bg;
-  const skin = "#c98b5e";
-  const hood = { bear: "#f4c430", frog: "#58b947" }[p.hair];
-  let back = "", front = "";
-  if (p.hair === "bear") back = `<circle cx="27" cy="33" r="10" fill="${hood}"/><circle cx="73" cy="33" r="10" fill="${hood}"/><circle cx="27" cy="33" r="5" fill="#e0a21b"/><circle cx="73" cy="33" r="5" fill="#e0a21b"/>`;
-  if (p.hair === "frog") back = `<circle cx="33" cy="30" r="11" fill="${hood}"/><circle cx="67" cy="30" r="11" fill="${hood}"/><circle cx="33" cy="29" r="5" fill="#fff"/><circle cx="67" cy="29" r="5" fill="#fff"/><circle cx="33" cy="29" r="2.5" fill="#123"/><circle cx="67" cy="29" r="2.5" fill="#123"/>`;
-  if (hood) back += `<circle cx="50" cy="62" r="35" fill="${hood}"/><rect x="15" y="62" width="70" height="40" fill="${hood}"/>`;
-  else back += `<path d="M22 100c2-16 13-24 28-24s26 8 28 24Z" fill="${p.hair === "boy" ? "#f4f0e6" : "#fff"}"/>`;
-  if (p.hair === "boy") front = `<path d="M25 56c-2-20 12-30 27-29 14 1 24 10 23 26-5-8-12-12-20-12-6 6-17 9-30 15Z" fill="#7a4a24"/><path d="M30 38c-6 2-12 0-16-4 6 0 10-2 14-6Z" fill="#7a4a24"/>`;
-  if (p.hair === "bun") front = `<circle cx="50" cy="26" r="8" fill="#1d1414"/><circle cx="50" cy="19" r="3" fill="#ff6fb5"/><path d="M25 58c-1-18 10-28 25-28s26 10 25 28c-6-10-14-14-25-14s-19 4-25 14Z" fill="#1d1414"/>`;
-  if (p.hair === "bear" || p.hair === "frog") front = `<path d="M30 52c3-10 10-15 20-15s17 5 20 15c-6-5-12-7-20-7s-14 2-20 7Z" fill="#2a1a12"/>`;
-  return `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="av-${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs>
-    <rect width="100" height="100" fill="url(#av-${id})"/>${back}
-    <circle cx="50" cy="62" r="25" fill="${skin}"/>${front}
-    <ellipse cx="41" cy="62" rx="6" ry="7" fill="#fff"/><ellipse cx="59" cy="62" rx="6" ry="7" fill="#fff"/>
-    <circle cx="42" cy="63" r="4" fill="#3a2214"/><circle cx="58" cy="63" r="4" fill="#3a2214"/>
-    <circle cx="43.4" cy="61.4" r="1.4" fill="#fff"/><circle cx="59.4" cy="61.4" r="1.4" fill="#fff"/>
-    <circle cx="34" cy="72" r="3.5" fill="#e8737a" opacity=".45"/><circle cx="66" cy="72" r="3.5" fill="#e8737a" opacity=".45"/>
-    <path d="M44 75c4 3.5 8 3.5 12 0" stroke="#5a2a1a" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>`;
+function avatar(p) {
+  return `<img src="img/profiles/${p.img}.jpg" alt="" aria-hidden="true">`;
 }
 
 const LOCK_ICON = `<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>`;
@@ -261,11 +244,27 @@ function peekParent(name) {
     ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__years">${pp.srk.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>` : ""}`;
 }
 
-// Dad's impeccable timing: what he pressed play on, on the days that matter.
+// Dad's impeccable timing: poster cards for what he pressed play on, on the days that matter. Click one for the story.
 function peekSpecial(pp) {
-  if (!pp.special?.length) return "";
-  return `<p class="peek__label">Impeccable timing · what he watched on the days that matter</p>
-    <div class="peek__days">${pp.special.map((r) => `<div class="peek__day"><span class="peek__dayname">${esc(r.day)} ${r.year}</span><b>${esc(r.show)}</b><span>${r.views > 1 ? `${r.views} episodes` : "1 view"}</span></div>`).join("")}</div>`;
+  const t = pp.timing || [];
+  if (!t.length) return "";
+  return `<p class="peek__label">Impeccable timing · tap a poster for the story</p>
+    <div class="peek__years peek__timing">${t.map((r, i) => `<button class="peek__year peek__tcard" type="button" data-t="${i}">${art(r.show, { tall: true })}<b>${esc(r.day)} ${r.year}</b><span>${esc(r.show)}</span></button>`).join("")}</div>
+    <div class="peek__story" id="peek-story" hidden></div>`;
+}
+function wireTiming(el) {
+  const t = DATA?.family?.parents?.Dad?.timing || [];
+  const story = el.querySelector("#peek-story");
+  el.querySelectorAll(".peek__tcard").forEach((b) => b.addEventListener("click", () => {
+    const r = t[b.dataset.t];
+    const open = b.classList.contains("is-on");
+    el.querySelectorAll(".peek__tcard").forEach((x) => x.classList.remove("is-on"));
+    if (open) { story.hidden = true; return; }
+    b.classList.add("is-on");
+    story.innerHTML = `<p class="peek__kicker">${esc(r.day)} ${r.year}</p><h3>${esc(r.show)}</h3>
+      <p><b>What it is:</b> ${esc(r.about)}</p><p><b>That day:</b> ${esc(r.when)}</p><p class="peek__irony">${esc(r.irony)}</p>`;
+    story.hidden = false;
+  }));
 }
 
 // Amaira is public (data only): her top 10 and her #1 show every year.
@@ -274,9 +273,8 @@ function peekAmaira() {
   if (!a?.top?.length) return "";
   return `<p class="peek__label">Her top 10</p>
     ${peekTop10(a.top)}
-    ${a.masha ? `<div class="peek__callout">Her first obsession was <b>Little Baby Bum</b>, then <b>Masha and the Bear</b>. Neither is her #1 on paper, and that's Netflix's fault: it keeps one date per episode per profile, so rewatching doesn't count. ${a.bum ? `Little Baby Bum shows up on ${a.bum.profiles} profiles. ` : ""}Masha: every one of its ${a.masha.episodes} episodes on <b>${a.masha.profiles} different profiles</b>, about <b>${a.masha.per_episode} times each</b>, more than any other show she watches.</div>` : ""}
     <p class="peek__label">Her #1 show every year</p>
-    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`).join("")}</div>
+    <div class="peek__years">${a.years.map((y) => `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}${y.rewatched ? " · on repeat" : ""}</span></div>`).join("")}</div>
     ${DATA.family.copy_cat?.length >= 5 ? `<p class="peek__label">Copy cat · ${DATA.family.copy_cat.length} titles she watched after me. She's never found one first.</p>
     <div class="peek__years">${DATA.family.copy_cat.map((c) => `<div class="peek__year">${art(c.show, { tall: true })}<b>Me ${c.me} → her ${c.her}</b><span>${esc(c.show)}</span></div>`).join("")}</div>` : ""}`;
 }
@@ -305,6 +303,7 @@ function peekProfile(p) {
     <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
   </div>`;
   el.hidden = false;
+  wireTiming(el);
   el.querySelector(".peek__close").focus();
 }
 
@@ -367,13 +366,13 @@ function setupProfiles() {
     const b = e.target.closest(".profile");
     if (!b) return;
     const key = b.dataset.profile;
-    if (key === "add") return say(b, "One household, one account. Since May 2023, adding someone from outside it costs extra.");
+    if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Back off, mister.");
     const p = PROFILES[key];
     if (p.me) return enter();
     if (DATA?.family) return peekProfile(p);
     say(b, `That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
   });
-  $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Profiles on this account are managed from home, in Dallas."));
+  $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Manage profiles? Suhani and Dad agree on almost nothing. They agree on this: nobody manages them."));
   $(`[data-profile="${PROFILES.indexOf(me)}"]`).focus();
 }
 
@@ -483,9 +482,27 @@ function yearStrip(s) {
   const first = parse(DATA.totals.from).getFullYear(), last = parse(DATA.totals.to).getFullYear();
   return `<span class="strip" aria-label="${yearsOf(s)} of ${last - first + 1} years">${Array.from({ length: last - first + 1 }, (_, i) => {
     const y = first + i, eps = s.by_year[y];
-    return `<i class="${eps ? "on" : ""}" title="${y}${eps ? `: ${eps} episode${eps === 1 ? "" : "s"}` : ""}"></i>`;
+    return eps ? `<button type="button" class="on" data-year-show="${esc(s.show)}" data-year="${y}" title="${y}: ${eps} episode${eps === 1 ? "" : "s"}. Click to see them." aria-label="${esc(s.show)} in ${y}: ${eps} episodes"></button>`
+      : `<i title="${y}"></i>`;
   }).join("")}</span>`;
 }
+
+// A lit year square: the episodes I watched that year, with stills (Netflix's export has no video).
+function openYear(show, year) {
+  const s = DATA.shows[show], eps = s?.by_year[year] || 0, stills = STILLS[show]?.[year] || [];
+  const q = encodeURIComponent(`${show} official trailer`);
+  openModal(`${show} · ${year}`, `
+    <p class="modal__meta"><span class="match">${eps} episode${eps === 1 ? "" : "s"} that year</span><span>age ${year - BIRTH_YEAR}</span></p>
+    ${stills.length ? `<div class="stills">${stills.map((x) => `<figure><img src="${esc(x.img)}" alt="" loading="lazy"><figcaption>${esc(x.ep)}</figcaption></figure>`).join("")}</div>`
+      : `<p class="modal__copy">No stills for this year, but here's what the square means: I came back to ${esc(show)} ${eps} time${eps === 1 ? "" : "s"} in ${year}.</p>`}
+    <a class="btn btn--light" href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener">▶ Watch the trailer</a>`);
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-year-show]");
+  if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  openYear(b.dataset.yearShow, b.dataset.year);
+}, true);
 
 function collection() {
   const shows = comfortShows();
@@ -924,6 +941,7 @@ function houseScreen(x, y, w, h, me = false) {
     ${me ? houseFace(cx, cy, s, "face-happy") + houseFace(cx, cy, s, "face-sad") : houseFace(cx, cy, s)}`;
 }
 
+const roomName = (x, y, name) => `<text class="room-name" x="${x}" y="${y}" text-anchor="middle">${name}</text>`;
 function houseSVG() {
   const room = (id, pts, grad, device, extra = "") => `
     <g class="piece ${extra}" data-piece="${id}"><g class="bob">
@@ -943,8 +961,7 @@ function houseSVG() {
     return `<polyline points="${pts.join(" ")}" pathLength="1"/>`;
   };
   const hubEdge = (x, y) => { const a = Math.atan2(y - 560, x - 450); return [450 + 138 * Math.cos(a), 560 + 138 * Math.sin(a)]; };
-  const cracks = [[140, 400], [300, 162], [600, 162], [760, 400]].map((p) => zigzag(hubEdge(...p), p))
-    .concat([zigzag([140, 255], [450, 75], 30, 6), zigzag([450, 75], [760, 255], 30, 6)]).join("");
+  const cracks = [[760, 400]].map((p) => zigzag(hubEdge(...p), p)).join("");  // only my room breaks off
   const wifi = [22, 40, 58].map((r) =>
     `<path d="M${450 - r * .707} ${528 - r * .707}A${r} ${r} 0 0 1 ${450 + r * .707} ${528 - r * .707}" stroke="#e50914" stroke-width="9" fill="none" stroke-linecap="round"/>`).join("");
   return `<svg viewBox="-80 -60 1080 790" role="img" aria-label="A house of screens, one in each room, breaking apart as my phone moves away">
@@ -965,15 +982,14 @@ function houseSVG() {
 
     <g class="whole">
     <g class="piece" data-piece="chimney"><g class="bob"><rect x="636" y="104" width="38" height="80" fill="#e50914"/></g></g>
-    ${room("r2", "450,560 140,400 140,255 300,162", "hg2",
-      houseScreen(178, 292, 132, 86) + `<rect x="236" y="378" width="16" height="22" fill="#555"/><rect x="214" y="398" width="60" height="7" rx="3" fill="#555"/>`)}
+    ${room("r2", "450,560 140,560 140,255 300,162", "hg2",
+      houseScreen(178, 292, 132, 86) + `<rect x="236" y="378" width="16" height="22" fill="#555"/><rect x="214" y="398" width="60" height="7" rx="3" fill="#555"/>` +
+      houseScreen(178, 462, 104, 64) + `<path d="M168 528h124l10 12H158Z" fill="#555"/>` + roomName(330, 445, "DAD"))}
     ${room("r3", "450,560 300,162 450,75 600,162", "hg3",
-      houseScreen(368, 168, 164, 104) + `<path d="M392 272l-8 14M508 272l8 14" stroke="#777" stroke-width="5"/>`)}
-    ${room("r4", "450,560 600,162 760,255 760,400", "hg4", houseScreen(598, 306, 112, 76))}
-    ${room("r1", "450,560 140,560 140,400", "hg1",
-      houseScreen(178, 462, 104, 64) + `<path d="M168 528h124l10 12H158Z" fill="#555"/>`)}
+      houseScreen(368, 168, 164, 104) + `<path d="M392 272l-8 14M508 272l8 14" stroke="#777" stroke-width="5"/>` + roomName(450, 330, "MOM"))}
+    ${room("r4", "450,560 600,162 760,255 760,400", "hg4", houseScreen(598, 306, 112, 76) + roomName(660, 420, "AMAIRA"))}
     ${room("r5", "450,560 760,400 760,560", "hg5",
-      houseScreen(676, 446, 50, 90, true) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>`, "me")}
+      houseScreen(676, 446, 50, 90, true) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>` + roomName(598, 545, "SUHANI"), "me")}
     <g class="piece" data-piece="hub">
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#171717" stroke="#e50914" stroke-width="7"/>
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#000" filter="url(#grain)"/>
@@ -990,9 +1006,9 @@ function houseSVG() {
   </svg>`;
 }
 
+// Only my room leaves: Dad, Mom and Amaira stay home on the Dallas Wi-Fi.
 const PIECE_MOVES = {
-  chimney: [80, -210, 30], roof: [0, -140, -6], r1: [-150, 70, -12], r2: [-190, -60, -9],
-  r3: [0, -95, 5], r4: [165, -60, 10], r5: [215, 105, 14], hub: [0, 0, 0],
+  chimney: [0, 0, 0], roof: [0, 0, 0], r2: [0, 0, 0], r3: [0, 0, 0], r4: [0, 0, 0], r5: [230, 120, 12], hub: [0, 0, 0],
 };
 
 // The household, hands-on: break the house, then drag each room back where it belongs.
@@ -1002,15 +1018,15 @@ function setupHouse() {
   const { windows: w, dates, monthly } = DATA;
   const july = monthly.find((m) => m.month === "2025-07");
   const steps = {
-    whole: `<q>A Netflix account is for use by one household.</q> Ours was in Dallas: four profiles, every screen under one roof. For me nothing changed: <b>${n(w.after_crackdown.views)} views</b> from that day to the end of 2023.`,
-    broken: `On <b>${fmtDate(dates.austin)}</b> I moved to Austin, and my screen left the house. My first semester: <b>${w.first_semester.views} views</b>, about one month's worth back home.`,
-    rebuilt: `It only came back together when I went home. Summer 2025, back on the Dallas Wi-Fi: <b>${july.views} views in July</b>, my biggest month in years.`,
+    whole: `Four of us, one account: Dad, Mom, Amaira and me, every screen on one Wi-Fi in Dallas. Then Netflix's new rule: <q>A Netflix account is for use by one household.</q> For us nothing changed: <b>${n(w.after_crackdown.views)} views</b> from that day to the end of 2023.`,
+    broken: `On <b>${fmtDate(dates.austin)}</b> I left for college in Austin. My phone left the Wi-Fi, and Netflix stopped counting me as part of the family: a sharer to block, or an extra member to pay for. My first semester: <b>${w.first_semester.views} views</b>, about one month's worth back home.`,
+    rebuilt: `Summer 2025, back on the Dallas Wi-Fi, Netflix let me back in the family: <b>${july.views} views in July</b>, my biggest month in years.`,
   };
   $("#house-steps").innerHTML = Object.entries(steps).map(([k, t]) => `<p class="house__step" data-step="${k}">${t}</p>`).join("");
   $(".house__copy").insertAdjacentHTML("beforeend", `<div class="house__controls">
-    <button class="btn btn--play house__btn" type="button" id="house-break"><span class="btn__icon">⚡</span> Break the house</button>
-    <button class="btn btn--light house__btn" type="button" id="house-fix" hidden>Put it back together</button>
-    <p class="house__hint" id="house-hint" hidden>Or drag the rooms back into place yourself.</p></div>`);
+    <button class="btn btn--play house__btn" type="button" id="house-break"><span class="btn__icon">🎓</span> Send me to college</button>
+    <button class="btn btn--light house__btn" type="button" id="house-fix" hidden>Bring me home for summer</button>
+    <p class="house__hint" id="house-hint" hidden>Or drag my room back home yourself.</p></div>`);
   const svg = section.querySelector("svg");
   const pieces = [...section.querySelectorAll(".piece")];
   pieces.forEach((el, i) => {
@@ -1029,7 +1045,7 @@ function setupHouse() {
     state = next;
     clearTimeout(timer);
     $("#house-break").hidden = next === "broken" || next === "cracking";
-    $("#house-break").innerHTML = `<span class="btn__icon">⚡</span> ${next === "rebuilt" ? "Break it again" : "Break the house"}`;
+    $("#house-break").innerHTML = `<span class="btn__icon">🎓</span> ${next === "rebuilt" ? "Back to college" : "Send me to college"}`;
     $("#house-fix").hidden = $("#house-hint").hidden = next !== "broken";
     section.classList.toggle("is-rebuilt", next === "rebuilt");
     show(next === "cracking" ? "whole" : next);
@@ -1701,6 +1717,7 @@ function setupGlobal() {
 }
 
 setupIntro(setupProfiles);
+fetch("data/stills.json").then((r) => (r.ok ? r.json() : {})).then((x) => { STILLS = x; }).catch(() => {});
 Promise.all([
   fetch("data/site.json").then((r) => r.json()),
   fetch("data/art.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
