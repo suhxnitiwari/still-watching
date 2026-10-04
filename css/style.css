@@ -1129,3 +1129,10 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
   .phone { min-height: 0; }
   .scene--cast .scene__text { max-width: 100%; }
 }
+.cast--left { right: auto; left: clamp(16px, 6vw, 100px); top: 10%; transform: none; width: min(24vw, 300px); }
+.scene.is-on .cast--left { animation: pop .6s cubic-bezier(.2, .9, .3, 1.2) .15s forwards; transform: scale(.6); }
+.scene--cast .dorm__girl, .scene--cast .dorm__bubble { display: none; }
+.mbars { display: flex; align-items: flex-end; gap: 8px; height: 160px; }
+.mbars span { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: #aaa; }
+.mbars i { width: 100%; height: calc(var(--h) * 3px); background: var(--red); border-radius: 3px 3px 0 0; transform-origin: bottom; animation: grow .8s ease both; }
+@keyframes grow { from { transform: scaleY(0); } }
