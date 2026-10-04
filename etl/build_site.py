@@ -218,6 +218,47 @@ def amaira(h):
     return {"views": int(len(a)), "top": [{"show": k, "views": int(v)} for k, v in top.items()], "years": years}
 
 
+# Watched together on Mom's account, so they don't count as her favorites.
+FAMILY_TOGETHER = {"The Great Indian Kapil Show", "The Night Agent"}
+SRK = ["Om Shanti Om", "Chennai Express", "Dilwale", "Dunki", "Raees", "Kabhi Khushi Kabhie Gham", "Dil To Pagal Hai",
+       "Phir Bhi Dil Hai Hindustani", "Deewana", "Anjaam", "Chak De! India", "Dear Zindagi", "Jawan", "Zero"]
+
+
+def parents(h, meta):
+    """What Dad's and Mom's profiles show (approved by Suhani): top 10, each year, top genre, and how fast they finish."""
+    def genres(d):
+        c = Counter()
+        for show, n in d["show"].value_counts().items():
+            for g in (meta.get(show) or {}).get("genres", []):
+                c[g] += int(n)
+        return [{"genre": g, "pct": round(n / len(d) * 100)} for g, n in c.most_common(3)]
+    def fast(d):
+        d = d[d["kind"] == "series"].assign(season=d["title"].str.extract(r"(Season \d+|Series \d+|Volume \d+)")[0].fillna("S1"))
+        g = d.groupby(["show", "season"])["date"].agg(["size", lambda s: (s.max() - s.min()).days + 1])
+        g = g[g["size"] >= 4]
+        return round(float((g.iloc[:, 1] <= 3).mean()) * 100) if len(g) else None
+    dad = h[h["who"] == "Dad"]
+    dad_years = []
+    for y, g in dad.groupby(dad["date"].dt.year):
+        vc = g["show"].value_counts()
+        dad_years.append({"year": int(y), "show": vc.index[0], "episodes": int(vc.iloc[0])})
+    mom = h[(h["who"] == "Mom") & ~h["show"].isin(FAMILY_TOGETHER)]
+    mser, mmov = mom[mom["kind"] == "series"], mom[mom["kind"] == "movie"]
+    mom_years = []
+    for y, g in mom.groupby(mom["date"].dt.year):
+        sv = g[g["kind"] == "series"]["show"].value_counts()
+        mom_years.append({"year": int(y), "movies": int((g["kind"] == "movie").sum()),
+                          "show": sv.index[0] if len(sv) and sv.iloc[0] >= 5 else None, "episodes": int(sv.iloc[0]) if len(sv) else 0})
+    return {
+        "Dad": {"top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
+                "years": dad_years, "genres": genres(dad), "fast": fast(dad)},
+        "Mom": {"top": [{"show": k, "views": int(v)} for k, v in mser["show"].value_counts().head(10).items()],
+                "years": [y for y in mom_years if y["movies"] or y["show"]], "genres": genres(mser), "fast": fast(mom),
+                "movies": int(mmov["show"].nunique()), "movie_pct": round(len(mmov) / len(mom) * 100),
+                "srk": [t for t in SRK if t in set(mom["show"])]},
+    }
+
+
 def family(meta):
     """Family comparisons Suhani's family agreed to share: aggregates only, Mom and Dad unnamed, my sister
     unnamed, and no dates."""
@@ -270,6 +311,7 @@ def family(meta):
     return {
         "habits": {label[w]: habits(w) for w in label},
         "profiles": {label[w]: peek(w) for w in label},
+        "parents": parents(h, meta),
         # Amaira's own section (her family said yes): her 10 favorites and her #1 show each year.
         "amaira": amaira(h),
         "freeze": {"family": int(len(freeze)), "mine": sorted(set(freeze[freeze["who"] == "Suhani"]["show"]))},
@@ -657,7 +699,10 @@ def main():
         "shows": {show: show_summary(df, show) for show in sorted(featured)},
         # Posters only, for the family profile peeks (these aren't in my history).
         "extra_art": sorted(({t["show"] for p in (fam or {}).get("profiles", {}).values() for t in p["top"]}
-                             | {t["show"] for t in (fam or {}).get("amaira", {}).get("top", []) + (fam or {}).get("amaira", {}).get("years", [])}) - featured),
+                             | {t["show"] for t in (fam or {}).get("amaira", {}).get("top", []) + (fam or {}).get("amaira", {}).get("years", [])}
+                             | {t["show"] for p in (fam or {}).get("parents", {}).values() for t in p["top"]}
+                             | {y["show"] for p in (fam or {}).get("parents", {}).values() for y in p["years"] if y.get("show")}
+                             | set((fam or {}).get("parents", {}).get("Mom", {}).get("srk", []))) - featured),
     }
     OUT.parent.mkdir(exist_ok=True)
     OUT.write_text(json.dumps(site, indent=1, ensure_ascii=False))

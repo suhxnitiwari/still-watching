@@ -1034,3 +1034,20 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
   .cs .itree__b { grid-template-columns: 1fr; }
   .cs .itree__b em { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 6px; }
 }
+
+/* Parent peeks: top 10 grid, each-year strip, SRK shelf */
+.peek__genre { margin: 0 0 16px; font-size: 18px; font-weight: 700; }
+.peek__top10 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+.peek__top10 .peek__show { font-size: 11px; }
+.peek__top10 .peek__show span { font-size: 10px; }
+.peek__years { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 16px; scrollbar-width: thin; }
+.peek__year { flex: 0 0 76px; display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
+.peek__year .art { position: relative; display: block; width: 100%; aspect-ratio: 2 / 3; border-radius: 5px; overflow: hidden; }
+.peek__year .art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.peek__year b { color: var(--red); font-size: 12px; }
+.peek__year span { color: #ccc; line-height: 1.2; }
+.peek__year--mom { flex-basis: 64px; background: #222; border-radius: 6px; padding: 8px 6px; text-align: center; }
+.peek__movies { font-family: var(--display); font-size: 30px; color: #fff !important; line-height: 1; }
+@media (max-width: 560px) { .peek__top10 { grid-template-columns: repeat(3, 1fr); } }
+.peek__chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.peek__chips span { background: rgba(229, 9, 20, .14); border: 1px solid rgba(229, 9, 20, .45); border-radius: 999px; padding: 4px 10px; font-size: 12px; }

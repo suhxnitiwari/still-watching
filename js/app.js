@@ -227,9 +227,9 @@ function peekPersona(name) {
   if (!hb) return "";
   const stat = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
   const P = {
-    Mom: hb.Mom && { type: "The steady one", tag: "A little, in Hindi, every so often.",
-      about: `She never binges, she just keeps a show going: one or two things a night, then she's done. Mostly Hindi, the biggest movie person in the house, and once she's seen it, she's seen it. She never rewatches.`,
-      stats: [stat(hb.Mom.binge_days, "binge days in 11 years"), stat(hb.Mom.per_day, "a day when she watches"), stat(`${hb.Mom.hindi_pct}%`, "Hindi"), stat(`${hb.Mom.movie_pct}%`, "movies")] },
+    Mom: hb.Mom && f.parents?.Mom && { type: "The movie person", tag: "One sitting, done.",
+      about: `Hindi movies, start to finish in a night: ${n(f.parents.Mom.movies)} of them. When she does pick a series, she wants it over fast. Once she's seen it, she's seen it. She never rewatches.`,
+      stats: [stat(n(f.parents.Mom.movies), "Hindi movies"), stat(`${f.parents.Mom.movie_pct}%`, "of her watching is movies"), stat(`${f.parents.Mom.fast}%`, "of seasons done in 3 days"), stat(hb.Mom.binge_days, "binge days in 11 years")] },
     Dad: hb.Dad && { type: "The sampler", tag: "A serial killer… of pilots.",
       about: `He'll try anything once, and usually only once. The survivors are cartels, bikers and crime families, plus the only Spanish and Korean thrillers in the house. Lots of movies, almost no rewatches.`,
       stats: [stat(n(hb.Dad.titles), "different titles"), stat(`${f.quit_rate.Dad}%`, "quit after episode 1"), stat(hb.Dad.eps_per_show, "episodes a show"), stat(`${hb.Dad.movie_pct}%`, "movies")] },
@@ -237,6 +237,23 @@ function peekPersona(name) {
   if (!P) return "";
   return `<div class="peek__persona"><p class="peek__label">Watcher type</p><h3>${P.type}</h3><p class="peek__tag">${P.tag}</p>
     <p class="peek__about">${P.about}</p><div class="peek__stats">${P.stats.join("")}</div></div>`;
+}
+
+// Dad's and Mom's approved peek: top genre, top 10, each year (Mom: movies a year), then the lock.
+function peekParent(name) {
+  const pp = DATA?.family?.parents?.[name];
+  if (!pp) return "";
+  const his = name === "Dad" ? "His" : "Her";
+  const genre = name === "Mom" ? "Bollywood movies, and Hindi crime for series" : pp.genres.slice(0, 2).map((g) => g.genre.toLowerCase()).join(" and ").replace(/^drama and crime$/, "crime drama");
+  const years = pp.years.map((y) => name === "Dad"
+    ? `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`
+    : `<div class="peek__year peek__year--mom"><b>${y.year}</b><span class="peek__movies">${y.movies}</span><span>movies${y.show ? ` · ${esc(y.show)}` : ""}</span></div>`).join("");
+  return `<p class="peek__label">${his} top genre</p><p class="peek__genre">${esc(genre)}</p>
+    <p class="peek__label">${his} top 10${name === "Mom" ? " series" : ""}</p>
+    <div class="peek__top10">${pp.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
+    <p class="peek__label">${name === "Dad" ? "His #1 show every year" : "Hindi movies every year"}</p>
+    <div class="peek__years">${years}</div>
+    ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__chips">${pp.srk.map((t) => `<span>${esc(t)}</span>`).join("")}</div>` : ""}`;
 }
 
 function peekProfile(p) {
@@ -256,10 +273,10 @@ function peekProfile(p) {
     <button class="peek__close" type="button" aria-label="Close">×</button>
     <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
     ${peekPersona(p.name)}
-    ${pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
+    ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
-    <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She'd rather you watch Kapil." : "She's busy rewatching iCarly."}</span></div>
+    <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
   </div>`;
   el.hidden = false;
   el.querySelector(".peek__close").focus();

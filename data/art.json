@@ -680,5 +680,174 @@
   "match": "Pocoyo (2005)",
   "source": "https://www.tvmaze.com/shows/6495/pocoyo",
   "poster": "img/posters/pocoyo.jpg"
+ },
+ "Anjaam": {
+  "match": "Anjaan: Rural Myths (2018)",
+  "source": "https://www.tvmaze.com/shows/46798/anjaan-rural-myths",
+  "poster": "img/posters/anjaam.jpg"
+ },
+ "Apocalypse": {
+  "match": "Apocalypse (2026)",
+  "source": "https://www.tvmaze.com/shows/93595/apocalypse",
+  "poster": "img/posters/apocalypse.jpg",
+  "backdrop": "img/backdrops/apocalypse.jpg"
+ },
+ "Aranyak": {
+  "match": "Aranyak (2021)",
+  "source": "https://www.tvmaze.com/shows/58894/aranyak",
+  "poster": "img/posters/aranyak.jpg"
+ },
+ "Black Warrant": {
+  "match": "Black Warrant (2025)",
+  "source": "https://www.tvmaze.com/shows/81584/black-warrant",
+  "poster": "img/posters/black-warrant.jpg",
+  "backdrop": "img/backdrops/black-warrant.jpg"
+ },
+ "Blood Coast": {
+  "match": "Pax Massilia (2023)",
+  "source": "https://www.tvmaze.com/shows/69107/pax-massilia",
+  "poster": "img/posters/blood-coast.jpg",
+  "backdrop": "img/backdrops/blood-coast.jpg"
+ },
+ "Breaking Bad": {
+  "match": "Breaking Bad (2008)",
+  "source": "https://www.tvmaze.com/shows/169/breaking-bad",
+  "poster": "img/posters/breaking-bad.jpg",
+  "backdrop": "img/backdrops/breaking-bad.jpg"
+ },
+ "Choona": {
+  "match": "Choona (2023)",
+  "source": "https://www.tvmaze.com/shows/69840/choona",
+  "poster": "img/posters/choona.jpg"
+ },
+ "Class": {
+  "match": "Class (2016)",
+  "source": "https://www.tvmaze.com/shows/11374/class",
+  "poster": "img/posters/class.jpg",
+  "backdrop": "img/backdrops/class.jpg"
+ },
+ "Criminal Code": {
+  "match": "DNA do Crime (2023)",
+  "source": "https://www.tvmaze.com/shows/71503/dna-do-crime",
+  "poster": "img/posters/criminal-code.jpg"
+ },
+ "Deewana": {
+  "match": "Ek Deewana Tha (?)",
+  "source": "https://www.tvmaze.com/shows/36212/ek-deewana-tha",
+  "poster": "img/posters/deewana.jpg"
+ },
+ "Dilwale": {
+  "match": "Mighty Little Bheem: Diwali (2019)",
+  "source": "https://www.tvmaze.com/shows/61908/mighty-little-bheem-diwali",
+  "poster": "img/posters/dilwale.jpg"
+ },
+ "Dunki": {
+  "match": "Slam Dunk (1993)",
+  "source": "https://www.tvmaze.com/shows/4254/slam-dunk",
+  "poster": "img/posters/dunki.jpg",
+  "backdrop": "img/backdrops/dunki.jpg"
+ },
+ "El Chapo": {
+  "match": "El Chapo (2017)",
+  "source": "https://www.tvmaze.com/shows/26955/el-chapo",
+  "poster": "img/posters/el-chapo.jpg",
+  "backdrop": "img/backdrops/el-chapo.jpg"
+ },
+ "Fool Me Once": {
+  "match": "Harlan Coben's Fool Me Once (2024)",
+  "source": "https://www.tvmaze.com/shows/67105/harlan-cobens-fool-me-once",
+  "poster": "img/posters/fool-me-once.jpg",
+  "backdrop": "img/backdrops/fool-me-once.jpg"
+ },
+ "Jamtara - Sabka Number Ayega": {
+  "match": "Jamtara - Sabka Number Ayega (2020)",
+  "source": "https://www.tvmaze.com/shows/45536/jamtara-sabka-number-ayega",
+  "poster": "img/posters/jamtara-sabka-number-ayega.jpg",
+  "backdrop": "img/backdrops/jamtara-sabka-number-ayega.jpg"
+ },
+ "Jawan": {
+  "match": "Kisah Tanah Jawa: Merapi (2019)",
+  "source": "https://www.tvmaze.com/shows/44831/kisah-tanah-jawa-merapi",
+  "poster": "img/posters/jawan.jpg",
+  "backdrop": "img/backdrops/jawan.jpg"
+ },
+ "Khakee": {
+  "match": "Khakee: The Bihar Chapter (2022)",
+  "source": "https://www.tvmaze.com/shows/64999/khakee-the-bihar-chapter",
+  "poster": "img/posters/khakee.jpg",
+  "backdrop": "img/backdrops/khakee.jpg"
+ },
+ "Maamla Legal Hai": {
+  "match": "Maamla Legal Hai (2024)",
+  "source": "https://www.tvmaze.com/shows/74540/maamla-legal-hai",
+  "poster": "img/posters/maamla-legal-hai.jpg"
+ },
+ "Musafir Cafe": {
+  "match": "Musafir Cafe (2026)",
+  "source": "https://www.tvmaze.com/shows/93309/musafir-cafe",
+  "poster": "img/posters/musafir-cafe.jpg"
+ },
+ "Queen of the South": {
+  "match": "Queen of the South (2016)",
+  "source": "https://www.tvmaze.com/shows/7015/queen-of-the-south",
+  "poster": "img/posters/queen-of-the-south.jpg",
+  "backdrop": "img/backdrops/queen-of-the-south.jpg"
+ },
+ "Raees": {
+  "match": "Zel Al Raees (2017)",
+  "source": "https://www.tvmaze.com/shows/52702/zel-al-raees",
+  "poster": "img/posters/raees.jpg"
+ },
+ "Raja, Rasoi aur Anya Kahaniyan": {
+  "match": "Raja, Rasoi Aur Anya Kahaniyaan (2014)",
+  "source": "https://www.tvmaze.com/shows/76752/raja-rasoi-aur-anya-kahaniyaan",
+  "poster": "img/posters/raja-rasoi-aur-anya-kahaniyan.jpg"
+ },
+ "Rise of Empires": {
+  "match": "Rise of Empires: Ottoman (2020)",
+  "source": "https://www.tvmaze.com/shows/45424/rise-of-empires-ottoman",
+  "poster": "img/posters/rise-of-empires.jpg",
+  "backdrop": "img/backdrops/rise-of-empires.jpg"
+ },
+ "Sacred Games": {
+  "match": "Sacred Games (2018)",
+  "source": "https://www.tvmaze.com/shows/18197/sacred-games",
+  "poster": "img/posters/sacred-games.jpg",
+  "backdrop": "img/backdrops/sacred-games.jpg"
+ },
+ "Suburra": {
+  "match": "Suburra: La Serie (2017)",
+  "source": "https://www.tvmaze.com/shows/6766/suburra-la-serie",
+  "poster": "img/posters/suburra.jpg",
+  "backdrop": "img/backdrops/suburra.jpg"
+ },
+ "The Borgias": {
+  "match": "The Borgias (2011)",
+  "source": "https://www.tvmaze.com/shows/515/the-borgias",
+  "poster": "img/posters/the-borgias.jpg",
+  "backdrop": "img/backdrops/the-borgias.jpg"
+ },
+ "The Fame Game": {
+  "match": "The Fame Game (2022)",
+  "source": "https://www.tvmaze.com/shows/56740/the-fame-game",
+  "poster": "img/posters/the-fame-game.jpg"
+ },
+ "Undercover": {
+  "match": "Undercover (2019)",
+  "source": "https://www.tvmaze.com/shows/22400/undercover",
+  "poster": "img/posters/undercover.jpg",
+  "backdrop": "img/backdrops/undercover.jpg"
+ },
+ "Yeh Kaali Kaali Ankhein": {
+  "match": "Yeh Kaali Kaali Ankhein (2022)",
+  "source": "https://www.tvmaze.com/shows/59833/yeh-kaali-kaali-ankhein",
+  "poster": "img/posters/yeh-kaali-kaali-ankhein.jpg",
+  "backdrop": "img/backdrops/yeh-kaali-kaali-ankhein.jpg"
+ },
+ "Zero": {
+  "match": "Zero (2021)",
+  "source": "https://www.tvmaze.com/shows/42928/zero",
+  "poster": "img/posters/zero.jpg",
+  "backdrop": "img/backdrops/zero.jpg"
  }
 }

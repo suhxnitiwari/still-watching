@@ -2423,23 +2423,23 @@
     "hindi_pct": 8
    },
    "Mom": {
-    "binge_days": 5,
-    "eps_per_show": 5.7,
-    "titles": 334,
-    "movie_pct": 39,
+    "binge_days": 4,
+    "eps_per_show": 5.6,
+    "titles": 376,
+    "movie_pct": 43,
     "top5_pct": 18,
     "per_day": 1.6,
     "month": 1,
-    "hindi_pct": 59
+    "hindi_pct": 63
    },
    "Dad": {
     "binge_days": 28,
     "eps_per_show": 3.3,
-    "titles": 771,
-    "movie_pct": 32,
-    "top5_pct": 16,
+    "titles": 729,
+    "movie_pct": 30,
+    "top5_pct": 17,
     "per_day": 1.8,
-    "month": 12,
+    "month": 1,
     "hindi_pct": 1
    },
    "My sister": {
@@ -2484,11 +2484,11 @@
       "views": 21
      },
      {
-      "show": "Delhi Crime",
+      "show": "Jamtara - Sabka Number Ayega",
       "views": 18
      }
     ],
-    "views": 688,
+    "views": 718,
     "rewatched": 1,
     "rewatch_pct": 0.1
    },
@@ -2507,7 +2507,7 @@
       "views": 45
      }
     ],
-    "views": 1488,
+    "views": 1445,
     "rewatched": 16,
     "rewatch_pct": 1.1
    },
@@ -2529,6 +2529,280 @@
     "views": 1504,
     "rewatched": 117,
     "rewatch_pct": 7.8
+   }
+  },
+  "parents": {
+   "Dad": {
+    "top": [
+     {
+      "show": "Sons of Anarchy",
+      "views": 67
+     },
+     {
+      "show": "Narcos",
+      "views": 60
+     },
+     {
+      "show": "Ozark",
+      "views": 45
+     },
+     {
+      "show": "El Chapo",
+      "views": 34
+     },
+     {
+      "show": "Peaky Blinders",
+      "views": 33
+     },
+     {
+      "show": "Breaking Bad",
+      "views": 31
+     },
+     {
+      "show": "Queen of the South",
+      "views": 29
+     },
+     {
+      "show": "The Borgias",
+      "views": 29
+     },
+     {
+      "show": "Money Heist",
+      "views": 27
+     },
+     {
+      "show": "Suburra",
+      "views": 25
+     }
+    ],
+    "years": [
+     {
+      "year": 2015,
+      "show": "Apocalypse",
+      "episodes": 6
+     },
+     {
+      "year": 2016,
+      "show": "Breaking Bad",
+      "episodes": 30
+     },
+     {
+      "year": 2017,
+      "show": "Sons of Anarchy",
+      "episodes": 67
+     },
+     {
+      "year": 2018,
+      "show": "Queen of the South",
+      "episodes": 25
+     },
+     {
+      "year": 2019,
+      "show": "Undercover",
+      "episodes": 10
+     },
+     {
+      "year": 2020,
+      "show": "Narcos",
+      "episodes": 10
+     },
+     {
+      "year": 2021,
+      "show": "Narcos",
+      "episodes": 38
+     },
+     {
+      "year": 2022,
+      "show": "Ozark",
+      "episodes": 35
+     },
+     {
+      "year": 2023,
+      "show": "Rise of Empires",
+      "episodes": 13
+     },
+     {
+      "year": 2024,
+      "show": "Fool Me Once",
+      "episodes": 9
+     },
+     {
+      "year": 2025,
+      "show": "Blood Coast",
+      "episodes": 11
+     },
+     {
+      "year": 2026,
+      "show": "Criminal Code",
+      "episodes": 16
+     }
+    ],
+    "genres": [
+     {
+      "genre": "Drama",
+      "pct": 46
+     },
+     {
+      "genre": "Crime",
+      "pct": 42
+     },
+     {
+      "genre": "Action",
+      "pct": 21
+     }
+    ],
+    "fast": 41
+   },
+   "Mom": {
+    "top": [
+     {
+      "show": "Delhi Crime",
+      "views": 18
+     },
+     {
+      "show": "Jamtara - Sabka Number Ayega",
+      "views": 18
+     },
+     {
+      "show": "Sacred Games",
+      "views": 16
+     },
+     {
+      "show": "Khakee",
+      "views": 14
+     },
+     {
+      "show": "Yeh Kaali Kaali Ankhein",
+      "views": 14
+     },
+     {
+      "show": "Maamla Legal Hai",
+      "views": 10
+     },
+     {
+      "show": "Tribhuvan Mishra CA Topper",
+      "views": 9
+     },
+     {
+      "show": "Class",
+      "views": 8
+     },
+     {
+      "show": "Choona",
+      "views": 8
+     },
+     {
+      "show": "The Fame Game",
+      "views": 8
+     }
+    ],
+    "years": [
+     {
+      "year": 2015,
+      "movies": 2,
+      "show": null,
+      "episodes": 0
+     },
+     {
+      "year": 2016,
+      "movies": 11,
+      "show": "Raja, Rasoi aur Anya Kahaniyan",
+      "episodes": 5
+     },
+     {
+      "year": 2017,
+      "movies": 32,
+      "show": null,
+      "episodes": 1
+     },
+     {
+      "year": 2018,
+      "movies": 29,
+      "show": null,
+      "episodes": 3
+     },
+     {
+      "year": 2019,
+      "movies": 20,
+      "show": "Sacred Games",
+      "episodes": 13
+     },
+     {
+      "year": 2020,
+      "movies": 26,
+      "show": "Jamtara - Sabka Number Ayega",
+      "episodes": 9
+     },
+     {
+      "year": 2021,
+      "movies": 12,
+      "show": "Aranyak",
+      "episodes": 7
+     },
+     {
+      "year": 2022,
+      "movies": 36,
+      "show": "Jamtara - Sabka Number Ayega",
+      "episodes": 9
+     },
+     {
+      "year": 2023,
+      "movies": 31,
+      "show": "Class",
+      "episodes": 8
+     },
+     {
+      "year": 2024,
+      "movies": 39,
+      "show": "Tribhuvan Mishra CA Topper",
+      "episodes": 9
+     },
+     {
+      "year": 2025,
+      "movies": 26,
+      "show": "Black Warrant",
+      "episodes": 7
+     },
+     {
+      "year": 2026,
+      "movies": 46,
+      "show": "Musafir Cafe",
+      "episodes": 8
+     }
+    ],
+    "genres": [
+     {
+      "genre": "Drama",
+      "pct": 66
+     },
+     {
+      "genre": "Crime",
+      "pct": 50
+     },
+     {
+      "genre": "Thriller",
+      "pct": 30
+     }
+    ],
+    "fast": 54,
+    "movies": 303,
+    "movie_pct": 48,
+    "srk": [
+     "Om Shanti Om",
+     "Chennai Express",
+     "Dilwale",
+     "Dunki",
+     "Raees",
+     "Kabhi Khushi Kabhie Gham",
+     "Dil To Pagal Hai",
+     "Phir Bhi Dil Hai Hindustani",
+     "Deewana",
+     "Anjaam",
+     "Chak De! India",
+     "Dear Zindagi",
+     "Jawan",
+     "Zero"
+    ]
    }
   },
   "amaira": {
@@ -2702,17 +2976,17 @@
    "Tribhuvan Mishra CA Topper",
    "Saiyaara",
    "Shaque",
-   "De De Pyaar De 2",
    "Tere Ishk Mein",
+   "De De Pyaar De 2",
    "Chandigarh Kare Aashiqui",
+   "Maa Behen",
    "Operation Safed Sagar",
    "Taskaree",
-   "Maa Behen",
-   "Ek Villain Returns"
+   "Single Papa"
   ],
   "mom_hindi_lead": {
-   "shared": 72,
-   "mom_first": 51,
+   "shared": 74,
+   "mom_first": 53,
    "me_first": 21,
    "next_week": 13
   },
@@ -2723,8 +2997,8 @@
    "within_week": 0
   },
   "dad_and_me": {
-   "shared": 29,
-   "first": 22,
+   "shared": 27,
+   "first": 20,
    "second": 7,
    "within_week": 3
   },
@@ -2736,14 +3010,14 @@
   },
   "shows_started": {
    "Me": 205,
-   "Mom": 74,
+   "Mom": 73,
    "Dad": 309,
    "My sister": 117
   },
   "quit_rate": {
    "Dad": 66,
    "Me": 49,
-   "Mom": 39,
+   "Mom": 40,
    "My sister": 32
   },
   "kapil": {
@@ -3655,26 +3929,6 @@
    "eras": {
     "Austin": 19,
     "Dallas": 6
-   }
-  },
-  "Ek Villain Returns": {
-   "show": "Ek Villain Returns",
-   "kind": "movie",
-   "views": 1,
-   "first": "2022-09-19",
-   "last": "2022-09-19",
-   "days": 1,
-   "best_day": {
-    "date": "2022-09-19",
-    "episodes": 1
-   },
-   "binge_days": 0,
-   "seasons": {},
-   "by_year": {
-    "2022": 1
-   },
-   "eras": {
-    "Dallas": 1
    }
   },
   "Emily in Paris": {
@@ -5673,19 +5927,56 @@
   }
  },
  "extra_art": [
+  "Anjaam",
+  "Apocalypse",
+  "Aranyak",
   "Barbie Dreamhouse Adventures",
   "Ben & Holly's Little Kingdom",
+  "Black Warrant",
+  "Blood Coast",
+  "Breaking Bad",
+  "Chak De! India",
+  "Chennai Express",
+  "Choona",
+  "Class",
+  "Criminal Code",
+  "Dear Zindagi",
+  "Deewana",
+  "Dil To Pagal Hai",
+  "Dilwale",
+  "Dunki",
+  "El Chapo",
+  "Fool Me Once",
+  "Jamtara - Sabka Number Ayega",
+  "Jawan",
+  "Kabhi Khushi Kabhie Gham",
+  "Khakee",
+  "Maamla Legal Hai",
   "Masha and the Bear",
+  "Musafir Cafe",
   "Narcos",
   "Octonauts",
+  "Om Shanti Om",
   "Ozark",
   "PJ Masks",
+  "Phir Bhi Dil Hai Hindustani",
   "Pocoyo",
+  "Queen of the South",
+  "Raees",
+  "Raja, Rasoi aur Anya Kahaniyan",
+  "Rise of Empires",
+  "Sacred Games",
   "Sofia the First",
   "Sons of Anarchy",
+  "Suburra",
+  "The Borgias",
   "The Boss Baby",
+  "The Fame Game",
   "The Thundermans",
+  "Undercover",
   "Victorious",
+  "Yeh Kaali Kaali Ankhein",
+  "Zero",
   "iCarly"
  ]
 }
