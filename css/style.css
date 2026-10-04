@@ -1215,9 +1215,9 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .peek__head { display: none; }
 
 /* Avatar reveal: a face rebuilt from data on a canvas, then the real portrait */
-.profile .avatar img { opacity: 0; transition: opacity .9s ease, filter .9s ease; filter: saturate(.4) contrast(1.3); }
+.profile .avatar img { opacity: 0; transition: opacity .5s ease, filter .5s ease; filter: contrast(1.2); }
 .profile .avatar.is-revealed img { opacity: 1; filter: none; }
-.avatar__recon { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; transition: opacity .9s ease; pointer-events: none; }
+.avatar__recon { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; transition: opacity .5s ease; pointer-events: none; image-rendering: pixelated; }
 .avatar.is-revealed .avatar__recon { opacity: 0; }
 .avatar__status { position: absolute; left: 0; right: 0; bottom: 6px; z-index: 2; text-align: center; font: 700 8px/1 "Courier New", monospace; letter-spacing: .14em; color: #fff; text-shadow: 0 0 6px #e50914; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .avatar.is-reconstructing .avatar__status { opacity: 1; }

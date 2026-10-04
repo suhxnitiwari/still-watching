@@ -189,59 +189,68 @@ const DATA_BITS = {
 function reconstruct(avatarEl, name) {
   const img = avatarEl.querySelector("img"), cv = avatarEl.querySelector(".avatar__recon"), status = avatarEl.querySelector(".avatar__status");
   if (!img || !cv) return () => {};
-  const N = 34, words = (DATA_BITS[name] || []).join(" ").replace(/[^A-Za-z0-9]/g, "").toUpperCase() || "01";
-  let grid = null, raf = 0;
+  // Coarse to fine, the way an image model denoises: the whole face sharpens at once.
+  const LEVELS = [3, 5, 8, 13, 21, 34];
+  let grids = null, raf = 0;
   const sample = () => {
-    const off = document.createElement("canvas"); off.width = off.height = N;
-    const g = off.getContext("2d"); g.drawImage(img, 0, 0, N, N);
-    const d = g.getImageData(0, 0, N, N).data;
-    grid = Array.from({ length: N * N }, (_, k) => {
-      const r = d[k * 4], gg = d[k * 4 + 1], b = d[k * 4 + 2], lum = (0.3 * r + 0.59 * gg + 0.11 * b) / 255;
-      const ch = lum < .22 ? "0" : lum < .45 ? "1" : words[(k * 7) % words.length];
-      return { r, g: gg, b, lum, ch, t: (Math.floor(k / N) / N) * .75 + Math.random() * .12 };
+    grids = LEVELS.map((n) => {
+      const off = document.createElement("canvas"); off.width = off.height = n;
+      const g = off.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(img, 0, 0, n, n);
+      const d = g.getImageData(0, 0, n, n).data;
+      return { n, px: Array.from({ length: n * n }, (_, k) => [d[k * 4], d[k * 4 + 1], d[k * 4 + 2]]), seed: Array.from({ length: n * n }, () => Math.random()) };
     });
   };
   const play = () => {
     if (!img.complete || !img.naturalWidth) { img.addEventListener("load", play, { once: true }); return; }
-    if (!grid) sample();
+    if (!grids) sample();
     cancelAnimationFrame(raf);
-    const size = cv.clientWidth || 140, dpr = Math.min(devicePixelRatio || 1, 2);
-    cv.width = cv.height = size * dpr;
-    const ctx = cv.getContext("2d"), cell = (size * dpr) / N;
-    ctx.font = `700 ${cell * 1.05}px "Courier New", monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    const size = cv.clientWidth || 140, dpr = Math.min(devicePixelRatio || 1, 2), W = size * dpr;
+    cv.width = cv.height = W;
+    const ctx = cv.getContext("2d");
     avatarEl.classList.remove("is-revealed"); avatarEl.classList.add("is-reconstructing");
-    const start = performance.now(), NOISE = 650, SCAN = 1900, HOLD = 450;
+    const start = performance.now(), STATIC = 450, GEN = 2300, END = STATIC + GEN + 250;
     const frame = (now) => {
-      const t = now - start, scan = Math.max(0, (t - NOISE) / SCAN);
-      ctx.fillStyle = "#050505"; ctx.fillRect(0, 0, cv.width, cv.height);
-      for (let k = 0; k < grid.length; k++) {
-        const c = grid[k], x = (k % N + .5) * cell, y = (Math.floor(k / N) + .5) * cell;
-        if (scan >= c.t) {
-          // a pixel block in the portrait's color, with a glyph printed on it
-          const fresh = Math.min(1, (scan - c.t) * 6);
-          ctx.fillStyle = `rgba(${c.r},${c.g},${c.b},${.25 + .6 * fresh})`;
-          ctx.fillRect(x - cell / 2 + .5, y - cell / 2 + .5, cell - 1, cell - 1);
-          const lift = (v) => Math.min(255, v + 70);
-          ctx.fillStyle = fresh < 1 ? "#fff" : `rgb(${lift(c.r)},${lift(c.g)},${lift(c.b)})`;
-          ctx.fillText(c.ch, x, y);
-        } else {
-          ctx.fillStyle = Math.random() < .12 ? "rgba(255,255,255,.7)" : `rgba(229,9,20,${.25 + Math.random() * .4})`;
-          ctx.fillText(Math.random() < .5 ? "0" : "1", x, y);
+      const t = now - start, p = Math.min(1, Math.max(0, (t - STATIC) / GEN));
+      ctx.globalAlpha = 1;
+      if (t < STATIC) {  // colored static
+        const n = 24, c = W / n;
+        for (let k = 0; k < n * n; k++) { const v = Math.random() * 255; ctx.fillStyle = Math.random() < .2 ? `rgb(${v},20,30)` : `rgb(${v * .25},${v * .25},${v * .3})`; ctx.fillRect((k % n) * c, Math.floor(k / n) * c, c + 1, c + 1); }
+        status.textContent = "GENERATING…";
+      } else {
+        const eased = 1 - Math.pow(1 - p, 2.2), li = Math.min(LEVELS.length - 1, Math.floor(eased * LEVELS.length)), local = eased * LEVELS.length - li;
+        const prev = grids[Math.max(0, li - 1)], cur = grids[li];
+        // previous level underneath, current level settling in cell by cell
+        [prev, cur].forEach((g, layer) => {
+          const c = W / g.n;
+          for (let k = 0; k < g.n * g.n; k++) {
+            if (layer === 1 && g.seed[k] > local * 1.3) continue;
+            const [r, gg, b] = g.px[k], jit = layer === 1 && g.seed[k] > local ? 40 : 0;
+            ctx.fillStyle = `rgb(${r + (Math.random() - .5) * jit},${gg + (Math.random() - .5) * jit},${b + (Math.random() - .5) * jit})`;
+            ctx.fillRect((k % g.n) * c, Math.floor(k / g.n) * c, c + .6, c + .6);
+          }
+        });
+        // faint bits on the blocks, fading as it gets confident
+        if (cur.n >= 8) {
+          const c = W / cur.n;
+          ctx.font = `700 ${c * .62}px "Courier New", monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillStyle = `rgba(255,255,255,${.28 * (1 - p)})`;
+          for (let k = 0; k < cur.n * cur.n; k += 1) ctx.fillText(cur.seed[k] > .5 ? "1" : "0", (k % cur.n + .5) * c, (Math.floor(k / cur.n) + .5) * c);
         }
+        // a glitch at the end: an RGB split slice
+        if (p > .86) {
+          const y = Math.random() * W, h = W * (.04 + Math.random() * .08);
+          ctx.globalAlpha = .55; ctx.drawImage(img, -6 * dpr, y, W, h, 0, y, W, h); ctx.globalAlpha = 1;
+        }
+        status.textContent = p < 1 ? `GENERATING ${Math.round(p * 100)}%` : "MATCH FOUND";
       }
-      if (scan > 0 && scan < .95) {  // the scanline
-        const sy = Math.min(scan / .87, 1) * cv.height;
-        ctx.fillStyle = "rgba(255,255,255,.85)"; ctx.fillRect(0, sy - dpr, cv.width, 2 * dpr);
-        ctx.fillStyle = "rgba(229,9,20,.18)"; ctx.fillRect(0, sy - 14 * dpr, cv.width, 14 * dpr);
-      }
-      status.textContent = t < NOISE ? "SCANNING…" : scan < 1 ? `RECONSTRUCTING ${Math.min(99, Math.round(scan * 100))}%` : "MATCH FOUND";
-      if (t < NOISE + SCAN + HOLD) raf = requestAnimationFrame(frame);
+      if (t < END) raf = requestAnimationFrame(frame);
       else { avatarEl.classList.remove("is-reconstructing"); avatarEl.classList.add("is-revealed"); }
     };
     raf = requestAnimationFrame(frame);
   };
   return play;
 }
+
 function dataRain(name) {
   const words = DATA_BITS[name] || [];
   const line = (i) => Array.from({ length: 6 }, (_, k) => (k + i) % 3 === 0 && words.length ? words[(k * 3 + i) % words.length] : Math.random().toString(2).slice(2, 10)).join(" ");
