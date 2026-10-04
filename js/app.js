@@ -1419,7 +1419,7 @@ function vampireFilm() {
   return [
     { dur: 5, black: true, center: true, kicker: "December 22, 2018", line: "Day one of<br><em>winter break</em>", sub: "Twelve years old. A show about vampires in Virginia." },
     { dur: 5.5, img: backdropOf("The Vampire Diaries"), kicker: "The Vampire Diaries", line: `<span class="scene__counter" data-to="${showViews("The Vampire Diaries")}">0</span><br><em>episodes</em>`, sub: "22 in the last ten days of December. 48 in March. All of it." },
-    { dur: 5, montage: postersOf(["The Vampire Diaries", "The Originals", "Jane The Virgin", "Gossip Girl"]), center: true, kicker: "The CW era begins", line: "Vampires,<br><em>then everything</em>", sub: "Every one finished." },
+    { dur: 5, montage: postersOf(["The Vampire Diaries", "The Originals", "Riverdale", "Jane The Virgin", "Gossip Girl"]), center: true, kicker: "The CW era begins", line: "Vampires,<br><em>then everything</em>", sub: "Binged, every one." },
     { dur: 5, img: backdropOf("The Originals"), alt: true, kicker: "Then the spin-off", line: "The<br><em>Originals</em>", sub: `${showViews("The Originals")} more episodes. I don't leave a universe once I'm in.` },
     { dur: 4.5, cast: "suhani", age: 12, kicker: "Team?", line: "Damon<br><em>or Stefan</em>", sub: "The data can't say. I can.", say: "Not answering that." },
   ];
