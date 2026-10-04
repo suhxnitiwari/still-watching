@@ -366,7 +366,7 @@ function setupProfiles() {
     const b = e.target.closest(".profile");
     if (!b) return;
     const key = b.dataset.profile;
-    if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Back off, mister.");
+    if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister.");
     const p = PROFILES[key];
     if (p.me) return enter();
     if (DATA?.family) return peekProfile(p);
