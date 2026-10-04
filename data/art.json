@@ -1124,5 +1124,55 @@
   "match": "Sardar Ka Grandson",
   "source": "https://en.wikipedia.org/wiki/Sardar_Ka_Grandson",
   "poster": "img/posters/sardar-ka-grandson.jpg"
+ },
+ "Queen": {
+  "match": "Queen (2013 film)",
+  "source": "https://en.wikipedia.org/wiki/Queen_(2013_film)",
+  "poster": "img/posters/queen.jpg"
+ },
+ "Aiyaary": {
+  "match": "Aiyaary",
+  "source": "https://en.wikipedia.org/wiki/Aiyaary",
+  "poster": "img/posters/aiyaary.jpg"
+ },
+ "Rajma Chawal": {
+  "match": "Rajma Chawal",
+  "source": "https://en.wikipedia.org/wiki/Rajma_Chawal",
+  "poster": "img/posters/rajma-chawal.jpg"
+ },
+ "Zindagi Na Milegi Dobara": {
+  "match": "Zindagi Na Milegi Dobara",
+  "source": "https://en.wikipedia.org/wiki/Zindagi_Na_Milegi_Dobara",
+  "poster": "img/posters/zindagi-na-milegi-dobara.jpg"
+ },
+ "Sooryavanshi": {
+  "match": "Sooryavanshi",
+  "source": "https://en.wikipedia.org/wiki/Sooryavanshi",
+  "poster": "img/posters/sooryavanshi.jpg"
+ },
+ "Kyaa Kool Hain Hum 3": {
+  "match": "Kyaa Kool Hain Hum 3",
+  "source": "https://en.wikipedia.org/wiki/Kyaa_Kool_Hain_Hum_3",
+  "poster": "img/posters/kyaa-kool-hain-hum-3.jpg"
+ },
+ "Tere Ishk Mein": {
+  "match": "Tere Ishk Mein",
+  "source": "https://en.wikipedia.org/wiki/Tere_Ishk_Mein",
+  "poster": "img/posters/tere-ishk-mein.jpg"
+ },
+ "De De Pyaar De 2": {
+  "match": "De De Pyaar De 2",
+  "source": "https://en.wikipedia.org/wiki/De_De_Pyaar_De_2",
+  "poster": "img/posters/de-de-pyaar-de-2.jpg"
+ },
+ "Chandigarh Kare Aashiqui": {
+  "match": "Chandigarh Kare Aashiqui",
+  "source": "https://en.wikipedia.org/wiki/Chandigarh_Kare_Aashiqui",
+  "poster": "img/posters/chandigarh-kare-aashiqui.jpg"
+ },
+ "Pitaah": {
+  "match": "Pitaah",
+  "source": "https://en.wikipedia.org/wiki/Pitaah",
+  "poster": "img/posters/pitaah.jpg"
  }
 }

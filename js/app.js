@@ -312,14 +312,18 @@ function peekProfile(p) {
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") el.hidden = true; });
   }
   const label = p.name === "Sister" ? "my sister" : p.name;
+  const heroShow = (DATA?.family?.parents?.[p.name]?.top || DATA?.family?.amaira?.top || [])[0]?.show;
+  const heroImg = p.name === "Sister" ? backdropOf(DATA?.family?.amaira?.top?.[0]?.show) : backdropOf(heroShow);
   el.innerHTML = `<div class="peek__card">
     <button class="peek__close" type="button" aria-label="Close">×</button>
+    <div class="peek__hero" style="${heroImg ? `background-image:url('${heroImg}')` : ""}"><div class="peek__herotext"><p class="peek__kicker">${p.name === "Sister" ? "my sister" : p.name}'s profile</p><h2 class="peek__herotitle">Hi, ${p.name === "Sister" ? "Amaira" : p.name}</h2></div></div>
     <div class="peek__head"><span class="avatar avatar--sm">${avatar(p, "peek")}</span><div><p class="peek__kicker">Peeking at</p><h2>${p.name}</h2></div></div>
     ${peekPersona(p.name)}
     ${DATA?.family?.parents?.[p.name] ? peekParent(p.name) + (p.name === "Dad" ? peekSpecial(DATA.family.parents.Dad) : `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>`)
       : p.name === "Sister" && DATA?.family?.amaira ? peekAmaira() + `<ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : pk ? `<p class="peek__label">${p.name === "Sister" ? "Her" : p.name === "Mom" ? "Her" : "His"} top shows</p>
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
+    <div class="peek__wall" aria-hidden="true">${Array.from({ length: 3 }, () => `<div class="peek__ghostrow">${Array.from({ length: 7 }, () => "<i></i>").join("")}</div>`).join("")}</div>
     <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
   </div>`;
   el.hidden = false;
@@ -1007,7 +1011,7 @@ function houseSVG() {
     return `<polyline points="${pts.join(" ")}" pathLength="1"/>`;
   };
   const hubEdge = (x, y) => { const a = Math.atan2(y - 560, x - 450); return [450 + 138 * Math.cos(a), 560 + 138 * Math.sin(a)]; };
-  const cracks = [[760, 400]].map((p) => zigzag(hubEdge(...p), p)).join("");  // only my room breaks off
+  const cracks = [[600, 162], [760, 400]].map((p) => zigzag(hubEdge(...p), p)).join("");  // only my room breaks off
   const wifi = [22, 40, 58].map((r) =>
     `<path d="M${450 - r * .707} ${528 - r * .707}A${r} ${r} 0 0 1 ${450 + r * .707} ${528 - r * .707}" stroke="#e50914" stroke-width="9" fill="none" stroke-linecap="round"/>`).join("");
   return `<svg viewBox="-80 -60 1080 790" role="img" aria-label="A house of screens, one in each room, breaking apart as my phone moves away">
@@ -1033,9 +1037,9 @@ function houseSVG() {
       houseScreen(178, 462, 104, 64) + `<path d="M168 528h124l10 12H158Z" fill="#555"/>` + roomName(330, 445, "DAD"))}
     ${room("r3", "450,560 300,162 450,75 600,162", "hg3",
       houseScreen(368, 168, 164, 104) + `<path d="M392 272l-8 14M508 272l8 14" stroke="#777" stroke-width="5"/>` + roomName(450, 330, "MOM"))}
-    ${room("r4", "450,560 600,162 760,255 760,400", "hg4", houseScreen(598, 306, 112, 76) + roomName(660, 420, "AMAIRA"))}
+    ${room("r4", "450,560 600,162 760,255 760,400", "hg4", houseScreen(598, 306, 112, 76, true) + roomName(660, 420, "SUHANI"), "me")}
     ${room("r5", "450,560 760,400 760,560", "hg5",
-      houseScreen(676, 446, 50, 90, true) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>` + roomName(598, 545, "SUHANI"), "me")}
+      houseScreen(676, 446, 50, 90) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>` + roomName(640, 552, "AMAIRA"))}
     <g class="piece" data-piece="hub">
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#171717" stroke="#e50914" stroke-width="7"/>
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#000" filter="url(#grain)"/>
@@ -1054,7 +1058,7 @@ function houseSVG() {
 
 // Only my room leaves: Dad, Mom and Amaira stay home on the Dallas Wi-Fi.
 const PIECE_MOVES = {
-  chimney: [0, 0, 0], roof: [0, 0, 0], r2: [0, 0, 0], r3: [0, 0, 0], r4: [0, 0, 0], r5: [230, 120, 12], hub: [0, 0, 0],
+  chimney: [0, 0, 0], roof: [0, 0, 0], r2: [0, 0, 0], r3: [0, 0, 0], r4: [240, -30, 10], r5: [0, 0, 0], hub: [0, 0, 0],
 };
 
 // The household, hands-on: break the house, then drag each room back where it belongs.
