@@ -1006,5 +1006,123 @@
   "match": "Inglourious Basterds",
   "source": "https://en.wikipedia.org/wiki/Inglourious_Basterds",
   "poster": "img/posters/inglourious-basterds.jpg"
+ },
+ "Bard of Blood": {
+  "match": "Bard of Blood (2019)",
+  "source": "https://www.tvmaze.com/shows/43513/bard-of-blood",
+  "poster": "img/posters/bard-of-blood.jpg",
+  "backdrop": "img/backdrops/bard-of-blood.jpg"
+ },
+ "CAT": {
+  "match": "CAT (2022)",
+  "source": "https://www.tvmaze.com/shows/65657/cat",
+  "poster": "img/posters/cat.jpg",
+  "backdrop": "img/backdrops/cat.jpg"
+ },
+ "COMEDIANS of the world": {
+  "match": "Comedians of the World (2019)",
+  "source": "https://www.tvmaze.com/shows/39951/comedians-of-the-world",
+  "poster": "img/posters/comedians-of-the-world.jpg",
+  "backdrop": "img/backdrops/comedians-of-the-world.jpg"
+ },
+ "Engineering Girls": {
+  "match": "Engineering Girls (2018)",
+  "source": "https://www.tvmaze.com/shows/49352/engineering-girls",
+  "poster": "img/posters/engineering-girls.jpg",
+  "backdrop": "img/backdrops/engineering-girls.jpg"
+ },
+ "Glory": {
+  "match": "Glory (2026)",
+  "source": "https://www.tvmaze.com/shows/91618/glory",
+  "poster": "img/posters/glory.jpg",
+  "backdrop": "img/backdrops/glory.jpg"
+ },
+ "Guns & Gulaabs": {
+  "match": "Guns & Gulaabs (2023)",
+  "source": "https://www.tvmaze.com/shows/70177/guns-gulaabs",
+  "poster": "img/posters/guns-gulaabs.jpg"
+ },
+ "Kota Factory": {
+  "match": "Kota Factory (2019)",
+  "source": "https://www.tvmaze.com/shows/49403/kota-factory",
+  "poster": "img/posters/kota-factory.jpg",
+  "backdrop": "img/backdrops/kota-factory.jpg"
+ },
+ "Russell Peters": {
+  "match": "Russell Peters: Irresponsible Ensemble (2024)",
+  "source": "https://www.tvmaze.com/shows/73904/russell-peters-irresponsible-ensemble",
+  "poster": "img/posters/russell-peters.jpg"
+ },
+ "Taj Mahal 1989": {
+  "match": "Taj Mahal 1989 (2020)",
+  "source": "https://www.tvmaze.com/shows/46608/taj-mahal-1989",
+  "poster": "img/posters/taj-mahal-1989.jpg",
+  "backdrop": "img/backdrops/taj-mahal-1989.jpg"
+ },
+ "The Ba***ds of Bollywood": {
+  "match": "The Ba***ds of Bollywood (2025)",
+  "source": "https://www.tvmaze.com/shows/87140/the-bads-of-bollywood",
+  "poster": "img/posters/the-ba-ds-of-bollywood.jpg"
+ },
+ "Her Mother's Killer": {
+  "match": "La Venganza de Analía (2020)",
+  "source": "https://www.tvmaze.com/shows/49383/la-venganza-de-analia",
+  "poster": "img/posters/her-mother-s-killer.jpg",
+  "backdrop": "img/backdrops/her-mother-s-killer.jpg"
+ },
+ "Mai": {
+  "match": "Mai (2022)",
+  "source": "https://www.tvmaze.com/shows/55886/mai",
+  "poster": "img/posters/mai.jpg"
+ },
+ "Maa": {
+  "match": "Maa (2025 film)",
+  "source": "https://en.wikipedia.org/wiki/Maa_(2025_film)",
+  "poster": "img/posters/maa.jpg"
+ },
+ "Neerja": {
+  "match": "Neerja",
+  "source": "https://en.wikipedia.org/wiki/Neerja",
+  "poster": "img/posters/neerja.jpg"
+ },
+ "Talvar": {
+  "match": "Talvar (film)",
+  "source": "https://en.wikipedia.org/wiki/Talvar_(film)",
+  "poster": "img/posters/talvar.jpg"
+ },
+ "Phantom": {
+  "match": "Phantom (2015 film)",
+  "source": "https://en.wikipedia.org/wiki/Phantom_(2015_film)",
+  "poster": "img/posters/phantom.jpg"
+ },
+ "Jai Mummy Di": {
+  "match": "Jai Mummy Di",
+  "source": "https://en.wikipedia.org/wiki/Jai_Mummy_Di",
+  "poster": "img/posters/jai-mummy-di.jpg"
+ },
+ "Daadi Ki Shaadi": {
+  "match": "Daadi Ki Shaadi",
+  "source": "https://en.wikipedia.org/wiki/Daadi_Ki_Shaadi",
+  "poster": "img/posters/daadi-ki-shaadi.jpg"
+ },
+ "Bbuddah Hoga Terra Baap": {
+  "match": "Bbuddah... Hoga Terra Baap",
+  "source": "https://en.wikipedia.org/wiki/Bbuddah..._Hoga_Terra_Baap",
+  "poster": "img/posters/bbuddah-hoga-terra-baap.jpg"
+ },
+ "Mister Mummy": {
+  "match": "Mister Mummy",
+  "source": "https://en.wikipedia.org/wiki/Mister_Mummy",
+  "poster": "img/posters/mister-mummy.jpg"
+ },
+ "Super Nani": {
+  "match": "Super Nani",
+  "source": "https://en.wikipedia.org/wiki/Super_Nani",
+  "poster": "img/posters/super-nani.jpg"
+ },
+ "Sardar Ka Grandson": {
+  "match": "Sardar Ka Grandson",
+  "source": "https://en.wikipedia.org/wiki/Sardar_Ka_Grandson",
+  "poster": "img/posters/sardar-ka-grandson.jpg"
  }
 }

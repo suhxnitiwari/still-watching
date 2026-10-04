@@ -23,10 +23,17 @@
       <path class="intro__ribbon intro__ribbon--shade" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
       <path class="intro__ribbon" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
     </svg>
+    <span class="intro__boot" aria-hidden="true">
+      <span>11 years of viewing history loaded</span>
+      <span>4 profiles found</span>
+      <span>7,000+ plays recovered</span>
+      <span>0 names. 0 ages. 0 locations.</span>
+    </span>
     <span class="intro__hint">
       <b class="intro__q">What can 11 years of Netflix history reveal about a family?</b>
-      <span class="intro__sub">A data investigation of one real account. Four profiles, 7,000+ plays, nothing but titles and dates.</span>
-      <span class="intro__cta">▶ Open the case <small>🔊 sound on</small></span>
+      <span class="intro__timeline" aria-hidden="true"><i>2015</i><span></span><i>2026</i></span>
+      <span class="intro__cta">▶ Play</span>
+      <span class="intro__meta">5 seasons · 4 profiles · Based on real data · Just titles + dates</span>
     </span>
   </button>
   <button class="intro__skip" type="button" id="intro-skip">Skip intro</button>
@@ -35,7 +42,7 @@
 <!-- Who's watching? -->
 <section id="profiles" class="profiles" aria-label="Choose a profile">
   <div class="wordmark profiles__mark">Still Watching</div>
-  <div class="profiles__lock" aria-hidden="true">
+  <div class="profiles__lock" aria-hidden="true" hidden>
     <svg viewBox="0 0 120 140"><defs>
       <linearGradient id="shield" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5c8a"/><stop offset=".55" stop-color="#e50914"/><stop offset="1" stop-color="#b81d74"/></linearGradient>
       <linearGradient id="shield-in" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8fb1" stop-opacity=".9"/><stop offset="1" stop-color="#c2185b" stop-opacity=".6"/></linearGradient>
@@ -47,10 +54,19 @@
       <rect x="57.5" y="68" width="5" height="11" rx="2.5" fill="#fff"/>
     </svg>
   </div>
-  <p class="profiles__lock-text" id="lock-text">Netflix lets anyone download their viewing history: every title, every date, nothing else. My family gave me all four of ours. <b>No names, no ages, no locations. How much can the data figure out on its own?</b></p>
+  <p class="profiles__lock-text" id="lock-text" hidden></p>
   <h1 class="profiles__title">Who's watching?</h1>
   <div class="profiles__list" id="profile-list"></div>
-  <p class="profiles__guide">Start with <b>Suhani</b>: eleven years of one girl growing up, from Disney Channel at nine to Hindi rom-coms in a college dorm, told only through what she pressed play on. Or peek at Dad, Mom and Sister first.</p>
+  <p class="profiles__peek" id="profile-peek" aria-live="polite"></p>
+  <div class="pin" id="pin" hidden>
+    <p class="pin__title">Profile locked.</p>
+    <div class="pin__dots"><span>○</span><span>○</span><span>○</span><span>○</span></div>
+    <p class="pin__not">Not with a password.</p>
+    <div class="pin__cols"><div><b>What Netflix gave me</b><span>✓ Title</span><span>✓ Date watched</span></div>
+      <div><b>What it didn't</b><span>× Name</span><span>× Age</span><span>× Location</span><span>× Gender</span><span>× Relationship</span></div></div>
+    <p class="pin__q">So how much can two columns figure out?</p>
+    <button class="btn btn--play pin__go" type="button" id="pin-go">Unlock the data →</button>
+  </div>
   <p class="profiles__hint" id="profile-hint" aria-live="polite"></p>
   <button class="profiles__manage" type="button" id="manage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Manage Profiles</button>
 </section>

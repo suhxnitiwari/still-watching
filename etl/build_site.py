@@ -336,6 +336,7 @@ def parents(h, meta):
     for y, g in mom.groupby(mom["date"].dt.year):
         sv = g[g["kind"] == "series"]["show"].value_counts()
         mom_years.append({"year": int(y), "movies": int((g["kind"] == "movie").sum()),
+                          "titles": g["show"].value_counts().index[:12].tolist(),
                           "show": sv.index[0] if len(sv) and sv.iloc[0] >= 5 else None, "episodes": int(sv.iloc[0]) if len(sv) else 0})
     return {
         "Dad": {"top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
@@ -832,6 +833,8 @@ def main():
                              | {t["show"] for t in (fam or {}).get("amaira", {}).get("top", []) + (fam or {}).get("amaira", {}).get("years", [])}
                              | {t["show"] for p in (fam or {}).get("parents", {}).values() for t in p["top"]}
                              | {y["show"] for p in (fam or {}).get("parents", {}).values() for y in p["years"] if y.get("show")}
+                             | {t for y in (fam or {}).get("parents", {}).get("Mom", {}).get("years", []) for t in y.get("titles", [])[:4]}
+                             | set((fam or {}).get("mom_parent_titles", []) + (fam or {}).get("dad_parent_titles", []))
                              | set((fam or {}).get("parents", {}).get("Mom", {}).get("srk", []))
                              | {t["show"] for t in (fam or {}).get("parents", {}).get("Dad", {}).get("timing", [])}
                              | {c["show"] for c in (fam or {}).get("copy_cat", [])}) - featured),

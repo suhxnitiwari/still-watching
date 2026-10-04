@@ -175,6 +175,26 @@ const PROFILES = [
 function avatar(p) {
   return `<img src="img/profiles/${p.img}.jpg" alt="" aria-hidden="true">`;
 }
+// The profile screen's avatars start as raw data (bits, titles, dates) and resolve into a face:
+// the data working out who's behind each profile.
+const DATA_BITS = {
+  Dad: ["Narcos", "2017-11-13", "Ozark", "Sons of Anarchy", "El Chapo", "729 titles", "66%"],
+  Mom: ["Delhi Crime", "Jamtara", "Om Shanti Om", "2019-03-27", "303 films", "Hindi", "Sacred Games"],
+  Suhani: ["Friends", "2019-12-15", "29 eps", "Gossip Girl", "Jessie", "Vampire Diaries", "Austin"],
+  Sister: ["iCarly", "Masha", "Sofia", "2023-09-24", "Barbie", "PJ Masks", "Little Baby Bum"],
+};
+function dataRain(name) {
+  const words = DATA_BITS[name] || [];
+  const line = (i) => Array.from({ length: 6 }, (_, k) => (k + i) % 3 === 0 && words.length ? words[(k * 3 + i) % words.length] : Math.random().toString(2).slice(2, 10)).join(" ");
+  return `<span class="avatar__data" aria-hidden="true">${Array.from({ length: 14 }, (_, i) => `<span>${line(i)}</span>`).join("")}</span>`;
+}
+const PROFILE_TEASE = {
+  Dad: (f) => [`${n(f?.profiles?.Dad?.views || 0)} plays`, "What does he watch on the days that matter?"],
+  Mom: (f) => [`${n(f?.profiles?.Mom?.views || 0)} plays`, "Can Netflix tell when Hindi took over?"],
+  Suhani: (f) => [`🔒 Primary case file · ${n(f?.profiles?.Me?.views || 0)} plays`, "Eleven years. One person. No demographic data."],
+  Sister: (f) => [`${n(f?.profiles?.["My sister"]?.views || 0)} plays`, "What does growing up look like when Netflix was there from day one?"],
+};
+const PROFILE_GLOW = { Dad: "#0033cc", Mom: "#c00010", Suhani: "#ff2079", Sister: "#7a00c2" };
 
 const LOCK_ICON = `<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>`;
 
@@ -192,11 +212,7 @@ function peekLines(name) {
       `Quits <b>${f.quit_rate.Dad}%</b> of shows after one episode.`,
     ].filter(Boolean);
   }
-  if (name === "Mom") return [
-    `<b>${f.mom_parent_titles.length} titles about moms, dads and grandparents</b>: ${listOf(f.mom_parent_titles.map(esc))}. Dad's only two: ${listOf(f.dad_parent_titles.map(esc))}.`,
-    `Watched ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles before me. She's my Hindi recommendation engine.`,
-    `Rewatches: basically never.`,
-  ];
+  if (name === "Mom") return [];  // her facts live in shelves and her persona now
   if (name === "Sister") return [
     `The biggest rewatcher in the family: <b>${f.profiles["My sister"].rewatch_pct}%</b> of what she watches is a repeat.`,
     `I was first on <b>${f.me_to_sister.first} of ${f.me_to_sister.shared}</b> shows we share. I'm her tastemaker.`,
@@ -211,8 +227,8 @@ function peekPersona(name) {
   const stat = (v, l) => `<div><b>${v}</b><span>${l}</span></div>`;
   const P = {
     Mom: hb.Mom && f.parents?.Mom && { type: "The movie person", tag: "One sitting, done.",
-      about: `Hindi movies, start to finish in a night: ${n(f.parents.Mom.movies)} of them. When she does pick a series, she wants it over fast. Once she's seen it, she's seen it. She never rewatches.`,
-      stats: [stat(n(f.parents.Mom.movies), "Hindi movies"), stat(`${f.parents.Mom.movie_pct}%`, "of her watching is movies"), stat(`${f.parents.Mom.fast}%`, "of seasons done in 3 days"), stat(hb.Mom.binge_days, "binge days in 11 years")] },
+      about: `Hindi movies, start to finish in a night: ${n(f.parents.Mom.movies)} of them. When she does pick a series, she wants it over fast. Once she's seen it, she's seen it. Rewatches: basically never.`,
+      stats: [stat(n(f.parents.Mom.movies), "Hindi movies"), stat(`${f.parents.Mom.movie_pct}%`, "of her watching is movies"), stat(`${f.parents.Mom.fast}%`, "of seasons done in 3 days"), stat(`${f.profiles.Mom.rewatched}`, "rewatches, ever")] },
     Dad: hb.Dad && { type: "The sampler", tag: "A serial killer… of pilots.",
       about: `He'll try anything once, and usually only once. The survivors are cartels, bikers and crime families, plus the only Spanish and Korean thrillers in the house. Lots of movies, almost no rewatches.`,
       stats: [stat(n(hb.Dad.titles), "different titles"), stat(`${f.quit_rate.Dad}%`, "quit after episode 1"), stat(hb.Dad.eps_per_show, "episodes a show"), stat(`${hb.Dad.movie_pct}%`, "movies")] },
@@ -235,12 +251,16 @@ function peekParent(name) {
   const genre = name === "Mom" ? "Bollywood movies, and Hindi crime for series" : pp.genres.slice(0, 2).map((g) => g.genre.toLowerCase()).join(" and ").replace(/^drama and crime$/, "crime drama");
   const years = pp.years.map((y) => name === "Dad"
     ? `<div class="peek__year">${art(y.show, { tall: true })}<b>${y.year}</b><span>${esc(y.show)}</span></div>`
-    : `<div class="peek__year peek__year--mom"><b>${y.year}</b><span class="peek__movies">${y.movies}</span><span>movies${y.show ? ` · ${esc(y.show)}` : ""}</span></div>`).join("");
+    : (() => { const pick = (y.titles || []).find((t) => ART[t]?.poster) || y.show;
+        return `<div class="peek__year peek__year--poster">${art(pick, { tall: true })}<span class="peek__count"><b>${y.movies}</b>movies</span><b>${y.year}</b><span>${esc(pick || "")}</span></div>`; })()).join("");
   return `<p class="peek__label">${his} top genre</p><p class="peek__genre">${esc(genre)}</p>
     <p class="peek__label">${his} top 10${name === "Mom" ? " series" : ""}</p>
     ${peekTop10(pp.top)}
     <p class="peek__label">${name === "Dad" ? "His #1 show every year" : "Hindi movies every year"}</p>
     <div class="peek__years">${years}</div>
+    ${name === "Mom" ? (() => { const f = DATA.family, shelf = (list) => `<div class="peek__years">${list.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>`;
+      return `<p class="peek__label">Mumma watched it first · ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles</p>${shelf(f.mom_first_titles)}
+        <p class="peek__label">Moms, dads and grandparents · ${f.mom_parent_titles.length} titles (Dad has ${f.dad_parent_titles.length}, both deadly)</p>${shelf(f.mom_parent_titles)}`; })() : ""}
     ${pp.srk?.length ? `<p class="peek__label">The Shah Rukh shelf · ${pp.srk.length} films</p><div class="peek__years">${pp.srk.map((t) => `<div class="peek__year">${art(t, { tall: true })}<span>${esc(t)}</span></div>`).join("")}</div>` : ""}`;
 }
 
@@ -338,7 +358,7 @@ function setupProfiles() {
 
   $("#profile-list").innerHTML = PROFILES.map((p, i) => `
     <button class="profile" type="button" data-profile="${i}">
-      <span class="avatar">${avatar(p, i)}${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
+      <span class="avatar">${avatar(p, i)}${dataRain(p.name)}${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
       <span class="profile__name">${p.name}</span>
     </button>`).join("") + `
     <button class="profile profile--add" type="button" data-profile="add">
@@ -368,10 +388,36 @@ function setupProfiles() {
     const key = b.dataset.profile;
     if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister.");
     const p = PROFILES[key];
-    if (p.me) return enter();
+    if (p.me) return lockScreen();
     if (DATA?.family) return peekProfile(p);
     say(b, `That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
   });
+  // Suhani's profile: a PIN screen that turns into what the dataset actually contains.
+  const lockScreen = () => {
+    const pin = $("#pin");
+    ["#profile-list", ".profiles__title", "#profile-peek", "#profile-hint", "#manage"].forEach((sel) => { const el = $(sel); if (el) el.style.display = "none"; });
+    pin.hidden = false;
+    requestAnimationFrame(() => pin.classList.add("is-on"));
+    $("#pin-go").focus();
+  };
+  $("#pin-go").addEventListener("click", () => {
+    const pin = $("#pin");
+    pin.classList.remove("is-on");
+    pin.innerHTML = `<p class="pin__narration"><span>Eleven years ago, a nine-year-old pressed play.</span><span>Netflix remembered.</span></p>`;
+    requestAnimationFrame(() => pin.classList.add("is-on"));
+    setTimeout(enter, 3400);
+  });
+  // Hovering a profile: the page glows in their color and teases what the data knows.
+  const peekText = $("#profile-peek");
+  $("#profile-list").addEventListener("pointerover", (e) => {
+    const b = e.target.closest(".profile");
+    const p = b && PROFILES[b.dataset.profile];
+    if (!p) { peekText.innerHTML = ""; gate.style.removeProperty("--glow"); return; }
+    gate.style.setProperty("--glow", PROFILE_GLOW[p.name]);
+    const [a, q] = PROFILE_TEASE[p.name](DATA?.family);
+    peekText.innerHTML = `<b>${a}</b><span>${q}</span>`;
+  });
+  $("#profile-list").addEventListener("focusin", (e) => e.target.dispatchEvent(new Event("pointerover", { bubbles: true })));
   $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Manage profiles? Suhani and Dad agree on almost nothing. They agree on this: nobody manages them."));
   $(`[data-profile="${PROFILES.indexOf(me)}"]`).focus();
 }
