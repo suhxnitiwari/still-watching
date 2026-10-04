@@ -207,6 +207,9 @@ def profile(df, meta):
     }
 
 
+FAVORITE_YEARS = {2017: "Little Baby Bum", 2018: "Little Baby Bum", 2019: "Masha and the Bear"}
+
+
 def amaira(h):
     """My sister's top 10 shows, and the show she watched most each year."""
     a = h[h["who"] == "Sister"]
@@ -215,6 +218,12 @@ def amaira(h):
     for y, g in a.groupby(a["date"].dt.year):
         vc = g["show"].value_counts()
         years.append({"year": int(y), "show": vc.index[0], "episodes": int(vc.iloc[0]), "views": int(len(g))})
+    # Her real favorites, per Suhani: Netflix can't count rewatches (one date per episode per profile),
+    # so her most rewatched shows undercount. Little Baby Bum first, then Masha.
+    for y in years:
+        if y["year"] in FAVORITE_YEARS:
+            show = FAVORITE_YEARS[y["year"]]
+            y.update(show=show, episodes=int(((a["show"] == show) & (a["date"].dt.year == y["year"])).sum()), rewatched=True)
     m = a[a["show"] == "Masha and the Bear"]
     masha = {"episodes": int(m["title"].nunique()), "profiles": int(m["profile"].nunique()),
              "per_episode": round(len(m) / m["title"].nunique(), 1)} if len(m) else None
@@ -255,6 +264,54 @@ def special_days(d):
     return sorted(out, key=lambda r: (order.index(r["day"]), r["year"]))
 
 
+# Dad's impeccable timing, written up: what the title is, what day it was, and the irony. Every pick is checked
+# against his history in special_days(); the notes are mine.
+DAD_TIMING = [
+    ("His birthday", 2018, "24 Hours to Live", "An action movie about a hitman brought back from the dead with one day left to live.",
+     "April 26: Papa's birthday.", "Another year older, and he picks a man with 24 hours left."),
+    ("The week my sister was born", 2016, "Roman Empire", "A docudrama about Commodus, the emperor's son who was raised to rule Rome.",
+     "November 20, 2016: my sister was one week old.", "The episode was called \"Born in the Purple.\" New baby, new heir."),
+    ("Mother's Day", 2017, "Peaky Blinders", "A Birmingham gangster family in the 1920s, run by brothers with razor blades in their caps.",
+     "Mother's Day.", "Three episodes. The closest thing to a mom on screen was Aunt Polly, who runs the gang's money."),
+    ("Mother's Day", 2018, "City of God", "Two boys grow up in a Rio favela as gang wars take over their neighborhood.",
+     "Mother's Day.", "Happy Mother's Day, from the drug wars of Rio."),
+    ("Mother's Day", 2023, "The Mother", "Jennifer Lopez as an assassin who comes out of hiding to protect the daughter she gave up.",
+     "Mother's Day.", "Technically on theme."),
+    ("Father's Day", 2018, "Money Heist", "A crew in red jumpsuits and Dalí masks takes over Spain's Royal Mint.",
+     "Father's Day.", "He treated himself to six episodes of a heist."),
+    ("Father's Day", 2024, "Hit Man", "A mild-mannered professor goes undercover as a fake hitman for the police.",
+     "Father's Day.", "A dad who secretly moonlights as a hitman. Relatable?"),
+    ("Christmas Eve", 2017, "72 Dangerous Animals", "A countdown of Latin America's deadliest animals.",
+     "Christmas Eve.", "The episode was \"Deathly Bite.\" Silent night."),
+    ("Christmas", 2018, "Watership Down", "An animated series about rabbits fleeing the destruction of their warren. Not many make it.",
+     "Christmas Day. He watched all four episodes, plus four of a Montreal mafia show.", "Bunnies for Christmas. Doomed bunnies."),
+    ("Christmas", 2024, "Escape at Dannemora", "The true story of two inmates who broke out of a New York prison with help from a worker inside.",
+     "Christmas Day.", "Home for the holidays: a prison break."),
+    ("Thanksgiving", 2015, "Apocalypse", "World War II in restored color, from the invasion of Poland to the bomb.",
+     "Thanksgiving.", "Episodes \"The World Ablaze\" and \"Inferno.\" Pass the turkey."),
+    ("Thanksgiving", 2023, "MADOFF", "The story of Bernie Madoff's $65 billion Ponzi scheme.",
+     "Thanksgiving.", "The episode was \"A Liar, Not a Failure.\" Grateful? His investors weren't."),
+    ("Halloween", 2025, "Mob War", "How Philadelphia's mafia tore itself apart in the 1980s.",
+     "Halloween.", "The episode was \"Kill, Kill, Kill.\" Scarier than any costume."),
+    ("Diwali", 2016, "The Borgias", "Renaissance Rome's most notorious family, poisoning its way through the Vatican.",
+     "Diwali, the festival of lights.", "Seven episodes, including \"The Poisoned Chalice.\" Happy Diwali."),
+    ("My sister's birthday", 2017, "Inglourious Basterds", "Tarantino's World War II revenge fantasy.",
+     "November 13: my sister turned one.", "Party energy."),
+    ("My sister's birthday", 2021, "Narcos", "Narcos: Mexico, the rise of the Guadalajara cartel.",
+     "November 13: my sister turned five.", "Four episodes of cartels. Cake, anyone?"),
+]
+
+
+def dad_timing(h):
+    d = h[h["who"] == "Dad"]
+    out = []
+    for day, year, show, about, when, irony in DAD_TIMING:
+        hit = d[(d["show"] == show) & (d["date"].dt.year == year)]
+        if len(hit):  # only keep picks the data still backs up
+            out.append({"day": day, "year": year, "show": show, "about": about, "when": when, "irony": irony})
+    return out
+
+
 def parents(h, meta):
     """What Dad's and Mom's profiles show (approved by Suhani): top 10, each year, top genre, and how fast they finish."""
     def genres(d):
@@ -282,7 +339,7 @@ def parents(h, meta):
                           "show": sv.index[0] if len(sv) and sv.iloc[0] >= 5 else None, "episodes": int(sv.iloc[0]) if len(sv) else 0})
     return {
         "Dad": {"top": [{"show": k, "views": int(v)} for k, v in dad["show"].value_counts().head(10).items()],
-                "years": dad_years, "genres": genres(dad), "fast": fast(dad), "special": special_days(dad)},
+                "years": dad_years, "genres": genres(dad), "fast": fast(dad), "special": special_days(dad), "timing": dad_timing(h)},
         "Mom": {"top": [{"show": k, "views": int(v)} for k, v in mser["show"].value_counts().head(10).items()],
                 "years": [y for y in mom_years if y["movies"] or y["show"]], "genres": genres(mser), "fast": fast(mom),
                 "movies": int(mmov["show"].nunique()), "movie_pct": round(len(mmov) / len(mom) * 100),
@@ -738,6 +795,7 @@ def main():
                              | {t["show"] for p in (fam or {}).get("parents", {}).values() for t in p["top"]}
                              | {y["show"] for p in (fam or {}).get("parents", {}).values() for y in p["years"] if y.get("show")}
                              | set((fam or {}).get("parents", {}).get("Mom", {}).get("srk", []))
+                             | {t["show"] for t in (fam or {}).get("parents", {}).get("Dad", {}).get("timing", [])}
                              | {c["show"] for c in (fam or {}).get("copy_cat", [])}) - featured),
     }
     OUT.parent.mkdir(exist_ok=True)

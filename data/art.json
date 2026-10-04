@@ -675,12 +675,6 @@
   "source": "https://www.tvmaze.com/shows/6495/pocoyo",
   "poster": "img/posters/pocoyo.jpg"
  },
- "Apocalypse": {
-  "match": "Apocalypse (2026)",
-  "source": "https://www.tvmaze.com/shows/93595/apocalypse",
-  "poster": "img/posters/apocalypse.jpg",
-  "backdrop": "img/backdrops/apocalypse.jpg"
- },
  "Aranyak": {
   "match": "Aranyak (2021)",
   "source": "https://www.tvmaze.com/shows/58894/aranyak",
@@ -972,5 +966,45 @@
   "match": "My Little Pony: Friendship Is Magic",
   "source": "https://en.wikipedia.org/wiki/My_Little_Pony%3A_Friendship_Is_Magic",
   "poster": "img/posters/my-little-pony.jpg"
+ },
+ "24 Hours to Live": {
+  "match": "24 Hours to Live",
+  "source": "https://en.wikipedia.org/wiki/24_Hours_to_Live",
+  "poster": "img/posters/24-hours-to-live.jpg"
+ },
+ "Roman Empire": {
+  "match": "Roman Empire (TV series)",
+  "source": "https://en.wikipedia.org/wiki/Roman_Empire_(TV_series)",
+  "poster": "img/posters/roman-empire.jpg"
+ },
+ "City of God": {
+  "match": "City of God (2002 film)",
+  "source": "https://en.wikipedia.org/wiki/City_of_God_(2002_film)",
+  "poster": "img/posters/city-of-god.jpg"
+ },
+ "The Mother": {
+  "match": "The Mother (2023 film)",
+  "source": "https://en.wikipedia.org/wiki/The_Mother_(2023_film)",
+  "poster": "img/posters/the-mother.jpg"
+ },
+ "Hit Man": {
+  "match": "Hit Man (2023 film)",
+  "source": "https://en.wikipedia.org/wiki/Hit_Man_(2023_film)",
+  "poster": "img/posters/hit-man.jpg"
+ },
+ "Escape at Dannemora": {
+  "match": "Escape at Dannemora",
+  "source": "https://en.wikipedia.org/wiki/Escape_at_Dannemora",
+  "poster": "img/posters/escape-at-dannemora.jpg"
+ },
+ "MADOFF": {
+  "match": "Madoff: The Monster of Wall Street",
+  "source": "https://en.wikipedia.org/wiki/Madoff%3A_The_Monster_of_Wall_Street",
+  "poster": "img/posters/madoff.jpg"
+ },
+ "Inglourious Basterds": {
+  "match": "Inglourious Basterds",
+  "source": "https://en.wikipedia.org/wiki/Inglourious_Basterds",
+  "poster": "img/posters/inglourious-basterds.jpg"
  }
 }

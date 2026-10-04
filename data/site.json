@@ -2857,6 +2857,136 @@
       "show": "Narcos",
       "views": 4
      }
+    ],
+    "timing": [
+     {
+      "day": "His birthday",
+      "year": 2018,
+      "show": "24 Hours to Live",
+      "about": "An action movie about a hitman brought back from the dead with one day left to live.",
+      "when": "April 26: Papa's birthday.",
+      "irony": "Another year older, and he picks a man with 24 hours left."
+     },
+     {
+      "day": "The week my sister was born",
+      "year": 2016,
+      "show": "Roman Empire",
+      "about": "A docudrama about Commodus, the emperor's son who was raised to rule Rome.",
+      "when": "November 20, 2016: my sister was one week old.",
+      "irony": "The episode was called \"Born in the Purple.\" New baby, new heir."
+     },
+     {
+      "day": "Mother's Day",
+      "year": 2017,
+      "show": "Peaky Blinders",
+      "about": "A Birmingham gangster family in the 1920s, run by brothers with razor blades in their caps.",
+      "when": "Mother's Day.",
+      "irony": "Three episodes. The closest thing to a mom on screen was Aunt Polly, who runs the gang's money."
+     },
+     {
+      "day": "Mother's Day",
+      "year": 2018,
+      "show": "City of God",
+      "about": "Two boys grow up in a Rio favela as gang wars take over their neighborhood.",
+      "when": "Mother's Day.",
+      "irony": "Happy Mother's Day, from the drug wars of Rio."
+     },
+     {
+      "day": "Mother's Day",
+      "year": 2023,
+      "show": "The Mother",
+      "about": "Jennifer Lopez as an assassin who comes out of hiding to protect the daughter she gave up.",
+      "when": "Mother's Day.",
+      "irony": "Technically on theme."
+     },
+     {
+      "day": "Father's Day",
+      "year": 2018,
+      "show": "Money Heist",
+      "about": "A crew in red jumpsuits and Dalí masks takes over Spain's Royal Mint.",
+      "when": "Father's Day.",
+      "irony": "He treated himself to six episodes of a heist."
+     },
+     {
+      "day": "Father's Day",
+      "year": 2024,
+      "show": "Hit Man",
+      "about": "A mild-mannered professor goes undercover as a fake hitman for the police.",
+      "when": "Father's Day.",
+      "irony": "A dad who secretly moonlights as a hitman. Relatable?"
+     },
+     {
+      "day": "Christmas Eve",
+      "year": 2017,
+      "show": "72 Dangerous Animals",
+      "about": "A countdown of Latin America's deadliest animals.",
+      "when": "Christmas Eve.",
+      "irony": "The episode was \"Deathly Bite.\" Silent night."
+     },
+     {
+      "day": "Christmas",
+      "year": 2018,
+      "show": "Watership Down",
+      "about": "An animated series about rabbits fleeing the destruction of their warren. Not many make it.",
+      "when": "Christmas Day. He watched all four episodes, plus four of a Montreal mafia show.",
+      "irony": "Bunnies for Christmas. Doomed bunnies."
+     },
+     {
+      "day": "Christmas",
+      "year": 2024,
+      "show": "Escape at Dannemora",
+      "about": "The true story of two inmates who broke out of a New York prison with help from a worker inside.",
+      "when": "Christmas Day.",
+      "irony": "Home for the holidays: a prison break."
+     },
+     {
+      "day": "Thanksgiving",
+      "year": 2015,
+      "show": "Apocalypse",
+      "about": "World War II in restored color, from the invasion of Poland to the bomb.",
+      "when": "Thanksgiving.",
+      "irony": "Episodes \"The World Ablaze\" and \"Inferno.\" Pass the turkey."
+     },
+     {
+      "day": "Thanksgiving",
+      "year": 2023,
+      "show": "MADOFF",
+      "about": "The story of Bernie Madoff's $65 billion Ponzi scheme.",
+      "when": "Thanksgiving.",
+      "irony": "The episode was \"A Liar, Not a Failure.\" Grateful? His investors weren't."
+     },
+     {
+      "day": "Halloween",
+      "year": 2025,
+      "show": "Mob War",
+      "about": "How Philadelphia's mafia tore itself apart in the 1980s.",
+      "when": "Halloween.",
+      "irony": "The episode was \"Kill, Kill, Kill.\" Scarier than any costume."
+     },
+     {
+      "day": "Diwali",
+      "year": 2016,
+      "show": "The Borgias",
+      "about": "Renaissance Rome's most notorious family, poisoning its way through the Vatican.",
+      "when": "Diwali, the festival of lights.",
+      "irony": "Seven episodes, including \"The Poisoned Chalice.\" Happy Diwali."
+     },
+     {
+      "day": "My sister's birthday",
+      "year": 2017,
+      "show": "Inglourious Basterds",
+      "about": "Tarantino's World War II revenge fantasy.",
+      "when": "November 13: my sister turned one.",
+      "irony": "Party energy."
+     },
+     {
+      "day": "My sister's birthday",
+      "year": 2021,
+      "show": "Narcos",
+      "about": "Narcos: Mexico, the rise of the Guadalajara cartel.",
+      "when": "November 13: my sister turned five.",
+      "irony": "Four episodes of cartels. Cake, anyone?"
+     }
     ]
    },
    "Mom": {
@@ -3204,21 +3334,24 @@
    "years": [
     {
      "year": 2017,
-     "show": "Octonauts",
-     "episodes": 6,
-     "views": 7
+     "show": "Little Baby Bum",
+     "episodes": 0,
+     "views": 7,
+     "rewatched": true
     },
     {
      "year": 2018,
-     "show": "The Boss Baby",
-     "episodes": 33,
-     "views": 45
+     "show": "Little Baby Bum",
+     "episodes": 1,
+     "views": 45,
+     "rewatched": true
     },
     {
      "year": 2019,
-     "show": "Sofia the First",
-     "episodes": 59,
-     "views": 198
+     "show": "Masha and the Bear",
+     "episodes": 29,
+     "views": 198,
+     "rewatched": true
     },
     {
      "year": 2020,
@@ -6276,6 +6409,8 @@
   }
  },
  "extra_art": [
+  "24 Hours to Live",
+  "72 Dangerous Animals",
   "Anjaam",
   "Apocalypse",
   "Aranyak",
@@ -6290,6 +6425,7 @@
   "Chennai Express",
   "Chhota Bheem and the Curse of Damyaan",
   "Choona",
+  "City of God",
   "Class",
   "Coco",
   "Criminal Code",
@@ -6300,8 +6436,11 @@
   "Dilwale",
   "Dunki",
   "El Chapo",
+  "Escape at Dannemora",
   "Fool Me Once",
+  "Hit Man",
   "Home",
+  "Inglourious Basterds",
   "Jamtara - Sabka Number Ayega",
   "Jawan",
   "Kabhi Khushi Kabhie Gham",
@@ -6309,14 +6448,16 @@
   "Kung Fu Panda",
   "LEGO",
   "Leap!",
+  "Little Baby Bum",
+  "MADOFF",
   "Maamla Legal Hai",
   "Masha and the Bear",
   "Mickey's Once Upon a Christmas",
   "Minions",
+  "Mob War",
   "Musafir Cafe",
   "My Little Pony",
   "Narcos",
-  "Octonauts",
   "Om Shanti Om",
   "Ozark",
   "PJ Masks",
@@ -6327,6 +6468,7 @@
   "Raees",
   "Raja, Rasoi aur Anya Kahaniyan",
   "Rise of Empires",
+  "Roman Empire",
   "Sacred Games",
   "Sing",
   "Sofia the First",
@@ -6337,12 +6479,14 @@
   "The Emoji Movie",
   "The Fame Game",
   "The Jungle Book",
+  "The Mother",
   "The Secret Life of Pets",
   "The Thundermans",
   "Trolls",
   "Undercover",
   "Victorious",
   "Walt Disney Animation Studios Short Films Collection",
+  "Watership Down",
   "YES DAY",
   "Yeh Kaali Kaali Ankhein",
   "Zero",

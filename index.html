@@ -23,7 +23,11 @@
       <path class="intro__ribbon intro__ribbon--shade" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
       <path class="intro__ribbon" pathLength="1" d="M108 44C94 18 38 14 34 54C30 92 106 104 106 150C106 196 44 206 26 172"/>
     </svg>
-    <span class="intro__hint">Click to start <small>🔊 sound on</small></span>
+    <span class="intro__hint">
+      <b class="intro__q">What can 11 years of Netflix history reveal about a family?</b>
+      <span class="intro__sub">A data investigation of one real account. Four profiles, 7,000+ plays, nothing but titles and dates.</span>
+      <span class="intro__cta">▶ Open the case <small>🔊 sound on</small></span>
+    </span>
   </button>
   <button class="intro__skip" type="button" id="intro-skip">Skip intro</button>
 </div>
@@ -43,9 +47,10 @@
       <rect x="57.5" y="68" width="5" height="11" rx="2.5" fill="#fff"/>
     </svg>
   </div>
-  <p class="profiles__lock-text" id="lock-text">Profile Lock is currently on.</p>
+  <p class="profiles__lock-text" id="lock-text">Netflix lets anyone download their viewing history: every title, every date, nothing else. My family gave me all four of ours. <b>No names, no ages, no locations. How much can the data figure out on its own?</b></p>
   <h1 class="profiles__title">Who's watching?</h1>
   <div class="profiles__list" id="profile-list"></div>
+  <p class="profiles__guide">Start with <b>Suhani</b>: eleven years of one girl growing up, from Disney Channel at nine to Hindi rom-coms in a college dorm, told only through what she pressed play on. Or peek at Dad, Mom and Sister first.</p>
   <p class="profiles__hint" id="profile-hint" aria-live="polite"></p>
   <button class="profiles__manage" type="button" id="manage"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> Manage Profiles</button>
 </section>
@@ -125,6 +130,7 @@
       <div class="house__copy">
         <p class="house__kicker">Update on Sharing · May 23, 2023</p>
         <h3 class="house__title" id="house-title">One Household</h3>
+        <p class="house__lede">Four family members sharing one account. Then Netflix decided an account belongs to one house, and I moved out.</p>
         <div class="house__steps" id="house-steps"></div>
         <p class="house__source"><a href="https://about.netflix.com/en/news/update-on-sharing-may-us" target="_blank" rel="noopener">Netflix, “Update on Sharing,” May 23, 2023</a></p>
         <a class="btn btn--light house__case" href="case-study.html">Read the PM case study →</a>
@@ -187,7 +193,7 @@
         <nav aria-label="About the data"><b>About the data</b><a href="#about">How it was made</a><a href="#about">Privacy</a><a href="https://www.tvmaze.com" target="_blank" rel="noopener">Images: TVmaze</a></nav>
       </div>
       <p class="foot__still">Still watching since <span id="foot-since"></span>.</p>
-      <p class="foot__copy">© 2026 Suhani Tiwari · Not affiliated with Netflix</p>
+      <p class="foot__copy">© 2026 Suhani Tiwari · Not affiliated with Netflix (yet). I would love to work there someday.</p>
     </div>
   </footer>
 </main>
