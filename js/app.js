@@ -596,22 +596,17 @@ function setupProfiles() {
 
 // ---------- hero ----------
 function setupHero() {
-  const yearly = Object.fromEntries(DATA.yearly.map((y) => [y.year, y.views]));
-  const full = DATA.yearly.filter((y) => y.year >= 2018 && y.year <= 2023);
-  const usual = full.reduce((a, y) => a + y.views, 0) / full.length;
-  const drop = Math.round((1 - yearly[2024] / usual) * 100);
-  const silence = DATA.gaps[0];
-  const after = DATA.windows.after_crackdown;
   const dot = '<span class="dot"></span>';
+  const from = parse(DATA.totals.from).getFullYear(), to = parse(DATA.totals.to).getFullYear();
+  const eps = Object.keys(FILMS).length;
 
-  $("#hero-meta").innerHTML = ["Documentary", "Coming of Age", "2024", "2 Seasons"].map((x) => `<span>${x}</span>`).join(dot) + dot + '<span class="rating">TV-14</span>';
+  // The billboard sells the series: seasons of short films, not one finding.
+  $("#hero-meta").innerHTML = ["Coming of Age", "Docuseries", `${from}–${to}`, `${SEASONS.length} Seasons`, `${eps} Episodes`].map((x) => `<span>${x}</span>`).join(dot);
   $("#hero-copy").textContent =
-    `In May 2023, Netflix started checking whether you watch from the account's home Wi-Fi. ` +
-    `At home in Dallas, nothing changed: ${n(after.views)} views by the end of the year. ` +
-    `Then 2024 brought ${yearly[2024]}, my lowest year, and after I moved to Austin the screen mostly went dark, ` +
-    `except the summers I came home.`;
-  $("#hero-badges").innerHTML =
-    `<span class="chip"><i></i>${drop}% Fewer Views</span><span class="chip"><i></i>${DATA.profile.senior_spring.views} Views, Senior Spring</span>`;
+    `${to - from} years of one Netflix account, cut into ${SEASONS.length} seasons of short episodes and made with love. ` +
+    `Every scene is built from my viewing history: a nine-year-old fresh from Singapore, a pandemic binge, ` +
+    `a dorm where the password stopped working. Start with Season 1, or pick an episode.`;
+  $("#hero-badges").innerHTML = `<span class="chip"><i></i>New: Season ${SEASONS.length}, ${esc(SEASONS.at(-1).title)}</span>`;
 
   // The poster wall drifts, unless the viewer asked for less motion.
   $("#hero-wall").innerHTML = wallHTML();
@@ -625,7 +620,6 @@ function setupHero() {
   setPaused(matchMedia("(prefers-reduced-motion: reduce)").matches);
   toggle.addEventListener("click", () => setPaused(!wall.classList.contains("is-paused")));
 
-  $("#more-info").addEventListener("click", () => { location.href = "case-study.html"; });
 }
 
 function openStory() {
@@ -1595,22 +1589,6 @@ function playBehind(stage, key, closed) {
   };
   step();
 }
-function dadFilm() {
-  const f = DATA.family, pp = f?.parents?.Dad, hb = f?.habits?.Dad;
-  if (!pp || !hb) return [];
-  const t = pp.timing || [];
-  return [
-    { dur: 5, cast: "dad", kicker: "A Tiwari household special", line: "Hi,<br><em>Papa</em>", sub: "Who he is, read from his history alone." },
-    { dur: 6, black: true, center: true, kicker: "Watcher type", line: "The<br><em>sampler</em>", sub: `${n(hb.titles)} different titles. He quits ${f.quit_rate.Dad}% after one episode, ${hb.eps_per_show} episodes a show, ${hb.movie_pct}% movies. A serial killer… of pilots.` },
-    ...whoScenes("Dad"),
-    { dur: 5.5, montage: postersOf(pp.top), center: true, kicker: "His top 10", line: "Cartels, bikers,<br><em>crime families</em>", sub: `${pp.top[0].show}: ${pp.top[0].views} episodes. Plus the only Spanish and Korean thrillers in the house.` },
-    { dur: 5.5, montage: pp.years.map((y) => ({ img: posterOf(y.show), tag: y.year })), center: true, kicker: "His #1 show every year", line: `${pp.years[0].year} to<br><em>${pp.years.at(-1).year}</em>`, sub: listOf(pp.years.slice(-3).map((y) => `${y.show} (${y.year})`)) + "." },
-    readingScene("Dad", pp.years),
-    ...(t.length ? [{ dur: 4.5, cast: "dad", kicker: "And then there's", line: "His impeccable<br><em>timing</em>", sub: "What Dad presses play on, on the days that matter." }] : []),
-    ...t.slice(0, 6).map((r, i) => ({ dur: 5, img: posterOf(r.show) || backdropOf(r.show), alt: i % 2 === 1, kicker: `${r.day} ${r.year}`, line: esc(r.show), sub: r.irony })),
-    { dur: 5, cast: "dad", kicker: "The verdict", line: `Quits <em>${f.quit_rate.Dad}%</em><br>of shows`, sub: "Samples everything. Commits to nothing. Except crime." },
-  ];
-}
 // The cast: illustrated portraits of the four of us.
 const CAST = { suhani: { name: "Suhani", color: "#ff2079" }, dad: { name: "Dad", color: "#0033cc" }, mom: { name: "Mom", color: "#c00010" }, amaira: { name: "Amaira", color: "#7a00c2" } };
 const castImg = (who) => `img/profiles/${who}.jpg`;
@@ -1620,7 +1598,8 @@ const castImg = (who) => `img/profiles/${who}.jpg`;
 // photo (a polaroid of home), phone (a call with chat bubbles), freeze (record scratch), rewind (VHS rewind).
 function sceneHTML(s) {
   let bg = "", extra = "", cls = "";
-  if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
+  if (s.set || s.panes) { bg = setSceneHTML(s); cls += " scene--set"; }
+  else if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
   else if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
   else if (s.montage?.length) bg = `<div class="montage${s.rewind ? " montage--rewind" : ""}" style="--cols:${Math.max(3, Math.ceil(s.montage.length / 2))}">${s.montage.map((m, k) =>
     `<figure style="--k:${k}"><img src="${m.img}" alt="" loading="lazy">${m.tag ? `<figcaption>${m.tag}</figcaption>` : ""}</figure>`).join("")}</div>`;
@@ -1645,7 +1624,7 @@ function sceneHTML(s) {
   if (s.freeze) { cls += " scene--freeze"; extra += `<span class="scratch">*record scratch* *freeze frame*</span>`; }
   if (s.rewind) { cls += " scene--rewind"; extra += `<span class="rewind">◀◀ REWIND</span>`; }
   return `<section class="scene${s.viz ? " scene--viz" : ""}${s.center ? " scene--center" : ""}${s.alt ? " scene--alt" : ""}${s.accent ? ` scene--${s.accent}` : ""}${cls}" style="--dur:${s.dur + 1}s">
-    ${bg}${extra}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker)}</p><h2 class="scene__line">${s.line}</h2><p class="scene__sub">${esc(s.sub)}</p>${s.viz || ""}</div></section>`;
+    ${bg}${extra}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker || "")}</p>${s.line ? `<h2 class="scene__line">${s.line}</h2>` : ""}${s.sub ? `<p class="scene__sub">${esc(s.sub)}</p>` : ""}${s.viz || ""}</div></section>`;
 }
 
 // ---------- The five seasons: my life on one Netflix account ----------
@@ -1656,26 +1635,128 @@ const amairaYear = (y) => DATA.family?.amaira?.years.find((x) => x.year === y);
 const amairaCut = (y) => { const a = amairaYear(y); return a ? [{ dur: 4.5, cast: "amaira", kicker: `Meanwhile · ${y}`, line: `Amaira's<br><em>${esc(a.show)}</em> era`, sub: `My little sister's #1 that year. Side character, main-character energy.`, say: y < 2020 ? "I'm the side character." : "Still the side character." }] : []; };
 
 // S1 · Elementary
+// S1:E1, the cold open. Move-in day in West Campus, the household wall, and Papa.
+// Sets: people stand on the West Campus sidewalk at y 668; the dorm bed's mattress top is y 640.
+const WC = { y: 668, s: .62 };
+const DORM_BED = { x: 520, y: 742, s: .68 };
 function pilotFilm() {
   const { windows: w, dates } = DATA;
+  const day = fmtDate(dates.austin);
+  const car = { kind: "car", x: 1060, y: 760, riders: ["mom", "dad", "amaira"], waver: "amaira", waveAt: 1.8 };
   return [
-    { dur: 5, black: true, center: true, kicker: `${fmtDate(dates.austin)} · Austin`, line: "Move-in<br><em>day</em>", sub: "Mom, Dad and Amaira just drove away." },
-    { dur: 5.5, photo: ["dad", "mom", "amaira"], photoCaption: "home", kicker: "11:47 PM · the dorm", line: "Totally<br><em>fine</em>", sub: "Looking at a photo of home. Not crying. Just one episode to feel normal." },
-    { dur: 6, dorm: true, cast: "suhani", castLeft: true, kicker: "Netflix · one episode", line: "Wait,<br><em>what?</em>", sub: "\"Not part of the household.\"" },
-    { dur: 7, phone: { who: "dad", name: "Papa", lines: [{ me: true, text: "Papa what's the Netflix code??" }, { me: true, text: "it says I'm not part of the household" }, { text: "You're on your own, kid." }] },
-      kicker: "Calling Papa", line: "Family<br><em>plan</em>", sub: "Or not." },
-    { dur: 5.5, cast: "suhani", freeze: true, kicker: "Freeze frame", line: "Yep.<br><em>That's me.</em>", sub: "You're probably wondering how I got here.", say: "So… about that." },
-    { dur: 5.5, rewind: true, montage: postersOf(DATA.yearly.slice().reverse().map((y) => y.show)), center: true, kicker: `${new Date(dates.austin).getFullYear()} → 2015`, line: "Let's<br><em>rewind</em>", sub: `${w.first_semester.views} views my first semester. Eleven years of history. It starts in 2015.` },
+    { dur: 7, set: "westcampus", kicker: `${day} · West Campus, Austin`,
+      cam: [[0, 800, 450, 1600], [7, 740, 480, 1320]],
+      things: [
+        { who: "suhani", x: 650, ...WC }, { who: "mom", x: 730, ...WC }, { who: "amaira", x: 810, ...WC },
+        { who: "dad", x: 1000, ...WC, keys: [[0, { pose: "carry", walk: 1 }], [.3, { x: 1000 }], [3.3, { x: 560, walk: 0, e: "linear" }], [3.5, { pose: "idle" }]] },
+        { ...car, riders: [] },
+      ],
+      credits: [[.6, 2.6, "A Suhani Tiwari Original"], [3.8, 3, "<small>A Netflix-history docuseries</small>Still Watching", true]] },
+    { dur: 9, set: "westcampus", kicker: "The goodbye",
+      cam: [[0, 700, 500, 900], [.55, 700, 500, 900], [.55, 700, 468, 470], [3.75, 700, 468, 470], [3.75, 560, 462, 470], [6.15, 560, 462, 470], [6.15, 840, 520, 400], [8.5, 840, 520, 400], [8.5, 700, 500, 900]],
+      things: [
+        { who: "dad", x: 560, ...WC },
+        { who: "mom", x: 660, ...WC, keys: [[0, { pose: "hugR" }]] },
+        { who: "suhani", x: 740, ...WC, keys: [[0, { pose: "hugL" }], [7.6, { mood: "flat" }]] },
+        { who: "amaira", x: 840, ...WC, keys: [[0, { pose: "hips" }]] },
+        { ...car, riders: [] },
+      ],
+      talk: [[.6, "mom", "Call me when you eat dinner. Not after."], [3.8, "dad", "And go to class, beta."], [6.2, "amaira", "Can I have your room now?"]],
+      credits: [[.8, 2.4, "Starring<b>Suhani Tiwari</b>"], [4.6, 2.6, "With<b>Papa · Mumma · Amaira</b>"]] },
+    { dur: 8, set: "westcampus", kicker: "8:12 PM",
+      cam: [[0, 800, 450, 1600], [4.8, 800, 450, 1600], [8, 720, 480, 600]],
+      things: [
+        { who: "suhani", x: 720, ...WC, keys: [[1.7, { pose: "wave" }], [5.2, { pose: "idle" }], [5.5, { mood: "sad" }]] },
+        { ...car, keys: [[1.6, { x: 1060 }], [5.6, { x: -420, e: "in" }]] },
+      ],
+      talk: [[2.1, "amaira", "Byeee, Didi!"]],
+      credits: [[.5, 2.6, "Created by<b>Suhani Tiwari</b>"], [5.6, 2.3, "From<b>four Netflix exports</b>"]] },
+    { dur: 9.5, set: "dorm", kicker: "11:47 PM · her dorm",
+      cam: [[0, 800, 450, 1600], [9.5, 760, 470, 1350]],
+      things: [
+        { kind: "tv", x: 1095, y: 230, keys: [[7.6, { screen: "home" }]] },
+        { who: "suhani", x: 1480, y: 900, s: .8, start: { mood: "sad", walk: 1 },
+          keys: [[.3, { x: 1480 }], [3, { x: DORM_BED.x, y: 900, s: .8, walk: 0, e: "linear" }], [3.45, { y: DORM_BED.y, s: DORM_BED.s, rot: -78, e: "in" }],
+            [6.4, { rot: -78 }], [7, { rot: 0, sit: 1 }], [7.1, { pose: "remote" }], [7.7, { mood: "smile" }]] },
+      ],
+      talk: [[3.9, "suhani", "Okay. One episode. Just to feel normal."]] },
+    { dur: 7.5, set: "dorm", kicker: "Netflix · one episode",
+      cam: [[0, 1295, 345, 660], [2.4, 1295, 345, 560], [4.2, 1295, 345, 540], [4.2, 520, 500, 520], [7.5, 520, 495, 470]],
+      things: [
+        { kind: "tv", x: 1095, y: 230, keys: [[0, { screen: "home" }], [2.4, { screen: "blocked" }]] },
+        { who: "suhani", ...DORM_BED, start: { sit: 1, pose: "remote" }, keys: [[4.2, { mood: "shock" }], [4.5, { pose: "face" }]] },
+      ],
+      talk: [[4.6, "suhani", "Wait… WHAT?"]] },
+    { dur: 10.5, kicker: "Calling Papa",
+      panes: [
+        { set: "dorm", cam: [[0, 520, 500, 600]], things: [{ who: "suhani", ...DORM_BED, start: { sit: 1, pose: "phone" }, keys: [[8, { mood: "shock" }], [9.3, { mood: "sad" }]] }] },
+        { set: "living", cam: [[0, 800, 500, 760], [10.5, 800, 480, 680]], glow: [[".lv-tv", 0]],
+          things: [{ who: "dad", x: 800, y: 742, s: .9, start: { sit: 1, pose: "phone", mood: "flat" }, keys: [[7.9, { mood: "smile" }]] }] },
+      ],
+      talk: [[.5, "suhani", "Papa, Netflix says I'm not part of the household."], [4.2, "suhani", "Can you let me in?"], [6.3, "dad", "Sorry, kiddo.", 1.4], [7.9, "dad", "You're on your own."]] },
+    { dur: 8.5, set: "dorm", kicker: "Still 11:58 PM",
+      cam: [[0, 800, 450, 1600], [8.5, 420, 560, 760]],
+      things: [
+        { kind: "tv", x: 1095, y: 230, keys: [[0, { screen: "blocked" }]] },
+        { who: "suhani", ...DORM_BED, start: { rot: -78, mood: "sad", pose: "face" } },
+      ],
+      talk: [[.8, "suhani", "Ugh. Every time I moved, Netflix made it better."], [4.6, "suhani", "Every. Single. Time."]],
+      credits: [[6.2, 2.3, "<small>Episode 1</small>You're On Your Own, Kid", true]] },
+    { dur: 5.5, rewind: true, montage: postersOf(DATA.yearly.slice().reverse().map((y) => y.show)), center: true, kicker: `${new Date(dates.austin).getFullYear()} → 2015`, line: "Let's<br><em>rewind</em>", sub: `${w.first_semester.views} views my first semester. Every move before this one, Netflix was there. It starts in 2015.` },
   ];
 }
+
+// S1:E2. Cupertino, 2015: laughed at for an accent, rescued by a Disney nanny from Texas.
+const PG = { y: 700, s: .62 };
+const COUCH = (who) => ({ y: 600 + 150 * .9 * LOOKS[who].h, s: .9 });
 function helloFilm() {
-  const el = era("elementary"), p = DATA.profile;
+  const p = DATA.profile, jessie = DATA.shows.Jessie, glc = DATA.shows["Good Luck Charlie"], lm = DATA.shows["Liv and Maddie"];
+  const first = p.first_title;
+  const months = DATA.monthly.filter((m) => m.month >= "2015-06" && m.month <= "2016-08");
+  const label = (m) => new Date(`${m}-15`).toLocaleString("en-US", { month: "short" });
+  const at = (date) => months.findIndex((m) => m.month === date.slice(0, 7));
+  const scroll = [first, "Phineas and Ferb", "LEGO Ninjago", "How to Train Your Dragon 2", "The Pirate Fairy", "Jessie"].filter((s) => ART[s]);
   return [
-    { dur: 6, cast: "suhani", kicker: "Season 1 · Elementary", line: "Hi, I'm<br><em>Suhani</em>", sub: "Eleven years of my life, told only through what I pressed play on.", say: "For video purposes, I look like this." },
-    { dur: 5, img: backdropOf(p.first_title), kicker: `${fmtDate(DATA.totals.from)} · Cupertino`, line: `First play:<br><em>${esc(p.first_title)}</em>`, sub: "Nine years old, just off the plane from Singapore." },
-    { dur: 5.5, montage: postersOf(el.top.slice(0, 6)), center: true, kicker: "Learning America", line: "Disney Channel<br>was my <em>teacher</em>", sub: `${listOf(el.top.slice(0, 3).map((s) => s.show))}.` },
-    { dur: 5, black: true, center: true, kicker: "2016", line: `<span class="scene__counter" data-to="${Math.round(p.kids_by_year["2016"])}">0</span>%<br>kids' <em>shows</em>`, sub: "Before rom-coms, there was Ninjago." },
-    { dur: 5, cast: "suhani", age: 10, kicker: "Confession", line: `${showViews("Jessie")} episodes<br>of <em>Jessie</em>`, sub: "A nanny from Texas raising four kids in New York. I took notes.", say: "No regrets." },
+    { dur: 10, set: "playground", kicker: "June 2015 · Cupertino · Suhani, 9",
+      cam: [[0, 700, 560, 1100], [2.4, 800, 560, 900], [4.85, 800, 560, 900], [4.85, 1000, 575, 560], [7.1, 1000, 575, 560], [7.1, 760, 575, 420], [8.6, 760, 575, 440], [10, 600, 560, 800]],
+      things: [
+        { who: "kidA", x: 920, ...PG, keys: [[4.8, { pose: "hips" }]] }, { who: "kidB", x: 1030, ...PG, keys: [[7.2, { pose: "face" }]] }, { who: "kidC", x: 1130, ...PG },
+        { who: "suhani9", x: 260, ...PG, start: { walk: 1 },
+          keys: [[.2, { x: 260 }], [2.4, { x: 760, walk: 0, e: "linear" }], [2.5, { pose: "wave" }], [4.7, { pose: "idle" }], [5, { mood: "shock" }], [7.3, { mood: "sad" }],
+            [8.6, { x: 760, walk: 1 }], [10, { x: 420, e: "linear" }]] },
+      ],
+      talk: [[2.6, "suhani9", "Hi! My name is Suhani."], [4.9, "kidA", "Why do you talk like that?"], [7.3, "kidB", "Say it again! Say it again!"]] },
+    { dur: 10.5, set: "living", kicker: "That night · home", glow: [[".lv-tv", 0]], 
+      cam: [[0, 800, 500, 1050], [.5, 800, 500, 1050], [.5, 650, 470, 580], [6.3, 650, 470, 580], [6.3, 800, 540, 560], [8.8, 800, 540, 560], [8.8, 950, 490, 580]],
+      things: [
+        { who: "dad", x: 640, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
+        { who: "suhani9", x: 800, ...COUCH("suhani9"), start: { sit: 1, pose: "lap", mood: "flat" }, keys: [[6.4, { mood: "sad" }]] },
+        { who: "mom", x: 960, ...COUCH("mom"), start: { sit: 1, pose: "lap" } },
+      ],
+      talk: [[.6, "dad", "My colleague says everyone has this Netflix now."], [4.2, "dad", `Here. ${first}.`], [6.4, "suhani9", "I want my Indian channels."], [8.9, "mom", "Keep scrolling, beta."]] },
+    { dur: 8, set: "browse", kicker: `Two months of scrolling · ${fmtDate(jessie.first)}`,
+      cam: [[0, 800, 450, 1600], [5.6, 800, 450, 1600], [8, 700, 560, 1100]],
+      things: [{ kind: "browse", x: 0, shows: scroll, row: "Popular on Netflix", keys: [[.6, { x: 0 }], [5.2, { x: (scroll.length - 1) * TILE }]] }],
+      talk: [[5.4, "suhani9", "Wait. That one."]] },
+    { dur: 8.5, set: "living", kicker: "Practicing every line", glow: [[".lv-tv", 0]],
+      cam: [[0, 800, 560, 760], [8.5, 800, 545, 560]],
+      things: [{ who: "suhani9", x: 800, y: 840, s: .95, keys: [[.4, { pose: "hips" }], [2.4, { pose: "wave" }], [4.3, { pose: "hips" }]] }],
+      talk: [[.6, "suhani9", "Oh. My. Gosh."], [2.4, "suhani9", "Oh my gosh!"], [4.4, "suhani9", "Oh my gosh, y'all."]],
+      credits: [[6.4, 2, `Jessie: a nanny from <b>Texas</b>`]] },
+    { dur: 9.5, set: "chart", kicker: "June 2015 → August 2016 · my views per month",
+      things: [{ kind: "bars", title: "WHAT TAUGHT ME AMERICAN", keys: [[.4, { p: 0 }], [7.6, { p: 1, e: "linear" }]],
+        data: months.map((m) => ({ v: m.views, label: label(m.month) + (m.month.endsWith("-01") ? ` ’${m.month.slice(2, 4)}` : ""), hi: m.month >= jessie.first.slice(0, 7) })),
+        marks: [{ i: at(jessie.first), text: "Jessie", sub: fmtDate(jessie.first) }, { i: at(lm.first), text: "Liv and Maddie", sub: fmtDate(lm.first), row: 1 }, { i: at(glc.first), text: "Good Luck Charlie", sub: fmtDate(glc.first) }],
+        meter: { label: "Confidence (self-reported)", keys: [[0, 0], [at(jessie.first) + 1, 10], [months.length, 100]], end: "100%: AMERICAN" } }] },
+    { dur: 9, set: "playground", kicker: "Summer 2016 · same playground · Suhani, 10",
+      cam: [[0, 860, 560, 900], [9, 820, 570, 700]],
+      things: [
+        { who: "kidA", x: 640, ...PG, keys: [[4.4, { pose: "hips" }]] },
+        { who: "suhani9", x: 800, ...PG, keys: [[.6, { pose: "hips" }], [3.9, { pose: "wave" }], [5.4, { pose: "idle" }]] },
+        { who: "kidB", x: 950, ...PG, keys: [[4.4, { pose: "wave" }]] }, { who: "kidC", x: 1080, ...PG },
+      ],
+      talk: [[.6, "suhani9", "Wait, you guys watch Good Luck Charlie too?!"], [4.3, "kidB", "Oh my gosh, YES."], [6, "suhani9", "Okay, so, like…"]],
+      credits: [[6.6, 2.3, "<small>One year later</small>Officially American", true]] },
   ];
 }
 function amairaFilm() {
@@ -1729,7 +1810,18 @@ function sentHomeFilm() {
     { dur: 5, img: backdropOf("The Vampire Diaries"), alt: true, kicker: "May 25, 2020 · lockdown", line: "11 episodes<br>in <em>one day</em>", sub: "Back to Mystic Falls." },
     { dur: 5, img: backdropOf("13 Reasons Why"), kicker: "July 2020", line: "13 Reasons<br><em>Why</em>", sub: "The darkest I get. The COVID summer before the move." },
     ...(g ? [{ dur: 5.5, black: true, center: true, kicker: "Summer 2020", line: "Cupertino<br>to <em>Dallas</em>", sub: `Then ${g.days} days with nothing on. A new state, a new school, and no time for TV.` }] : []),
-    { dur: 4.5, cast: "suhani", age: 14, kicker: "High school, in Texas", line: "New<br><em>state</em>", sub: "Season 3 starts here.", say: "Y'all. I'm in Texas." },
+    { dur: 8, set: "playground", tx: true, kicker: "Fall 2020 · Dallas · Suhani, 14",
+      cam: [[0, 860, 540, 1200], [4, 860, 540, 1200], [4, 520, 555, 520]],
+      things: [
+        { who: "kidA", x: 1050, ...PG, s: .8, start: { pose: "hips" } }, { who: "kidB", x: 1160, ...PG, s: .8, keys: [[1, { pose: "wave" }], [2.4, { pose: "idle" }]] }, { who: "kidC", x: 1270, ...PG, s: .8 },
+        { who: "suhani13", x: 520, ...PG, start: { mood: "flat" }, keys: [[3.8, { mood: "sad" }]] },
+      ],
+      talk: [[4.2, "suhani13", "New state. New playground. New kid. Again."]] },
+    { dur: 7.5, set: "living", glow: tvGlow, kicker: "The shows that already felt like home",
+      cam: [[0, 800, 520, 1000], [7.5, 800, 500, 620]],
+      things: [{ who: "suhani13", x: 800, ...COUCH("suhani13"), start: { sit: 1, pose: "remote", mood: "flat" }, keys: [[3.2, { mood: "smile" }]] }],
+      talk: [[.8, "suhani13", "Okay. Something I already know."], [3.4, "suhani13", "Hi, Mystic Falls. Missed you."]],
+      credits: [[5.4, 2, "Season 3<b>starts in Texas</b>"]] },
   ];
 }
 
@@ -1833,43 +1925,168 @@ function momFilm() {
     { dur: 4.5, cast: "mom", kicker: "Mumma", line: "One sitting,<br><em>done</em>", sub: "", say: "One more movie." },
   ];
 }
-function copyCatFilm() {
-  const f = DATA.family, c = f?.copy_cat || [], a = f?.amaira, hb = f?.habits?.["My sister"];
-  if (!a) return [];
+// In the living room, a standing grown-up is closer to the camera than the couch, so a little bigger.
+const STAND = { y: 870, s: 1.2 };
+const tvGlow = [[".lv-tv", 0]];
+const browse = (shows, row, keys) => ({ kind: "browse", x: 0, shows: shows.filter((s) => ART[s]), row, keys });
+// Papa's episode: a sitcom, every punchline straight out of his viewing history.
+function dadFilm() {
+  const f = DATA.family, pp = f?.parents?.Dad, d = f?.detective;
+  if (!pp) return [];
+  const md = f.dad_on_mothers_day || [], bday = f.dad_sister_birthday_picks || [], k = f.kapil || {};
+  const quit = f.pilot_quitters || {}, started = f.shows_started || {};
+  const cast = (who) => ({ Dad: "Papa", Me: "Suhani", "My sister": "Amaira", Mom: "Mumma" })[who] || who;
   return [
-    { dur: 5, cast: "amaira", kicker: "A Tiwari household special", line: "Hi,<br><em>Amaira</em>", sub: "My little sister, read from her history alone.", say: "Finally, my own episode." },
-    ...(hb ? [{ dur: 5.5, black: true, center: true, kicker: "Watcher type", line: "The<br><em>superfan</em>", sub: `${hb.top5_pct}% of everything she watches is five shows. ${f.profiles["My sister"].rewatch_pct}% of it is a repeat, the most in the family.` }] : []),
-    { dur: 5, montage: a.top.map((t) => ({ img: posterOf(t.show), tag: t.views })), center: true, kicker: "Her top 10", line: `${esc(a.top[0].show)},<br><em>${a.top[0].views} episodes</em>`, sub: listOf(a.top.slice(1, 4).map((t) => t.show)) + "." },
-    { dur: 6, montage: a.years.map((y) => ({ img: posterOf(y.show), tag: `Age ${sisterAge(y.year)}` })), center: true, kicker: "Watch her grow up", line: "Toddler to<br><em>tween</em>", sub: listOf([a.years[0], a.years[Math.floor(a.years.length / 2)], a.years.at(-1)].map((y) => `${y.show} at ${sisterAge(y.year)}`)) + "." },
-    readingScene("Sister", a.years),
-    ...(a.masha ? [{ dur: 5, img: backdropOf("Masha and the Bear"), kicker: "Her real obsession", line: "Little Baby Bum,<br><em>then Masha</em>", sub: `Netflix keeps one date per episode, so rewatches hide. But every Masha episode shows up on ${a.masha.profiles} profiles, ${a.masha.per_episode} times each.` }] : []),
-    ...(c.length ? [{ dur: 5, cast: "amaira", kicker: "Copy cat", line: `${c.length} shows,<br><em>after me</em>`, sub: "I found every one first.", say: "I was going to find them anyway." },
-      { dur: 5.5, montage: postersOf(c.slice(0, 8).map((x) => x.show)), center: true, kicker: `${c[0].show}: me ${c[0].me}, her ${c[0].her}`, line: "Years<br><em>later</em>", sub: listOf(c.slice(0, 4).map((x) => `${x.show} (${Math.round(x.years)} yrs)`)) + "." }] : []),
-    ...(f.me_to_sister ? [{ dur: 5, wall: true, center: true, kicker: "Big sister", line: `First on<br><em>${f.me_to_sister.first} of ${f.me_to_sister.shared}</em>`, sub: "The shows we share. I'm her tastemaker." }] : []),
+    { dur: 6.5, set: "living", glow: tvGlow, kicker: "Mother's Day, 2023 · the Tiwari living room",
+      cam: [[0, 900, 520, 1200], [4, 900, 520, 1200], [4, 700, 470, 560]],
+      things: [
+        { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
+        { who: "mom", x: 1700, ...STAND, start: { walk: 1 }, keys: [[.2, { x: 1700 }], [1.6, { x: 1180, walk: 0, e: "linear" }], [1.7, { pose: "hips" }]] },
+      ],
+      talk: [[1.8, "mom", "It's Mother's Day. You pick the movie."], [4.3, "dad", "Already on it."]] },
+    { dur: 5, set: "browse", kicker: "His pick",
+      cam: [[0, 800, 450, 1600], [5, 760, 400, 1300]],
+      things: [browse(["The Mother"], "Continue Watching for Papa")],
+      talk: [[1.4, "dad", "It has \"Mother\" in the title."]] },
+    { dur: 8, set: "living", glow: tvGlow, kicker: "The Mother: an assassin movie",
+      cam: [[0, 1180, 470, 600], [2.5, 1180, 470, 600], [2.5, 700, 470, 560], [5, 700, 470, 560], [5, 900, 520, 1200]],
+      things: [
+        { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
+        { who: "mom", x: 1180, ...STAND, start: { pose: "hips", mood: "flat" } },
+      ],
+      talk: [[.4, "mom", "It's about an assassin."], [2.6, "dad", "A mother assassin. Happy Mother's Day."]],
+      credits: [[5.2, 2.6, `His other Mother's Day picks<b>${md.filter((x) => x.year < 2023).slice(0, 2).map((x) => `${esc(x.show)} (${x.year})`).join(" · ")}</b>`]] },
+    { dur: 7, set: "browse", kicker: "One episode each",
+      things: [browse(pp.top.map((t) => t.show), "Papa's Pilots", [[.4, { x: 0 }], [6.2, { x: (pp.top.filter((t) => ART[t.show]).length - 1) * TILE, e: "linear" }]])],
+      talk: [[.6, "dad", "Slow.", .9], [1.7, "dad", "Too slow.", .9], [2.8, "dad", "Too many subtitles.", 1.1], [4.1, "dad", "Slow.", .9], [5.3, "dad", "…Okay, Narcos again."]] },
+    { dur: 7, set: "chart", kicker: `Shows started: ${cast("Dad")} ${started.Dad}`,
+      things: [
+        { kind: "bars", w: 1000, title: "SHOWS DROPPED AFTER EPISODE 1", keys: [[.3, { p: 0 }], [3.4, { p: 1, e: "linear" }]],
+          data: Object.entries(quit).map(([who, v]) => ({ v, label: cast(who), hi: who === "Dad" })) },
+        { who: "dad", x: 1340, y: 760, s: .95, keys: [[3.6, { pose: "hips" }]] },
+      ],
+      talk: [[4, "dad", "I know what I like within one episode."]] },
+    { dur: 6.5, set: "browse", kicker: "2017 · Papa opens his own profile",
+      things: [browse(["Liv and Maddie", "Jessie", "Sofia the First", "PJ Masks", "Masha and the Bear"], "Continue Watching for Papa")],
+      talk: [[1, "dad", "Who is watching Liv and Maddie on MY profile?"]],
+      credits: d ? [[3.8, 2.6, `Papa's profile<b>${d.dad_file_daughters}% his daughters · ${d.dad_file_dad}% Papa</b>`]] : [] },
+    { dur: 6, set: "living", glow: tvGlow, kicker: "The suspects",
+      cam: [[0, 900, 500, 1100], [2.7, 900, 500, 1100], [2.7, 1050, 470, 600]],
+      things: [
+        { who: "suhani11", x: 760, ...COUCH("suhani11"), start: { sit: 1, pose: "lap", mood: "smile" } },
+        { who: "mom", x: 1050, ...COUCH("mom"), start: { sit: 1, pose: "cradle", mood: "flat" } },
+      ],
+      talk: [[.5, "suhani11", "It was Amaira."], [2.8, "mom", "She is six months old."]] },
+    { dur: 6.5, set: "browse", kicker: "So Papa moved to Mumma's profile",
+      things: [browse(["Narcos", "Sons of Anarchy", "Ozark", "El Chapo", "Peaky Blinders"], "Continue Watching for Mumma")],
+      talk: [[1, "mom", "Why does my profile think I run a cartel?"]],
+      credits: d ? [[3.6, 2.7, `Mumma's profile<b>${d.mom_file_dad}% Papa · ${d.mom_file_mom}% Mumma</b>`]] : [] },
+    { dur: 9.5, set: "living", glow: tvGlow, kicker: "April 26, 2018 · Papa's birthday",
+      cam: [[0, 860, 540, 1150], [2.6, 860, 540, 1150], [2.6, 700, 470, 560], [4.6, 700, 470, 560], [4.6, 1180, 480, 600], [6.6, 1180, 480, 600], [6.6, 700, 470, 560]],
+      things: [
+        { who: "dad", x: 700, ...COUCH("dad"), hat: true, start: { sit: 1, pose: "remote" } },
+        { kind: "cake", x: 900, y: 800, candles: 4 },
+        { who: "mom", x: 1180, ...STAND, start: { pose: "hips" }, keys: [[4.6, { mood: "shock" }], [6.6, { mood: "flat" }]] },
+      ],
+      talk: [[.5, "mom", "Happy birthday! What are we watching?"], [2.7, "dad", "24 Hours to Live."], [4.7, "mom", "…On your birthday?"], [6.7, "dad", "It's motivational."]] },
+    { dur: 8.5, set: "living", glow: tvGlow, kicker: "Every year on Amaira's birthday",
+      cam: [[0, 860, 540, 1150], [2.7, 860, 540, 1150], [2.7, 700, 470, 560]],
+      things: [
+        { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
+        { who: "amaira6", x: 1050, y: 860, s: 1.25, hat: true, start: { pose: "hips", mood: "flat" } },
+      ],
+      talk: [[.5, "amaira6", "Papa. It's MY birthday."], [2.8, "dad", "Narcos is a family show. It's about a family business."]],
+      credits: [[6, 2.4, `His picks on her birthdays<b>${bday.map(esc).join(" · ")}</b>`]] },
+    { dur: 8, set: "chart", kicker: "The Great Indian Kapil Show · views",
+      things: [
+        { kind: "bars", w: 1000, title: "THE FAMILY'S FAVORITE COMEDY", keys: [[.3, { p: 0 }], [3, { p: 1, e: "linear" }]],
+          data: Object.entries(k).map(([who, v]) => ({ v, label: cast(who), hi: who === "Dad" })) },
+        { who: "dad", x: 1340, y: 760, s: .95, keys: [[3.2, { pose: "hips", mood: "flat" }]] },
+      ],
+      talk: [[3.4, "dad", "I watched one. It was enough."]],
+      credits: [[5.6, 2.4, "<small>A household special</small>Papa: The Sampler", true]] },
   ];
 }
-// Amaira never knew a house without Netflix: growing up with it from day one.
+
+// Amaira copies everything I watch, years later. The data has the receipts.
+function copyCatFilm() {
+  const f = DATA.family, c = f?.copy_cat || [], ms = f?.me_to_sister;
+  if (!c.length) return [];
+  const short = (s) => ({ "The Secret Life of Pets": "Secret Life of Pets", "Walt Disney Animation Studios Short Films Collection": "Disney Shorts" })[s] || s;
+  const dil = c.find((x) => x.show === "Dilwale");
+  return [
+    { dur: 9.5, set: "living", glow: tvGlow, kicker: "Summer 2025 · home from college",
+      cam: [[0, 830, 500, 900], [3.9, 830, 500, 900], [3.9, 700, 470, 520], [5.5, 700, 470, 520], [5.5, 960, 520, 480], [6.9, 960, 520, 480], [6.9, 830, 500, 900]],
+      things: [
+        { who: "suhani", x: 700, ...COUCH("suhani"), start: { sit: 1, pose: "lap" }, keys: [[1, { pose: "hips" }], [2.5, { pose: "face" }], [3.8, { pose: "lap", mood: "flat" }]] },
+        { who: "amaira", x: 960, ...COUCH("amaira"), start: { sit: 1, pose: "lap" }, keys: [[1.5, { pose: "hips" }], [3, { pose: "face" }], [4.2, { pose: "lap", mood: "flat" }]] },
+      ],
+      talk: [[4, "suhani", "Stop copying me."], [5.6, "amaira", "Stop copying me."], [7, "suhani", "Amaira!", 1], [8.1, "amaira", "Amaira!", 1]] },
+    { dur: 7, set: "browse", kicker: "Her profile, 2025",
+      things: [browse(c.slice(0, 6).map((x) => x.show), "Continue Watching for Amaira", [[.5, { x: 0 }], [4.6, { x: 3 * TILE }]])],
+      talk: [[1, "suhani", "Wait. I watched every single one of these."], [4.6, "amaira", "So?"]] },
+    { dur: 8, set: "chart", kicker: "Same titles, my profile vs. hers",
+      things: [{ kind: "bars", title: "YEARS AFTER I WATCHED IT", keys: [[.3, { p: 0 }], [5, { p: 1, e: "linear" }]],
+        data: c.slice(0, 6).map((x) => ({ v: Math.round(x.years * 10) / 10, label: short(x.show), hi: true })) }],
+      credits: ms ? [[5.4, 2.5, `Shows we both watched<b>${ms.shared} · I was first on ${ms.first}</b>`]] : [] },
+    { dur: 6.5, kicker: "LEGO Ninjago · 2015 | 2020",
+      panes: [
+        { set: "living", glow: tvGlow, cam: [[0, 800, 560, 620]], things: [{ who: "suhani9", x: 800, ...COUCH("suhani9"), start: { sit: 1, pose: "lap" }, keys: [[.8, { pose: "wave" }], [2.2, { pose: "lap" }]] }] },
+        { set: "living", glow: tvGlow, cam: [[0, 800, 580, 600]], things: [{ who: "amaira3", x: 800, ...COUCH("amaira3"), start: { sit: 1, pose: "lap" }, keys: [[2.2, { pose: "wave" }], [3.6, { pose: "lap" }]] }] },
+      ],
+      talk: [[.8, "suhani9", "NINJAGO!", 1.2], [2.3, "amaira3", "NINJAGO!", 1.2]] },
+    ...(dil ? [{ dur: 9.5, set: "living", glow: tvGlow, kicker: `${dil.her} · Dilwale`,
+      cam: [[0, 980, 520, 1100], [2.9, 980, 520, 1100], [2.9, 900, 520, 480], [4.4, 900, 520, 480], [4.4, 1200, 480, 600]],
+      things: [
+        { who: "amaira", x: 900, ...COUCH("amaira"), start: { sit: 1, pose: "remote" } },
+        { who: "mom", x: 1700, ...STAND, start: { walk: 1 }, keys: [[.1, { x: 1700 }], [1.1, { x: 1200, walk: 0, e: "linear" }], [1.2, { pose: "hips", mood: "shock" }], [5, { mood: "flat" }]] },
+      ],
+      talk: [[1.2, "mom", "Dilwale? Since when do you watch Hindi movies?"], [3, "amaira", "Didi watched it."], [4.5, "mom", `In ${dil.me}.`]],
+      credits: [[6.6, 2.7, "<small>A household special</small>Amaira: The Copycat", true]] }] : []),
+  ];
+}
+
+// Amaira never knew a house without Netflix. Growing up with it, from day one.
 function bornStreamingFilm() {
   const f = DATA.family, a = f?.amaira, d = f?.detective;
   if (!a?.years?.length) return [];
-  const ys = a.years, max = Math.max(...ys.map((y) => y.views));
-  // Her preschool peak: too young before it, school after it.
-  const peak = ys.filter((y) => sisterAge(y.year) <= 4).reduce((m, y) => (y.views > m.views ? y : m));
-  const age = sisterAge;
-  const year = (y) => ys.find((x) => x.year === y);
-  const school = [2021, 2022, 2023].map(year).filter(Boolean);
-  const meAge = Math.floor((parse(DATA.totals.from) - parse("2006-03-06")) / 3.156e10);
+  const ys = a.years, age = sisterAge;
+  const peak = ys.filter((y) => age(y.year) <= 4).reduce((m, y) => (y.views > m.views ? y : m));
   return [
-    { dur: 5.5, black: true, center: true, kicker: "November 2016", line: "Born<br><em>streaming</em>", sub: "Amaira has never lived in a house without Netflix. The account was already 17 months old." },
-    { dur: 6, img: backdropOf("Little Baby Bum"), kicker: "Her first show", line: "Little Baby Bum,<br><em>on repeat</em>", sub: `Nursery rhymes, the same few episodes over and over${a.bum ? `, on ${a.bum.profiles} profiles` : ""}. Netflix keeps only the latest date for each episode, so every rewatch erased the one before. Her first show hid itself.` },
-    { dur: 5.5, cast: "suhani", kicker: "For comparison", line: `Me: ${meAge} years old.<br><em>Her: a baby.</em>`, sub: "My first play was Lilo & Stitch, fresh off the plane from Singapore. She was born into the queue.", say: "She'll never know life before autoplay." },
-    { dur: 6, montage: postersOf(["Sofia the First", "Masha and the Bear", "PJ Masks", "Pocoyo", "The Boss Baby", "Octonauts"]), center: true, kicker: "Raised on Dad's profile", line: `${a.on_dad}%<br><em>on Dad's profile</em>`, sub: `${a.on_dad > 50 ? "More than half" : a.on_dad === 50 ? "Half" : "Much"} of everything she's ever watched. Sofia, Masha, PJ Masks. He never got it back.` },
-    { dur: 7, black: true, center: true, kicker: "Her views, every year of her life", line: `Age ${age(peak.year)}:<br><em>${peak.views}</em>`, sub: `Her preschool peak. Too young before it, school right after. ${ys.map((y) => `${age(y.year)}: ${y.views}`).join(" · ")}.`,
-      viz: viz(`<div class="mbars">${ys.map((y) => `<span style="--h:${Math.round(y.views / max * 45)}"><i></i>${age(y.year)}</span>`).join("")}</div>`) },
-    ...(school.length === 3 ? [{ dur: 5.5, img: backdropOf("Ben & Holly's Little Kingdom"), alt: true, kicker: "Then school started", line: `${school[0].views} → ${school[1].views}<br>→ <em>${school[2].views}</em>`, sub: `Ages ${age(2021)} to ${age(2023)}. Kindergarten and first grade did what no parent could.` }] : []),
-    ...(d ? [{ dur: 5.5, cast: "amaira", kicker: fmtMonth(d.sister_profile_from.slice(0, 7)), line: "Her own<br><em>profile</em>", sub: `Six years old, and finally a profile with her name on it. It's ${a.on_own}% of her history now, and growing.`, say: "Finally. My own." }] : []),
-    { dur: 6, montage: postersOf(["iCarly", "Victorious", "The Thundermans", "Sam & Cat", "Alexa & Katie", "Fuller House"]), center: true, kicker: `${ys.at(-1).year} · age ${age(ys.at(-1).year)}`, line: `${ys.at(-1).views} views<br><em>and counting</em>`, sub: `Now she watches more than ever: ${Math.round(ys.at(-1).views / peak.views * 10) / 10}× her preschool peak, and the year isn't over. ${a.titles} titles in ${age(ys.at(-1).year)} years.` },
-    { dur: 5, cast: "amaira", kicker: "Still watching", line: "Born<br><em>streaming</em>", sub: "Day one to today. She's never known a TV that didn't ask \"Are you still watching?\"", say: "Obviously I'm still watching." },
+    { dur: 8.5, set: "living", glow: tvGlow, kicker: "November 20, 2016 · Amaira is one week old",
+      cam: [[0, 860, 520, 1150], [.4, 860, 520, 1150], [.4, 640, 470, 560], [4.4, 640, 470, 560], [4.4, 820, 540, 560], [6.6, 820, 540, 560], [6.6, 860, 520, 1150]],
+      things: [
+        { who: "dad", x: 640, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
+        { who: "suhani11", x: 820, ...COUCH("suhani11"), start: { sit: 1, pose: "lap" }, keys: [[4.4, { mood: "flat" }]] },
+        { who: "mom", x: 1020, ...COUCH("mom"), start: { sit: 1, pose: "cradle" } },
+      ],
+      talk: [[.5, "dad", "Roman Empire. This episode is called \"Born in the Purple.\""], [4.5, "suhani11", "Papa. She is ONE WEEK old."]],
+      credits: [[6.8, 1.7, "<small>A household special</small>Born Streaming", true]] },
+    { dur: 7, set: "living", glow: tvGlow, kicker: "Age 2 · Little Baby Bum, on repeat",
+      cam: [[0, 800, 600, 900], [7, 800, 640, 600]],
+      things: [{ who: "amaira2", x: 800, y: 880, s: 1.3, start: { pose: "idle" }, keys: [[.8, { pose: "wave" }], [1.6, { pose: "idle" }], [2.2, { pose: "wave" }], [3, { pose: "idle" }], [3.6, { pose: "wave" }], [4.4, { pose: "idle" }]] }],
+      talk: [[.8, "amaira2", "AGAIN!", .8], [2.2, "amaira2", "AGAIN!", .8], [3.6, "amaira2", "AGAIN!!", .9]],
+      credits: [[4.8, 2.1, "Netflix keeps one date per episode<b>Every rewatch erased the last one</b>"]] },
+    { dur: 6.5, set: "browse", kicker: "Raised on Papa's profile",
+      things: [browse(["Sofia the First", "Masha and the Bear", "PJ Masks", "Little Baby Bum", "Octonauts"], "Continue Watching for Papa")],
+      talk: [[1, "dad", "This is still my profile, right?"]],
+      credits: [[3.4, 2.8, `Amaira's whole life on Netflix<b>${a.on_dad}% on Papa's profile</b>`]] },
+    { dur: 8, set: "chart", kicker: "Amaira's views at every age",
+      things: [{ kind: "bars", title: "GROWING UP ON NETFLIX", keys: [[.3, { p: 0 }], [5.5, { p: 1, e: "linear" }]],
+        data: ys.map((y) => ({ v: y.views, label: `Age ${age(y.year)}`, hi: y === peak })),
+        marks: [{ i: ys.indexOf(peak), text: "Preschool peak", sub: `${peak.views} views` }] }] },
+    ...(d ? [{ dur: 6, set: "living", glow: tvGlow, kicker: `${fmtMonth(d.sister_profile_from.slice(0, 7))} · age ${age(+d.sister_profile_from.slice(0, 4))}`,
+      cam: [[0, 800, 600, 900], [6, 800, 610, 640]],
+      things: [{ who: "amaira6", x: 800, y: 870, s: 1.3, start: { pose: "remote" }, keys: [[2.6, { pose: "wave" }]] }],
+      talk: [[.6, "amaira6", "Wait. That one says AMAIRA."], [2.7, "amaira6", "Finally. My own profile."]] }] : []),
+    { dur: 7.5, set: "living", glow: tvGlow, kicker: `${ys.at(-1).year} · age ${age(ys.at(-1).year)} · ${ys.at(-1).views} views and counting`,
+      cam: [[0, 830, 500, 900], [3, 830, 500, 900], [3, 700, 470, 520]],
+      things: [
+        { who: "suhani", x: 700, ...COUCH("suhani"), start: { sit: 1, pose: "lap" } },
+        { who: "amaira", x: 960, ...COUCH("amaira"), start: { sit: 1, pose: "remote" } },
+      ],
+      talk: [[.6, "amaira", "Didi. Are you still watching?"], [3.1, "suhani", "Obviously."]],
+      credits: [[4.8, 2.6, "She's never known a TV<b>that didn't ask</b>"]] },
   ];
 }
 function accountFilm() {
@@ -1892,8 +2109,8 @@ const SEASONS = [
   { n: 5, title: "The Household", sub: "Four profiles, one account, no names." },
 ];
 const FILMS = {
-  pilot: { season: 1, subtitle: "You're On Your Own, Kid", scenes: pilotFilm, art: "Friends", blurb: "Move-in day. Netflix says she's not part of the household. Dad says she's on her own." },
-  growing: { season: 1, subtitle: "Hi, I'm Suhani", scenes: helloFilm, art: "Jessie", blurb: "A nine-year-old fresh from Singapore learns America through Disney Channel." },
+  pilot: { season: 1, subtitle: "You're On Your Own, Kid", scenes: pilotFilm, art: "Friends", blurb: "Move-in day in West Campus. Mumma, Papa and Amaira drive away, Netflix locks her out, and Papa says she's on her own." },
+  growing: { season: 1, subtitle: "Hi, I'm Suhani", scenes: helloFilm, art: "Jessie", blurb: "Cupertino, 2015. The playground laughs at her accent. Then Papa discovers Netflix, and a nanny from Texas teaches her American." },
   amaira: { season: 1, subtitle: "Good Luck, Amaira", scenes: amairaFilm, art: "Good Luck Charlie", blurb: "A baby sister comes home. A big sister finds a sitcom about exactly that." },
   kids: { season: 1, subtitle: "The Kids' Profile", scenes: kidsProfileFilm, art: "Liv and Maddie", blurb: "Dad's profile, technically. Then one of her own." },
   own: { season: 2, subtitle: "The Family-Drama Era", scenes: ownProfileFilm, art: "Switched at Birth", blurb: "Freeform, secrets, and finishing a show only to start it again." },
@@ -1911,10 +2128,10 @@ const FILMS = {
   still: { season: 4, subtitle: "Still Watching", scenes: stillFilm, art: "Bridgerton", blurb: "Eleven years later. Are you still watching?" },
   detective: { season: 5, subtitle: "Four Files, No Names", scenes: detectiveFilm, art: "Fuller House", blurb: "Four zip files, no labels. The data figures out the family anyway." },
   watch: { season: 5, subtitle: "How We Watch", scenes: watchFilm, art: "Fuller House", blurb: "A binger, a superfan, a sampler and a movie person." },
-  dad: { season: 5, subtitle: "Papa: The Sampler", scenes: dadFilm, art: "Sons of Anarchy", blurb: "A household special. Who Papa is, from his history alone: two daughters, a new baby, a history buff, and impeccable timing." },
+  dad: { season: 5, subtitle: "Papa: The Sampler", scenes: dadFilm, art: "The Mother", blurb: "A sitcom. The Mother on Mother's Day, 24 Hours to Live on his birthday, Narcos on Amaira's, and 205 pilots he never finished." },
   mom: { season: 5, subtitle: "Mumma: The Movie Person", scenes: momFilm, art: "Delhi Crime", blurb: "A household special. Who Mumma is, from her history alone: a shared profile, brand-new releases and '90s Shah Rukh." },
-  born: { season: 5, subtitle: "Born Streaming", scenes: bornStreamingFilm, art: "Octonauts", blurb: "Amaira has never lived without Netflix. A first show that erased itself, a preschool peak at four, and more TV than ever at nine." },
-  copycat: { season: 5, subtitle: "Amaira: The Superfan", scenes: copyCatFilm, art: "iCarly", blurb: "A household special. Little Baby Bum to iCarly, her #1 show at every age, and every show she copied from me." },
+  born: { season: 5, subtitle: "Born Streaming", scenes: bornStreamingFilm, art: "Octonauts", blurb: "Amaira, one week old, while Papa watches \"Born in the Purple.\" Then Little Baby Bum on repeat, Papa\'s profile, and finally her own." },
+  copycat: { season: 5, subtitle: "Amaira: The Copycat", scenes: copyCatFilm, art: "The Secret Life of Pets", blurb: "She watches everything I watched, years later. Same couch, same poses, same shows. The data has receipts." },
   account: { season: 5, subtitle: "The Account", scenes: accountFilm, art: "Narcos", blurb: "Whose profile is it, really?" },
 };
 Object.values(FILMS).forEach((f) => { f.name = "Still Watching"; });
@@ -1960,7 +2177,7 @@ function setupTeasers() {
     f.i = i;
   };
   els.forEach((el) => el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); el.click(); } }));
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { els.forEach((el) => show(build(el), 0)); return; }
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { els.forEach((el) => { const f = build(el); show(f, 0); animateSet(f.scenes[0], f.list[0], f.list[0].dur / 2); }); return; }
 
   let active = null, raf = 0, last = 0;
   const frame = (now) => {
@@ -1971,6 +2188,7 @@ function setupTeasers() {
     let acc = 0, i = 0;
     while (i < f.list.length - 1 && acc + f.list[i].dur <= f.t) acc += f.list[i++].dur;
     if (i !== f.i) show(f, i);
+    animateSet(f.scenes[i], f.list[i], f.t - acc);
     f.el.querySelector(".teaser__bar i").style.width = `${(f.t / f.total) * 100}%`;
     raf = requestAnimationFrame(frame);
   };
@@ -2030,6 +2248,7 @@ function setupPlayer() {
   const render = () => {
     const i = Math.max(0, starts.findLastIndex((s) => s <= t));
     show(i);
+    animateSet(sceneEls[i], list[i], t - starts[i]);
     const counter = sceneEls[i].querySelector(".scene__counter");
     if (counter) counter.textContent = Math.round(Math.min((t - starts[i]) / 2.2, 1) * counter.dataset.to);
     const pct = (t / total) * 100;
@@ -2090,7 +2309,7 @@ function setupPlayer() {
     opener?.focus();
   };
 
-  $("#play").addEventListener("click", (e) => { opener = e.currentTarget; open("password"); });
+  $("#play").addEventListener("click", (e) => { opener = e.currentTarget; open(Object.keys(FILMS)[0]); });
   document.addEventListener("click", (e) => {
     const b = e.target.closest("[data-film]");
     if (b && FILMS[b.dataset.film]) { opener = b; open(b.dataset.film); }
