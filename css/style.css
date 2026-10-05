@@ -1407,3 +1407,34 @@ button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red
 .credit.is-title small { display: block; font-family: Inter, sans-serif; font-size: .17em; letter-spacing: .3em; color: var(--red); font-weight: 800; text-transform: uppercase; margin-bottom: .6em; }
 .teaser .credit { font-size: clamp(9px, 1.8cqw, 15px); }
 .teaser .credit.is-title { font-size: clamp(20px, 7cqw, 60px); }
+
+/* ---------- Cold open, upgraded: the S draws itself while the family's titles pour into it ---------- */
+.intro__rain { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.intro__ribbon { animation: ribbon-draw 1.8s cubic-bezier(.6, 0, .2, 1) .35s both; }
+.intro__ribbon--shade { animation-delay: .45s; }
+.intro__logo { z-index: 2; }
+.intro__boot { gap: 9px; font-size: clamp(13px, 1.25vw, 17px); color: #c9c9c9; letter-spacing: .24em; }
+.intro__boot span { display: inline-block; overflow: hidden; white-space: nowrap; max-width: 0; opacity: 1;
+  animation: bootType .9s steps(34, end) forwards; border-right: 2px solid transparent; }
+.intro__boot span:nth-child(1) { animation-delay: 1.2s; }
+.intro__boot span:nth-child(2) { animation-delay: 1.9s; }
+.intro__boot span:nth-child(3) { animation-delay: 2.6s; }
+.intro__boot span:nth-child(4) { animation-delay: 3.3s; color: #ff3d4f; text-shadow: 0 0 12px rgba(229, 9, 20, .8); }
+@keyframes bootType { from { max-width: 0; } to { max-width: 40ch; } }
+.intro__hint { animation-delay: 4.2s; }
+.intro__timeline span { animation-delay: 4.4s; }
+@media (prefers-reduced-motion: reduce) { .intro__ribbon { animation: none; } .intro__boot span { animation: none; max-width: none; } }
+
+/* ---------- Who's watching: bigger faces, and no names until the data works them out ---------- */
+.profile .avatar { width: clamp(112px, 12.5vw, 196px); }
+.profiles__title { font-size: clamp(34px, 4vw, 60px); }
+.profile__name { font-family: "Courier New", monospace; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: clamp(12px, 1.05vw, 15px); color: #8a8a8a; transition: color .3s; }
+.profile__name.is-named { font-family: Inter, sans-serif; letter-spacing: 0; text-transform: none; font-weight: 500; font-size: clamp(15px, 1.4vw, 21px); color: #e5e5e5; }
+.profile__ev { min-height: 1.2em; margin-top: -4px; font: 700 10px/1.2 "Courier New", monospace; letter-spacing: .14em; text-transform: uppercase; color: #e50914; text-shadow: 0 0 8px rgba(229, 9, 20, .6); opacity: .9; transition: opacity .5s; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.profile__ev:empty { opacity: 0; }
+.profile__ev.is-match { color: #46d369; text-shadow: 0 0 8px rgba(70, 211, 105, .6); }
+.profile__ev:not(.is-match):not(:empty) { animation: evFlick .16s steps(2) infinite; }
+.profile .avatar.is-revealed + .profile__name + .profile__ev:not(.is-match) { opacity: 0; }
+@keyframes evFlick { 50% { opacity: .65; } }
+.avatar.is-reconstructing { box-shadow: 0 0 0 1px rgba(229, 9, 20, .6), 0 0 30px rgba(229, 9, 20, .35); }
+.avatar__recon { image-rendering: auto; }
