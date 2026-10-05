@@ -356,7 +356,7 @@ function dataRain(name) {
 const PROFILE_TEASE = {
   Dad: (f) => [`${n(f?.profiles?.Dad?.views || 0)} plays`, "What does he watch on the days that matter?"],
   Mom: (f) => [`${n(f?.profiles?.Mom?.views || 0)} plays`, "Can Netflix tell when Hindi took over?"],
-  Suhani: (f) => [`🔒 Primary case file · ${n(f?.profiles?.Me?.views || 0)} plays`, "Eleven years. One person. No demographic data."],
+  Suhani: (f) => [`Primary case file · ${n(f?.profiles?.Me?.views || 0)} plays`, "Eleven years. One person. No demographic data."],
   Sister: (f) => [`${n(f?.profiles?.["My sister"]?.views || 0)} plays`, "What does growing up look like when Netflix was there from day one?"],
 };
 const PROFILE_GLOW = { Dad: "#0033cc", Mom: "#c00010", Suhani: "#ff2079", Sister: "#7a00c2" };
@@ -664,15 +664,12 @@ function setupProfiles() {
     void button.offsetWidth;
     button.classList.add("is-shaking");
   };
+  // Straight in: the cold open covers the swap, so the gate can go at once.
   const enter = () => {
     try { sessionStorage.setItem("entered", "1"); } catch {}
-    gate.classList.add("is-unlocked");
-    $("#lock-text").textContent = "Unlocked. Welcome back, Suhani.";
-    setTimeout(() => {
-      gate.classList.add("is-leaving");
-      document.body.classList.remove("locked");
-    }, 550);
-    setTimeout(() => gate.remove(), 1200);
+    gate.remove();
+    document.body.classList.remove("locked");
+    scrollTo(0, 0);
   };
   $("#profile-list").addEventListener("click", (e) => {
     const b = e.target.closest(".profile");
@@ -680,24 +677,9 @@ function setupProfiles() {
     const key = b.dataset.profile;
     if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister.");
     const p = PROFILES[key];
-    if (p.me) return lockScreen();
+    if (p.me) return coldOpen(enter);
     if (DATA?.family) return peekProfile(p);
     say(b, `That's ${p.name === "Sister" ? "my sister" : p.name}'s profile. This site only has Suhani's history.`);
-  });
-  // Suhani's profile: a PIN screen that turns into what the dataset actually contains.
-  const lockScreen = () => {
-    const pin = $("#pin");
-    ["#profile-list", ".profiles__title", "#profile-peek", "#profile-hint", "#manage"].forEach((sel) => { const el = $(sel); if (el) el.style.display = "none"; });
-    pin.hidden = false;
-    requestAnimationFrame(() => pin.classList.add("is-on"));
-    $("#pin-go").focus();
-  };
-  $("#pin-go").addEventListener("click", () => {
-    const pin = $("#pin");
-    pin.classList.remove("is-on");
-    pin.innerHTML = `<p class="pin__narration"><span>Eleven years ago, a nine-year-old pressed play.</span><span>Netflix remembered.</span></p>`;
-    requestAnimationFrame(() => pin.classList.add("is-on"));
-    setTimeout(enter, 3400);
   });
   // Hovering a profile: the page glows in their color and teases what the data knows.
   const peekText = $("#profile-peek");
@@ -712,6 +694,166 @@ function setupProfiles() {
   $("#profile-list").addEventListener("focusin", (e) => e.target.dispatchEvent(new Event("pointerover", { bubbles: true })));
   $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Manage profiles? Suhani and Dad agree on almost nothing. They agree on this: nobody manages them."));
   $(`[data-profile="${PROFILES.indexOf(me)}"]`).focus();
+}
+
+// ---------- Suhani's cold open ----------
+// Netflix's export is two columns, Title and Date. My own posters race past while those rows stream in
+// (every show's first, biggest and last day, in order), then the wall collapses into one face and the
+// guesses the site makes from those two columns land under it. About 3.5 s; any click, key, scroll or tap skips.
+const REEL_MS = 3500;
+const REEL = { resolve: 1450, named: 2250 };
+function reelParts() {
+  const shows = Object.values(DATA.shows).sort((a, b) => b.views - a.views);
+  const posters = [...new Set(shows.map((s) => ART[s.show]?.poster).filter(Boolean))];
+  const rows = shows.flatMap((s) => [...new Set([s.first, s.best_day?.date, s.last].filter(Boolean))].map((d) => [s.show, d]))
+    .sort((a, b) => (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0));
+  return { posters, rows };
+}
+// Warm the cache while the profile screen plays, so the wall is full on the first frame.
+function preloadReel() {
+  if (!$("#profiles")) return;
+  reelParts().posters.slice(0, 48).forEach((src) => { const im = new Image(); im.decoding = "async"; im.src = src; });
+}
+
+function coldOpen(onDone) {
+  if (!DATA) { onDone(); return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const { posters, rows } = reelParts(), t = DATA.totals;
+  const csvDate = (iso) => { const [y, m, d] = iso.split("-"); return `${+m}/${+d}/${y.slice(2)}`; };
+  const csvTitle = (x) => (x.includes(",") ? `"${x}"` : x);
+  // The wall: posters dealt into columns, each column twice so the loop is seamless.
+  const cols = innerWidth < 640 ? 6 : 11;
+  const wall = Array.from({ length: cols }, (_, c) => {
+    const list = Array.from({ length: 5 }, (_, k) => posters[(c * 5 + k * 3) % posters.length]);
+    const imgs = list.map((src) => `<img src="${src}" alt="">`).join("");
+    return `<div class="reel__col" style="--t:${(1.6 + (c % 3) * .35).toFixed(2)}s">${imgs}${imgs}</div>`;
+  }).join("");
+  // What two columns gave away: the same guesses the case file makes, with numbers from the data.
+  const to = parse(t.to).getFullYear();
+  const places = Object.entries(DATA.eras).sort((a, b) => (a[1].from < b[1].from ? -1 : 1)).map(([k]) => k);
+  const college = DATA.eras.Austin && parse(DATA.eras.Austin.from).getFullYear();
+  const tags = [
+    ["Age", `About ${to - BIRTH_YEAR}`],
+    ["Home", `${places.join(" → ")}, Texas`],
+    ["Background", "Hindi-speaking"],
+    college && ["School", `In college since ${college}`],
+    ["Family", "A big sister"],
+  ].filter(Boolean);
+
+  const el = document.createElement("div");
+  el.className = "reel";
+  el.setAttribute("role", "dialog");
+  el.setAttribute("aria-label", "Opening Suhani's profile");
+  el.style.setProperty("--dur", `${REEL_MS}ms`);
+  el.innerHTML = `
+    <div class="reel__wall" aria-hidden="true"><div class="reel__grid">${wall}</div></div>
+    <p class="reel__file" aria-hidden="true">NetflixViewingHistory.csv<b>Title<i>,</i>Date</b></p>
+    <div class="reel__feed" aria-hidden="true"></div>
+    <p class="reel__count" aria-hidden="true"><b>0</b><span>rows</span></p>
+    <p class="reel__stamp"><b>Title<i>,</i> Date<i>.</i></b><span>All Netflix kept. No name, no age, no address.</span></p>
+    <div class="reel__face" aria-hidden="true"><canvas></canvas></div>
+    <p class="reel__who">
+      <span class="reel__kicker">2 columns · ${n(t.views)} rows · worked out</span>
+      <span class="reel__name">Suhani</span>
+      <span class="reel__tags">${tags.map(([k, v], i) => `<span style="--i:${i}"><small>${k}</small>${esc(v)}</span>`).join("")}</span>
+    </p>
+    <button class="reel__skip" type="button">Skip</button>
+    <span class="reel__bar" aria-hidden="true"></span>`;
+  document.body.appendChild(el);
+
+  const feed = $(".reel__feed", el), countB = $(".reel__count b", el), countS = $(".reel__count span", el);
+  const nameEl = $(".reel__name", el), cv = $(".reel__face canvas", el);
+  let done = false, raf = 0, shown = 0;
+  const timers = [];
+  const later = (ms, fn) => timers.push(setTimeout(fn, ms));
+
+  // The face: a mosaic of my own posters in the colors of my photo, coarse to fine, then the photo itself.
+  const photo = new Image(); photo.src = "img/profiles/suhani.jpg";
+  const tiles = (FACE_POSTERS.Suhani || []).map(posterImg);
+  const LEVELS = [5, 8, 12, 18, 28];
+  let grids = null;
+  const sample = () => LEVELS.map((k) => {
+    const off = document.createElement("canvas"); off.width = off.height = k;
+    const g = off.getContext("2d"); g.drawImage(photo, 0, 0, k, k);
+    const d = g.getImageData(0, 0, k, k).data;
+    return { k, px: Array.from({ length: k * k }, (_, j) => `rgb(${d[j * 4]},${d[j * 4 + 1]},${d[j * 4 + 2]})`) };
+  });
+  const drawFace = (p) => {   // p: 0..1 across the resolve
+    if (!photo.complete || !photo.naturalWidth) return;
+    const W = cv.width = cv.height = Math.round((cv.clientWidth || 160) * Math.min(devicePixelRatio || 1, 2));
+    const ctx = cv.getContext("2d");
+    if (p >= 1) { ctx.drawImage(photo, 0, 0, W, W); return; }
+    grids = grids || sample();
+    const g = grids[Math.min(LEVELS.length - 1, Math.floor(p * LEVELS.length))], c = W / g.k;
+    for (let j = 0; j < g.k * g.k; j++) {
+      const x = (j % g.k) * c, y = Math.floor(j / g.k) * c;
+      ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
+      ctx.fillStyle = g.px[j]; ctx.fillRect(x, y, c + .5, c + .5);
+      const po = tiles[(j * 7) % (tiles.length || 1)];
+      if (po && po.complete && po.naturalWidth) {
+        ctx.globalCompositeOperation = "overlay"; ctx.globalAlpha = .85;
+        ctx.drawImage(po, 0, (po.naturalHeight - po.naturalWidth) * .35, po.naturalWidth, po.naturalWidth, x, y, c + .5, c + .5);
+      }
+    }
+    ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
+    const sy = p * W;   // the scan that locks it in
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, sy); ctx.clip(); ctx.drawImage(photo, 0, 0, W, W); ctx.restore();
+    ctx.fillStyle = "#ff2d3a"; ctx.fillRect(0, sy - 2, W, 3);
+  };
+
+  const t0 = performance.now();
+  const frame = (now) => {
+    const ms = now - t0;
+    // rows stream through eleven years while the count climbs to the real total
+    const p = Math.min(1, ms / (REEL.resolve - 100));
+    const upTo = Math.floor(p * rows.length);
+    if (upTo > shown) {
+      const html = rows.slice(Math.max(shown, upTo - 26), upTo).map(([s, d]) => `<p>${esc(csvTitle(s))},<i>${csvDate(d)}</i></p>`).join("");
+      feed.insertAdjacentHTML("beforeend", html);
+      while (feed.children.length > 26) feed.firstElementChild.remove();
+      shown = upTo;
+      countB.textContent = n(Math.round(t.views * p));
+      countS.textContent = `rows · ${fmtMonth(rows[upTo - 1][1].slice(0, 7))}`;
+    }
+    if (ms >= REEL.resolve) drawFace(Math.min(1, (ms - REEL.resolve) / (REEL.named - REEL.resolve - 50)));
+    if (ms < REEL.named + 50) raf = requestAnimationFrame(frame);
+  };
+
+  const decode = () => {
+    const target = "SUHANI", glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let k = 0;
+    const tick = setInterval(() => {
+      k++;
+      nameEl.textContent = target.split("").map((ch, j) => (j < k / 2 ? ch : glyphs[Math.floor(Math.random() * glyphs.length)])).join("");
+      if (k / 2 >= target.length || done) { clearInterval(tick); nameEl.textContent = "Suhani"; }
+    }, 30);
+  };
+
+  const finish = () => {
+    if (done) return;
+    done = true;
+    cancelAnimationFrame(raf); timers.forEach(clearTimeout);
+    ["keydown", "wheel", "touchstart"].forEach((ev) => removeEventListener(ev, finish));
+    onDone();
+    el.classList.add("is-out");
+    setTimeout(() => el.remove(), 400);
+  };
+
+  if (reduce) {
+    el.classList.add("is-resolve", "is-named");
+    photo.decode?.().then(() => drawFace(1)).catch(() => {});
+    photo.addEventListener("load", () => drawFace(1));
+    later(1800, finish);
+  } else {
+    raf = requestAnimationFrame(frame);
+    later(REEL.resolve, () => el.classList.add("is-resolve"));
+    later(REEL.named, () => { drawFace(1); el.classList.add("is-named"); decode(); });
+    later(REEL_MS, finish);
+  }
+  // Skippable from the first frame: the click that opened it has already landed.
+  el.addEventListener("click", finish);
+  later(120, () => ["keydown", "wheel", "touchstart"].forEach((ev) => addEventListener(ev, finish, { passive: true })));
+  $(".reel__skip", el).focus();
 }
 
 // ---------- hero ----------
@@ -2685,4 +2827,5 @@ Promise.all([
     setupEpisodes();
     setupTeasers();
     setupGlobal();
+    preloadReel();
   });
