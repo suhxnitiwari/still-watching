@@ -310,6 +310,8 @@ def amaira(h):
 
 
 # Watched together on Mom's account, so they don't count as her favorites.
+# Hindi shows Mumma recommended to me, in Suhani's words.
+MUMMA_RECS = ["Class"]
 FAMILY_TOGETHER = {"The Great Indian Kapil Show", "The Night Agent"}
 SRK = ["Om Shanti Om", "Chennai Express", "Dilwale", "Dunki", "Raees", "Kabhi Khushi Kabhie Gham", "Dil To Pagal Hai",
        "Phir Bhi Dil Hai Hindustani", "Deewana", "Anjaam", "Chak De! India", "Dear Zindagi", "Jawan", "Zero"]
@@ -363,8 +365,6 @@ DAD_TIMING = [
      "Father's Day.", "A dad who secretly moonlights as a hitman. Relatable?"),
     ("Christmas Eve", 2017, "72 Dangerous Animals", "A countdown of Latin America's deadliest animals.",
      "Christmas Eve.", "The episode was \"Deathly Bite.\" Silent night."),
-    ("Christmas", 2018, "Watership Down", "An animated series about rabbits fleeing the destruction of their warren. Not many make it.",
-     "Christmas Day. He watched all four episodes, plus four of a Montreal mafia show.", "Bunnies for Christmas. Doomed bunnies."),
     ("Christmas", 2024, "Escape at Dannemora", "The true story of two inmates who broke out of a New York prison with help from a worker inside.",
      "Christmas Day.", "Home for the holidays: a prison break."),
     ("Thanksgiving", 2015, "Apocalypse", "World War II in restored color, from the invasion of Poland to the bomb.",
@@ -549,7 +549,9 @@ def family(meta):
         },
         "dad_on_mothers_day": [{"show": r.show, "year": int(r.date.year)} for r in dad_md.drop_duplicates("show").itertuples()],
         "mom_parent_titles": titles_of("Mom"), "dad_parent_titles": titles_of("Dad"),
-        "mom_first_titles": [t for t in g[g > 0].sort_values().index.tolist()][:10],
+        # Shows Suhani says Mumma talked her into lead the row; the rest are the ones I followed fastest.
+        "mom_first_titles": ([t for t in MUMMA_RECS if t in g[g > 0].index]
+                             + [t for t in g[g > 0].sort_values().index if t not in MUMMA_RECS])[:10],
         "mom_hindi_lead": {"shared": int(len(f)), "mom_first": int((g > 0).sum()), "me_first": int((g < 0).sum()),
                            "next_week": int(((g > 0) & (g <= 7)).sum())},
         "me_to_sister": lead("Suhani", "Sister"),

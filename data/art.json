@@ -704,8 +704,8 @@
   "poster": "img/posters/choona.jpg"
  },
  "Class": {
-  "match": "Class (2016)",
-  "source": "https://www.tvmaze.com/shows/11374/class",
+  "match": "Class (2023)",
+  "source": "https://www.netflix.com",
   "poster": "img/posters/class.jpg",
   "backdrop": "img/backdrops/class.jpg"
  },
@@ -995,7 +995,8 @@
  "Escape at Dannemora": {
   "match": "Escape at Dannemora",
   "source": "https://en.wikipedia.org/wiki/Escape_at_Dannemora",
-  "poster": "img/posters/escape-at-dannemora.jpg"
+  "poster": "img/posters/escape-at-dannemora.jpg",
+  "backdrop": "img/backdrops/escape-at-dannemora.jpg"
  },
  "MADOFF": {
   "match": "Madoff: The Monster of Wall Street",
@@ -1180,5 +1181,34 @@
   "source": "https://www.tvmaze.com/shows/9803/lilo-stitch-the-series",
   "poster": "img/posters/lilo-stitch.jpg",
   "backdrop": "img/backdrops/lilo-stitch.jpg"
+ },
+ "Saiyaara": {
+  "match": "Saiyaara (2025 film)",
+  "source": "https://www.yashrajfilms.com",
+  "poster": "img/posters/saiyaara.jpg",
+  "backdrop": "img/backdrops/saiyaara.jpg"
+ },
+ "Apocalypse": {
+  "match": "Apocalypse: The Second World War (2009)",
+  "source": "https://en.wikipedia.org/wiki/Apocalypse:_The_Second_World_War",
+  "poster": "img/posters/apocalypse.jpg",
+  "backdrop": "img/backdrops/apocalypse.jpg"
+ },
+ "Mob War": {
+  "match": "Mob War: Philadelphia vs. the Mafia (2024)",
+  "source": "https://www.netflix.com/title/81697798",
+  "poster": "img/posters/mob-war.jpg",
+  "backdrop": "img/backdrops/mob-war.jpg"
+ },
+ "72 Dangerous Animals": {
+  "match": "72 Dangerous Animals (Netflix)",
+  "source": "https://www.netflix.com",
+  "poster": "img/posters/72-dangerous-animals.jpg",
+  "backdrop": "img/backdrops/72-dangerous-animals.jpg"
+ },
+ "Maa Behen": {
+  "match": "Maa Behen",
+  "source": "https://en.wikipedia.org/wiki/Maa_Behen",
+  "poster": "img/posters/maa-behen.jpg"
  }
 }

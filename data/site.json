@@ -1300,8 +1300,8 @@
    "titles_per_month": 3.5,
    "movie_share": 8.7,
    "language": {
-    "English": 89.7,
-    "Hindi": 4.8,
+    "English": 88.9,
+    "Hindi": 5.7,
     "Korean": 1.8,
     "Spanish": 1.1,
     "Arabic": 0.6,
@@ -1322,26 +1322,26 @@
     "Romance": 66.0,
     "Comedy": 37.6,
     "Medical": 17.8,
-    "Crime": 14.4,
-    "Science-Fiction": 11.1,
+    "Crime": 15.2,
     "Supernatural": 10.3,
+    "Science-Fiction": 10.3,
     "Mystery": 8.1,
     "Family": 8.1,
     "Horror": 2.5,
-    "Thriller": 1.5,
+    "Thriller": 2.3,
     "Action": 1.4,
     "Adventure": 0.9,
-    "Fantasy": 0.9,
     "Espionage": 0.8,
     "Food": 0.3,
     "Legal": 0.3,
     "Children": 0.2,
+    "Fantasy": 0.1,
     "History": 0.1
    },
-   "netflix_share": 38.7,
+   "netflix_share": 39.5,
    "median_premiere": 2014,
    "classic_share": 33.2,
-   "fresh_share": 17.7,
+   "fresh_share": 18.5,
    "top": [
     {
      "show": "Grey's Anatomy",
@@ -1391,8 +1391,8 @@
       "views": 12
      },
      {
-      "show": "Bombay Begums",
-      "views": 5
+      "show": "Class",
+      "views": 8
      }
     ],
     "family": [
@@ -1831,7 +1831,7 @@
     }
    ],
    "median_age": 6,
-   "fresh_pct": 10,
+   "fresh_pct": 11,
    "netflix_pct": 27,
    "cw_pct": 22,
    "cw_top": [
@@ -2428,13 +2428,13 @@
   },
   {
    "genre": "Supernatural",
-   "views": 408,
+   "views": 400,
    "shows": [
     "The Vampire Diaries",
     "The Originals",
     "Manifest"
    ],
-   "pct": 13.2
+   "pct": 13.0
   },
   {
    "genre": "Comedy",
@@ -2468,13 +2468,13 @@
   },
   {
    "genre": "Crime & thriller",
-   "views": 160,
+   "views": 168,
    "shows": [
     "The Night Agent",
     "13 Reasons Why",
     "Ginny & Georgia"
    ],
-   "pct": 5.2
+   "pct": 5.5
   },
   {
    "genre": "Drama",
@@ -2507,7 +2507,7 @@
    "2020": 19,
    "2021": 21,
    "2022": 6,
-   "2023": 15,
+   "2023": 18,
    "2024": 4,
    "2025": 16,
    "2026": 15
@@ -2516,6 +2516,10 @@
    {
     "show": "Delhi Crime",
     "views": 18
+   },
+   {
+    "show": "Class",
+    "views": 8
    },
    {
     "show": "Dabba Cartel",
@@ -2608,13 +2612,13 @@
     "top5_pct": 18,
     "per_day": 1.6,
     "month": 1,
-    "hindi_pct": 63,
-    "netflix_pct": 93
+    "hindi_pct": 64,
+    "netflix_pct": 95
    },
    "Dad": {
-    "binge_days": 28,
+    "binge_days": 27,
     "eps_per_show": 3.3,
-    "titles": 730,
+    "titles": 729,
     "movie_pct": 30,
     "top5_pct": 17,
     "per_day": 1.8,
@@ -2688,7 +2692,7 @@
       "views": 45
      }
     ],
-    "views": 1447,
+    "views": 1443,
     "rewatched": 16,
     "rewatch_pct": 1.1
    },
@@ -2732,7 +2736,7 @@
       "2015": 117,
       "2016": 193,
       "2017": 206,
-      "2018": 167,
+      "2018": 163,
       "2019": 105,
       "2020": 68,
       "2021": 117,
@@ -2850,11 +2854,11 @@
     "genres": [
      {
       "genre": "Drama",
-      "pct": 45
+      "pct": 44
      },
      {
       "genre": "Crime",
-      "pct": 42
+      "pct": 43
      },
      {
       "genre": "Action",
@@ -2957,12 +2961,6 @@
       "day": "Christmas",
       "year": 2018,
       "show": "Bad Blood",
-      "views": 4
-     },
-     {
-      "day": "Christmas",
-      "year": 2018,
-      "show": "Watership Down",
       "views": 4
      },
      {
@@ -3138,14 +3136,6 @@
       "about": "A countdown of Latin America's deadliest animals.",
       "when": "Christmas Eve.",
       "irony": "The episode was \"Deathly Bite.\" Silent night."
-     },
-     {
-      "day": "Christmas",
-      "year": 2018,
-      "show": "Watership Down",
-      "about": "An animated series about rabbits fleeing the destruction of their warren. Not many make it.",
-      "when": "Christmas Day. He watched all four episodes, plus four of a Montreal mafia show.",
-      "irony": "Bunnies for Christmas. Doomed bunnies."
      },
      {
       "day": "Christmas",
@@ -3487,11 +3477,11 @@
      },
      {
       "genre": "Crime",
-      "pct": 50
+      "pct": 52
      },
      {
       "genre": "Thriller",
-      "pct": 30
+      "pct": 32
      }
     ],
     "fast": 54,
@@ -3541,7 +3531,7 @@
      "low_day": "Thursday",
      "low_day_pct": 11,
      "median_premiere": 2022,
-     "fresh_pct": 79,
+     "fresh_pct": 81,
      "by_year": {
       "2015": 2,
       "2016": 19,
@@ -3872,8 +3862,7 @@
    "christmas": [
     "Bad Blood",
     "Escape at Dannemora",
-    "Peaky Blinders",
-    "Watership Down"
+    "Peaky Blinders"
    ],
    "fathers_day": [
     {
@@ -3930,20 +3919,20 @@
    "The Mother"
   ],
   "mom_first_titles": [
+   "Class",
    "Tribhuvan Mishra CA Topper",
    "Saiyaara",
    "Shaque",
    "Tere Ishk Mein",
    "De De Pyaar De 2",
    "Chandigarh Kare Aashiqui",
-   "Maa Behen",
-   "Operation Safed Sagar",
    "Taskaree",
-   "Single Papa"
+   "Operation Safed Sagar",
+   "Maa Behen"
   ],
   "mom_hindi_lead": {
-   "shared": 74,
-   "mom_first": 53,
+   "shared": 75,
+   "mom_first": 54,
    "me_first": 21,
    "next_week": 13
   },
@@ -3968,7 +3957,7 @@
   "shows_started": {
    "Me": 202,
    "Mom": 73,
-   "Dad": 310,
+   "Dad": 309,
    "My sister": 117
   },
   "quit_rate": {
@@ -4691,6 +4680,26 @@
    },
    "eras": {
     "Austin": 1
+   }
+  },
+  "Class": {
+   "show": "Class",
+   "kind": "series",
+   "views": 8,
+   "first": "2023-05-24",
+   "last": "2023-05-25",
+   "days": 2,
+   "best_day": {
+    "date": "2023-05-25",
+    "episodes": 5
+   },
+   "binge_days": 2,
+   "seasons": {},
+   "by_year": {
+    "2023": 8
+   },
+   "eras": {
+    "Dallas": 8
    }
   },
   "Crash Landing on You": {
@@ -6887,7 +6896,6 @@
   "Chhota Bheem and the Curse of Damyaan",
   "Choona",
   "City of God",
-  "Class",
   "Coco",
   "Criminal Code",
   "Daadi Ki Shaadi",
@@ -6973,7 +6981,6 @@
   "Victorious",
   "Waarrior Savitri",
   "Walt Disney Animation Studios Short Films Collection",
-  "Watership Down",
   "YES DAY",
   "Yeh Kaali Kaali Ankhein",
   "Zero",

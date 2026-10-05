@@ -34,7 +34,7 @@ LOOKUP = {
     "The Great Indian Kapil Show": 2024, "The Night Agent": 2023, "The Originals": 2013,
     "The Vampire Diaries": 2009, "Workin' Moms": 2017, "XO, Kitty": 2023, "Young Sheldon": 2017,
     "Masaba Masaba": 2020, "Money Heist": ("La Casa de Papel", 2017), "Victorious": 2010, "Merry Happy Whatever": 2019,
-    "Dabba Cartel": 2025, "Tribhuvan Mishra CA Topper": 2024, "Beyond Stranger Things": 2017,
+    "Dabba Cartel": 2025, "Class": 2023, "Tribhuvan Mishra CA Topper": 2024, "Beyond Stranger Things": 2017,
     "Jessie": 2011, "Richie Rich": 2015, "Goosebumps": 1995, "Inspector Gadget": 2015, "One Day at a Time": 2017, "Pretty Little Liars": 2010, "Good Luck Charlie": 2010, "Lab Rats": 2012, "Liv and Maddie": 2013, "A.N.T. Farm": 2011,
     "Phineas and Ferb": 2007, "Dragon Tales": 1999, "Mickey Mouse Clubhouse": 2006, "Mighty Med": 2013,
 }
@@ -50,7 +50,7 @@ WIKI = {"A Family Affair": "A Family Affair (2024 film)",
         # Dad's impeccable-timing picks.
         "24 Hours to Live": "24 Hours to Live", "Roman Empire": "Roman Empire (TV series)", "City of God": "City of God (2002 film)", "The Mother": "The Mother (2023 film)", "Hit Man": "Hit Man (2023 film)", "72 Dangerous Animals": "72 Dangerous Animals: Latin America", "Watership Down": "Watership Down (TV series)", "Escape at Dannemora": "Escape at Dannemora", "Apocalypse": "Apocalypse: The Second World War", "MADOFF": "Madoff: The Monster of Wall Street", "Mob War": "Mob War: Philadelphia vs. the Mafia", "Inglourious Basterds": "Inglourious Basterds",
         # Mom's Hindi films.
-        "Maa": "Maa (2025 film)", "Neerja": "Neerja", "Talvar": "Talvar (film)", "Phantom": "Phantom (2015 film)", "Jai Mummy Di": "Jai Mummy Di", "Daadi Ki Shaadi": "Daadi Ki Shaadi", "Bbuddah Hoga Terra Baap": "Bbuddah Hoga Terra Baap", "Mister Mummy": "Mister Mummy", "Super Nani": "Super Nani", "Sardar Ka Grandson": "Sardar Ka Grandson", "Saiyaara": "Saiyaara", "Queen": "Queen (2013 film)", "Aiyaary": "Aiyaary", "Rajma Chawal": "Rajma Chawal", "Zindagi Na Milegi Dobara": "Zindagi Na Milegi Dobara", "Sooryavanshi": "Sooryavanshi", "Kyaa Kool Hain Hum 3": "Kyaa Kool Hain Hum 3", "Tere Ishk Mein": "Tere Ishk Mein", "De De Pyaar De 2": "De De Pyaar De 2", "Chandigarh Kare Aashiqui": "Chandigarh Kare Aashiqui", "Pitaah": "Pitaah", "My Little Pony": "My Little Pony: Friendship Is Magic"}
+        "Maa": "Maa (2025 film)", "Maa Behen": "Maa Behen", "Neerja": "Neerja", "Talvar": "Talvar (film)", "Phantom": "Phantom (2015 film)", "Jai Mummy Di": "Jai Mummy Di", "Daadi Ki Shaadi": "Daadi Ki Shaadi", "Bbuddah Hoga Terra Baap": "Bbuddah Hoga Terra Baap", "Mister Mummy": "Mister Mummy", "Super Nani": "Super Nani", "Sardar Ka Grandson": "Sardar Ka Grandson", "Saiyaara": "Saiyaara", "Queen": "Queen (2013 film)", "Aiyaary": "Aiyaary", "Rajma Chawal": "Rajma Chawal", "Zindagi Na Milegi Dobara": "Zindagi Na Milegi Dobara", "Sooryavanshi": "Sooryavanshi", "Kyaa Kool Hain Hum 3": "Kyaa Kool Hain Hum 3", "Tere Ishk Mein": "Tere Ishk Mein", "De De Pyaar De 2": "De De Pyaar De 2", "Chandigarh Kare Aashiqui": "Chandigarh Kare Aashiqui", "Pitaah": "Pitaah", "My Little Pony": "My Little Pony: Friendship Is Magic"}
 
 
 def get_json(url):

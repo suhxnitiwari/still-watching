@@ -509,9 +509,10 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 }
 .house__kicker { color: var(--red); font-weight: 700; letter-spacing: .18em; font-size: 12px; text-transform: uppercase; margin: 0 0 8px; }
 .house__title { font-family: var(--display); font-weight: 400; font-size: clamp(44px, 5vw, 76px); line-height: .9; margin: 0 0 20px; }
-.house__steps { position: relative; min-height: 9.5em; }
+.house__steps { display: grid; }
+/* Every step shares one grid cell, so the box is as tall as the longest step and nothing below gets overlapped. */
 .house__step {
-  position: absolute; inset: 0 0 auto; margin: 0;
+  grid-area: 1 / 1; margin: 0;
   font-size: clamp(16px, 1.4vw, 20px); line-height: 1.5; color: #e5e5e5;
   opacity: 0; transform: translateY(12px); transition: opacity .45s, transform .45s;
 }
@@ -617,7 +618,7 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
 .still__sub { color: var(--muted); margin: 0 auto 28px; max-width: 560px; line-height: 1.5; }
 .still__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-.about { padding: 20px var(--gutter) 60px; color: var(--dim); max-width: 860px; font-size: 14px; line-height: 1.6; }
+.about { padding: 20px var(--gutter) 60px; color: var(--dim); font-size: 14px; line-height: 1.6; }
 .about h3 { color: var(--muted); font-size: 16px; }
 .about strong { color: var(--muted); }
 .about__small { font-size: 12px; margin-top: 24px; }
@@ -862,7 +863,6 @@ button.episode { width: 100%; text-align: left; font: inherit; color: inherit; b
   .preview { display: none; }
   .house__stage { grid-template-columns: 1fr; grid-template-rows: auto 1fr; align-items: start; padding-top: 68px; }
   .house__title { margin-bottom: 10px; }
-  .house__steps { min-height: 7.5em; }
   .house__step { font-size: 15px; }
   .nav__links { display: none; }
   .nav { gap: 12px; }
