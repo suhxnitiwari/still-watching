@@ -232,24 +232,34 @@ const DATA_BITS = {
   Suhani: ["Friends", "2019-12-15", "29 eps", "Gossip Girl", "Jessie", "Vampire Diaries", "Austin"],
   Sister: ["iCarly", "Masha", "Sofia", "2023-09-24", "Barbie", "PJ Masks", "Little Baby Bum"],
 };
-// The reveal: the computer rebuilds each face from data. It samples the real portrait's pixels and redraws
-// them as glyphs (bits, digits and letters from that person's own titles), each tinted with the pixel's color.
-// Noise first, then a scanline locks the glyphs into a face, then the glyphs dissolve into the photo.
-function reconstruct(avatarEl, name, onDone) {
+// Each face's own posters and play count: the reveal builds the face out of what that person actually watched.
+const FACE_POSTERS = {
+  Dad: ["sons-of-anarchy", "narcos", "ozark", "el-chapo", "breaking-bad", "queen-of-the-south", "peaky-blinders", "money-heist", "the-mother", "madoff", "escape-at-dannemora", "suburra"],
+  Mom: ["the-great-indian-kapil-show", "the-night-agent", "jamtara-sabka-number-ayega", "delhi-crime", "heeramandi", "om-shanti-om", "tribhuvan-mishra-ca-topper", "shaque", "single-papa", "maa", "chennai-express", "dil-to-pagal-hai"],
+  Suhani: ["friends", "the-vampire-diaries", "grey-s-anatomy", "gossip-girl", "gilmore-girls", "bridgerton", "emily-in-paris", "outer-banks", "never-have-i-ever", "jessie", "riverdale", "the-originals"],
+  Sister: ["icarly", "sofia-the-first", "the-thundermans", "masha-and-the-bear", "barbie-dreamhouse-adventures", "pj-masks", "little-baby-bum", "my-little-pony", "peter-rabbit", "octonauts", "pocoyo", "mickey-mouse-clubhouse"],
+};
+const FACE_PLAYS = { Dad: 1447, Mom: 718, Suhani: 3366, Sister: 1508 };
+const POSTER_IMG = new Map();
+const posterImg = (slug) => { let im = POSTER_IMG.get(slug); if (!im) { im = new Image(); im.decoding = "async"; im.src = `img/posters/${slug}.jpg`; POSTER_IMG.set(slug, im); } return im; };
+Object.values(FACE_POSTERS).flat().forEach(posterImg);
+
+// The reveal, in four beats: the data arrives as binary, the face assembles as a mosaic of that person's
+// own posters, their titles type over it, then a scan locks on and the photo snaps in.
+function reconstruct(avatarEl, name, onDone, onCount) {
   const img = avatarEl.querySelector("img"), cv = avatarEl.querySelector(".avatar__recon"), status = avatarEl.querySelector(".avatar__status");
   if (!img || !cv) return () => {};
-  // Coarse to fine, the way an image model denoises: the whole face sharpens at once.
-  const LEVELS = [6, 9, 13, 18, 24, 32];
+  const MOSAIC = [6, 9, 13, 17], GLYPH = 26;
   const letters = (DATA_BITS[name] || ["DATA"]).join("").replace(/[^A-Za-z0-9%]/g, "").toUpperCase();
+  const posters = (FACE_POSTERS[name] || []).map(posterImg), plays = FACE_PLAYS[name] || 0;
   let grids = null, raf = 0;
-  const sample = () => {
-    grids = LEVELS.map((n) => {
-      const off = document.createElement("canvas"); off.width = off.height = n;
-      const g = off.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(img, 0, 0, n, n);
-      const d = g.getImageData(0, 0, n, n).data;
-      return { n, px: Array.from({ length: n * n }, (_, k) => [d[k * 4], d[k * 4 + 1], d[k * 4 + 2]]), seed: Array.from({ length: n * n }, () => Math.random()) };
-    });
+  const grid = (n) => {
+    const off = document.createElement("canvas"); off.width = off.height = n;
+    const g = off.getContext("2d"); g.imageSmoothingQuality = "high"; g.drawImage(img, 0, 0, n, n);
+    const d = g.getImageData(0, 0, n, n).data;
+    return { n, px: Array.from({ length: n * n }, (_, k) => [d[k * 4], d[k * 4 + 1], d[k * 4 + 2]]), seed: Array.from({ length: n * n }, () => Math.random()), pi: Array.from({ length: n * n }, () => Math.floor(Math.random() * 1e6)) };
   };
+  const sample = () => { grids = {}; [...MOSAIC, GLYPH].forEach((n) => { grids[n] = grid(n); }); };
   const play = () => {
     if (!img.complete || !img.naturalWidth) { img.addEventListener("load", play, { once: true }); return; }
     if (!grids) sample();
@@ -258,44 +268,78 @@ function reconstruct(avatarEl, name, onDone) {
     cv.width = cv.height = W;
     const ctx = cv.getContext("2d");
     avatarEl.classList.remove("is-revealed"); avatarEl.classList.add("is-reconstructing");
-    const start = performance.now(), STATIC = 450, GEN = 2300, END = STATIC + GEN + 250;
+    const BITS = 750, MOS = 1700, TXT = 800, LOCK = 650, END = BITS + MOS + TXT + LOCK;
+    const start = performance.now();
+    const cols = 12, colY = Array.from({ length: cols }, () => Math.random() * W);
     const frame = (now) => {
-      const t = now - start, p = Math.min(1, Math.max(0, (t - STATIC) / GEN));
-      ctx.globalAlpha = 1;
-      if (t < STATIC) {  // colored static
-        const n = 24, c = W / n;
-        for (let k = 0; k < n * n; k++) { const v = Math.random() * 255; ctx.fillStyle = Math.random() < .2 ? `rgb(${v},20,30)` : `rgb(${v * .25},${v * .25},${v * .3})`; ctx.fillRect((k % n) * c, Math.floor(k / n) * c, c + 1, c + 1); }
-        status.textContent = "GENERATING…";
-      } else {
-        const eased = 1 - Math.pow(1 - p, 2.2), li = Math.min(LEVELS.length - 1, Math.floor(eased * LEVELS.length)), local = eased * LEVELS.length - li;
-        const prev = grids[Math.max(0, li - 1)], cur = grids[li];
-        // the face is typed out of their own titles: every cell a letter, tinted with the portrait's color there
-        ctx.fillStyle = "#050505"; ctx.fillRect(0, 0, W, W);
-        ctx.textAlign = "center"; ctx.textBaseline = "middle";
-        const shift = Math.floor(t / 70);
-        [prev, cur].forEach((g, layer) => {
-          const c = W / g.n;
-          ctx.font = `900 ${c * 1.15}px "Courier New", monospace`;
-          for (let k = 0; k < g.n * g.n; k++) {
-            if (layer === 1 && g.seed[k] > local * 1.3) continue;
-            if (layer === 0 && cur !== prev && cur.seed[Math.floor(k * cur.n * cur.n / (g.n * g.n))] <= local * 1.3) continue;
-            const [r, gg, b] = g.px[k], lift = 1.25 + p * .2;
-            ctx.fillStyle = `rgb(${Math.min(255, r * lift)},${Math.min(255, gg * lift)},${Math.min(255, b * lift)})`;
-            const settled = g.seed[k] < local, ch = letters[(k + (settled ? 0 : shift)) % letters.length];
-            ctx.fillText(ch, (k % g.n + .5) * c, (Math.floor(k / g.n) + .5) * c);
+      const t = now - start;
+      ctx.globalAlpha = 1; ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = "#040404"; ctx.fillRect(0, 0, W, W);
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      // 1. data received: binary pouring down the tile, red with white heads
+      const bitsA = t < BITS + MOS * .4 ? Math.min(1, (BITS + MOS * .4 - t) / (MOS * .4)) : 0;
+      if (bitsA > 0) {
+        const fs = W / cols;
+        ctx.font = `700 ${fs * .9}px "Courier New", monospace`;
+        for (let c = 0; c < cols; c++) {
+          colY[c] = (colY[c] + fs * .55) % (W + fs * 8);
+          for (let r = 0; r < 9; r++) {
+            const y = colY[c] - r * fs;
+            ctx.globalAlpha = bitsA * (r === 0 ? 1 : .75 - r * .08);
+            ctx.fillStyle = r === 0 ? "#fff" : "#e50914";
+            ctx.fillText(((c * 7 + r + Math.floor(t / 90)) % 3 === 0) ? "1" : "0", (c + .5) * fs, y);
+          }
+        }
+        ctx.globalAlpha = 1;
+      }
+      // 2. the face, as a mosaic of their own posters, coarse to fine
+      const pm = Math.max(0, Math.min(1, (t - BITS) / MOS));
+      if (pm > 0) {
+        const lv = Math.min(MOSAIC.length - 1, Math.floor(pm * MOSAIC.length)), local = pm * MOSAIC.length - lv;
+        [lv > 0 ? MOSAIC[lv - 1] : null, MOSAIC[lv]].forEach((n, layer) => {
+          if (!n) return;
+          const g = grids[n], c = W / n;
+          for (let k = 0; k < n * n; k++) {
+            if (layer === 1 && g.seed[k] > local * 1.25) continue;
+            const x = (k % n) * c, y = Math.floor(k / n) * c, [r, gg, b] = g.px[k];
+            ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
+            ctx.fillStyle = `rgb(${r},${gg},${b})`; ctx.fillRect(x, y, c + .5, c + .5);
+            const po = posters[g.pi[k] % (posters.length || 1)];
+            if (po && po.complete && po.naturalWidth) {
+              const sw = po.naturalWidth, sh = sw;   // the square middle of the poster
+              ctx.globalCompositeOperation = "overlay"; ctx.globalAlpha = .9;
+              ctx.drawImage(po, 0, (po.naturalHeight - sh) * .35, sw, sh, x, y, c + .5, c + .5);
+            }
           }
         });
-        // a scanline sweeping down as it locks on
-        const sy = (t / 9) % W; ctx.fillStyle = "rgba(229,9,20,.35)"; ctx.fillRect(0, sy, W, 2 * dpr);
-        // the photo bleeds through under the letters near the end
-        if (p > .7) { ctx.globalAlpha = (p - .7) / .3 * .85; ctx.drawImage(img, 0, 0, W, W); ctx.globalAlpha = 1; }
-        // a glitch at the end: an RGB split slice
-        if (p > .86) {
-          const y = Math.random() * W, h = W * (.04 + Math.random() * .08);
-          ctx.globalAlpha = .55; ctx.drawImage(img, -6 * dpr, y, W, h, 0, y, W, h); ctx.globalAlpha = 1;
-        }
-        status.textContent = p < 1 ? `GENERATING ${Math.round(p * 100)}%` : "MATCH FOUND";
+        ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
       }
+      // 3. their titles, typed over the mosaic letter by letter
+      const pt = Math.max(0, Math.min(1, (t - BITS - MOS * .75) / (TXT + MOS * .25)));
+      if (pt > 0) {
+        const g = grids[GLYPH], c = W / GLYPH, shift = Math.floor(t / 60);
+        ctx.font = `900 ${c * 1.1}px "Courier New", monospace`;
+        for (let k = 0; k < GLYPH * GLYPH; k++) {
+          if (g.seed[k] > pt * 1.4) continue;
+          const [r, gg, b] = g.px[k];
+          ctx.globalAlpha = .85 * (1 - Math.max(0, (t - BITS - MOS - TXT) / LOCK));
+          ctx.fillStyle = `rgb(${Math.min(255, r * 1.5 + 30)},${Math.min(255, gg * 1.5 + 30)},${Math.min(255, b * 1.5 + 30)})`;
+          ctx.fillText(letters[(k + (g.seed[k] < pt ? 0 : shift)) % letters.length], (k % GLYPH + .5) * c, (Math.floor(k / GLYPH) + .5) * c);
+        }
+        ctx.globalAlpha = 1;
+      }
+      // 4. lock on: a scan sweeps down, the photo snaps in behind it, one white flash
+      const pl = Math.max(0, Math.min(1, (t - BITS - MOS - TXT) / LOCK));
+      if (pl > 0) {
+        const sy = pl * W;
+        ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, sy); ctx.clip(); ctx.drawImage(img, 0, 0, W, W); ctx.restore();
+        ctx.fillStyle = "#ff2d3a"; ctx.shadowColor = "#e50914"; ctx.shadowBlur = 16 * dpr; ctx.fillRect(0, sy - 2 * dpr, W, 3 * dpr); ctx.shadowBlur = 0;
+        if (pl > .85) { ctx.globalAlpha = (1 - pl) / .15 * .8; ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, W, W); ctx.globalAlpha = 1; }
+      }
+      // the readout: plays received, then the match
+      const got = Math.round(plays * Math.min(1, t / (BITS + MOS)));
+      status.textContent = t < BITS + MOS ? `${got.toLocaleString()} PLAYS IN` : t < END - LOCK * .3 ? "LOCKING ON…" : "MATCH FOUND";
+      onCount && onCount(got);
       if (t < END) raf = requestAnimationFrame(frame);
       else { avatarEl.classList.remove("is-reconstructing"); avatarEl.classList.add("is-revealed"); onDone && onDone(); }
     };
@@ -579,6 +623,15 @@ function setupProfiles() {
       <span class="avatar" aria-hidden="true">+</span><span class="profile__name">Add Profile</span>
     </button>`;
 
+  // Above the faces, the whole account arriving: plays received, then profiles identified.
+  const hudEl = document.createElement("p"); hudEl.className = "profiles__hud"; hudEl.setAttribute("aria-hidden", "true");
+  $(".profiles__title").before(hudEl);
+  const got = PROFILES.map(() => 0), total = PROFILES.reduce((a, p) => a + (FACE_PLAYS[p.name] || 0), 0);
+  let found = 0;
+  const hud = () => { const n = got.reduce((a, b) => a + b, 0);
+    hudEl.innerHTML = found >= PROFILES.length ? `<b>${total.toLocaleString()}</b> plays received · <b>${PROFILES.length}</b> profiles identified`
+      : `<i></i>Receiving data · <b>${n.toLocaleString()}</b> / ${total.toLocaleString()} plays · <b>${found}</b> of ${PROFILES.length} identified`; };
+  hud();
   // Rebuild each face from data, one after another; hovering replays it.
   [...document.querySelectorAll("#profile-list .profile")].forEach((b, i) => {
     const p = PROFILES[b.dataset.profile];
@@ -587,7 +640,7 @@ function setupProfiles() {
     let named = false, evT = 0;
     const reveal = () => {
       clearInterval(evT); ev.textContent = "Match found"; ev.classList.add("is-match");
-      if (named) return; named = true; b.setAttribute("aria-label", p.name);
+      if (named) return; named = true; found++; hud(); b.setAttribute("aria-label", p.name);
       const target = p.name, glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%#";
       let k = 0;
       const tick = setInterval(() => {
@@ -596,11 +649,11 @@ function setupProfiles() {
       }, 45);
       setTimeout(() => ev.classList.remove("is-match"), 1600);
     };
-    const av = b.querySelector(".avatar"), play0 = reconstruct(av, p.name, reveal);
+    const av = b.querySelector(".avatar"), play0 = reconstruct(av, p.name, reveal, (n) => { got[i] = n; hud(); });
     const play = () => { let j = 0; clearInterval(evT); ev.classList.remove("is-match"); evT = setInterval(() => { ev.textContent = bits[j++ % bits.length] || ""; }, 160); play0(); };
     b.setAttribute("aria-label", `Profile ${i + 1}`);
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { av.classList.add("is-revealed"); nm.textContent = p.name; return; }
-    setTimeout(play, 300 + i * 450);
+    setTimeout(play, 350 + i * 700);
     let last = 0;
     b.addEventListener("mouseenter", () => { if (av.classList.contains("is-revealed") && performance.now() - last > 3500) { last = performance.now(); play(); } });
   });
@@ -1665,7 +1718,7 @@ const castImg = (who) => `img/profiles/${who}.jpg`;
 // photo (a polaroid of home), phone (a call with chat bubbles), freeze (record scratch), rewind (VHS rewind).
 function sceneHTML(s) {
   let bg = "", extra = "", cls = "";
-  if (s.set || s.panes) { bg = setSceneHTML(s); cls += " scene--set"; }
+  if (s.set || s.panes) { bg = setSceneHTML(s); cls += ` scene--set${s.cut ? " scene--cut" : ""}`; }
   else if (s.dorm) bg = `<div class="scene__bg scene__bg--dorm">${dormSVG()}</div>`;
   else if (s.wall) bg = `<div class="scene__bg">${wallHTML()}</div>`;
   else if (s.montage?.length) bg = `<div class="montage${s.rewind ? " montage--rewind" : ""}" style="--cols:${Math.max(3, Math.ceil(s.montage.length / 2))}">${s.montage.map((m, k) =>
