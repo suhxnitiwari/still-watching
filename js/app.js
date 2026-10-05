@@ -156,10 +156,12 @@ function setupIntro(onDone) {
     return `<i style="--x:${x.toFixed(3)};--w:${(2 + Math.random() * 10).toFixed(1)}px;--c:${colors[i % colors.length]};--d:${(Math.random() * .35).toFixed(2)}s"></i>`;
   }).join("");
   const stopRain = titleRain(intro);
+  const mosaic = posterS(intro);
   $("#intro-start").focus();
   $("#intro-start").addEventListener("click", () => {
     if (intro.classList.contains("is-playing")) return;
     taDum();
+    mosaic.finish();
     intro.classList.add("is-playing");
     stopRain.burst();
     setTimeout(finish, matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3000);
