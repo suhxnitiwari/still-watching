@@ -1517,3 +1517,8 @@ button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red
 .avatar.is-reconstructing { box-shadow: 0 0 0 1px rgba(229, 9, 20, .8), 0 0 40px rgba(229, 9, 20, .45); transform: scale(1.04); transition: transform .4s; }
 .avatar.is-revealed { animation: faceLock .5s ease-out; }
 @keyframes faceLock { 0% { box-shadow: 0 0 0 3px #fff, 0 0 60px rgba(255, 255, 255, .6); } 100% { box-shadow: none; } }
+
+/* ---------- The intro S as a mosaic of the family's posters (js/mosaic.js) ---------- */
+/* Bigger than the plain S so the posters read; the boot lines move down to clear it. */
+.intro.has-mosaic .intro__logo { width: min(clamp(150px, 24vw, 300px), 27vh); }
+.intro.has-mosaic .intro__boot { top: calc(50% + 21.5vh + 14px); }
