@@ -1553,3 +1553,22 @@ button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red
 .intro__start:hover .intro__ctaIcon, .intro__start:focus-visible .intro__ctaIcon { background: #fff; color: var(--red); }
 .intro__start:hover .intro__ctaIcon::before, .intro__start:hover .intro__ctaIcon::after { border-color: #fff; }
 @media (prefers-reduced-motion: reduce) { .intro__cta::after, .intro__ctaIcon::before, .intro__ctaIcon::after, .intro__ctaReel span { animation: none; } }
+
+/* ---------- Every scene opens on where and when: big, centred, easy to read, then it steps aside ---------- */
+.slate { position: absolute; z-index: 3; top: 9%; left: 50%; transform: translateX(-50%); display: grid; justify-items: center; gap: 6px;
+  padding: 14px 28px 12px; text-align: center; pointer-events: none; opacity: 0; max-width: 86%;
+  background: rgba(8, 6, 10, .72); border-top: 3px solid var(--red); border-radius: 4px; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); backdrop-filter: blur(4px); }
+.slate b { font: 400 clamp(26px, 3.2vw, 48px)/1 var(--display); letter-spacing: .06em; color: #fff; }
+.slate span { font: 700 clamp(13px, 1.25vw, 18px)/1.2 Inter, sans-serif; letter-spacing: .22em; text-transform: uppercase; color: #f1d9a8; }
+.slate span:empty, .slate b:empty { display: none; }
+.scene.is-on .slate { animation: slateIn .6s cubic-bezier(.2, .8, .2, 1) .15s forwards, slateOut .6s ease 4.4s forwards; }
+@keyframes slateIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes slateOut { to { opacity: 0; transform: translate(-50%, -6px); } }
+.teaser .slate { top: 6%; padding: 6px 12px; }
+.teaser .slate b { font-size: clamp(14px, 3cqw, 26px); }
+.teaser .slate span { font-size: clamp(8px, 1.4cqw, 12px); }
+.scene__kicker:empty { display: none; }
+@media (prefers-reduced-motion: reduce) { .scene.is-on .slate { animation: none; opacity: 1; } }
+.slate i { display: none; font: 600 clamp(12px, 1.05vw, 15px)/1.2 Inter, sans-serif; font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
+.scene--set .slate i { display: block; }
+.scene--set:has(.slate) .scene__kicker { display: none; }

@@ -16,7 +16,7 @@ const LOOKS = {
 };
 LOOKS.suhani.scoop = true;
 // Younger me: nine and fresh off the plane, then thirteen and starting over in Texas.
-LOOKS.suhani9 = { ...LOOKS.suhani, top: "#d99a3a", sleeve: .45, bottom: "#5b78ad", shoe: "#f2f2f2", h: .64, necklace: false, scoop: false };
+LOOKS.suhani9 = { ...LOOKS.suhani, hairStyle: "mid", top: "#d99a3a", sleeve: .45, bottom: "#5b78ad", shoe: "#f2f2f2", h: .64, necklace: false, scoop: false };
 LOOKS.suhani13 = { ...LOOKS.suhani, top: "#66789b", sleeve: 1, bottom: "#2b2b33", h: .9, necklace: false, scoop: false };
 LOOKS.suhani11 = { ...LOOKS.suhani9, top: "#8a5bb0", h: .7 };
 // Amaira at every age: a toddler, a kindergartner, and now.
@@ -76,11 +76,18 @@ function personSVG(who, opt = {}) {
     return `<g class="leg leg--${side}"><line x1="${x}" y1="-152" x2="${x * 1.1}" y2="-14" stroke="${k.bottom}" stroke-width="28" stroke-linecap="round"/>
       <ellipse cx="${x * 1.25}" cy="-6" rx="19" ry="8" fill="${k.shoe}"/></g>`;
   };
-  const long = k.hairStyle === "long";
-  const hairBack = long
+  const long = k.hairStyle === "long" || k.hairStyle === "mid";
+  // "mid": shoulder-length, the way my hair was as a kid.
+  const hairBack = k.hairStyle === "mid"
+    ? `<path d="M-46 -366C-62 -424 62 -424 46 -366C58 -340 58 -316 62 -294C48 -286 34 -292 26 -302L-26 -302C-34 -292 -48 -286 -62 -294C-58 -316 -58 -340 -46 -366Z" fill="${k.hair}"/>`
+    : long
     ? `<path d="M-46 -366C-62 -424 62 -424 46 -366C64 -318 58 -248 72 -198C52 -186 32 -194 24 -208L-24 -208C-32 -194 -52 -186 -72 -198C-58 -248 -64 -318 -46 -366Z" fill="${k.hair}"/>`
     : "";
-  const hairFront = long
+  const hairFront = k.hairStyle === "mid"
+    ? `<path d="M-44 -354C-48 -404 -8 -414 12 -408C42 -402 50 -376 44 -346C34 -372 18 -386 -4 -388C-22 -382 -36 -372 -44 -354Z" fill="${k.hair}"/>
+       <path d="M-41 -362C-52 -336 -50 -312 -54 -296C-44 -292 -38 -300 -36 -310C-33 -326 -31 -340 -30 -350Z" fill="${k.hair}"/>
+       <path d="M41 -362C52 -336 50 -312 54 -296C44 -292 38 -300 36 -310C33 -326 31 -340 30 -350Z" fill="${k.hair}"/>`
+    : long
     ? `<path d="M-44 -354C-48 -404 -8 -414 12 -408C42 -402 50 -376 44 -346C34 -372 18 -386 -4 -388C-22 -382 -36 -372 -44 -354Z" fill="${k.hair}"/>
        <path d="M-41 -362C-56 -320 -50 -266 -60 -226C-48 -220 -40 -230 -36 -246C-32 -282 -30 -322 -30 -350Z" fill="${k.hair}"/>
        <path d="M41 -362C56 -320 50 -266 60 -226C48 -220 40 -230 36 -246C32 -282 30 -322 30 -350Z" fill="${k.hair}"/>`

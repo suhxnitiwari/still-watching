@@ -1709,12 +1709,12 @@ function friendsFilm() {
   const fr = DATA.profile.friends_race, { binges } = DATA;
   const big = binges.find((b) => b.show === "Friends");
   return [
-    { dur: 5, black: true, center: true, kicker: "December 1, 2019", line: "Friends is leaving<br><em>Netflix</em>", sub: "January 1, 2020. Thirty-one days left. Eighth grade, winter break coming." },
-    { dur: 5, img: backdropOf("Friends"), kicker: "December 2019", line: `${fr.december} episodes<br>in <em>one month</em>`, sub: "About six a day, every day.", viz: viz(spark({ from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] })) },
-    { dur: 5, black: true, center: true, kicker: fmtDate(big.date), line: `<span class="scene__counter" data-to="${big.episodes}">0</span> episodes<br>in <em>one day</em>`, sub: "Roughly eleven hours of Central Perk." },
-    { dur: 4.5, img: backdropOf("Friends"), alt: true, kicker: "December 25–31", line: `${fr.last_week} more,<br><em>racing the clock</em>`, sub: "Christmas Day alone: 8 episodes." },
-    { dur: 5, black: true, center: true, kicker: "December 31, 11:59 PM", line: "Just<br><em>one more</em>", sub: `Netflix logged ${fr.jan1} episodes on January 1, 2020. Past midnight. In denial.` },
-    { dur: 5.5, wall: true, center: true, kicker: "Then it was gone", line: `${fr.watched} of <em>${fr.total}</em>`, sub: "And on the very last night, I went back to where it started: the pilot." },
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: "December 1, 2019", kicker: "Eighth grade", line: "Friends is leaving<br><em>Netflix</em>", sub: "January 1, 2020. Thirty-one days left. Eighth grade, winter break coming." },
+    { dur: 5, img: backdropOf("Friends"), where: "Cupertino, California", when: "December 2019", kicker: "", line: `${fr.december} episodes<br>in <em>one month</em>`, sub: "About six a day, every day.", viz: viz(spark({ from: "2019-09", to: "2020-03", hot: ["2019-11", "2019-12"] })) },
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: fmtDate(big.date), kicker: "", line: `<span class="scene__counter" data-to="${big.episodes}">0</span> episodes<br>in <em>one day</em>`, sub: "Roughly eleven hours of Central Perk." },
+    { dur: 4.5, img: backdropOf("Friends"), alt: true, where: "Cupertino, California", when: "December 25–31, 2019", kicker: "", line: `${fr.last_week} more,<br><em>racing the clock</em>`, sub: "Christmas Day alone: 8 episodes." },
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: "December 31, 2019 · 11:59 PM", kicker: "", line: "Just<br><em>one more</em>", sub: `Netflix logged ${fr.jan1} episodes on January 1, 2020. Past midnight. In denial.` },
+    { dur: 5.5, wall: true, center: true, where: "Cupertino, California", when: "January 1, 2020", kicker: "Then it was gone", line: `${fr.watched} of <em>${fr.total}</em>`, sub: "And on the very last night, I went back to where it started: the pilot." },
   ];
 }
 
@@ -1723,12 +1723,12 @@ function summerFilm() {
   const gg = w.summer_2025.top[0];
   const july = monthly.find((m) => m.month === "2025-07");
   return [
-    { dur: 5, dorm: true, kicker: "Austin · spring 2025", line: "One more<br><em>final</em>", sub: `Freshman year on a family account: ${p.college.fall_2024} views a day in the fall.` },
-    { dur: 4.5, black: true, center: true, kicker: "May 2025", line: "Back on the<br><em>home Wi-Fi</em>", sub: "Dallas. The TV recognizes me again." },
-    { dur: 5.5, img: backdropOf(gg.show), kicker: "June – July 2025", line: `${gg.views} episodes<br>of <em>${esc(gg.show)}</em>`, sub: "Starving. Absolutely starving." },
-    { dur: 5, black: true, center: true, kicker: `${fmtShort(streak.from)} – ${fmtShort(streak.to)}`, line: `<span class="scene__counter" data-to="${streak.days}">0</span> days<br>in a <em>row</em>`, sub: "The longest streak of my life.", viz: viz(spark({ from: "2025-04", to: "2025-10", hot: ["2025-06", "2025-07"] })) },
-    { dur: 5, montage: w.summer_2025.top.slice(0, 5).map((s) => ({ img: posterOf(s.show), tag: `${s.views}` })), center: true, kicker: "July 2025", line: `${july.views} views<br>in <em>one month</em>`, sub: "My biggest month since Friends left." },
-    { dur: 5, img: backdropOf(w.fall_2025.top[0].show), alt: true, kicker: "August 2025", line: "Back to<br><em>Austin</em>", sub: `Sophomore fall: ${p.college.fall_2025} views a day. See you next summer.` },
+    { dur: 5, dorm: true, where: "Her dorm, West Campus, Austin", when: "Spring 2025", kicker: "", line: "One more<br><em>final</em>", sub: `Freshman year on a family account: ${p.college.fall_2024} views a day in the fall.` },
+    { dur: 4.5, black: true, center: true, where: "Home, Dallas, Texas", when: "May 2025", kicker: "", line: "Back on the<br><em>home Wi-Fi</em>", sub: "Dallas. The TV recognizes me again." },
+    { dur: 5.5, img: backdropOf(gg.show), where: "Home, Dallas, Texas", when: "June – July 2025", kicker: "", line: `${gg.views} episodes<br>of <em>${esc(gg.show)}</em>`, sub: "Starving. Absolutely starving." },
+    { dur: 5, black: true, center: true, where: "Home, Dallas, Texas", when: `${fmtShort(streak.from)} – ${fmtShort(streak.to)}, 2025`, kicker: "", line: `<span class="scene__counter" data-to="${streak.days}">0</span> days<br>in a <em>row</em>`, sub: "The longest streak of my life.", viz: viz(spark({ from: "2025-04", to: "2025-10", hot: ["2025-06", "2025-07"] })) },
+    { dur: 5, montage: w.summer_2025.top.slice(0, 5).map((s) => ({ img: posterOf(s.show), tag: `${s.views}` })), center: true, where: "Home, Dallas, Texas", when: "July 2025", kicker: "", line: `${july.views} views<br>in <em>one month</em>`, sub: "My biggest month since Friends left." },
+    { dur: 5, img: backdropOf(w.fall_2025.top[0].show), alt: true, where: "Austin, Texas", when: "August 2025", kicker: "Sophomore year", line: "Back to<br><em>Austin</em>", sub: `Sophomore fall: ${p.college.fall_2025} views a day. See you next summer.` },
   ];
 }
 
@@ -1856,7 +1856,7 @@ function sceneHTML(s) {
   if (s.freeze) { cls += " scene--freeze"; extra += `<span class="scratch">*record scratch* *freeze frame*</span>`; }
   if (s.rewind) { cls += " scene--rewind"; extra += `<span class="rewind">◀◀ REWIND</span>`; }
   return `<section class="scene${s.viz ? " scene--viz" : ""}${s.center ? " scene--center" : ""}${s.alt ? " scene--alt" : ""}${s.accent ? ` scene--${s.accent}` : ""}${cls}" style="--dur:${s.dur + 1}s">
-    ${bg}${extra}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker || "")}</p>${s.line ? `<h2 class="scene__line">${s.line}</h2>` : ""}${s.sub ? `<p class="scene__sub">${esc(s.sub)}</p>` : ""}${s.viz || ""}</div></section>`;
+    ${bg}${extra}${s.where || s.when ? `<div class="slate"><b>${esc(s.where || "")}</b><span>${esc(s.when || "")}</span>${s.kicker ? `<i>${esc(s.kicker)}</i>` : ""}</div>` : ""}<div class="scene__text"><p class="scene__kicker">${esc(s.kicker || "")}</p>${s.line ? `<h2 class="scene__line">${s.line}</h2>` : ""}${s.sub ? `<p class="scene__sub">${esc(s.sub)}</p>` : ""}${s.viz || ""}</div></section>`;
 }
 
 // ---------- The five seasons: my life on one Netflix account ----------
@@ -1864,7 +1864,7 @@ const era = (k) => DATA.life.find((e) => e.key === k);
 const postersOf = (list) => list.map((s) => ({ img: posterOf(s.show || s), tag: "" })).filter((m) => m.img);
 const showViews = (name) => DATA.shows[name]?.views || 0;
 const amairaYear = (y) => DATA.family?.amaira?.years.find((x) => x.year === y);
-const amairaCut = (y) => { const a = amairaYear(y); return a ? [{ dur: 4.5, cast: "amaira", kicker: `Meanwhile · ${y}`, line: `Amaira's<br><em>${esc(a.show)}</em> era`, sub: `My little sister's #1 that year. Side character, main-character energy.`, say: y < 2020 ? "I'm the side character." : "Still the side character." }] : []; };
+const amairaCut = (y) => { const a = amairaYear(y); return a ? [{ dur: 4.5, cast: "amaira", where: y < 2020 ? "Cupertino, California" : "Dallas, Texas", when: `${y}`, kicker: "Meanwhile", line: `Amaira's<br><em>${esc(a.show)}</em> era`, sub: `My little sister's #1 that year. Side character, main-character energy.`, say: y < 2020 ? "I'm the side character." : "Still the side character." }] : []; };
 
 // S1 · Elementary
 // S1:E1, the cold open. Move-in day in West Campus, the household wall, and Papa.
@@ -1876,7 +1876,7 @@ function pilotFilm() {
   const day = fmtDate(dates.austin);
   const car = { kind: "car", x: 1060, y: 760, riders: ["mom", "dad", "amaira"], waver: "amaira", waveAt: 1.8 };
   return [
-    { dur: 7, set: "westcampus", kicker: `${day} · West Campus, Austin`,
+    { dur: 7, set: "westcampus", where: "West Campus, Austin, Texas", when: `${day}`, kicker: "Move-in day",
       cam: [[0, 800, 450, 1600], [7, 740, 480, 1320]],
       things: [
         { who: "suhani", x: 650, ...WC }, { who: "mom", x: 730, ...WC }, { who: "amaira", x: 810, ...WC },
@@ -1884,7 +1884,7 @@ function pilotFilm() {
         { ...car, riders: [] },
       ],
       credits: [[.6, 2.6, "A Suhani Tiwari Original"], [3.8, 3, "<small>A Netflix-history docuseries</small>Still Watching", true]] },
-    { dur: 9, set: "westcampus", kicker: "The goodbye",
+    { dur: 9, set: "westcampus", where: "West Campus, Austin, Texas", when: `${day}`, kicker: "The goodbye",
       cam: [[0, 700, 500, 900], [.55, 700, 500, 900], [.55, 700, 468, 470], [3.75, 700, 468, 470], [3.75, 560, 462, 470], [6.15, 560, 462, 470], [6.15, 840, 520, 400], [8.5, 840, 520, 400], [8.5, 700, 500, 900]],
       things: [
         { who: "dad", x: 560, ...WC },
@@ -1895,7 +1895,7 @@ function pilotFilm() {
       ],
       talk: [[.6, "mom", "Call me when you eat dinner. Not after."], [3.8, "dad", "And go to class, beta."], [6.2, "amaira", "Can I have your room now?"]],
       credits: [[.8, 2.4, "Starring<b>Suhani Tiwari</b>"], [4.6, 2.6, "With<b>Papa · Mumma · Amaira</b>"]] },
-    { dur: 8, set: "westcampus", kicker: "8:12 PM",
+    { dur: 8, set: "westcampus", where: "West Campus, Austin, Texas", when: `${day} · 8:12 PM`, kicker: "",
       cam: [[0, 800, 450, 1600], [4.8, 800, 450, 1600], [8, 720, 480, 600]],
       things: [
         { who: "suhani", x: 720, ...WC, keys: [[1.7, { pose: "wave" }], [5.2, { pose: "idle" }], [5.5, { mood: "sad" }]] },
@@ -1903,7 +1903,7 @@ function pilotFilm() {
       ],
       talk: [[2.1, "amaira", "Byeee, Didi!"]],
       credits: [[.5, 2.6, "Created by<b>Suhani Tiwari</b>"], [5.6, 2.3, "From<b>four Netflix exports</b>"]] },
-    { dur: 9.5, set: "dorm", kicker: "11:47 PM · her dorm",
+    { dur: 9.5, set: "dorm", where: "Her dorm, West Campus, Austin", when: `${day} · 11:47 PM`, kicker: "",
       cam: [[0, 800, 450, 1600], [9.5, 760, 470, 1350]],
       things: [
         { kind: "tv", x: 1095, y: 230, keys: [[7.6, { screen: "home" }]] },
@@ -1912,21 +1912,21 @@ function pilotFilm() {
             [6.4, { rot: -78 }], [7, { rot: 0, sit: 1 }], [7.1, { pose: "remote" }], [7.7, { mood: "smile" }]] },
       ],
       talk: [[3.9, "suhani", "Okay. One episode. Just to feel normal."]] },
-    { dur: 7.5, set: "dorm", kicker: "Netflix · one episode",
+    { dur: 7.5, set: "dorm", where: "Her dorm, West Campus, Austin", when: `${day} · 11:52 PM`, kicker: "One episode",
       cam: [[0, 1295, 345, 660], [2.4, 1295, 345, 560], [4.2, 1295, 345, 540], [4.2, 520, 500, 520], [7.5, 520, 495, 470]],
       things: [
         { kind: "tv", x: 1095, y: 230, keys: [[0, { screen: "home" }], [2.4, { screen: "blocked" }]] },
         { who: "suhani", ...DORM_BED, start: { sit: 1, pose: "remote" }, keys: [[4.2, { mood: "shock" }], [4.5, { pose: "face" }]] },
       ],
       talk: [[4.6, "suhani", "Wait… WHAT?"]] },
-    { dur: 10.5, kicker: "Calling Papa",
+    { dur: 10.5, where: "Austin ↔ Dallas", when: `${day} · 11:55 PM`, kicker: "Calling Papa",
       panes: [
         { set: "dorm", cam: [[0, 520, 500, 600]], things: [{ who: "suhani", ...DORM_BED, start: { sit: 1, pose: "phone" }, keys: [[8, { mood: "shock" }], [9.3, { mood: "sad" }]] }] },
         { set: "living", cam: [[0, 800, 500, 760], [10.5, 800, 480, 680]], glow: [[".lv-tv", 0]],
           things: [{ who: "dad", x: 800, y: 742, s: .9, start: { sit: 1, pose: "phone", mood: "flat" }, keys: [[7.9, { mood: "smile" }]] }] },
       ],
       talk: [[.5, "suhani", "Papa, Netflix says I'm not part of the household."], [4.2, "suhani", "Can you let me in?"], [6.3, "dad", "Sorry, kiddo.", 1.4], [7.9, "dad", "You're on your own."]] },
-    { dur: 8.5, set: "dorm", kicker: "Still 11:58 PM",
+    { dur: 8.5, set: "dorm", where: "Her dorm, West Campus, Austin", when: `${day} · 11:58 PM`, kicker: "",
       cam: [[0, 800, 450, 1600], [8.5, 420, 560, 760]],
       things: [
         { kind: "tv", x: 1095, y: 230, keys: [[0, { screen: "blocked" }]] },
@@ -1934,7 +1934,7 @@ function pilotFilm() {
       ],
       talk: [[.8, "suhani", "Ugh. Every time I moved, Netflix made it better."], [4.6, "suhani", "Every. Single. Time."]],
       credits: [[6.2, 2.3, "<small>Episode 1</small>You're On Your Own, Kid", true]] },
-    { dur: 5.5, rewind: true, montage: postersOf(DATA.yearly.slice().reverse().map((y) => y.show)), center: true, kicker: `${new Date(dates.austin).getFullYear()} → 2015`, line: "Let's<br><em>rewind</em>", sub: `${w.first_semester.views} views my first semester. Every move before this one, Netflix was there. It starts in 2015.` },
+    { dur: 5.5, rewind: true, montage: postersOf(DATA.yearly.slice().reverse().map((y) => y.show)), center: true, where: "Austin → Cupertino", when: `${new Date(dates.austin).getFullYear()} → 2015`, kicker: "", line: "Let's<br><em>rewind</em>", sub: `${w.first_semester.views} views my first semester. Every move before this one, Netflix was there. It starts in 2015.` },
   ];
 }
 
@@ -1949,7 +1949,7 @@ function helloFilm() {
   const at = (date) => months.findIndex((m) => m.month === date.slice(0, 7));
   const scroll = [first, "Phineas and Ferb", "LEGO Ninjago", "How to Train Your Dragon 2", "The Pirate Fairy", "Jessie"].filter((s) => ART[s]);
   return [
-    { dur: 10, set: "playground", kicker: "June 2015 · Cupertino · Suhani, 9",
+    { dur: 10, set: "playground", where: "A playground in Cupertino, California", when: "June 2015", kicker: "Suhani, 9",
       cam: [[0, 700, 560, 1100], [2.4, 800, 560, 900], [4.85, 800, 560, 900], [4.85, 1000, 575, 560], [7.1, 1000, 575, 560], [7.1, 760, 575, 420], [8.6, 760, 575, 440], [10, 600, 560, 800]],
       things: [
         { who: "kidA", x: 920, ...PG, keys: [[4.8, { pose: "hips" }]] }, { who: "kidB", x: 1030, ...PG, keys: [[7.2, { pose: "face" }]] }, { who: "kidC", x: 1130, ...PG },
@@ -1958,7 +1958,7 @@ function helloFilm() {
             [8.6, { x: 760, walk: 1 }], [10, { x: 420, e: "linear" }]] },
       ],
       talk: [[2.6, "suhani9", "Hi! My name is Suhani."], [4.9, "kidA", "Why do you talk like that?"], [7.3, "kidB", "Say it again! Say it again!"]] },
-    { dur: 10.5, set: "living", kicker: "That night · home", glow: [[".lv-tv", 0]], 
+    { dur: 10.5, set: "living", where: "Home, Cupertino, California", when: "June 2015 · that night", kicker: "", glow: [[".lv-tv", 0]], 
       cam: [[0, 800, 500, 1050], [.5, 800, 500, 1050], [.5, 650, 470, 580], [6.3, 650, 470, 580], [6.3, 800, 540, 560], [8.8, 800, 540, 560], [8.8, 950, 490, 580]],
       things: [
         { who: "dad", x: 640, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
@@ -1966,21 +1966,21 @@ function helloFilm() {
         { who: "mom", x: 960, ...COUCH("mom"), start: { sit: 1, pose: "lap" } },
       ],
       talk: [[.6, "dad", "My colleague says everyone has this Netflix now."], [4.2, "dad", `Here. ${first}.`], [6.4, "suhani9", "I want my Indian channels."], [8.9, "mom", "Keep scrolling, beta."]] },
-    { dur: 8, set: "browse", kicker: `Two months of scrolling · ${fmtDate(jessie.first)}`,
+    { dur: 8, set: "browse", where: "Home, Cupertino, California", when: fmtDate(jessie.first), kicker: "Two months of scrolling",
       cam: [[0, 800, 450, 1600], [5.6, 800, 450, 1600], [8, 700, 560, 1100]],
       things: [{ kind: "browse", x: 0, shows: scroll, row: "Popular on Netflix", keys: [[.6, { x: 0 }], [5.2, { x: (scroll.length - 1) * TILE }]] }],
       talk: [[5.4, "suhani9", "Wait. That one."]] },
-    { dur: 8.5, set: "living", kicker: "Practicing every line", glow: [[".lv-tv", 0]],
+    { dur: 8.5, set: "living", where: "Home, Cupertino, California", when: `${fmtMonth(jessie.first.slice(0, 7))}`, kicker: "Practicing every line", glow: [[".lv-tv", 0]],
       cam: [[0, 800, 560, 760], [8.5, 800, 545, 560]],
       things: [{ who: "suhani9", x: 800, y: 840, s: .95, keys: [[.4, { pose: "hips" }], [2.4, { pose: "wave" }], [4.3, { pose: "hips" }]] }],
       talk: [[.6, "suhani9", "Oh. My. Gosh."], [2.4, "suhani9", "Oh my gosh!"], [4.4, "suhani9", "Oh my gosh, y'all."]],
       credits: [[6.4, 2, `Jessie: a nanny from <b>Texas</b>`]] },
-    { dur: 9.5, set: "chart", kicker: "June 2015 → August 2016 · my views per month",
+    { dur: 9.5, set: "chart", where: "Cupertino, California", when: "June 2015 – August 2016", kicker: "My views per month",
       things: [{ kind: "bars", title: "WHAT TAUGHT ME AMERICAN", keys: [[.4, { p: 0 }], [7.6, { p: 1, e: "linear" }]],
         data: months.map((m) => ({ v: m.views, label: label(m.month) + (m.month.endsWith("-01") ? ` ’${m.month.slice(2, 4)}` : ""), hi: m.month >= jessie.first.slice(0, 7) })),
         marks: [{ i: at(jessie.first), text: "Jessie", sub: fmtDate(jessie.first) }, { i: at(lm.first), text: "Liv and Maddie", sub: fmtDate(lm.first), row: 1 }, { i: at(glc.first), text: "Good Luck Charlie", sub: fmtDate(glc.first) }],
         meter: { label: "Confidence (self-reported)", keys: [[0, 0], [at(jessie.first) + 1, 10], [months.length, 100]], end: "100%: AMERICAN" } }] },
-    { dur: 9, set: "playground", kicker: "Summer 2016 · same playground · Suhani, 10",
+    { dur: 9, set: "playground", where: "Same playground, Cupertino", when: "Summer 2016", kicker: "Suhani, 10",
       cam: [[0, 860, 560, 900], [9, 820, 570, 700]],
       things: [
         { who: "kidA", x: 640, ...PG, keys: [[4.4, { pose: "hips" }]] },
@@ -1995,22 +1995,12 @@ function amairaFilm() {
   const a = DATA.family?.arrival;
   if (!a) return [];
   return [
-    { dur: 5, black: true, center: true, kicker: "November 13, 2016", line: "Plus<br><em>one</em>", sub: "My little sister, Amaira, comes home." },
-    { dur: 5, cast: "amaira", kicker: "Introducing", line: "The side<br><em>character</em>", sub: "Day one, she already had a fan base.", say: "Hi. I'll be taking over the TV in about two years." },
-    { dur: 5.5, black: true, center: true, kicker: "Big sister on the couch", line: `<span class="scene__counter" data-to="${Math.round(a.me_after)}">0</span> episodes<br>a <em>week</em>`, sub: `Up from about ${Math.round(a.me_before)} before she arrived. New baby, busy parents.` },
-    { dur: 6, img: backdropOf("Good Luck Charlie"), kicker: "What I picked", line: "Good Luck<br><em>Charlie</em>", sub: `A Disney sitcom about a family with a brand-new baby girl. ${a.glc_6mo} episodes in six months. Uncomfortably familiar.` },
-    { dur: 5.5, cast: "dad", kicker: "Meanwhile, Dad", line: `${Math.round(a.dad_before)} a week<br>→ <em>${a.dad_after}</em>`, sub: "Newborn life. The one show he did watch that week: Roman Empire, episode \"Born in the Purple.\"" },
-    { dur: 5, wall: true, center: true, kicker: "Big sister mode", line: "Good luck,<br><em>Amaira</em>", sub: `Years later she'd copy my shows: ${DATA.family.me_to_sister.first} of ${DATA.family.me_to_sister.shared}, every one after me.` },
-  ];
-}
-function kidsProfileFilm() {
-  const d = DATA.family?.detective, el = era("elementary");
-  return [
-    { dur: 5, cast: "suhani", age: 11, kicker: "2017", line: "Dad's<br><em>profile</em>", sub: "Technically his. Practically mine.", say: "He wasn't using it." },
-    ...(d ? [{ dur: 5, black: true, center: true, kicker: "Dad's profile, 2017", line: `<span class="scene__counter" data-to="${d.kids_file["2017"]}">0</span><br><em>views</em>`, sub: "Jessie, Liv and Maddie, Lab Rats. Very few of them were Dad." }] : []),
-    { dur: 5, montage: postersOf(["Liv and Maddie", "Lab Rats", "Jessie", "Mighty Med", "Bunk'd", "Good Luck Charlie"]), center: true, kicker: "Peak Disney", line: "The Disney<br><em>years</em>", sub: "" },
-    { dur: 5, img: backdropOf("Mighty Med"), alt: true, kicker: "Mother's Day 2017", line: "13 episodes of<br><em>Mighty Med</em>", sub: "Sorry, Mumma." },
-    { dur: 5.5, black: true, center: true, kicker: d ? fmtDate(d.my_profile_from) : "December 2017", line: "My own<br><em>profile</em>", sub: d ? `And Dad's profile went quiet: ${d.kids_file["2018"]} views the next year.` : "" },
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: "November 13, 2016", kicker: "", line: "Plus<br><em>one</em>", sub: "My little sister, Amaira, comes home." },
+    { dur: 5, cast: "amaira", where: "Cupertino, California", when: "November 2016", kicker: "Introducing", line: "The side<br><em>character</em>", sub: "Day one, she already had a fan base.", say: "Hi. I'll be taking over the TV in about two years." },
+    { dur: 5.5, black: true, center: true, where: "Home, Cupertino, California", when: "November 2016", kicker: "Big sister on the couch", line: `<span class="scene__counter" data-to="${Math.round(a.me_after)}">0</span> episodes<br>a <em>week</em>`, sub: `Up from about ${Math.round(a.me_before)} before she arrived. New baby, busy parents.` },
+    { dur: 6, img: backdropOf("Good Luck Charlie"), where: "Home, Cupertino, California", when: "November 2016 – May 2017", kicker: "What I picked", line: "Good Luck<br><em>Charlie</em>", sub: `A Disney sitcom about a family with a brand-new baby girl. ${a.glc_6mo} episodes in six months. Uncomfortably familiar.` },
+    { dur: 5.5, cast: "dad", where: "Home, Cupertino, California", when: "November 2016", kicker: "Meanwhile, Dad", line: `${Math.round(a.dad_before)} a week<br>→ <em>${a.dad_after}</em>`, sub: "Newborn life. The one show he did watch that week: Roman Empire, episode \"Born in the Purple.\"" },
+    { dur: 5, wall: true, center: true, where: "Cupertino, California", when: "November 2016", kicker: "Big sister mode", line: "Good luck,<br><em>Amaira</em>", sub: `Years later she'd copy my shows: ${DATA.family.me_to_sister.first} of ${DATA.family.me_to_sister.shared}, every one after me.` },
   ];
 }
 
@@ -2018,38 +2008,38 @@ function kidsProfileFilm() {
 function ownProfileFilm() {
   const ms = era("middle");
   return [
-    { dur: 5.5, cast: "suhani", age: 12, kicker: "Season 2 · Middle School", line: "The family-<br><em>drama</em> era", sub: "Freeform, the CW and a lot of secrets.", say: "Everyone on TV was adopted or switched at birth." },
-    { dur: 5.5, montage: postersOf(ms.top.slice(0, 6)), center: true, kicker: "2017 – 2020", line: "Switched at Birth,<br><em>The Fosters</em>", sub: `${listOf(ms.top.slice(0, 4).map((s) => s.show))}.` },
-    { dur: 5, img: backdropOf("Baby Daddy"), kicker: "Attachment issues, chapter 1", line: "Finale, then<br><em>back to Season 5</em>", sub: "30 more episodes after the ending." },
-    { dur: 5, montage: DATA.loyalty.after_finale.map((x) => ({ img: posterOf(x.show), tag: `+${x.after}` })).filter((m) => m.img), center: true, kicker: "Episodes after the finale", line: "I don't do<br><em>goodbyes</em>", sub: "" },
-    { dur: 5, img: backdropOf("The Fosters"), alt: true, kicker: "The Fosters", line: "104 of<br><em>104</em>", sub: "Every single episode." },
-    { dur: 4.5, cast: "suhani", age: 13, kicker: "Pattern detected", line: "Commitment<br><em>issues?</em>", sub: "", say: "Other way around." },
+    { dur: 5.5, cast: "suhani", age: 12, where: "Cupertino, California", when: "Fall 2017", kicker: "Season 2 · Middle School", line: "The family-<br><em>drama</em> era", sub: "Freeform, the CW and a lot of secrets.", say: "Everyone on TV was adopted or switched at birth." },
+    { dur: 5.5, montage: postersOf(ms.top.slice(0, 6)), center: true, where: "Cupertino, California", when: "2017 – 2020", kicker: "" , line: "Switched at Birth,<br><em>The Fosters</em>", sub: `${listOf(ms.top.slice(0, 4).map((s) => s.show))}.` },
+    { dur: 5, img: backdropOf("Baby Daddy"), where: "Cupertino, California", when: "2017 – 2020", kicker: "Attachment issues, chapter 1", line: "Finale, then<br><em>back to Season 5</em>", sub: "30 more episodes after the ending." },
+    { dur: 5, montage: DATA.loyalty.after_finale.map((x) => ({ img: posterOf(x.show), tag: `+${x.after}` })).filter((m) => m.img), center: true, where: "Cupertino, California", when: "2017 – 2020", kicker: "Episodes after the finale", line: "I don't do<br><em>goodbyes</em>", sub: "" },
+    { dur: 5, img: backdropOf("The Fosters"), alt: true, where: "Cupertino, California", when: "2017 – 2020", kicker: "The Fosters", line: "104 of<br><em>104</em>", sub: "Every single episode." },
+    { dur: 4.5, cast: "suhani", age: 13, where: "Cupertino, California", when: "2019", kicker: "Pattern detected", line: "Commitment<br><em>issues?</em>", sub: "", say: "Other way around." },
   ];
 }
 function vampireFilm() {
   return [
-    { dur: 5, black: true, center: true, kicker: "December 22, 2018", line: "Day one of<br><em>winter break</em>", sub: "Twelve years old. A show about vampires in Virginia." },
-    { dur: 5.5, img: backdropOf("The Vampire Diaries"), kicker: "The Vampire Diaries", line: `<span class="scene__counter" data-to="${showViews("The Vampire Diaries")}">0</span><br><em>episodes</em>`, sub: "22 in the last ten days of December. 48 in March. All of it." },
-    { dur: 5, montage: postersOf(["The Vampire Diaries", "The Originals", "Riverdale", "Jane The Virgin", "Gossip Girl"]), center: true, kicker: "The CW era begins", line: "Vampires,<br><em>then everything</em>", sub: "Binged, every one." },
-    { dur: 5, img: backdropOf("The Originals"), alt: true, kicker: "Then the spin-off", line: "The<br><em>Originals</em>", sub: `${showViews("The Originals")} more episodes. I don't leave a universe once I'm in.` },
-    { dur: 4.5, cast: "suhani", age: 12, kicker: "Team?", line: "Damon<br><em>or Stefan</em>", sub: "The data can't say. I can.", say: "Not answering that." },
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: "December 22, 2018", kicker: "Day one of winter break", line: "Day one of<br><em>winter break</em>", sub: "Twelve years old. A show about vampires in Virginia." },
+    { dur: 5.5, img: backdropOf("The Vampire Diaries"), where: "Cupertino, California", when: "December 2018 – March 2019", kicker: "The Vampire Diaries", line: `<span class="scene__counter" data-to="${showViews("The Vampire Diaries")}">0</span><br><em>episodes</em>`, sub: "22 in the last ten days of December. 48 in March. All of it." },
+    { dur: 5, montage: postersOf(["The Vampire Diaries", "The Originals", "Riverdale", "Jane The Virgin", "Gossip Girl"]), center: true, where: "Cupertino, California", when: "2019", kicker: "The CW era begins", line: "Vampires,<br><em>then everything</em>", sub: "Binged, every one." },
+    { dur: 5, img: backdropOf("The Originals"), alt: true, where: "Cupertino, California", when: "2019", kicker: "Then the spin-off", line: "The<br><em>Originals</em>", sub: `${showViews("The Originals")} more episodes. I don't leave a universe once I'm in.` },
+    { dur: 4.5, cast: "suhani", age: 12, where: "Cupertino, California", when: "2019", kicker: "Team?", line: "Damon<br><em>or Stefan</em>", sub: "The data can't say. I can.", say: "Not answering that." },
   ];
 }
 function sentHomeFilm() {
   const p = DATA.profile, g = DATA.gaps.find((x) => x.from.startsWith("2020"));
   return [
-    { dur: 5, black: true, center: true, kicker: "March 13, 2020", line: "Sent<br><em>home</em>", sub: `Schools closed. February: ${p.covid.feb_2020} views. March: ${p.covid.march_2020}.` },
-    { dur: 5, img: backdropOf("The Vampire Diaries"), alt: true, kicker: "May 25, 2020 · lockdown", line: "11 episodes<br>in <em>one day</em>", sub: "Back to Mystic Falls." },
-    { dur: 5, img: backdropOf("13 Reasons Why"), kicker: "July 2020", line: "13 Reasons<br><em>Why</em>", sub: "The darkest I get. The COVID summer before the move." },
-    ...(g ? [{ dur: 5.5, black: true, center: true, kicker: "Summer 2020", line: "Cupertino<br>to <em>Dallas</em>", sub: `Then ${g.days} days with nothing on. A new state, a new school, and no time for TV.` }] : []),
-    { dur: 8, set: "playground", tx: true, kicker: "Fall 2020 · Dallas · Suhani, 14",
+    { dur: 5, black: true, center: true, where: "Cupertino, California", when: "March 13, 2020", kicker: "", line: "Sent<br><em>home</em>", sub: `Schools closed. February: ${p.covid.feb_2020} views. March: ${p.covid.march_2020}.` },
+    { dur: 5, img: backdropOf("The Vampire Diaries"), alt: true, where: "Cupertino, California", when: "May 25, 2020", kicker: "Lockdown", line: "11 episodes<br>in <em>one day</em>", sub: "Back to Mystic Falls." },
+    { dur: 5, img: backdropOf("13 Reasons Why"), where: "Cupertino, California", when: "July 2020", kicker: "", line: "13 Reasons<br><em>Why</em>", sub: "The darkest I get. The COVID summer before the move." },
+    ...(g ? [{ dur: 5.5, black: true, center: true, where: "Cupertino → Dallas", when: "Summer 2020", kicker: "", line: "Cupertino<br>to <em>Dallas</em>", sub: `Then ${g.days} days with nothing on. A new state, a new school, and no time for TV.` }] : []),
+    { dur: 8, set: "playground", tx: true, where: "A new school, Dallas, Texas", when: "Fall 2020", kicker: "Suhani, 14",
       cam: [[0, 860, 540, 1200], [4, 860, 540, 1200], [4, 520, 555, 520]],
       things: [
         { who: "kidA", x: 1050, ...PG, s: .8, start: { pose: "hips" } }, { who: "kidB", x: 1160, ...PG, s: .8, keys: [[1, { pose: "wave" }], [2.4, { pose: "idle" }]] }, { who: "kidC", x: 1270, ...PG, s: .8 },
         { who: "suhani13", x: 520, ...PG, start: { mood: "flat" }, keys: [[3.8, { mood: "sad" }]] },
       ],
       talk: [[4.2, "suhani13", "New state. New playground. New kid. Again."]] },
-    { dur: 7.5, set: "living", glow: tvGlow, kicker: "The shows that already felt like home",
+    { dur: 7.5, set: "living", glow: tvGlow, where: "Home, Dallas, Texas", when: "Fall 2020", kicker: "The shows that already felt like home",
       cam: [[0, 800, 520, 1000], [7.5, 800, 500, 620]],
       things: [{ who: "suhani13", x: 800, ...COUCH("suhani13"), start: { sit: 1, pose: "remote", mood: "flat" }, keys: [[3.2, { mood: "smile" }]] }],
       talk: [[.8, "suhani13", "Okay. Something I already know."], [3.4, "suhani13", "Hi, Mystic Falls. Missed you."]],
@@ -2061,39 +2051,39 @@ function sentHomeFilm() {
 function darkFilm() {
   const d = DATA.dark_years;
   return [
-    { dur: 5, cast: "suhani", age: 15, kicker: "Season 3 · High School", line: "My \"dark\"<br><em>era</em>", sub: "Spoiler: it wasn't that dark.", say: "I can't handle actual horror." },
-    { dur: 5.5, montage: postersOf(d.shows.map((x) => x.show)), center: true, kicker: "2020 – 2021", line: `${d.by_year["2021"]}%<br><em>dark genres</em>`, sub: `${listOf(d.shows.map((x) => x.show))}. Teen mysteries and a missing plane.` },
-    { dur: 5, img: backdropOf("Stranger Things"), alt: true, kicker: "January 2021", line: "My darkest<br><em>month</em>", sub: "Stranger Things, in a COVID winter." },
-    { dur: 5, img: backdropOf("Manifest"), kicker: "July 24, 2021", line: "16 episodes<br>in <em>one day</em>", sub: "Manifest. A plane disappears for five years. I disappeared for one Saturday." },
+    { dur: 5, cast: "suhani", age: 15, where: "Dallas, Texas", when: "Fall 2020", kicker: "Season 3 · High School", line: "My \"dark\"<br><em>era</em>", sub: "Spoiler: it wasn't that dark.", say: "I can't handle actual horror." },
+    { dur: 5.5, montage: postersOf(d.shows.map((x) => x.show)), center: true, where: "Dallas, Texas", when: "2020 – 2021", kicker: "", line: `${d.by_year["2021"]}%<br><em>dark genres</em>`, sub: `${listOf(d.shows.map((x) => x.show))}. Teen mysteries and a missing plane.` },
+    { dur: 5, img: backdropOf("Stranger Things"), alt: true, where: "Dallas, Texas", when: "January 2021", kicker: "My darkest month", line: "My darkest<br><em>month</em>", sub: "Stranger Things, in a COVID winter." },
+    { dur: 5, img: backdropOf("Manifest"), where: "Dallas, Texas", when: "July 24, 2021", kicker: "", line: "16 episodes<br>in <em>one day</em>", sub: "Manifest. A plane disappears for five years. I disappeared for one Saturday." },
     ...amairaCut(2021),
   ];
 }
 function greysFilm() {
   return [
-    { dur: 5, img: backdropOf("Grey's Anatomy"), kicker: "May – June 2021", line: "The Grey's<br><em>summer</em>", sub: `${showViews("Grey's Anatomy")} episodes of a medical show.` },
-    { dur: 5, black: true, center: true, kicker: "May 25, 2021", line: `<span class="scene__counter" data-to="13">0</span> episodes<br>in <em>one day</em>`, sub: "On a Tuesday." },
-    { dur: 5, montage: postersOf(era("high").top.slice(0, 6)), center: true, kicker: "The high school lineup", line: "Summer<br><em>binge mode</em>", sub: "" },
-    { dur: 5, cast: "suhani", age: 15, kicker: "Plot twist", line: "I don't even like<br><em>medical shows</em>", sub: "Never finished. 400+ episodes. I have limits.", say: "It was a summer thing." },
+    { dur: 5, img: backdropOf("Grey's Anatomy"), where: "Dallas, Texas", when: "May – June 2021", kicker: "", line: "The Grey's<br><em>summer</em>", sub: `${showViews("Grey's Anatomy")} episodes of a medical show.` },
+    { dur: 5, black: true, center: true, where: "Dallas, Texas", when: "May 25, 2021 · a Tuesday", kicker: "", line: `<span class="scene__counter" data-to="13">0</span> episodes<br>in <em>one day</em>`, sub: "On a Tuesday." },
+    { dur: 5, montage: postersOf(era("high").top.slice(0, 6)), center: true, where: "Dallas, Texas", when: "2020 – 2024", kicker: "The high school lineup", line: "Summer<br><em>binge mode</em>", sub: "" },
+    { dur: 5, cast: "suhani", age: 15, where: "Dallas, Texas", when: "Summer 2021", kicker: "Plot twist", line: "I don't even like<br><em>medical shows</em>", sub: "Never finished. 400+ episodes. I have limits.", say: "It was a summer thing." },
     ...amairaCut(2022),
   ];
 }
 function meEraFilm() {
   const me = Object.entries(DATA.loyalty.me_titles), f = DATA.family;
   return [
-    { dur: 5.5, black: true, center: true, kicker: "Episode titles with I, me or my", line: "The<br><em>me era</em>", sub: me.map(([e, v]) => `${e}: ${v}%`).join(" · ") },
-    { dur: 5, img: backdropOf("Jane The Virgin"), alt: true, kicker: "September 2023", line: "Finished Jane,<br><em>then 55 more</em>", sub: "Watched the finale. Kept going." },
-    { dur: 5, img: backdropOf("Gilmore Girls"), kicker: "Stars Hollow", line: "Gilmore<br><em>Girls</em>", sub: `${showViews("Gilmore Girls")} episodes. A mom and daughter who talk too fast. Relatable.` },
-    ...(f ? [{ dur: 5.5, cast: "mom", kicker: "Enter Mumma", line: "My Hindi<br><em>recommender</em>", sub: `She watched ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles first. I started ${f.mom_hindi_lead.next_week} of them within a week.` }] : []),
+    { dur: 5.5, black: true, center: true, where: "Dallas, Texas", when: "2020 – 2024", kicker: "Episode titles with I, me or my", line: "The<br><em>me era</em>", sub: me.map(([e, v]) => `${e}: ${v}%`).join(" · ") },
+    { dur: 5, img: backdropOf("Jane The Virgin"), alt: true, where: "Dallas, Texas", when: "September 2023", kicker: "", line: "Finished Jane,<br><em>then 55 more</em>", sub: "Watched the finale. Kept going." },
+    { dur: 5, img: backdropOf("Gilmore Girls"), where: "Dallas, Texas", when: "2020 – 2024", kicker: "Stars Hollow", line: "Gilmore<br><em>Girls</em>", sub: `${showViews("Gilmore Girls")} episodes. A mom and daughter who talk too fast. Relatable.` },
+    ...(f ? [{ dur: 5.5, cast: "mom", where: "Home, Dallas, Texas", when: "2020 – 2024", kicker: "Enter Mumma", line: "My Hindi<br><em>recommender</em>", sub: `She watched ${f.mom_hindi_lead.mom_first} of our ${f.mom_hindi_lead.shared} shared Hindi titles first. I started ${f.mom_hindi_lead.next_week} of them within a week.` }] : []),
     ...amairaCut(2023),
   ];
 }
 function seniorFilm() {
   const p = DATA.profile, d = DATA.family?.detective;
   return [
-    { dur: 5.5, black: true, center: true, kicker: "January – June 2024", line: `<span class="scene__counter" data-to="${p.senior_spring.views}">0</span> views<br>in <em>six months</em>`, sub: "Senior spring. College apps, AP exams, prom. No time for TV." },
-    { dur: 5, montage: postersOf(DATA.windows.last_summer_home.top.map((x) => x.show)), center: true, kicker: "Graduation summer", line: "Making up<br><em>for lost time</em>", sub: "" },
-    { dur: 5, cast: "suhani", age: 18, kicker: "May 2024", line: "Class of<br><em>2024</em>", sub: `Then ${p.senior_spring.summer_after} views in the seven weeks after graduation.`, say: "Okay NOW I can watch TV." },
-    ...(d ? [{ dur: 5, cast: "amaira", kicker: fmtDate(d.sister_profile_from), line: "Amaira gets<br><em>her own profile</em>", sub: "Seven years old. iCarly, The Thundermans, Barbie. The side character got a spin-off." }] : []),
+    { dur: 5.5, black: true, center: true, where: "Dallas, Texas", when: "January – June 2024", kicker: "Senior spring", line: `<span class="scene__counter" data-to="${p.senior_spring.views}">0</span> views<br>in <em>six months</em>`, sub: "Senior spring. College apps, AP exams, prom. No time for TV." },
+    { dur: 5, montage: postersOf(DATA.windows.last_summer_home.top.map((x) => x.show)), center: true, where: "Dallas, Texas", when: "Summer 2024", kicker: "Graduation summer", line: "Making up<br><em>for lost time</em>", sub: "" },
+    { dur: 5, cast: "suhani", age: 18, where: "Dallas, Texas", when: "May 2024", kicker: "Graduation", line: "Class of<br><em>2024</em>", sub: `Then ${p.senior_spring.summer_after} views in the seven weeks after graduation.`, say: "Okay NOW I can watch TV." },
+    ...(d ? [{ dur: 5, cast: "amaira", where: "Dallas, Texas", when: fmtDate(d.sister_profile_from), kicker: "", line: "Amaira gets<br><em>her own profile</em>", sub: "Seven years old. iCarly, The Thundermans, Barbie. The side character got a spin-off." }] : []),
   ];
 }
 
@@ -2101,21 +2091,21 @@ function seniorFilm() {
 function householdFilm() {
   const { windows: w, dates } = DATA;
   return [
-    { dur: 5.5, cast: "suhani", kicker: "Season 4 · College", line: "Back to<br><em>the dorm</em>", sub: "Remember the cold open? Here's what happened.", say: "Okay, so." },
-    { dur: 6, wall: true, center: true, kicker: `Netflix · ${fmtDate(dates.crackdown)}`, line: "“One<br><em>household.</em>”", sub: "One home. One Wi-Fi. Ours: four of us in Dallas." },
-    { dur: 5, black: true, center: true, kicker: "May – December 2023", line: `<span class="scene__counter" data-to="${w.after_crackdown.views}">0</span><br><em>views</em>`, sub: "At home, nothing changed. Yet." },
-    { dur: 6.5, phone: { who: "dad", name: "Papa", lines: [{ me: true, text: "Papa what's the Netflix code??" }, { text: "You're on your own, kid." }, { me: true, text: "😭" }] }, kicker: fmtDate(dates.austin), line: "Not part of<br><em>the household</em>", sub: "200 miles from the Dallas Wi-Fi." },
-    { dur: 5, img: backdropOf(w.first_semester.top[0]?.show || "Gossip Girl"), kicker: "Fall 2024", line: `${w.first_semester.views}<br><em>views</em>`, sub: "My whole first semester. About one month's worth back home." },
+    { dur: 5.5, cast: "suhani", where: "Austin, Texas", when: fmtDate(dates.austin), kicker: "Season 4 · College", line: "Back to<br><em>the dorm</em>", sub: "Remember the cold open? Here's what happened.", say: "Okay, so." },
+    { dur: 6, wall: true, center: true, where: "Home, Dallas, Texas", when: fmtDate(dates.crackdown), kicker: "Netflix, by email", line: "“One<br><em>household.</em>”", sub: "One home. One Wi-Fi. Ours: four of us in Dallas." },
+    { dur: 5, black: true, center: true, where: "Home, Dallas, Texas", when: "May – December 2023", kicker: "", line: `<span class="scene__counter" data-to="${w.after_crackdown.views}">0</span><br><em>views</em>`, sub: "At home, nothing changed. Yet." },
+    { dur: 6.5, phone: { who: "dad", name: "Papa", lines: [{ me: true, text: "Papa what's the Netflix code??" }, { text: "You're on your own, kid." }, { me: true, text: "😭" }] }, where: "Her dorm, West Campus, Austin", when: fmtDate(dates.austin), kicker: "", line: "Not part of<br><em>the household</em>", sub: "200 miles from the Dallas Wi-Fi." },
+    { dur: 5, img: backdropOf(w.first_semester.top[0]?.show || "Gossip Girl"), where: "Austin, Texas", when: "Fall 2024", kicker: "First semester", line: `${w.first_semester.views}<br><em>views</em>`, sub: "My whole first semester. About one month's worth back home." },
   ];
 }
 function homesickFilm() {
   const p = DATA.profile, f = DATA.family;
   return [
-    { dur: 5, cast: "suhani", age: 19, kicker: "Missing home", line: "Homesick,<br><em>in Hindi</em>", sub: `In college, Hindi is ${Math.round(p.hindi_away)}% of my series when I'm away and ${Math.round(p.hindi_home)}% when I'm home.`, say: "Mumma's shows hit different in a dorm." },
-    { dur: 5.5, img: backdropOf("The Great Indian Kapil Show"), kicker: "The family show", line: "Kapil,<br><em>on the same day</em>", sub: f ? `Mom and I watched it on the same day ${f.kapil_same_day} times, 200 miles apart.` : "" },
-    { dur: 5, montage: postersOf(era("after").examples.hindi), center: true, kicker: "On repeat in the dorm", line: "Hindi,<br><em>more and more</em>", sub: "" },
-    { dur: 5, cast: "mom", kicker: "200 miles apart", line: "Same show,<br><em>same night</em>", sub: "", say: "Did you watch the new Kapil?" },
-    { dur: 5, black: true, center: true, kicker: "Winter break, January 2026", line: `${p.jan_2026.movies} movies,<br><em>${p.jan_2026.hindi} in Hindi</em>`, sub: "Movie nights with Mumma." },
+    { dur: 5, cast: "suhani", age: 19, where: "Austin, Texas", when: "2024 – 2026", kicker: "Missing home", line: "Homesick,<br><em>in Hindi</em>", sub: `In college, Hindi is ${Math.round(p.hindi_away)}% of my series when I'm away and ${Math.round(p.hindi_home)}% when I'm home.`, say: "Mumma's shows hit different in a dorm." },
+    { dur: 5.5, img: backdropOf("The Great Indian Kapil Show"), where: "Austin & Dallas", when: "2024 – 2026", kicker: "The family show", line: "Kapil,<br><em>on the same day</em>", sub: f ? `Mom and I watched it on the same day ${f.kapil_same_day} times, 200 miles apart.` : "" },
+    { dur: 5, montage: postersOf(era("after").examples.hindi), center: true, where: "Her dorm, West Campus, Austin", when: "2024 – 2026", kicker: "On repeat", line: "Hindi,<br><em>more and more</em>", sub: "" },
+    { dur: 5, cast: "mom", where: "Austin & Dallas", when: "2024 – 2026", kicker: "200 miles apart", line: "Same show,<br><em>same night</em>", sub: "", say: "Did you watch the new Kapil?" },
+    { dur: 5, black: true, center: true, where: "Home, Dallas, Texas", when: "January 2026", kicker: "Winter break", line: `${p.jan_2026.movies} movies,<br><em>${p.jan_2026.hindi} in Hindi</em>`, sub: "Movie nights with Mumma." },
   ];
 }
 function stillFilm() {
@@ -2124,8 +2114,8 @@ function stillFilm() {
     { dur: 5, rewind: true, montage: postersOf(DATA.yearly.map((y) => y.show)), center: true, kicker: "2015 → 2026", line: "Eleven<br><em>years</em>", sub: `${n(t.views)} views. ${n(t.titles)} titles. ${n(t.active_days)} days with something on.` },
     { dur: 5, montage: DATA.yearly.map((y) => ({ img: posterOf(y.show), tag: y.year })).filter((m) => m.img), center: true, kicker: "One show a year", line: "Every<br><em>era</em>", sub: "" },
     ...(DATA.genre_pie ? [{ dur: 5.5, black: true, center: true, kicker: "Eleven years, by genre", line: "Romance<br><em>first, always</em>", sub: "", viz: viz(pie(DATA.genre_pie)) }] : []),
-    { dur: 5, img: backdropOf("Gossip Girl"), kicker: `${DATA.streak.days} days in a row`, line: "Home<br><em>for summer</em>", sub: "My longest streak ever." },
-    { dur: 5.5, cast: "suhani", age: 20, kicker: "Still here", line: "Same profile.<br><em>Different person.</em>", sub: "Disney Channel in Cupertino to Hindi rom-coms in a dorm.", say: "Netflix raised me. A little." },
+    { dur: 5, img: backdropOf("Gossip Girl"), where: "Home, Dallas, Texas", when: "Summer 2025", kicker: `${DATA.streak.days} days in a row`, line: "Home<br><em>for summer</em>", sub: "My longest streak ever." },
+    { dur: 5.5, cast: "suhani", age: 20, where: "Austin, Texas", when: "2026", kicker: "Still here", line: "Same profile.<br><em>Different person.</em>", sub: "Disney Channel in Cupertino to Hindi rom-coms in a dorm.", say: "Netflix raised me. A little." },
     { dur: 6, black: true, center: true, kicker: "", line: "Are you<br>still <em>watching?</em>", sub: "Yes." },
   ];
 }
@@ -2137,8 +2127,8 @@ function detectiveFilm() {
   return [
     { dur: 5.5, black: true, center: true, kicker: "Season 5 · The Household", line: "Four files.<br><em>No names.</em>", sub: "Just titles and dates. Can the data figure out who lives here?" },
     { dur: 6, black: true, center: true, kicker: "File 1", line: "A kids' profile that<br><em>changed hands</em>", sub: `Disney tween shows peak in 2017 (${d.kids_file["2017"]} views), drop to ${d.kids_file["2018"]}, then come back as preschool shows in 2019. Two kids, about ten years apart.` },
-    { dur: 5.5, cast: "suhani", kicker: "File 3 opens · December 2017", line: "The big<br><em>sister</em>", sub: "The moment File 1 went quiet, a new profile started: Switched at Birth, Girl Meets World. The older girl got her own." },
-    { dur: 5.5, cast: "amaira", kicker: "File 4 opens · September 2023", line: "The little<br><em>sister</em>", sub: "File 1 goes quiet again. A new profile: Barbie, iCarly, The Thundermans." },
+    { dur: 5.5, cast: "suhani", where: "Cupertino, California", when: "December 2017", kicker: "File 3 opens", line: "The big<br><em>sister</em>", sub: "The moment File 1 went quiet, a new profile started: Switched at Birth, Girl Meets World. The older girl got her own." },
+    { dur: 5.5, cast: "amaira", where: "Dallas, Texas", when: "September 2023", kicker: "File 4 opens", line: "The little<br><em>sister</em>", sub: "File 1 goes quiet again. A new profile: Barbie, iCarly, The Thundermans." },
     { dur: 6, cast: "mom", kicker: "File 2", line: "Two people,<br><em>one profile</em>", sub: `Hindi movies on some days, cartel shows on others, and almost never both. ${d.mom_file_dad}% of this profile is one person, ${d.mom_file_mom}% the other.` },
     { dur: 5, cast: "dad", kicker: "The verdict", line: "A dad, a mom,<br><em>two daughters</em>", sub: "Indian-American, about ten years between the girls. Nobody told the data. It figured it out." },
   ];
@@ -2169,18 +2159,18 @@ function dadFilm() {
   const quit = f.pilot_quitters || {}, started = f.shows_started || {};
   const cast = (who) => ({ Dad: "Papa", Me: "Suhani", "My sister": "Amaira", Mom: "Mumma" })[who] || who;
   return [
-    { dur: 6.5, set: "living", glow: tvGlow, kicker: "Mother's Day, 2023 · the Tiwari living room",
+    { dur: 6.5, set: "living", glow: tvGlow, where: "The living room, Dallas", when: "Mother's Day, May 14, 2023", kicker: "",
       cam: [[0, 900, 520, 1200], [4, 900, 520, 1200], [4, 700, 470, 560]],
       things: [
         { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
         { who: "mom", x: 1700, ...STAND, start: { walk: 1 }, keys: [[.2, { x: 1700 }], [1.6, { x: 1180, walk: 0, e: "linear" }], [1.7, { pose: "hips" }]] },
       ],
       talk: [[1.8, "mom", "It's Mother's Day. You pick the movie."], [4.3, "dad", "Already on it."]] },
-    { dur: 5, set: "browse", kicker: "His pick",
+    { dur: 5, set: "browse", where: "The living room, Dallas", when: "Mother's Day, May 14, 2023", kicker: "His pick",
       cam: [[0, 800, 450, 1600], [5, 760, 400, 1300]],
       things: [browse(["The Mother"], "Continue Watching for Papa")],
       talk: [[1.4, "dad", "It has \"Mother\" in the title."]] },
-    { dur: 8, set: "living", glow: tvGlow, kicker: "The Mother: an assassin movie",
+    { dur: 8, set: "living", glow: tvGlow, where: "The living room, Dallas", when: "Mother's Day, May 14, 2023", kicker: "The Mother: an assassin movie",
       cam: [[0, 1180, 470, 600], [2.5, 1180, 470, 600], [2.5, 700, 470, 560], [5, 700, 470, 560], [5, 900, 520, 1200]],
       things: [
         { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
@@ -2198,22 +2188,22 @@ function dadFilm() {
         { who: "dad", x: 1340, y: 760, s: .95, keys: [[3.6, { pose: "hips" }]] },
       ],
       talk: [[4, "dad", "I know what I like within one episode."]] },
-    { dur: 6.5, set: "browse", kicker: "2017 · Papa opens his own profile",
+    { dur: 6.5, set: "browse", where: "Home, Cupertino, California", when: "2017", kicker: "Papa's profile",
       things: [browse(["Liv and Maddie", "Jessie", "Sofia the First", "PJ Masks", "Masha and the Bear"], "Continue Watching for Papa")],
       talk: [[1, "dad", "Who is watching Liv and Maddie on MY profile?"]],
       credits: d ? [[3.8, 2.6, `Papa's profile<b>${d.dad_file_daughters}% his daughters · ${d.dad_file_dad}% Papa</b>`]] : [] },
-    { dur: 6, set: "living", glow: tvGlow, kicker: "The suspects",
+    { dur: 6, set: "living", glow: tvGlow, where: "The living room, Cupertino", when: "May 2017", kicker: "The suspects",
       cam: [[0, 900, 500, 1100], [2.7, 900, 500, 1100], [2.7, 1050, 470, 600]],
       things: [
         { who: "suhani11", x: 760, ...COUCH("suhani11"), start: { sit: 1, pose: "lap", mood: "smile" } },
         { who: "mom", x: 1050, ...COUCH("mom"), start: { sit: 1, pose: "cradle", mood: "flat" } },
       ],
       talk: [[.5, "suhani11", "It was Amaira."], [2.8, "mom", "She is six months old."]] },
-    { dur: 6.5, set: "browse", kicker: "So Papa moved to Mumma's profile",
+    { dur: 6.5, set: "browse", where: "Home, Cupertino, California", when: "2017 onward", kicker: "So Papa moved to Mumma's profile",
       things: [browse(["Narcos", "Sons of Anarchy", "Ozark", "El Chapo", "Peaky Blinders"], "Continue Watching for Mumma")],
       talk: [[1, "mom", "Why does my profile think I run a cartel?"]],
       credits: d ? [[3.6, 2.7, `Mumma's profile<b>${d.mom_file_dad}% Papa · ${d.mom_file_mom}% Mumma</b>`]] : [] },
-    { dur: 9.5, set: "living", glow: tvGlow, kicker: "April 26, 2018 · Papa's birthday",
+    { dur: 9.5, set: "living", glow: tvGlow, where: "The living room, Cupertino", when: "April 26, 2018", kicker: "Papa's birthday",
       cam: [[0, 860, 540, 1150], [2.6, 860, 540, 1150], [2.6, 700, 470, 560], [4.6, 700, 470, 560], [4.6, 1180, 480, 600], [6.6, 1180, 480, 600], [6.6, 700, 470, 560]],
       things: [
         { who: "dad", x: 700, ...COUCH("dad"), hat: true, start: { sit: 1, pose: "remote" } },
@@ -2221,7 +2211,7 @@ function dadFilm() {
         { who: "mom", x: 1180, ...STAND, start: { pose: "hips" }, keys: [[4.6, { mood: "shock" }], [6.6, { mood: "flat" }]] },
       ],
       talk: [[.5, "mom", "Happy birthday! What are we watching?"], [2.7, "dad", "24 Hours to Live."], [4.7, "mom", "…On your birthday?"], [6.7, "dad", "It's motivational."]] },
-    { dur: 8.5, set: "living", glow: tvGlow, kicker: "Every year on Amaira's birthday",
+    { dur: 8.5, set: "living", glow: tvGlow, where: "The living room, Cupertino, then Dallas", when: "Every November 13", kicker: "Amaira's birthday",
       cam: [[0, 860, 540, 1150], [2.7, 860, 540, 1150], [2.7, 700, 470, 560]],
       things: [
         { who: "dad", x: 700, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
@@ -2247,27 +2237,27 @@ function copyCatFilm() {
   const short = (s) => ({ "The Secret Life of Pets": "Secret Life of Pets", "Walt Disney Animation Studios Short Films Collection": "Disney Shorts" })[s] || s;
   const dil = c.find((x) => x.show === "Dilwale");
   return [
-    { dur: 9.5, set: "living", glow: tvGlow, kicker: "Summer 2025 · home from college",
+    { dur: 9.5, set: "living", glow: tvGlow, where: "The living room, Dallas", when: "Summer 2025", kicker: "Home from college",
       cam: [[0, 830, 500, 900], [3.9, 830, 500, 900], [3.9, 700, 470, 520], [5.5, 700, 470, 520], [5.5, 960, 520, 480], [6.9, 960, 520, 480], [6.9, 830, 500, 900]],
       things: [
         { who: "suhani", x: 700, ...COUCH("suhani"), start: { sit: 1, pose: "lap" }, keys: [[1, { pose: "hips" }], [2.5, { pose: "face" }], [3.8, { pose: "lap", mood: "flat" }]] },
         { who: "amaira", x: 960, ...COUCH("amaira"), start: { sit: 1, pose: "lap" }, keys: [[1.5, { pose: "hips" }], [3, { pose: "face" }], [4.2, { pose: "lap", mood: "flat" }]] },
       ],
       talk: [[4, "suhani", "Stop copying me."], [5.6, "amaira", "Stop copying me."], [7, "suhani", "Amaira!", 1], [8.1, "amaira", "Amaira!", 1]] },
-    { dur: 7, set: "browse", kicker: "Her profile, 2025",
+    { dur: 7, set: "browse", where: "Home, Dallas, Texas", when: "2025", kicker: "Her profile",
       things: [browse(c.slice(0, 6).map((x) => x.show), "Continue Watching for Amaira", [[.5, { x: 0 }], [4.6, { x: 3 * TILE }]])],
       talk: [[1, "suhani", "Wait. I watched every single one of these."], [4.6, "amaira", "So?"]] },
     { dur: 8, set: "chart", kicker: "Same titles, my profile vs. hers",
       things: [{ kind: "bars", title: "YEARS AFTER I WATCHED IT", keys: [[.3, { p: 0 }], [5, { p: 1, e: "linear" }]],
         data: c.slice(0, 6).map((x) => ({ v: Math.round(x.years * 10) / 10, label: short(x.show), hi: true })) }],
       credits: ms ? [[5.4, 2.5, `Shows we both watched<b>${ms.shared} · I was first on ${ms.first}</b>`]] : [] },
-    { dur: 6.5, kicker: "LEGO Ninjago · 2015 | 2020",
+    { dur: 6.5, where: "Cupertino | Dallas", when: "2015 | 2020", kicker: "LEGO Ninjago",
       panes: [
         { set: "living", glow: tvGlow, cam: [[0, 800, 560, 620]], things: [{ who: "suhani9", x: 800, ...COUCH("suhani9"), start: { sit: 1, pose: "lap" }, keys: [[.8, { pose: "wave" }], [2.2, { pose: "lap" }]] }] },
         { set: "living", glow: tvGlow, cam: [[0, 800, 580, 600]], things: [{ who: "amaira3", x: 800, ...COUCH("amaira3"), start: { sit: 1, pose: "lap" }, keys: [[2.2, { pose: "wave" }], [3.6, { pose: "lap" }]] }] },
       ],
       talk: [[.8, "suhani9", "NINJAGO!", 1.2], [2.3, "amaira3", "NINJAGO!", 1.2]] },
-    ...(dil ? [{ dur: 9.5, set: "living", glow: tvGlow, kicker: `${dil.her} · Dilwale`,
+    ...(dil ? [{ dur: 9.5, set: "living", glow: tvGlow, where: "The living room, Dallas", when: dil.her, kicker: "Dilwale",
       cam: [[0, 980, 520, 1100], [2.9, 980, 520, 1100], [2.9, 900, 520, 480], [4.4, 900, 520, 480], [4.4, 1200, 480, 600]],
       things: [
         { who: "amaira", x: 900, ...COUCH("amaira"), start: { sit: 1, pose: "remote" } },
@@ -2285,7 +2275,7 @@ function bornStreamingFilm() {
   const ys = a.years, age = sisterAge;
   const peak = ys.filter((y) => age(y.year) <= 4).reduce((m, y) => (y.views > m.views ? y : m));
   return [
-    { dur: 8.5, set: "living", glow: tvGlow, kicker: "November 20, 2016 · Amaira is one week old",
+    { dur: 8.5, set: "living", glow: tvGlow, where: "The living room, Cupertino", when: "November 20, 2016", kicker: "Amaira is one week old",
       cam: [[0, 860, 520, 1150], [.4, 860, 520, 1150], [.4, 640, 470, 560], [4.4, 640, 470, 560], [4.4, 820, 540, 560], [6.6, 820, 540, 560], [6.6, 860, 520, 1150]],
       things: [
         { who: "dad", x: 640, ...COUCH("dad"), start: { sit: 1, pose: "remote" } },
@@ -2294,12 +2284,12 @@ function bornStreamingFilm() {
       ],
       talk: [[.5, "dad", "Roman Empire. This episode is called \"Born in the Purple.\""], [4.5, "suhani11", "Papa. She is ONE WEEK old."]],
       credits: [[6.8, 1.7, "<small>A household special</small>Born Streaming", true]] },
-    { dur: 7, set: "living", glow: tvGlow, kicker: "Age 2 · Little Baby Bum, on repeat",
+    { dur: 7, set: "living", glow: tvGlow, where: "The living room, Cupertino", when: "2018 – 2019", kicker: "Age 2 · Little Baby Bum, on repeat",
       cam: [[0, 800, 600, 900], [7, 800, 640, 600]],
       things: [{ who: "amaira2", x: 800, y: 880, s: 1.3, start: { pose: "idle" }, keys: [[.8, { pose: "wave" }], [1.6, { pose: "idle" }], [2.2, { pose: "wave" }], [3, { pose: "idle" }], [3.6, { pose: "wave" }], [4.4, { pose: "idle" }]] }],
       talk: [[.8, "amaira2", "AGAIN!", .8], [2.2, "amaira2", "AGAIN!", .8], [3.6, "amaira2", "AGAIN!!", .9]],
       credits: [[4.8, 2.1, "Netflix keeps one date per episode<b>Every rewatch erased the last one</b>"]] },
-    { dur: 6.5, set: "browse", kicker: "Raised on Papa's profile",
+    { dur: 6.5, set: "browse", where: "Cupertino, then Dallas", when: "2017 – 2023", kicker: "Raised on Papa's profile",
       things: [browse(["Sofia the First", "Masha and the Bear", "PJ Masks", "Little Baby Bum", "Octonauts"], "Continue Watching for Papa")],
       talk: [[1, "dad", "This is still my profile, right?"]],
       credits: [[3.4, 2.8, `Amaira's whole life on Netflix<b>${a.on_dad}% on Papa's profile</b>`]] },
@@ -2307,11 +2297,11 @@ function bornStreamingFilm() {
       things: [{ kind: "bars", title: "GROWING UP ON NETFLIX", keys: [[.3, { p: 0 }], [5.5, { p: 1, e: "linear" }]],
         data: ys.map((y) => ({ v: y.views, label: `Age ${age(y.year)}`, hi: y === peak })),
         marks: [{ i: ys.indexOf(peak), text: "Preschool peak", sub: `${peak.views} views` }] }] },
-    ...(d ? [{ dur: 6, set: "living", glow: tvGlow, kicker: `${fmtMonth(d.sister_profile_from.slice(0, 7))} · age ${age(+d.sister_profile_from.slice(0, 4))}`,
+    ...(d ? [{ dur: 6, set: "living", glow: tvGlow, where: "The living room, Dallas", when: fmtMonth(d.sister_profile_from.slice(0, 7)), kicker: `Age ${age(+d.sister_profile_from.slice(0, 4))}`,
       cam: [[0, 800, 600, 900], [6, 800, 610, 640]],
       things: [{ who: "amaira6", x: 800, y: 870, s: 1.3, start: { pose: "remote" }, keys: [[2.6, { pose: "wave" }]] }],
       talk: [[.6, "amaira6", "Wait. That one says AMAIRA."], [2.7, "amaira6", "Finally. My own profile."]] }] : []),
-    { dur: 7.5, set: "living", glow: tvGlow, kicker: `${ys.at(-1).year} · age ${age(ys.at(-1).year)} · ${ys.at(-1).views} views and counting`,
+    { dur: 7.5, set: "living", glow: tvGlow, where: "The living room, Dallas", when: `${ys.at(-1).year}`, kicker: `Age ${age(ys.at(-1).year)} · ${ys.at(-1).views} views and counting`,
       cam: [[0, 830, 500, 900], [3, 830, 500, 900], [3, 700, 470, 520]],
       things: [
         { who: "suhani", x: 700, ...COUCH("suhani"), start: { sit: 1, pose: "lap" } },
@@ -2344,7 +2334,6 @@ const FILMS = {
   pilot: { season: 1, subtitle: "You're On Your Own, Kid", scenes: pilotFilm, art: "Friends", blurb: "Move-in day in West Campus. Mumma, Papa and Amaira drive away, Netflix locks her out, and Papa says she's on her own." },
   growing: { season: 1, subtitle: "Hi, I'm Suhani", scenes: helloFilm, art: "Jessie", blurb: "Cupertino, 2015. The playground laughs at her accent. Then Papa discovers Netflix, and a nanny from Texas teaches her American." },
   amaira: { season: 1, subtitle: "Good Luck, Amaira", scenes: amairaFilm, art: "Good Luck Charlie", blurb: "A baby sister comes home. A big sister finds a sitcom about exactly that." },
-  kids: { season: 1, subtitle: "The Kids' Profile", scenes: kidsProfileFilm, art: "Liv and Maddie", blurb: "Dad's profile, technically. Then one of her own." },
   own: { season: 2, subtitle: "The Family-Drama Era", scenes: ownProfileFilm, art: "Switched at Birth", blurb: "Freeform, secrets, and finishing a show only to start it again." },
   vampire: { season: 2, subtitle: "Winter Break Vampire", scenes: vampireFilm, art: "The Vampire Diaries", blurb: "Day one of winter break, 2018. Then 172 episodes." },
   friends: { season: 2, subtitle: "The One With the Deadline", scenes: friendsFilm, art: "Friends", blurb: "Friends is leaving Netflix in 31 days. An eighth-grader takes that personally." },
@@ -2367,6 +2356,17 @@ const FILMS = {
   account: { season: 5, subtitle: "The Account", scenes: accountFilm, art: "Narcos", blurb: "Whose profile is it, really?" },
 };
 Object.values(FILMS).forEach((f) => { f.name = "Still Watching"; });
+// Every scene opens on where and when. Scenes set their own; the rest inherit the episode's.
+const FILM_AT = {
+  changed: ["Cupertino → Dallas → Austin", "2015 – 2026"], still: ["Cupertino → Dallas → Austin", "2015 – 2026"],
+  detective: ["The Tiwari account", "2015 – 2026"], watch: ["The Tiwari household", "2015 – 2026"], dad: ["The Tiwari account", "2015 – 2026"],
+  mom: ["The Tiwari household", "2015 – 2026"], copycat: ["The Tiwari account", "2015 – 2025"], born: ["The Tiwari account", "2016 – 2026"],
+  account: ["The Tiwari account", "2015 – 2026"], friends: ["Cupertino, California", "December 2019"], summer: ["Dallas, Texas", "Summer 2025"],
+};
+Object.entries(FILMS).forEach(([k, f]) => {
+  const fn = f.scenes, [where, when] = FILM_AT[k] || [];
+  f.scenes = () => fn().map((x) => ({ where, when, ...x, ...(x.where ? {} : { where }), ...(x.when ? {} : { when }) }));
+});
 // Episode numbers and autoplay order follow the list above.
 Object.entries(FILMS).forEach(([k, f], i, all) => {
   f.num = all.filter(([, x]) => x.season === f.season).findIndex(([kk]) => kk === k) + 1;
