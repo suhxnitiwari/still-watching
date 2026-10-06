@@ -155,7 +155,10 @@ function setupIntro(onDone) {
     const x = (Math.random() - .5) * 2;
     return `<i style="--x:${x.toFixed(3)};--w:${(2 + Math.random() * 10).toFixed(1)}px;--c:${colors[i % colors.length]};--d:${(Math.random() * .35).toFixed(2)}s"></i>`;
   }).join("");
-  const stopRain = titleRain(intro);
+  // Behind the Play button: a strip of the family's posters, uncovered on hover.
+  const strip = Object.values(FACE_POSTERS).map((l) => l.slice(0, 5)).flat().sort(() => Math.random() - .5)
+    .map((slug) => `<img src="img/posters/${slug}.jpg" alt="">`).join("");
+  $(".intro__ctaReel").innerHTML = `<span>${strip}${strip}</span>`;
   const mosaic = posterS(intro);
   $("#intro-start").focus();
   $("#intro-start").addEventListener("click", () => {
@@ -163,55 +166,9 @@ function setupIntro(onDone) {
     taDum();
     mosaic.finish();
     intro.classList.add("is-playing");
-    stopRain.burst();
     setTimeout(finish, matchMedia("(prefers-reduced-motion: reduce)").matches ? 600 : 3000);
   });
   $("#intro-skip").addEventListener("click", finish);
-}
-
-// The cold open: the family's own titles stream in from the dark and pour into the S as it draws itself.
-// Pressing play blows them back out past the camera.
-function titleRain(intro) {
-  const words = Object.values(DATA_BITS).flat().filter((w) => /[a-z]/i.test(w));
-  const cv = document.createElement("canvas");
-  cv.className = "intro__rain"; cv.setAttribute("aria-hidden", "true");
-  intro.querySelector(".intro__start").prepend(cv);
-  const ctx = cv.getContext("2d"), dpr = Math.min(devicePixelRatio || 1, 2);
-  let W = 0, H = 0, raf = 0, burst = 0, t0 = performance.now();
-  const size = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
-  size(); addEventListener("resize", size);
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return { burst() {} };
-  const RED = ["#e50914", "#ff3d4f", "#b20710", "#ff7aa2", "#ffffff"];
-  const P = [];
-  const spawn = () => {
-    const a = Math.random() * Math.PI * 2, d = Math.max(W, H) * (.55 + Math.random() * .25);
-    P.push({ w: words[Math.floor(Math.random() * words.length)], a, d, d0: d, v: .25 + Math.random() * .45,
-      s: 10 + Math.random() * 14, c: RED[Math.floor(Math.random() * (Math.random() < .15 ? 5 : 4))], life: 0 });
-  };
-  const frame = (now) => {
-    const t = (now - t0) / 1000;
-    ctx.clearRect(0, 0, W, H);
-    if (!burst && P.length < 140 && t < 3.6) for (let k = 0; k < 3; k++) spawn();
-    const cx = W / 2, cy = H / 2 - H * .02;
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    for (let i = P.length - 1; i >= 0; i--) {
-      const q = P[i];
-      if (burst) q.d += (q.d * .09 + 14) * (1 + q.v);            // play: everything flies out past the camera
-      else q.d -= q.d * .012 * q.v + .6;                           // otherwise drawn in toward the S
-      const near = Math.min(1, q.d / q.d0), x = cx + Math.cos(q.a) * q.d, y = cy + Math.sin(q.a) * q.d * .8;
-      const alpha = burst ? Math.max(0, 1 - (now - burst) / 900) : Math.min(1, (1 - near) * 3) * Math.min(1, q.d / 90);
-      if (q.d < 30 || alpha <= 0 && burst || x < -200 || x > W + 200 || y < -100 || y > H + 100 && burst) { P.splice(i, 1); continue; }
-      ctx.globalAlpha = alpha * .8;
-      ctx.font = `700 ${q.s * (burst ? 1 + (now - burst) / 300 : .6 + near * .6)}px "Bebas Neue", Inter, sans-serif`;
-      ctx.fillStyle = q.c; ctx.shadowColor = q.c; ctx.shadowBlur = 10;
-      ctx.fillText(q.w.toUpperCase(), x, y);
-    }
-    ctx.shadowBlur = 0; ctx.globalAlpha = 1;
-    if (burst && !P.length) return;
-    raf = requestAnimationFrame(frame);
-  };
-  raf = requestAnimationFrame(frame);
-  return { burst() { burst = performance.now(); } };
 }
 
 // ---------- Who's watching? ----------
@@ -586,6 +543,12 @@ function openAccount() {
   el.querySelector(".acct__back").focus();
 }
 
+const NOISE_LEN = 16;
+const noise = (len) => Array.from({ length: len }, () => {
+  const r = Math.random();
+  return r < .42 ? (r < .21 ? "0" : "1") : r < .62 ? String(Math.floor(Math.random() * 10)) : r < .93 ? "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)] : " ";
+}).join("");
+
 function setupProfiles() {
   const me = PROFILES.find((p) => p.me);
   $("#nav-avatar").innerHTML = avatar(me, "nav");
@@ -618,7 +581,7 @@ function setupProfiles() {
   $("#profile-list").innerHTML = PROFILES.map((p, i) => `
     <button class="profile" type="button" data-profile="${i}">
       <span class="avatar">${avatar(p, i)}<canvas class="avatar__recon" aria-hidden="true"></canvas><span class="avatar__status" aria-hidden="true"></span>${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
-      <span class="profile__name" data-name="${p.name}">Profile 0${i + 1}</span>
+      <span class="profile__name" data-name="${p.name}">${noise(NOISE_LEN)}</span>
       <span class="profile__ev" aria-hidden="true"></span>
     </button>`).join("") + `
     <button class="profile profile--add" type="button" data-profile="add">
@@ -639,23 +602,28 @@ function setupProfiles() {
     const p = PROFILES[b.dataset.profile];
     if (!p) return;
     const nm = b.querySelector(".profile__name"), ev = b.querySelector(".profile__ev"), bits = DATA_BITS[p.name] || [];
-    let named = false, evT = 0;
+    let counted = false, evT = 0, nmT = 0;
+    // The name is noise too until the face locks: binary, digits and keyboard mash, then it decodes.
+    const scramble = () => { clearInterval(nmT); nm.classList.remove("is-named"); nmT = setInterval(() => { nm.textContent = noise(NOISE_LEN); }, 70); };
     const reveal = () => {
       clearInterval(evT); ev.textContent = "Match found"; ev.classList.add("is-match");
-      if (named) return; named = true; found++; hud(); b.setAttribute("aria-label", p.name);
-      const target = p.name, glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789%#";
+      if (!counted) { counted = true; found++; hud(); b.setAttribute("aria-label", p.name); }
+      clearInterval(nmT);
+      const target = p.name;
       let k = 0;
-      const tick = setInterval(() => {
-        k++; nm.textContent = target.split("").map((ch, j) => j < k / 2 ? ch : glyphs[Math.floor(Math.random() * glyphs.length)]).join("");
-        if (k / 2 >= target.length) { clearInterval(tick); nm.textContent = target; nm.classList.add("is-named"); }
-      }, 45);
+      nmT = setInterval(() => {
+        k++;
+        const locked = Math.min(target.length, Math.floor(k / 2)), tail = Math.max(target.length - locked, NOISE_LEN - k);
+        nm.textContent = target.slice(0, locked) + noise(tail);
+        if (!tail) { clearInterval(nmT); nm.classList.add("is-named"); }
+      }, 50);
       setTimeout(() => ev.classList.remove("is-match"), 1600);
     };
     const av = b.querySelector(".avatar"), play0 = reconstruct(av, p.name, reveal, (n) => { got[i] = n; hud(); });
-    const play = () => { let j = 0; clearInterval(evT); ev.classList.remove("is-match"); evT = setInterval(() => { ev.textContent = bits[j++ % bits.length] || ""; }, 160); play0(); };
+    const play = () => { let j = 0; clearInterval(evT); ev.classList.remove("is-match"); evT = setInterval(() => { ev.textContent = bits[j++ % bits.length] || ""; }, 160); scramble(); play0(); };
     b.setAttribute("aria-label", `Profile ${i + 1}`);
-    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { av.classList.add("is-revealed"); nm.textContent = p.name; return; }
-    setTimeout(play, 350 + i * 700);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { av.classList.add("is-revealed"); nm.textContent = p.name; nm.classList.add("is-named"); return; }
+    setTimeout(play, 350);
     let last = 0;
     b.addEventListener("mouseenter", () => { if (av.classList.contains("is-revealed") && performance.now() - last > 3500) { last = performance.now(); play(); } });
   });
