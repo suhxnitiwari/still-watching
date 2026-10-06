@@ -1572,3 +1572,43 @@ button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red
 .slate i { display: none; font: 600 clamp(12px, 1.05vw, 15px)/1.2 Inter, sans-serif; font-style: normal; letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
 .scene--set .slate i { display: block; }
 .scene--set:has(.slate) .scene__kicker { display: none; }
+
+/* ---------- The family vault: sign in inside a locked profile, then Netflix's Viewing Activity page ---------- */
+.vault__form { margin-top: 14px; width: min(360px, 100%); display: grid; gap: 8px; }
+.vault__ask { margin: 0; color: #ddd; font-size: 14px; }
+.vault__row { display: flex; gap: 8px; }
+.vault__row input { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 4px; border: 1px solid #555; background: #111; color: #fff; font: 15px Inter, sans-serif; }
+.vault__row input:focus { outline: 2px solid #fff; outline-offset: 1px; }
+.vault__msg { min-height: 1.2em; margin: 0; font-size: 13px; color: #e87c03; }
+.vault__form.is-wrong { animation: shake .4s; }
+.vault__open { margin-top: 14px; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.vault { position: fixed; inset: 0; z-index: 80; overflow-y: auto; background: #fff; color: #333; }
+.vault[hidden] { display: none; }
+.vault__page { max-width: 960px; margin: 0 auto; padding: 24px 16px 80px; font: 15px/1.5 Inter, sans-serif; }
+.vault__loading { margin-top: 30vh; text-align: center; color: #666; }
+.vault__top { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; border-bottom: 1px solid #e6e6e6; }
+.vault__back { background: none; border: 0; font-size: 26px; cursor: pointer; color: #111; padding: 0 6px; }
+.vault__who { flex: 1; color: #666; font-size: 14px; }
+.vault__who b { color: #111; }
+.vault__out { background: none; border: 1px solid #bbb; border-radius: 4px; padding: 6px 12px; cursor: pointer; color: #333; }
+.vault__tabs { display: flex; gap: 8px; margin-top: 18px; }
+.vault__tabs button { border: 1px solid #ccc; background: #fff; border-radius: 999px; padding: 6px 16px; cursor: pointer; font-weight: 600; color: #333; }
+.vault__tabs button[aria-selected="true"] { background: #111; border-color: #111; color: #fff; }
+.vault__title { font: 400 clamp(34px, 5vw, 52px)/1 var(--display); color: #111; margin: 26px 0 6px; }
+.vault__title small { display: block; margin-top: 6px; font: 600 15px Inter, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+.vault__stats, .vault__top5 { margin: 4px 0; color: #555; }
+.vault__stats b, .vault__top5 b { color: #111; }
+.vault__tools { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 10px; }
+.vault__tools input { flex: 1 1 220px; padding: 9px 12px; border: 1px solid #bbb; border-radius: 4px; font: 15px Inter, sans-serif; }
+.vault__tools select { padding: 9px 10px; border: 1px solid #bbb; border-radius: 4px; font: 15px Inter, sans-serif; background: #fff; }
+.vault__tools .btn--dark, .vault__more { background: #f1f1f1; color: #111; border: 1px solid #ccc; }
+.vault__list { list-style: none; margin: 0; padding: 0; }
+.vault__list li { display: grid; grid-template-columns: 130px 1fr; gap: 16px; padding: 11px 0; border-bottom: 1px solid #ececec; }
+.vault__list time { color: #777; font-variant-numeric: tabular-nums; }
+.vault__list span { color: #111; overflow-wrap: anywhere; }
+.vault__list small { font-size: 15px; color: #555; }
+.vault__none { display: block !important; color: #777; }
+.vault__more { display: block; margin: 20px auto 0; }
+@media (max-width: 560px) { .vault__list li { grid-template-columns: 1fr; gap: 2px; } }
+.vault__tools .btn, .vault__more { font-size: 14px; padding: 9px 16px; }

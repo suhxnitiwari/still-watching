@@ -489,7 +489,8 @@ function peekProfile(p) {
       <div class="peek__top">${pk.top.map((t, i) => `<div class="peek__show">${art(t.show, { tall: true })}<b>${i + 1}. ${esc(t.show)}</b><span>${t.views} episodes</span></div>`).join("")}</div>
       <ul class="peek__lines">${peekLines(p.name).map((l) => `<li>${l}</li>`).join("")}</ul>` : ""}
     <div class="peek__wall" aria-hidden="true">${Array.from({ length: 3 }, () => `<div class="peek__ghostrow">${Array.from({ length: 7 }, () => "<i></i>").join("")}</div>`).join("")}</div>
-    <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span></div>
+    <div class="peek__locked"><span class="peek__lock">${LOCK_ICON}</span><b>The rest of ${label}'s profile is locked.</b><span>${p.name === "Dad" ? "He's a private guy." : p.name === "Mom" ? "She's busy finishing a movie." : "She's busy rewatching iCarly."}</span>
+      ${vaultForm(p.name)}</div>
   </div>`;
   el.hidden = false;
   playBehind(el.querySelector(".peek__stage"), SPECIAL[p.name], () => el.hidden);
@@ -497,7 +498,124 @@ function peekProfile(p) {
   el.querySelectorAll("[data-film]").forEach((b) => b.addEventListener("click", () => { el.hidden = true; }));
   wireTiming(el);
   wireRows(el);
+  wireVaultForm(el, p.name, () => { el.hidden = true; });
   el.querySelector(".peek__close").focus();
+}
+
+// ---------- The family vault ----------
+// Papa, Mumma and Amaira's full histories, encrypted in data/vault.json (etl/lock_family.mjs).
+// A password unwraps only the histories its role may read; everything is decrypted here, in the browser.
+const WHO = { Dad: "Papa", Mom: "Mumma", Sister: "Amaira" };
+let VAULT = null;
+const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const vaultGrant = () => { try { return JSON.parse(sessionStorage.getItem("vault") || "null"); } catch { return null; } };
+const loadVault = () => (VAULT ||= fetch("data/vault.json").then((r) => (r.ok ? r.json() : null)).catch(() => null));
+
+async function vaultUnlock(pw) {
+  const v = await loadVault();
+  if (!v) return null;
+  const enc = new TextEncoder().encode(pw.normalize("NFC"));
+  const base = await crypto.subtle.importKey("raw", enc, "PBKDF2", false, ["deriveKey"]);
+  const tries = v.roles.map(async (r) => {
+    const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt: unb64(r.salt), iterations: v.iter, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(r.iv) }, key, unb64(r.ct));
+    return JSON.parse(new TextDecoder().decode(pt));
+  });
+  const grant = await Promise.any(tries).catch(() => null);
+  if (grant) try { sessionStorage.setItem("vault", JSON.stringify(grant)); } catch {}
+  return grant;
+}
+
+async function vaultRows(who, grant) {
+  const v = await loadVault(), box = v?.profiles?.[who], k = grant?.keys?.[who];
+  if (!box || !k) return null;
+  const key = await crypto.subtle.importKey("raw", unb64(k), "AES-GCM", false, ["decrypt"]);
+  return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(box.iv) }, key, unb64(box.ct))));
+}
+
+function vaultForm(name) {
+  const g = vaultGrant();
+  if (g?.keys?.[name]) return `<button class="btn btn--light vault__open" type="button" data-vault-open>Open ${WHO[name]}'s full history</button>`;
+  return `<form class="vault__form" autocomplete="off">
+    <p class="vault__ask">Family? Sign in to see everything.</p>
+    <div class="vault__row"><input type="password" name="pw" placeholder="Family password" aria-label="Family password" autocomplete="current-password" required>
+    <button class="btn btn--light" type="submit">Unlock</button></div>
+    <p class="vault__msg" role="status" aria-live="polite"></p></form>`;
+}
+
+function wireVaultForm(el, name, close) {
+  el.querySelector("[data-vault-open]")?.addEventListener("click", () => { close(); openVault(name); });
+  const form = el.querySelector(".vault__form");
+  if (!form) return;
+  const msg = form.querySelector(".vault__msg"), btn = form.querySelector("button");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    btn.disabled = true; msg.textContent = "Checking…"; form.classList.remove("is-wrong");
+    const g = await vaultUnlock(form.pw.value);
+    btn.disabled = false;
+    if (!g) { msg.textContent = VAULT && (await VAULT) ? "That password doesn't open anything." : "The family vault isn't set up yet."; void form.offsetWidth; form.classList.add("is-wrong"); return; }
+    if (!g.keys[name]) { msg.textContent = `Signed in as ${g.role}. ${WHO[name]}'s history isn't yours to open.`; return; }
+    close(); openVault(name);
+  });
+}
+
+// Netflix's Viewing Activity page, for one profile: every play, newest first, searchable, downloadable.
+async function openVault(name) {
+  const g = vaultGrant();
+  if (!g?.keys?.[name]) return;
+  let el = $("#vault");
+  if (!el) {
+    el = document.createElement("div");
+    el.id = "vault"; el.className = "vault"; el.setAttribute("role", "dialog"); el.setAttribute("aria-modal", "true"); el.setAttribute("aria-label", "Viewing activity");
+    document.body.appendChild(el);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !el.hidden) closeVault(); });
+  }
+  const closeVault = () => { el.hidden = true; document.body.classList.remove("locked"); };
+  el.innerHTML = `<div class="vault__page"><p class="vault__loading">Decrypting ${WHO[name]}'s history…</p></div>`;
+  el.hidden = false; document.body.classList.add("locked");
+  const rows = await vaultRows(name, g).catch(() => null);
+  if (!rows) { el.querySelector(".vault__loading").textContent = "Couldn't open this history. Sign in again."; return; }
+  const mine = Object.keys(g.keys);
+  const shows = new Map();
+  rows.forEach(([, show]) => shows.set(show, (shows.get(show) || 0) + 1));
+  const top = [...shows].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const years = [...new Set(rows.map((r) => r[0].slice(0, 4)))];
+  const line = ([d, show, season, ep]) => `<li><time>${fmtDate(d)}</time><span>${esc(show)}${season ? `<small>: ${esc(season)}</small>` : ""}${ep ? `<small>: ${esc(ep)}</small>` : ""}</span></li>`;
+  el.innerHTML = `<div class="vault__page">
+    <div class="vault__top"><button class="vault__back" type="button" aria-label="Close">←</button><span class="vault__who">Signed in as <b>${esc(g.role)}</b></span>
+      <button class="vault__out" type="button">Sign out</button></div>
+    ${mine.length > 1 ? `<div class="vault__tabs" role="tablist">${mine.map((w) => `<button type="button" role="tab" aria-selected="${w === name}" data-vault-tab="${w}">${WHO[w]}</button>`).join("")}</div>` : ""}
+    <h1 class="vault__title">Viewing Activity<small>${WHO[name]}</small></h1>
+    <p class="vault__stats"><b>${n(rows.length)}</b> plays · <b>${n(shows.size)}</b> titles · ${fmtDate(rows.at(-1)[0])} to ${fmtDate(rows[0][0])}</p>
+    <p class="vault__top5">Most played: ${top.map(([s, c]) => `<b>${esc(s)}</b> ${c}`).join(" · ")}</p>
+    <div class="vault__tools"><input type="search" placeholder="Search titles" aria-label="Search titles">
+      <select aria-label="Year"><option value="">All years</option>${years.map((y) => `<option>${y}</option>`).join("")}</select>
+      <button class="btn btn--dark" type="button" data-vault-csv>Download all</button></div>
+    <ul class="vault__list"></ul>
+    <button class="btn btn--dark vault__more" type="button">Show more</button>
+  </div>`;
+  const list = el.querySelector(".vault__list"), more = el.querySelector(".vault__more"), q = el.querySelector("input"), yr = el.querySelector("select");
+  let shown = 0, hits = rows;
+  const render = (reset) => {
+    if (reset) { shown = 0; list.innerHTML = ""; }
+    const next = hits.slice(shown, shown + 200);
+    list.insertAdjacentHTML("beforeend", next.map(line).join("") || (shown ? "" : `<li class="vault__none">No plays match.</li>`));
+    shown += next.length; more.hidden = shown >= hits.length;
+  };
+  const filter = () => { const t = q.value.trim().toLowerCase(), y = yr.value;
+    hits = rows.filter((r) => (!y || r[0].startsWith(y)) && (!t || r.slice(1).join(" ").toLowerCase().includes(t))); render(true); };
+  q.addEventListener("input", filter); yr.addEventListener("change", filter); more.addEventListener("click", () => render());
+  render(true);
+  el.querySelector(".vault__back").addEventListener("click", closeVault);
+  el.querySelector(".vault__out").addEventListener("click", () => { try { sessionStorage.removeItem("vault"); } catch {} closeVault(); toast("Signed out of the family vault."); });
+  el.querySelectorAll("[data-vault-tab]").forEach((b) => b.addEventListener("click", () => openVault(b.dataset.vaultTab)));
+  el.querySelector("[data-vault-csv]").addEventListener("click", () => {
+    const csv = "Title,Date\n" + rows.map(([d, s, se, ep]) => `"${[s, se, ep].filter(Boolean).join(": ").replace(/"/g, '""')}",${d}`).join("\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = `${WHO[name]}-viewing-activity.csv`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+  el.querySelector(".vault__back").focus();
 }
 
 // Manage Profiles: Netflix's account page, pointed at this project.
