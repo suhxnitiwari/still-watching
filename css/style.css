@@ -205,7 +205,7 @@ body { background: linear-gradient(180deg, #2b070d 0, #170507 520px, var(--bg) 9
 /* A show-logo title, like the billboard art */
 .logo { margin: 0 0 18px; display: inline-grid; line-height: .9; text-shadow: 0 4px 22px rgba(0, 0, 0, .55); }
 .logo__the, .logo__script { font-family: "Yellowtail", cursive; color: var(--red); font-weight: 400; }
-.logo__the { font-size: clamp(30px, 3.4vw, 50px); margin-left: 12%; margin-bottom: -.25em; }
+.logo__the { font-size: clamp(30px, 3.4vw, 50px); margin-left: 12%; margin-bottom: .08em; }
 .logo__big { font-family: var(--display); font-size: clamp(64px, 8vw, 116px); letter-spacing: .01em; }
 .logo__script { font-size: clamp(54px, 6.4vw, 96px); margin: -.28em 0 -.2em 6%; transform: rotate(-6deg); transform-origin: left; }
 .logo__small { font-family: var(--display); color: var(--red); font-size: clamp(30px, 3.4vw, 50px); justify-self: end; margin-right: 6%; letter-spacing: .04em; }
