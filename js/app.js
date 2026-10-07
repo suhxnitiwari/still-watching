@@ -661,7 +661,6 @@ function openAccount() {
   el.querySelector(".acct__back").focus();
 }
 
-const NOISE_LEN = 16;
 const noise = (len) => Array.from({ length: len }, () => {
   const r = Math.random();
   return r < .42 ? (r < .21 ? "0" : "1") : r < .62 ? String(Math.floor(Math.random() * 10)) : r < .93 ? "abcdefghijklmnopqrstuvwxyz"[Math.floor(Math.random() * 26)] : " ";
@@ -699,7 +698,7 @@ function setupProfiles() {
   $("#profile-list").innerHTML = PROFILES.map((p, i) => `
     <button class="profile" type="button" data-profile="${i}">
       <span class="avatar">${avatar(p, i)}<canvas class="avatar__recon" aria-hidden="true"></canvas><span class="avatar__status" aria-hidden="true"></span>${p.me ? `<span class="avatar__lock">${LOCK_ICON}</span>` : ""}${p.kids ? '<span class="avatar__kids">kids</span>' : ""}</span>
-      <span class="profile__name" data-name="${p.name}">${noise(NOISE_LEN)}</span>
+      <span class="profile__name" data-name="${p.name}">${noise(p.name.length)}</span>
       <span class="profile__ev" aria-hidden="true"></span>
     </button>`).join("") + `
     <button class="profile profile--add" type="button" data-profile="add">
@@ -715,14 +714,19 @@ function setupProfiles() {
     hudEl.innerHTML = found >= PROFILES.length ? `<b>${total.toLocaleString()}</b> plays received · <b>${PROFILES.length}</b> profiles identified`
       : `<i></i>Receiving data · <b>${n.toLocaleString()}</b> / ${total.toLocaleString()} plays · <b>${found}</b> of ${PROFILES.length} identified`; };
   hud();
-  // Rebuild each face from data, one after another; hovering replays it.
+  // Rebuild every face from data at the same moment: wait until all four photos and their posters are in.
+  const starts = [];
+  const ready = (im) => im.complete && im.naturalWidth ? Promise.resolve() : new Promise((ok) => { im.addEventListener("load", ok, { once: true }); im.addEventListener("error", ok, { once: true }); });
+  const assets = [...document.querySelectorAll("#profile-list .avatar img"), ...Object.values(FACE_POSTERS).flat().map(posterImg)];
+  Promise.race([Promise.all(assets.map(ready)), new Promise((ok) => setTimeout(ok, 4000))])
+    .then(() => setTimeout(() => starts.forEach((f) => f()), 200));
   [...document.querySelectorAll("#profile-list .profile")].forEach((b, i) => {
     const p = PROFILES[b.dataset.profile];
     if (!p) return;
     const nm = b.querySelector(".profile__name"), ev = b.querySelector(".profile__ev"), bits = DATA_BITS[p.name] || [];
     let counted = false, evT = 0, nmT = 0;
     // The name is noise too until the face locks: binary, digits and keyboard mash, then it decodes.
-    const scramble = () => { clearInterval(nmT); nm.classList.remove("is-named"); nmT = setInterval(() => { nm.textContent = noise(NOISE_LEN); }, 70); };
+    const scramble = () => { clearInterval(nmT); nm.classList.remove("is-named"); nmT = setInterval(() => { nm.textContent = noise(p.name.length); }, 70); };
     const reveal = () => {
       clearInterval(evT); ev.textContent = "Match found"; ev.classList.add("is-match");
       if (!counted) { counted = true; found++; hud(); b.setAttribute("aria-label", p.name); }
@@ -731,7 +735,7 @@ function setupProfiles() {
       let k = 0;
       nmT = setInterval(() => {
         k++;
-        const locked = Math.min(target.length, Math.floor(k / 2)), tail = Math.max(target.length - locked, NOISE_LEN - k);
+        const locked = Math.min(target.length, Math.floor(k / 2)), tail = target.length - locked;
         nm.textContent = target.slice(0, locked) + noise(tail);
         if (!tail) { clearInterval(nmT); nm.classList.add("is-named"); }
       }, 50);
@@ -741,7 +745,7 @@ function setupProfiles() {
     const play = () => { let j = 0; clearInterval(evT); ev.classList.remove("is-match"); evT = setInterval(() => { ev.textContent = bits[j++ % bits.length] || ""; }, 160); scramble(); play0(); };
     b.setAttribute("aria-label", `Profile ${i + 1}`);
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) { av.classList.add("is-revealed"); nm.textContent = p.name; nm.classList.add("is-named"); return; }
-    setTimeout(play, 350);
+    starts.push(play);
     let last = 0;
     b.addEventListener("mouseenter", () => { if (av.classList.contains("is-revealed") && performance.now() - last > 3500) { last = performance.now(); play(); } });
   });
@@ -763,7 +767,15 @@ function setupProfiles() {
     const b = e.target.closest(".profile");
     if (!b) return;
     const key = b.dataset.profile;
-    if (key === "add") return say(b, "Woahhhhhhhhh. This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister.");
+    if (key === "add") {
+      // The family closes ranks: everyone scoots together, the + gets bumped out, and a stamp lands on it.
+      const list = $("#profile-list");
+      list.classList.remove("is-huddle"); b.classList.remove("is-kicked"); void b.offsetWidth;
+      if (!b.querySelector(".add__stamp")) b.querySelector(".avatar").insertAdjacentHTML("beforeend", `<span class="add__stamp" aria-hidden="true">Family<br>of 4</span>`);
+      list.classList.add("is-huddle"); b.classList.add("is-kicked");
+      clearTimeout(list._huddle); list._huddle = setTimeout(() => list.classList.remove("is-huddle"), 2600);
+      return say(b, "Woahhhhhhhhh. This family of 4 is full. Unless you're mine or Amaira's future husband, back off, mister.");
+    }
     const p = PROFILES[key];
     if (p.me) return coldOpen(enter);
     if (DATA?.family) return peekProfile(p);
@@ -780,7 +792,15 @@ function setupProfiles() {
     peekText.innerHTML = `<b>${a}</b><span>${q}</span>`;
   });
   $("#profile-list").addEventListener("focusin", (e) => e.target.dispatchEvent(new Event("pointerover", { bubbles: true })));
-  $("#manage").addEventListener("click", (e) => say(e.currentTarget, "Manage profiles? Suhani and Dad agree on almost nothing. They agree on this: nobody manages them."));
+  // Manage Profiles: Netflix's pencils pop onto every face; Dad and I shake our heads and flick ours away.
+  const PEN = `<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m13 7 4 4" stroke="currentColor" stroke-width="2"/></svg>`;
+  $("#manage").addEventListener("click", (e) => {
+    const list = $("#profile-list");
+    list.querySelectorAll(".profile:not(.profile--add) .avatar").forEach((a) => { if (!a.querySelector(".manage__pen")) a.insertAdjacentHTML("beforeend", `<span class="manage__pen" aria-hidden="true">${PEN}</span>`); });
+    gate.classList.remove("is-managing"); void gate.offsetWidth; gate.classList.add("is-managing");
+    clearTimeout(gate._manage); gate._manage = setTimeout(() => gate.classList.remove("is-managing"), 3200);
+    say(e.currentTarget, "Manage profiles? Suhani and Dad agree on almost nothing. They agree on this: nobody manages them.");
+  });
   $(`[data-profile="${PROFILES.indexOf(me)}"]`).focus();
 }
 
@@ -1565,7 +1585,7 @@ function houseSVG() {
       houseScreen(368, 168, 164, 104) + `<path d="M392 272l-8 14M508 272l8 14" stroke="#777" stroke-width="5"/>` + roomName(450, 330, "MOM"))}
     ${room("r4", "450,560 600,162 760,255 760,400", "hg4", houseScreen(598, 306, 112, 76, true) + roomName(660, 420, "SUHANI"), "me")}
     ${room("r5", "450,560 760,400 760,560", "hg5",
-      houseScreen(676, 446, 50, 90) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>` + roomName(640, 552, "AMAIRA"))}
+      houseScreen(676, 446, 50, 90) + `<path d="M712 520c10-4 22 4 24 18l4 22h-34Z" fill="#1d4b63"/>` + roomName(672, 552, "AMAIRA"))}
     <g class="piece" data-piece="hub">
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#171717" stroke="#e50914" stroke-width="7"/>
       <path d="M318 560A132 132 0 0 1 582 560Z" fill="#000" filter="url(#grain)"/>
@@ -1576,8 +1596,14 @@ function houseSVG() {
     </g>
 
     <text class="place" x="450" y="626" text-anchor="middle">DALLAS</text>
-    <g class="warning"><text x="880" y="455" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Not part of the</text>
-      <text x="880" y="477" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">(Netflix) household</text></g>
+    <g class="warning"><g transform="translate(-12 128)">
+      <clipPath id="warn-type"><rect class="warn__type" x="740" y="470" width="290" height="36"/></clipPath>
+      <clipPath id="warn-pen"><rect class="warn__pen" x="830" y="420" width="150" height="62"/></clipPath>
+      <g clip-path="url(#warn-type)" fill="#fff" font-size="22" font-weight="700">
+        <text class="warn__a" x="895" y="496" text-anchor="end">Not part of the</text>
+        <text class="warn__b" x="905" y="496">household</text></g>
+      <path class="warn__caret" d="M891 512 L900 499 L909 512" fill="none" stroke="#e50914" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="warn__netflix" clip-path="url(#warn-pen)" x="900" y="474" text-anchor="middle" transform="rotate(-6 900 474)" fill="#e50914">Netflix</text></g></g>
     <text class="place place--austin" x="880" y="712" text-anchor="middle">AUSTIN</text>
   </svg>`;
 }

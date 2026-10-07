@@ -1612,3 +1612,73 @@ button.cap:hover .tile, button.cap.is-on .tile { box-shadow: 0 0 0 3px var(--red
 .vault__more { display: block; margin: 20px auto 0; }
 @media (max-width: 560px) { .vault__list li { grid-template-columns: 1fr; gap: 2px; } }
 .vault__tools .btn, .vault__more { font-size: 14px; padding: 9px 16px; }
+
+/* "Not part of the household" types out, then a proofreader's caret squeezes in a handwritten "Netflix". */
+.house .warning { opacity: 0; transform: none; transition: opacity .3s; }
+.house.is-broken .warning { opacity: 1; transition-delay: 1.4s; }
+.warn__type, .warn__pen { transform-box: fill-box; transform-origin: left center; transform: scaleX(0); }
+.warn__netflix { font: 400 44px "Yellowtail", cursive; }
+.warn__caret { opacity: 0; transform-box: fill-box; transform-origin: center bottom; }
+.house.is-broken .warn__type { animation: warnType 1s steps(26, end) 1.5s forwards; }
+.house.is-broken .warn__caret { animation: warnCaret .35s cubic-bezier(.2, 1.6, .4, 1) 2.9s forwards; }
+.house.is-broken .warn__pen { animation: warnPen .9s ease-in-out 3.2s forwards; }
+@keyframes warnType { to { transform: scaleX(1); } }
+@keyframes warnCaret { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
+@keyframes warnPen { to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .house.is-broken .warn__type, .house.is-broken .warn__pen { animation: none; transform: none; }
+  .house.is-broken .warn__caret { animation: none; opacity: 1; }
+}
+
+/* Add Profile: the family huddles up, bumps the + out of line, and stamps it FAMILY OF 4. */
+#profile-list.is-huddle .profile:not(.profile--add) { animation: huddle 1.6s cubic-bezier(.3, 1.4, .5, 1) both; }
+#profile-list.is-huddle .profile:nth-child(1) { --push: 34px; animation-delay: 0s; }
+#profile-list.is-huddle .profile:nth-child(2) { --push: 22px; animation-delay: .06s; }
+#profile-list.is-huddle .profile:nth-child(3) { --push: 12px; animation-delay: .12s; }
+#profile-list.is-huddle .profile:nth-child(4) { --push: 4px; animation-delay: .18s; }
+@keyframes huddle {
+  0% { transform: none; }
+  25% { transform: translateX(var(--push)) translateY(-10px) rotate(2deg); }
+  40% { transform: translateX(var(--push)) translateY(0) rotate(-2deg); }
+  55% { transform: translateX(var(--push)) rotate(1deg); }
+  85% { transform: translateX(var(--push)); }
+  100% { transform: none; }
+}
+.profile--add.is-kicked { animation: kicked 1.4s cubic-bezier(.2, .9, .3, 1) .2s both; }
+@keyframes kicked {
+  0% { transform: none; }
+  18% { transform: translateX(70px) rotate(14deg); }
+  32% { transform: translateX(46px) rotate(-6deg); }
+  48% { transform: translateX(58px) rotate(4deg); }
+  70% { transform: translateX(10px) rotate(-2deg); }
+  100% { transform: none; }
+}
+.profile--add .avatar { position: relative; overflow: visible; }
+.add__stamp { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; pointer-events: none;
+  font: 400 clamp(26px, 2.6vw, 40px)/.95 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--red);
+  border: 4px solid var(--red); border-radius: 8px; background: rgba(20, 0, 2, .55); transform: rotate(-12deg) scale(3); opacity: 0;
+  mix-blend-mode: screen; }
+.profile--add.is-kicked .add__stamp { animation: stamp .45s cubic-bezier(.5, 0, .7, 1.4) .55s forwards; }
+@keyframes stamp { 0% { opacity: 0; transform: rotate(-12deg) scale(3); } 70% { opacity: 1; transform: rotate(-12deg) scale(.92); } 100% { opacity: .95; transform: rotate(-12deg) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  #profile-list.is-huddle .profile, .profile--add.is-kicked { animation: none; }
+  .profile--add.is-kicked .add__stamp { animation: none; opacity: .95; transform: rotate(-12deg); }
+}
+
+/* Manage Profiles: pencils pop onto every face, then Dad (1st) and Suhani (3rd) shake their heads and flick theirs off. */
+.manage__pen { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; background: rgba(0, 0, 0, .5); color: #fff; opacity: 0; pointer-events: none; }
+.manage__pen svg { width: 34%; height: 34%; padding: 10%; border: 2px solid #fff; border-radius: 50%; }
+.is-managing .manage__pen { animation: penIn .35s cubic-bezier(.2, 1.6, .4, 1) forwards, penOut .4s ease 2.6s forwards; }
+.is-managing .profile:nth-child(1) .manage__pen, .is-managing .profile:nth-child(3) .manage__pen { animation: penIn .35s cubic-bezier(.2, 1.6, .4, 1) forwards, penBg .3s ease 1.3s forwards; }
+.is-managing .profile:nth-child(1) .manage__pen svg { animation: flickL .8s cubic-bezier(.4, 0, .9, .6) 1.3s forwards; }
+.is-managing .profile:nth-child(3) .manage__pen svg { animation: flickR .8s cubic-bezier(.4, 0, .9, .6) 1.35s forwards; }
+.is-managing .profile:nth-child(1) .avatar, .is-managing .profile:nth-child(3) .avatar { animation: nope .6s ease-in-out .7s; }
+@keyframes penIn { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
+@keyframes penOut { to { opacity: 0; } }
+@keyframes penBg { to { background: rgba(0, 0, 0, 0); } }
+@keyframes flickL { to { transform: translate(-260px, -320px) rotate(-720deg) scale(.5); opacity: 0; } }
+@keyframes flickR { to { transform: translate(240px, -340px) rotate(720deg) scale(.5); opacity: 0; } }
+@keyframes nope { 15%, 55% { transform: rotate(-5deg); } 35%, 75% { transform: rotate(5deg); } 100% { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .is-managing .manage__pen, .is-managing .manage__pen svg, .is-managing .avatar { animation: none !important; } }
+.is-managing .profile:nth-child(1) .avatar, .is-managing .profile:nth-child(3) .avatar { overflow: visible; }
+.profile--add.is-kicked .avatar { color: transparent; transition: color .2s .6s; }
